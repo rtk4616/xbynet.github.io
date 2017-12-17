@@ -1,0 +1,1552 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="soa,msa,架构," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="倚楼听风雨" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="内容：常见的Web攻击手段和防御方法:如XSS,CSRF,SQL注入等安全算法:如数字摘要，对称加密，非对称加密，数字签名，数字证书等如何采用摘要认证防止信息篡改，通过数字签名来验证通信双方的合法性，及通过Https保证通信过程中数据不被第三方监听和截获。OAuth协议介绍">
+<meta name="keywords" content="soa,msa,架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[读书笔记]chapter3-互联网安全架构-大型网站分布式架构与设计实践">
+<meta property="og:url" content="http://xby1993.net/2017/12/17/读书笔记-chapter3-互联网安全架构-大型网站分布式架构与设计实践/index.html">
+<meta property="og:site_name" content="倚楼听风雨">
+<meta property="og:description" content="内容：常见的Web攻击手段和防御方法:如XSS,CSRF,SQL注入等安全算法:如数字摘要，对称加密，非对称加密，数字签名，数字证书等如何采用摘要认证防止信息篡改，通过数字签名来验证通信双方的合法性，及通过Https保证通信过程中数据不被第三方监听和截获。OAuth协议介绍">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xby1993.net/data/upload/046338b8-db65-11e7-8478-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/553cf1e8-dbc6-11e7-a58c-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/8b46ad18-dbc6-11e7-a039-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/fb3e8b5e-db6d-11e7-9926-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/25d34914-dbb4-11e7-8dbb-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/56ab4ea4-dbb4-11e7-813d-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/8749bf0c-dbb4-11e7-b037-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/a84fd2cc-dbb4-11e7-b583-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/ba6b08b4-dbb4-11e7-a9a9-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/e0e9bbe2-dbb4-11e7-9b67-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/f414f2dc-dbb4-11e7-8243-d46a6ad5b910.png">
+<meta property="og:image" content="http://xby1993.net/data/upload/0078409a-dbb5-11e7-a60e-d46a6ad5b910.png">
+<meta property="og:updated_time" content="2017-12-17T06:38:27.034Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[读书笔记]chapter3-互联网安全架构-大型网站分布式架构与设计实践">
+<meta name="twitter:description" content="内容：常见的Web攻击手段和防御方法:如XSS,CSRF,SQL注入等安全算法:如数字摘要，对称加密，非对称加密，数字签名，数字证书等如何采用摘要认证防止信息篡改，通过数字签名来验证通信双方的合法性，及通过Https保证通信过程中数据不被第三方监听和截获。OAuth协议介绍">
+<meta name="twitter:image" content="http://xby1993.net/data/upload/046338b8-db65-11e7-8478-d46a6ad5b910.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xby1993.net/2017/12/17/读书笔记-chapter3-互联网安全架构-大型网站分布式架构与设计实践/"/>
+
+
+
+
+
+  <title>[读书笔记]chapter3-互联网安全架构-大型网站分布式架构与设计实践 | 倚楼听风雨</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?7667846d611ad820cda0616ba071e37d";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">倚楼听风雨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡看江湖路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xby1993.net/2017/12/17/读书笔记-chapter3-互联网安全架构-大型网站分布式架构与设计实践/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[读书笔记]chapter3-互联网安全架构-大型网站分布式架构与设计实践</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-17T13:03:05+08:00">
+                2017-12-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/大型网站分布式架构与设计实践/" itemprop="url" rel="index">
+                    <span itemprop="name">大型网站分布式架构与设计实践</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/17/读书笔记-chapter3-互联网安全架构-大型网站分布式架构与设计实践/" class="leancloud_visitors" data-flag-title="[读书笔记]chapter3-互联网安全架构-大型网站分布式架构与设计实践">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  12,428
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  50
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>内容：<br>常见的Web攻击手段和防御方法:如XSS,CSRF,SQL注入等<br>安全算法:如数字摘要，对称加密，非对称加密，数字签名，数字证书等<br>如何采用摘要认证防止信息篡改，通过数字签名来验证通信双方的合法性，及通过Https保证通信过程中数据不被第三方监听和截获。<br>OAuth协议介绍</p>
+<a id="more"></a>
+<h2 id="XSS攻击"><a href="#XSS攻击" class="headerlink" title="XSS攻击"></a>XSS攻击</h2><p>XSS(Cross-Site Scripting),跨站脚本攻击。防范:Html实体字符转义escapeXml</p>
+<h2 id="CSRF攻击"><a href="#CSRF攻击" class="headerlink" title="CSRF攻击"></a>CSRF攻击</h2><p>CSRF(cross site request forgery):跨站请求伪造。<br><img src="/data/upload/046338b8-db65-11e7-8478-d46a6ad5b910.png" alt="046338b8-db65-11e7-8478-d46a6ad5b910.png"><br>举例：<br>CSRF攻击的主要目的是让用户在不知情的情况下攻击自己已登录的一个系统，类似于钓鱼。如用户当前已经登录了邮箱，或bbs，同时用户又在使用另外一个，已经被你控制的站点，我们姑且叫它钓鱼网站。这个网站上面可能因为某个图片吸引你，你去点击一下，此时可能就会触发一个js的点击事件，构造一个bbs发帖的请求，去往你的bbs发帖，由于当前你的浏览器状态已经是登陆状态，所以session登陆cookie信息都会跟正常的请求一样，纯天然的利用当前的登陆状态，让用户在不知情的情况下，帮你发帖或干其他事情。</p>
+<p>CSRF防御：</p>
+<ul>
+<li><strong>将cookie设置为HttpOnly</strong>,这样通过脚本就无法读取到cookie信息。</li>
+<li>通过 <strong>referer</strong>、<strong>token</strong> 或者 验证码 来检测用户提交。而该token不存在于cookie，而是随着每次响应返回到页面中的，服务端token存在于session中。</li>
+<li>尽量不要在页面的链接中暴露用户隐私信息。</li>
+<li>对于用户修改删除等操作最好都使用post 操作 。</li>
+<li>避免全站通用的cookie，严格设置cookie的域。</li>
+</ul>
+<h2 id="SQL注入攻击"><a href="#SQL注入攻击" class="headerlink" title="SQL注入攻击"></a>SQL注入攻击</h2><p>防范:使用预编译语句；避免密码明文存放；处理好相应异常。</p>
+<h2 id="文件上传漏洞"><a href="#文件上传漏洞" class="headerlink" title="文件上传漏洞"></a>文件上传漏洞</h2><p>防范：<br>对上传的文件进行白名单校验，限制上传文件大小，上传后的文件进行重命名。使用文件的魔数(magic number)来判断文件类型，而不是通过后缀名；对图片文件，可考虑使用imagemagick先缩放再保存。</p>
+<h2 id="DDoS攻击"><a href="#DDoS攻击" class="headerlink" title="DDoS攻击"></a>DDoS攻击</h2><p>DDoS(Distributed Denial of Service)即分布式拒绝服务攻击。<br><a href="http://netsecurity.51cto.com/art/200903/114969.htm" target="_blank" rel="noopener">http://netsecurity.51cto.com/art/200903/114969.htm</a><br>先说Dos，DoS攻击是最早出现的,它的攻击方法说白了就是单挑,是比谁的机器性能好、速度快。但是现在的科技飞速发展,一般的网站主机都有十几台主机,而且各个主机的处理能力、内存大小和网络速度都有飞速的发展,有的网络带宽甚至超过了千兆级别。这样我们的一对一单挑式攻击就没有什么作用了,搞不好自己的机子就会死掉。<br>不过,科技在发展,黑客的技术也在发展。DDoS攻击。它的原理说白了就是群殴,用好多的机器对目标机器一起发动DoS攻击,但这不是很多黑客一起参与的,这种攻击只是由一名黑客来操作的。这名黑客不是拥有很多机器,他是通过他的机器在网络上占领很多的“肉鸡”,并且控制这些“肉鸡”来发动DDoS攻击。</p>
+<p>DDoS攻击方式：</p>
+<p>1、SYN Flood攻击<br>SYN-Flood攻击是当前网络上最为常见的DDoS攻击，也是最为经典的拒绝服务攻击，它利用了TCP协议实现上的一个缺陷，通过向网络服务所在端口发送大量的伪造源地址的攻击报文，就可能造成目标服务器中的半开连接队列被占满，从而阻止其他合法用户进行访问。这种攻击早在1996年就被发现，但至今仍然显示出强大的生命力。很多操作系统，甚至防火墙、路由器都无法有效地防御这种攻击，而且由于它可以方便地伪造源地址，追查起来非常困难。它的数据包特征通常是，源发送了大量的SYN包，并且缺少三次握手的最后一步握手ACK回复。<br>原理<br>例如，攻击者首先伪造地址对服务器发起SYN请求（我可以建立连接吗？），服务器就会回应一个ACK+SYN（可以+请确认）。而真实的IP会认为，我没有发送请求，不作回应。服务器没有收到回应，会重试3-5次并且等待一个SYN Time（一般30秒-2分钟）后，丢弃这个连接。<br>如果攻击者大量发送这种伪造源地址的SYN请求，服务器端将会消耗非常多的资源来处理这种半连接，保存遍历会消耗非常多的CPU时间和内存，何况还要不断对这个列表中的IP进行SYN+ACK的重试。最后的结果是服务器无暇理睬正常的连接请求—拒绝服务。在服务器上用netstat –an命令查看SYN_RECV状态的话</p>
+<p>2、ACK Flood攻击<br>ACK Flood攻击是在TCP连接建立之后，所有的数据传输TCP报文都是带有ACK标志位的，主机在接收到一个带有ACK标志位的数据包的时候，需要检查该数据包所表示的连接四元组是否存在，如果存在则检查该数据包所表示的状态是否合法，然后再向应用层传递该数据包。如果在检查中发现该数据包不合法，例如该数据包所指向的目的端口在本机并未开放，则主机操作系统协议栈会回应RST包告诉对方此端口不存在。<br>这里，服务器要做两个动作：查表、回应ACK/RST。这种攻击方式显然没有SYN Flood给服务器带来的冲击大，因此攻击者一定要用大流量ACK小包冲击才会对服务器造成影响。按照我们对TCP协议的理解，随机源IP的ACK小包应该会被Server很快丢弃，因为在服务器的TCP堆栈中没有这些ACK包的状态信息。但是实际上通过测试，发现有一些TCP服务会对ACK Flood比较敏感，比如说JSP Server，在数量并不多的ACK小包的打击下，JSP Server就很难处理正常的连接请求。对于Apache或者IIS来说，10kpps的ACK Flood不构成危胁，但是更高数量的ACK Flood会造成服务器网卡中断频率过高，负载过重而停止响应。可以肯定的是，ACK Flood不但可以危害路由器等网络设备，而且对服务器上的应用有不小的影响。</p>
+<p>3、UDP DNS Query Flood攻击<br>原理<br>UDP DNS Query Flood攻击实质上是UDP Flood的一种，但是由于DNS服务器的不可替代的关键作用，一旦服务器瘫痪，影响一般都很大。<br>UDP DNS Query Flood攻击采用的方法是向被攻击的服务器发送大量的域名解析请求，通常请求解析的域名是随机生成或者是网络世界上根本不存在的域名，被攻击的DNS 服务器在接收到域名解析请求的时候首先会在服务器上查找是否有对应的缓存，如果查找不到并且该域名无法直接由服务器解析的时候，DNS 服务器会向其上层DNS服务器递归查询域名信息。域名解析的过程给服务器带来了很大的负载，每秒钟域名解析请求超过一定的数量就会造成DNS服务器解析域名超时。<br>根据微软的统计数据，一台DNS服务器所能承受的动态域名查询的上限是每秒钟9000个请求。而我们知道，在一台P3的PC机上可以轻易地构造出每秒钟几万个域名解析请求，足以使一台硬件配置极高的DNS服务器瘫痪，由此可见DNS 服务器的脆弱性。同时需要注意的是，蠕虫扩散也会带来大量的域名解析请求。</p>
+<p>4、CC(Challenge Collapsar)攻击</p>
+<h2 id="安全算法"><a href="#安全算法" class="headerlink" title="安全算法"></a>安全算法</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">toHexString</span><span class="params">(<span class="keyword">byte</span>[] b)</span> </span>&#123;  </span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder(b.length * <span class="number">2</span>);  </span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; b.length; i++) &#123;  </span><br><span class="line">            sb.append(hexChar[(b[i] &amp; <span class="number">0xf0</span>) &gt;&gt;&gt; <span class="number">4</span>]);  </span><br><span class="line">            sb.append(hexChar[b[i] &amp; <span class="number">0x0f</span>]);  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> sb.toString();  </span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<h3 id="数字摘要"><a href="#数字摘要" class="headerlink" title="数字摘要"></a>数字摘要</h3><p><a href="http://www.jb51.net/article/96121.htm" target="_blank" rel="noopener">http://www.jb51.net/article/96121.htm</a><br>hash碰撞:如果待摘要的关键字为k1,Hash函数为f(x),则关键字k1的摘要为f(k1),若关键字k2不等于k1, 而f(k1)=f(k2),这种现象称为hash碰撞。一个hash函数的好坏是由发生碰撞的几率决定的。<br>MD5(Message Digest Algorithm 5)<br>SHA-1(Secure Hash Algorithm)</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.security.MessageDigest;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * 采用MD5加密</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MD5Util</span> </span>&#123;</span><br><span class="line">  <span class="comment">/*** </span></span><br><span class="line"><span class="comment">   * MD5加密 生成32位md5码</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> 待加密字符串</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> 返回32位md5码</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">md5Encode</span><span class="params">(String inStr)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    MessageDigest md5 = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      md5 = MessageDigest.getInstance(<span class="string">"MD5"</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      System.out.println(e.toString());</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">byte</span>[] byteArray = inStr.getBytes(<span class="string">"UTF-8"</span>);</span><br><span class="line">    <span class="keyword">byte</span>[] md5Bytes = md5.digest(byteArray);</span><br><span class="line">    StringBuffer hexValue = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; md5Bytes.length; i++) &#123;</span><br><span class="line">      <span class="keyword">int</span> val = ((<span class="keyword">int</span>) md5Bytes[i]) &amp; <span class="number">0xff</span>;</span><br><span class="line">      <span class="keyword">if</span> (val &lt; <span class="number">16</span>) &#123;</span><br><span class="line">        hexValue.append(<span class="string">"0"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      hexValue.append(Integer.toHexString(val));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hexValue.toString();</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 测试主函数</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    String str = <span class="keyword">new</span> String(<span class="string">"amigoxiexiexingxing"</span>);</span><br><span class="line">    System.out.println(<span class="string">"原始："</span> + str);</span><br><span class="line">    System.out.println(<span class="string">"MD5后："</span> + md5Encode(str));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * 采用SHAA加密</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SHAUtil</span> </span>&#123;</span><br><span class="line">  <span class="comment">/*** </span></span><br><span class="line"><span class="comment">   * SHA加密 生成40位SHA码</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> 待加密字符串</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> 返回40位SHA码</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">shaEncode</span><span class="params">(String inStr)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    MessageDigest sha = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      sha = MessageDigest.getInstance(<span class="string">"SHA"</span>);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      System.out.println(e.toString());</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">      <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">byte</span>[] byteArray = inStr.getBytes(<span class="string">"UTF-8"</span>);</span><br><span class="line">    <span class="keyword">byte</span>[] md5Bytes = sha.digest(byteArray);</span><br><span class="line">    StringBuffer hexValue = <span class="keyword">new</span> StringBuffer();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; md5Bytes.length; i++) &#123;</span><br><span class="line">      <span class="keyword">int</span> val = ((<span class="keyword">int</span>) md5Bytes[i]) &amp; <span class="number">0xff</span>;</span><br><span class="line">      <span class="keyword">if</span> (val &lt; <span class="number">16</span>) &#123; </span><br><span class="line">        hexValue.append(<span class="string">"0"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      hexValue.append(Integer.toHexString(val));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> hexValue.toString();</span><br><span class="line">  &#125;</span><br><span class="line"> </span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 测试主函数</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String args[])</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    String str = <span class="keyword">new</span> String(<span class="string">"amigoxiexiexingxing"</span>);</span><br><span class="line">    System.out.println(<span class="string">"原始："</span> + str);</span><br><span class="line">    System.out.println(<span class="string">"SHA后："</span> + shaEncode(str));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SHA-1和MD5的比较<br>因为二者均由MD4导出，SHA-1和MD5彼此很相似。相应的，他们的强度和其他特性也是相似，但还有以下几点不同：<br>1）对强行攻击的安全性：最显著和最重要的区别是SHA-1摘要比MD5摘要长32 位。使用强行技术，产生任何一个报文使其摘要等于给定报摘要的难度对MD5是2^128数量级的操作，而对SHA-1则是2^160数量级的操作。这样，SHA-1对强行攻击有更大的强度。<br>2）对密码分析的安全性：由于MD5的设计，易受密码分析的攻击，SHA-1显得不易受这样的攻击。<br>3）速度：在相同的硬件上，SHA-1的运行速度比MD5慢。</p>
+<p>彩虹表破解Hash算法：<br>彩虹表预先建立一个可逆向的散列链并将其存储在表中，在破解时先查表得到可能包含结果的散列链，然后在内存中重新计算并得到最终结果。折中方式综合了计算暴力破解和查找表破解的优点，并将计算时间和存储空间降低到可以接受的范围。</p>
+<h3 id="对称加密算法"><a href="#对称加密算法" class="headerlink" title="对称加密算法"></a>对称加密算法</h3><p><a href="http://www.iteye.com/topic/1122076/" target="_blank" rel="noopener">http://www.iteye.com/topic/1122076/</a><br>常用的有:DES,AES等。目前AES是主流。<br>加密：大体上分为双向加密和单向加密，而双向加密又分为对称加密和非对称加密。<br>对称加密 采用单钥密码系统的加密方法，同一个密钥可以同时用作信息的加密和解密，这种加密方法称为对称加密，也称为单密钥加密。<br>需要对加密和解密使用相同密钥的加密算法。由于其速度，对称性加密通常在消息发送方需要加密大量数据时使用。对称性加密也称为密钥加密。<br>所谓对称，就是采用这种加密方法的双方使用方式<strong>用同样的密钥进行加密和解密</strong>。密钥是控制加密及解密过程的指令。 </p>
+<p>对称加密一般java类中中定义成员 ：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//KeyGenerator 提供对称密钥生成器的功能，支持各种算法  </span></span><br><span class="line"><span class="keyword">private</span> KeyGenerator keygen;  </span><br><span class="line"><span class="comment">//SecretKey 负责保存对称密钥  </span></span><br><span class="line"><span class="keyword">private</span> SecretKey deskey;  </span><br><span class="line"><span class="comment">//Cipher负责完成加密或解密工作  </span></span><br><span class="line"><span class="keyword">private</span> Cipher c;  </span><br><span class="line"><span class="comment">//该字节数组负责保存加密的结果  </span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">byte</span>[] cipherByte;  </span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//Security.addProvider(new com.sun.crypto.provider.SunJCE());  </span></span><br><span class="line"><span class="comment">//实例化支持DES算法的密钥生成器(算法名称命名需按规定，否则抛出异常)  </span></span><br><span class="line">keygen = KeyGenerator.getInstance(<span class="string">"DES"</span>);<span class="comment">//  </span></span><br><span class="line"><span class="comment">//生成密钥  </span></span><br><span class="line">deskey = keygen.generateKey();  </span><br><span class="line"><span class="comment">//生成Cipher对象,指定其支持的DES算法  </span></span><br><span class="line">c = Cipher.getInstance(<span class="string">"DES"</span>);</span><br></pre></td></tr></table></figure></p>
+<p>1、DES算法<br>为密码体制中的对称密码体制，又被成为美国数据加密标准，是1972年美国IBM公司研制的对称密码体制加密算法。 明文按64位进行分组, 密钥长64位，<strong>密钥事实上是56位参与DES运算</strong>（第8、16、24、32、40、48、56、64位是校验位， 使得每个密钥都有奇数个1）分组后的明文组和56位的密钥按位替代或交换的方法形成密文组的加密方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EncrypDES</span> </span>&#123;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">//KeyGenerator 提供对称密钥生成器的功能，支持各种算法  </span></span><br><span class="line">    <span class="keyword">private</span> KeyGenerator keygen;  </span><br><span class="line">    <span class="comment">//SecretKey 负责保存对称密钥  </span></span><br><span class="line">    <span class="keyword">private</span> SecretKey deskey;  </span><br><span class="line">    <span class="comment">//Cipher负责完成加密或解密工作  </span></span><br><span class="line">    <span class="keyword">private</span> Cipher c;  </span><br><span class="line">    <span class="comment">//该字节数组负责保存加密的结果  </span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] cipherByte;  </span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EncrypDES</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchAlgorithmException, NoSuchPaddingException</span>&#123;  </span><br><span class="line">        Security.addProvider(<span class="keyword">new</span> com.sun.crypto.provider.SunJCE());  </span><br><span class="line">        <span class="comment">//实例化支持DES算法的密钥生成器(算法名称命名需按规定，否则抛出异常)  </span></span><br><span class="line">        keygen = KeyGenerator.getInstance(<span class="string">"DES"</span>);  </span><br><span class="line">        <span class="comment">//生成密钥  </span></span><br><span class="line">        deskey = keygen.generateKey();  </span><br><span class="line">        <span class="comment">//生成Cipher对象,指定其支持的DES算法  </span></span><br><span class="line">        c = Cipher.getInstance(<span class="string">"DES"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * 对字符串加密 </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">byte</span>[] Encrytor(String str) <span class="keyword">throws</span> InvalidKeyException,  </span><br><span class="line">            IllegalBlockSizeException, BadPaddingException &#123;  </span><br><span class="line">        <span class="comment">// 根据密钥，对Cipher对象进行初始化，ENCRYPT_MODE表示加密模式  </span></span><br><span class="line">        c.init(Cipher.ENCRYPT_MODE, deskey);  </span><br><span class="line">        <span class="keyword">byte</span>[] src = str.getBytes();  </span><br><span class="line">        <span class="comment">// 加密，结果保存进cipherByte  </span></span><br><span class="line">        cipherByte = c.doFinal(src);  </span><br><span class="line">        <span class="keyword">return</span> cipherByte;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * 对字符串解密 </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">byte</span>[] Decryptor(<span class="keyword">byte</span>[] buff) <span class="keyword">throws</span> InvalidKeyException,  </span><br><span class="line">            IllegalBlockSizeException, BadPaddingException &#123;  </span><br><span class="line">        <span class="comment">// 根据密钥，对Cipher对象进行初始化，DECRYPT_MODE表示加密模式  </span></span><br><span class="line">        c.init(Cipher.DECRYPT_MODE, deskey);  </span><br><span class="line">        cipherByte = c.doFinal(buff);  </span><br><span class="line">        <span class="keyword">return</span> cipherByte;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">        EncrypDES de1 = <span class="keyword">new</span> EncrypDES();  </span><br><span class="line">        String msg =<span class="string">"郭XX-搞笑相声全集"</span>;  </span><br><span class="line">        <span class="keyword">byte</span>[] encontent = de1.Encrytor(msg);  </span><br><span class="line">        <span class="keyword">byte</span>[] decontent = de1.Decryptor(encontent);  </span><br><span class="line">        System.out.println(<span class="string">"明文是:"</span> + msg);  </span><br><span class="line">        System.out.println(<span class="string">"加密后:"</span> + <span class="keyword">new</span> String(encontent));  </span><br><span class="line">        System.out.println(<span class="string">"解密后:"</span> + <span class="keyword">new</span> String(decontent));  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 2、AES密码学中的高级加密标准（Advanced Encryption Standard，AES）<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EncrypAES</span> </span>&#123;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">//KeyGenerator 提供对称密钥生成器的功能，支持各种算法  </span></span><br><span class="line">    <span class="keyword">private</span> KeyGenerator keygen;  </span><br><span class="line">    <span class="comment">//SecretKey 负责保存对称密钥  </span></span><br><span class="line">    <span class="keyword">private</span> SecretKey deskey;  </span><br><span class="line">    <span class="comment">//Cipher负责完成加密或解密工作  </span></span><br><span class="line">    <span class="keyword">private</span> Cipher c;  </span><br><span class="line">    <span class="comment">//该字节数组负责保存加密的结果  </span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] cipherByte;  </span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">EncrypAES</span><span class="params">()</span> <span class="keyword">throws</span> NoSuchAlgorithmException, NoSuchPaddingException</span>&#123;  </span><br><span class="line">        Security.addProvider(<span class="keyword">new</span> com.sun.crypto.provider.SunJCE());  </span><br><span class="line">        <span class="comment">//实例化支持DES算法的密钥生成器(算法名称命名需按规定，否则抛出异常)  </span></span><br><span class="line">        keygen = KeyGenerator.getInstance(<span class="string">"AES"</span>);  </span><br><span class="line">        <span class="comment">//生成密钥  </span></span><br><span class="line">        deskey = keygen.generateKey();  </span><br><span class="line">        <span class="comment">//生成Cipher对象,指定其支持的DES算法  </span></span><br><span class="line">        c = Cipher.getInstance(<span class="string">"AES"</span>);  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * 对字符串加密 </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">byte</span>[] Encrytor(String str) <span class="keyword">throws</span> InvalidKeyException,  </span><br><span class="line">            IllegalBlockSizeException, BadPaddingException &#123;  </span><br><span class="line">        <span class="comment">// 根据密钥，对Cipher对象进行初始化，ENCRYPT_MODE表示加密模式  </span></span><br><span class="line">        c.init(Cipher.ENCRYPT_MODE, deskey);  </span><br><span class="line">        <span class="keyword">byte</span>[] src = str.getBytes();  </span><br><span class="line">        <span class="comment">// 加密，结果保存进cipherByte  </span></span><br><span class="line">        cipherByte = c.doFinal(src);  </span><br><span class="line">        <span class="keyword">return</span> cipherByte;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * 对字符串解密 </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">byte</span>[] Decryptor(<span class="keyword">byte</span>[] buff) <span class="keyword">throws</span> InvalidKeyException,  </span><br><span class="line">            IllegalBlockSizeException, BadPaddingException &#123;  </span><br><span class="line">        <span class="comment">// 根据密钥，对Cipher对象进行初始化，DECRYPT_MODE表示加密模式  </span></span><br><span class="line">        c.init(Cipher.DECRYPT_MODE, deskey);  </span><br><span class="line">        cipherByte = c.doFinal(buff);  </span><br><span class="line">        <span class="keyword">return</span> cipherByte;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;  </span><br><span class="line">        EncrypAES de1 = <span class="keyword">new</span> EncrypAES();  </span><br><span class="line">        String msg =<span class="string">"郭XX-搞笑相声全集"</span>;  </span><br><span class="line">        <span class="keyword">byte</span>[] encontent = de1.Encrytor(msg);  </span><br><span class="line">        <span class="keyword">byte</span>[] decontent = de1.Decryptor(encontent);  </span><br><span class="line">        System.out.println(<span class="string">"明文是:"</span> + msg);  </span><br><span class="line">        System.out.println(<span class="string">"加密后:"</span> + <span class="keyword">new</span> String(encontent));  </span><br><span class="line">        System.out.println(<span class="string">"解密后:"</span> + <span class="keyword">new</span> String(decontent));  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>因为某些国家的进口管制限制，Java发布的运行环境包中的默认仅允许128位密钥的AES加解密</p>
+<h3 id="非对称加密"><a href="#非对称加密" class="headerlink" title="非对称加密"></a>非对称加密</h3><p>与对称加密算法不同，非对称加密算法需要两个密钥：公开密钥（publick ey）和私有密钥 (private key)<br>公开密钥与私有密钥是一对，如果用公开密钥对数据进行加密，只有用对应的私有密钥才能解密；如果用私有密钥对数据进行加密，那么只有用对应的公开密钥才能解密。因为加密和解密使用的是两个不同的密钥，所以这种算法叫作非对称加密算法。<br>RSA算法基于一个十分简单的数论事实：将两个大素数相乘十分容易，但那时想要对其乘积进行因式分解却极其困难，因此可以将乘积公开作为加密密钥。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EncrypRSA</span> </span>&#123;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * 加密 </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">byte</span>[] encrypt(RSAPublicKey publicKey,<span class="keyword">byte</span>[] srcBytes) <span class="keyword">throws</span> NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException&#123;  </span><br><span class="line">        <span class="keyword">if</span>(publicKey!=<span class="keyword">null</span>)&#123;  </span><br><span class="line">            <span class="comment">//Cipher负责完成加密或解密工作，基于RSA  </span></span><br><span class="line">            Cipher cipher = Cipher.getInstance(<span class="string">"RSA"</span>);  </span><br><span class="line">            <span class="comment">//根据公钥，对Cipher对象进行初始化  </span></span><br><span class="line">            cipher.init(Cipher.ENCRYPT_MODE, publicKey);  </span><br><span class="line">            <span class="keyword">byte</span>[] resultBytes = cipher.doFinal(srcBytes);  </span><br><span class="line">            <span class="keyword">return</span> resultBytes;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">      </span><br><span class="line">    <span class="comment">/** </span></span><br><span class="line"><span class="comment">     * 解密  </span></span><br><span class="line"><span class="comment">     */</span>  </span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">byte</span>[] decrypt(RSAPrivateKey privateKey,<span class="keyword">byte</span>[] srcBytes) <span class="keyword">throws</span> NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException&#123;  </span><br><span class="line">        <span class="keyword">if</span>(privateKey!=<span class="keyword">null</span>)&#123;  </span><br><span class="line">            <span class="comment">//Cipher负责完成加密或解密工作，基于RSA  </span></span><br><span class="line">            Cipher cipher = Cipher.getInstance(<span class="string">"RSA"</span>);  </span><br><span class="line">            <span class="comment">//根据公钥，对Cipher对象进行初始化  </span></span><br><span class="line">            cipher.init(Cipher.DECRYPT_MODE, privateKey);  </span><br><span class="line">            <span class="keyword">byte</span>[] resultBytes = cipher.doFinal(srcBytes);  </span><br><span class="line">            <span class="keyword">return</span> resultBytes;  </span><br><span class="line">        &#125;  </span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> NoSuchAlgorithmException, InvalidKeyException, NoSuchPaddingException, IllegalBlockSizeException, BadPaddingException </span>&#123;  </span><br><span class="line">        EncrypRSA rsa = <span class="keyword">new</span> EncrypRSA();  </span><br><span class="line">        String msg = <span class="string">"郭XX-精品相声"</span>;  </span><br><span class="line">        <span class="comment">//KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象  </span></span><br><span class="line">        KeyPairGenerator keyPairGen = KeyPairGenerator.getInstance(<span class="string">"RSA"</span>);  </span><br><span class="line">        <span class="comment">//初始化密钥对生成器，密钥大小为1024位  </span></span><br><span class="line">        keyPairGen.initialize(<span class="number">1024</span>);  </span><br><span class="line">        <span class="comment">//生成一个密钥对，保存在keyPair中  </span></span><br><span class="line">        KeyPair keyPair = keyPairGen.generateKeyPair();  </span><br><span class="line">        <span class="comment">//得到私钥  </span></span><br><span class="line">        RSAPrivateKey privateKey = (RSAPrivateKey)keyPair.getPrivate();               </span><br><span class="line">        <span class="comment">//得到公钥  </span></span><br><span class="line">        RSAPublicKey publicKey = (RSAPublicKey)keyPair.getPublic();  </span><br><span class="line">          </span><br><span class="line">        <span class="comment">//用公钥加密  </span></span><br><span class="line">        <span class="keyword">byte</span>[] srcBytes = msg.getBytes();  </span><br><span class="line">        <span class="keyword">byte</span>[] resultBytes = rsa.encrypt(publicKey, srcBytes);  </span><br><span class="line">          </span><br><span class="line">        <span class="comment">//用私钥解密  </span></span><br><span class="line">        <span class="keyword">byte</span>[] decBytes = rsa.decrypt(privateKey, resultBytes);  </span><br><span class="line">          </span><br><span class="line">        System.out.println(<span class="string">"明文是:"</span> + msg);  </span><br><span class="line">        System.out.println(<span class="string">"加密后是:"</span> + <span class="keyword">new</span> String(resultBytes));  </span><br><span class="line">        System.out.println(<span class="string">"解密后是:"</span> + <span class="keyword">new</span> String(decBytes));  </span><br><span class="line">    &#125;  </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="数字签名"><a href="#数字签名" class="headerlink" title="数字签名"></a>数字签名</h3><p><a href="https://www.cnblogs.com/SirSmith/p/4985571.html" target="_blank" rel="noopener">https://www.cnblogs.com/SirSmith/p/4985571.html</a><br><a href="http://840327220.iteye.com/blog/2225109" target="_blank" rel="noopener">http://840327220.iteye.com/blog/2225109</a><br>数字签名是一种安全措施，分为：消息摘要和消息签名。<br>1、消息摘要：是一种算法，分为MD5/SHA算法，主要作用用来防止消息在传递途中被“第三者”篡改了。<br>2、消息签名：其基础是公钥和私钥的非对称加密。主要作用是验证发消息者的身份，确保消息来源的可靠性。</p>
+<p><img src="/data/upload/553cf1e8-dbc6-11e7-a58c-d46a6ad5b910.png" alt="553cf1e8-dbc6-11e7-a58c-d46a6ad5b910.png"><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">String password=<span class="string">"test"</span>;  </span><br><span class="line">            <span class="comment">// 1.初始化密钥  </span></span><br><span class="line">            KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance(<span class="string">"RSA"</span>);  </span><br><span class="line">            keyPairGenerator.initialize(<span class="number">512</span>);  </span><br><span class="line">            KeyPair keyPair = keyPairGenerator.generateKeyPair();  </span><br><span class="line">            RSAPublicKey rsaPublicKey = (RSAPublicKey)keyPair.getPublic();  </span><br><span class="line">            RSAPrivateKey rsaPrivateKey = (RSAPrivateKey)keyPair.getPrivate();  </span><br><span class="line">              </span><br><span class="line">            <span class="comment">// 2.进行签名  </span></span><br><span class="line">            PKCS8EncodedKeySpec pkcs8EncodedKeySpec = <span class="keyword">new</span> PKCS8EncodedKeySpec(rsaPrivateKey.getEncoded());  </span><br><span class="line">            KeyFactory keyFactory = KeyFactory.getInstance(<span class="string">"RSA"</span>);  </span><br><span class="line">            PrivateKey privateKey = keyFactory.generatePrivate(pkcs8EncodedKeySpec);  </span><br><span class="line">            Signature signature = Signature.getInstance(<span class="string">"MD5withRSA"</span>);  </span><br><span class="line">            signature.initSign(privateKey);  </span><br><span class="line">            signature.update(password.getBytes());  </span><br><span class="line">            <span class="keyword">byte</span>[] result = signature.sign();  </span><br><span class="line">            <span class="comment">//System.out.println("jdk rsa sign:" + Hex.encodeHexString(result) );  </span></span><br><span class="line">              </span><br><span class="line">            <span class="comment">// 3.验证签名  </span></span><br><span class="line">            X509EncodedKeySpec x509EncodedKeySpec = <span class="keyword">new</span> X509EncodedKeySpec(rsaPublicKey.getEncoded());  </span><br><span class="line">            keyFactory = KeyFactory.getInstance(<span class="string">"RSA"</span>);  </span><br><span class="line">            PublicKey publicKey = keyFactory.generatePublic(x509EncodedKeySpec);  </span><br><span class="line">            signature = Signature.getInstance(<span class="string">"MD5withRSA"</span>);  </span><br><span class="line">            signature.initVerify(publicKey);  </span><br><span class="line">            signature.update(password.getBytes());  </span><br><span class="line">            <span class="keyword">boolean</span> bool = signature.verify(result);</span><br></pre></td></tr></table></figure></p>
+<h3 id="数字证书"><a href="#数字证书" class="headerlink" title="数字证书"></a>数字证书</h3><p><img src="/data/upload/8b46ad18-dbc6-11e7-a039-d46a6ad5b910.png" alt="8b46ad18-dbc6-11e7-a039-d46a6ad5b910.png"><br><a href="https://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html" target="_blank" rel="noopener">https://www.cnblogs.com/JeffreySun/archive/2010/06/24/1627247.html</a><br><a href="https://www.2cto.com/article/201203/122095.html" target="_blank" rel="noopener">https://www.2cto.com/article/201203/122095.html</a><br><a href="http://yale.iteye.com/blog/1675344" target="_blank" rel="noopener">http://yale.iteye.com/blog/1675344</a><br><a href="http://blog.csdn.net/abinge317/article/details/51791856" target="_blank" rel="noopener">http://blog.csdn.net/abinge317/article/details/51791856</a><br>由于网络上通信的双方可能都不认识对方，那么就需要第三者来介绍，这就是数字证书。<br>数字证书由Certificate Authority( CA 认证中心)颁发。<br><img src="/data/upload/fb3e8b5e-db6d-11e7-9926-d46a6ad5b910.png" alt="fb3e8b5e-db6d-11e7-9926-d46a6ad5b910.png"></p>
+<p>用户A把自己的证书发送给用户B。用户B使用CA的公钥对证书的签名进行验证，由于只有CA才能生成该证书，因此只要证书验证正确，即说明证书是由CA发布的，证书中用户A的公钥是值得信赖的。用户B以后就可以使用该公钥验证用户A的签名或者进行和A进行加密通信。</p>
+<p>数字证书为发布公钥提供了一种简便的途径，其<strong>数字证书则成为加密算法以及公钥的载体</strong>，依靠数字证书，我们可以构建一个简单的加密网络应用平台，数字证书就好比我们生活中的身份证，现实中，身份证由公安机关签发，而网络用户的身份凭证由数字证书颁发认证机构—CA签发，只有经过CA签发的证书在网络中才具备可认证性，CA并不是一个单纯的防御手段，它集合了多种密码学算法：  </p>
+<ul>
+<li>消息摘要算法：MD5、和SHA（对数字证书本省做摘要处理，用于验证数据完整性服务器）  </li>
+<li>对称加密算法：RC2、RC4、IDEA、DES、AES（对数据进行加密/解密操作，用于保证数据保密性服务）  </li>
+<li>非对称加密算法：RSA、DH（对数据进行加密/解密操作，用于保证数据保密性服务）  </li>
+<li>数字签名算法：RSA、DSA(对数据进行签名/验证操作，保证数据的完整性和抗否认性)。  </li>
+</ul>
+<p><strong>证书的签发过程实际上是对申请数字证书的公钥做数字签名</strong>，<strong>证书的验证过程实际上是对数字证书的公钥做验证签名，其中还包含证书有效期验证</strong>，通过CA数字证书，我们对网络上传输的数据进行加密/解密和签名/验证操作，确保数据机密性、完整性、抗否认性、认证性，保证交易实体身份的真实性，保证网络安全性。</p>
+<p>所有证书有多种文件编码格式，主要包括:   </p>
+<ul>
+<li>CER编码(规范编码格式)：是数字证书的一种编码格式，它是BER(基本编码格式)的一个变种，比BER规定得更严格   </li>
+<li>DER(卓越编码格式)：同样是BER的一个变种，与CER的不同在于，DER使用定长模式，而CER使用变长模式。<br>所有证书都符合<strong>公钥基础设施(PKI)</strong>制定的ITU-T X509国际标准，<strong>PKCS(公钥加密标准)</strong>由RSA实验室和其他安全系统开发商为促进公钥密码的发展而制定的一系列标准，比如:PKCS#7(密码消息语法标准—-文件后缀名:.p7b、.p7c、.spc)、<strong>PKCS#10</strong>(证书请求语法标准—-文件后缀名:<strong>.p10、.csr</strong>)、PKCS#12(个人信息交换语法标准—-文件后缀名:.p12、.pfx)等。<br>在获得数字证书后，可以将其保存在电脑中，也可以保存在USB Key等相应的设备中。</li>
+</ul>
+<p>一个数字证书的例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">Certificate: </span><br><span class="line">   Data: </span><br><span class="line">       &lt;span style=&quot;color:#FF0000;&quot;&gt;证书标准版本号&lt;/span&gt; </span><br><span class="line">       Version: 1 (0x0) </span><br><span class="line">       &lt;span style=&quot;color:#FF0000;&quot;&gt;该证书的唯一编号&lt;/span&gt; </span><br><span class="line">       Serial Number: 7829 (0x1e95) </span><br><span class="line">       &lt;span style=&quot;color:#FF0000;&quot;&gt;该证书的签名算法&lt;/span&gt; </span><br><span class="line">       Signature Algorithm: md5WithRSAEncryption  </span><br><span class="line">       &lt;span style=&quot;color:#FF0000;&quot;&gt;颁布本证书的证书机构&lt;/span&gt; </span><br><span class="line">       Issuer: C=ZA, ST=Western Cape, L=Cape Town, O=Thawte Consulting cc, </span><br><span class="line">               OU=Certification Services Division, </span><br><span class="line">               CN=Thawte Server CA/emailAddress=server-certs@thawte.com </span><br><span class="line">       &lt;span style=&quot;color:#FF0000;&quot;&gt;证书有效期&lt;/span&gt; </span><br><span class="line">       Validity </span><br><span class="line">           Not Before: Jul  9 16:04:02 1998 GMT </span><br><span class="line">           Not After : Jul  9 16:04:02 1999 GMT </span><br><span class="line">       &lt;span style=&quot;color:#FF0000;&quot;&gt;证书持有人的姓名、地址等信息&lt;/span&gt; </span><br><span class="line">       Subject: C=US, ST=Maryland, L=Pasadena, O=Brent Baccala, </span><br><span class="line">                OU=FreeSoft, CN=www.freesoft.org/emailAddress=baccala@freesoft.org </span><br><span class="line">       &lt;span style=&quot;color:#FF0000;&quot;&gt;证书持有人的公钥&lt;/span&gt; </span><br><span class="line">       Subject Public Key Info: </span><br><span class="line">           Public Key Algorithm: rsaEncryption </span><br><span class="line">           RSA Public Key: (1024 bit) </span><br><span class="line">               Modulus (1024 bit): </span><br><span class="line">                   00:b4:31:98:0a:c4:bc:62:c1:88:aa:dc:b0:c8:bb: </span><br><span class="line">                   33:35:19:d5:0c:64:b9:3d:41:b2:96:fc:f3:31:e1: </span><br><span class="line">                   66:36:d0:8e:56:12:44:ba:75:eb:e8:1c:9c:5b:66: </span><br><span class="line">                   70:33:52:14:c9:ec:4f:91:51:70:39:de:53:85:17: </span><br><span class="line">                   16:94:6e:ee:f4:d5:6f:d5:ca:b3:47:5e:1b:0c:7b: </span><br><span class="line">                   c5:cc:2b:6b:c1:90:c3:16:31:0d:bf:7a:c7:47:77: </span><br><span class="line">                   8f:a0:21:c7:4c:d0:16:65:00:c1:0f:d7:b8:80:e3: </span><br><span class="line">                   d2:75:6b:c1:ea:9e:5c:5c:ea:7d:c1:a1:10:bc:b8: </span><br><span class="line">                   e8:35:1c:9e:27:52:7e:41:8f </span><br><span class="line">               Exponent: 65537 (0x10001) </span><br><span class="line">   &lt;span style=&quot;color:#FF0000;&quot;&gt;证书机构对该证书的数字签名&lt;/span&gt; </span><br><span class="line">   Signature Algorithm: md5WithRSAEncryption </span><br><span class="line">       93:5f:8f:5f:c5:af:bf:0a:ab:a5:6d:fb:24:5f:b6:59:5d:9d: </span><br><span class="line">       92:2e:4a:1b:8b:ac:7d:99:17:5d:cd:19:f6:ad:ef:63:2f:92: </span><br><span class="line">       ab:2f:4b:cf:0a:13:90:ee:2c:0e:43:03:be:f6:ea:8e:9c:67: </span><br><span class="line">       d0:a2:40:03:f7:ef:6a:15:09:79:a9:46:ed:b7:16:1b:41:72: </span><br><span class="line">       0d:19:aa:ad:dd:9a:df:ab:97:50:65:f5:5e:85:a6:ef:19:d1: </span><br><span class="line">       5a:de:9d:ea:63:cd:cb:cc:6d:5d:01:85:b5:6d:c8:f3:d9:f7: </span><br><span class="line">       8f:0e:fc:ba:1f:34:e9:96:6e:6c:cf:f2:ef:9b:bf:de:b5:22: </span><br><span class="line">       68:9f</span><br></pre></td></tr></table></figure></p>
+<p>我们先来看一个简单的证书机构签发的流程:<br><img src="/data/upload/25d34914-dbb4-11e7-8dbb-d46a6ad5b910.png" alt="25d34914-dbb4-11e7-8dbb-d46a6ad5b910.png"><br>这里的认证机构如何是证书申请者本身，将获得自签名证书。<br><strong>当客户端获得服务器下发的数字证书后</strong>，即可使用数字证书进行加密交互：<br><img src="/data/upload/56ab4ea4-dbb4-11e7-813d-d46a6ad5b910.png" alt="56ab4ea4-dbb4-11e7-813d-d46a6ad5b910.png"><br>数字证书的应用环境是在https安全协议中，使用流程远比上述加密交互流程复杂，但是相关操作封装在传输层，对于应用层透明，在https安全协议中使用非对称加密算法交换密钥，使用对称加密算法对数据进行加密/解密操作，提高加密/解密效率<br>要获得数字证书，我们需要使用数字证书管理工具：KeyTool和OpenSSL构建CSR(数字证书签发申请)，交由CA机构签发，形成最终的数字证书。  </p>
+<p><strong>SSL/TLS协议分为两层：</strong>  </p>
+<ul>
+<li>记录协议:建议在可靠的传输协议之上，为高层协议提供数据封装、压缩、加密等基本功能的支持  </li>
+<li>握手协议:建立在SSL记录协议之上，用于在实际的数据传输开始前，通讯双方进行身份认证、协商加密算法、交换加密密钥等<br>经过了SSL/TLS握手协议交互后，数据交互双方确定了本次会话使用的对称加密算法以及密钥，就可以开始进行加密数据交互了，以下是握手协议服务器端和客户端构建加密交互的相关流程图：<br><img src="/data/upload/8749bf0c-dbb4-11e7-b037-d46a6ad5b910.png" alt="8749bf0c-dbb4-11e7-b037-d46a6ad5b910.png"><br>1、 随机数为后续构建密钥准备<br>2、 其他信息包括服务器证书、甚至包含获取客户端证书的请求<br>3、验证算法<br>如果服务器端回复客户端时带有其他信息，则进入数字证书验证阶段<br>客户端验证服务器端证书：<br><img src="/data/upload/a84fd2cc-dbb4-11e7-b583-d46a6ad5b910.png" alt="a84fd2cc-dbb4-11e7-b583-d46a6ad5b910.png"><br>服务器端验证客户端证书:(非金融行业等关键性行业，可选)<br><img src="/data/upload/ba6b08b4-dbb4-11e7-a9a9-d46a6ad5b910.png" alt="ba6b08b4-dbb4-11e7-a9a9-d46a6ad5b910.png"><br>4、产生密钥<br>当服务器端和客户端经过上述流程后，就开始密钥构建交互了，服务器端和客户端最初需要主密钥为构建会话密钥做准备：<br><img src="/data/upload/e0e9bbe2-dbb4-11e7-9b67-d46a6ad5b910.png" alt="e0e9bbe2-dbb4-11e7-9b67-d46a6ad5b910.png"><br>5、 会话密钥   (用于对称加密)<br>完成上述主密钥构建操作后，服务器端和客户端将建立会话密钥，完成握手协议：<br><img src="/data/upload/f414f2dc-dbb4-11e7-8243-d46a6ad5b910.png" alt="f414f2dc-dbb4-11e7-8243-d46a6ad5b910.png"><br>6、加密交互<br>上述服务器端和客户端完成了握手协议以后就进入正式会话阶段，如果上述流程中有任何一端受到外界因素干扰发生异常，则重新进入协商算法阶段，下面流程表现进入会话阶段后，服务器端和客户端将使用会话密钥进行加密交互：<br><img src="/data/upload/0078409a-dbb5-11e7-a60e-d46a6ad5b910.png" alt="0078409a-dbb5-11e7-a60e-d46a6ad5b910.png"></li>
+</ul>
+<p>代码解释<br>在JAVA 6 以上版本中提供了完善的数字证书管理的实现，我们不需要关注相关具体算法，仅通过操作密钥库和数字证书就可以完成相应的加密/解密和签名/验证操作，<strong>密钥库管理私钥，数字证书管理公钥，私钥和密钥分属消息传递两方，进行加密消息的传递</strong>。<br>因此，我们可以将密钥库看做私钥相关操作的入口，数字证书则是公钥相关操作的入口：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 获得私钥，获得私钥后，通过RSA算方法实现进行"私钥加密，公钥解密"和"公钥加密，私钥解密"操作</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> keyStorePath 密钥库路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> alias 别名</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> password 密码</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span>  私钥 </span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> PrivateKey <span class="title">getPrivateKeyByKeyStore</span><span class="params">(String keyStorePath,String alias,String password)</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		<span class="comment">//获得密钥库</span></span><br><span class="line">		KeyStore ks = getKeyStore(keyStorePath,password);</span><br><span class="line">		<span class="comment">//获得私钥</span></span><br><span class="line">		<span class="keyword">return</span>  (PrivateKey)ks.getKey(alias, password.toCharArray());</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 由Certificate获得公钥，获得公钥后，通过RSA算方法实现进行"私钥加密，公钥解密"和"公钥加密，私钥解密"操作</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> certificatePath  证书路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> 公钥</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> PublicKey <span class="title">getPublicKeyByCertificate</span><span class="params">(String certificatePath)</span><span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		<span class="comment">//获得证书</span></span><br><span class="line">		Certificate certificate = getCertificate(certificatePath);</span><br><span class="line">		<span class="comment">//获得公钥</span></span><br><span class="line">		<span class="keyword">return</span> certificate.getPublicKey();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 加载数字证书，JAVA 6仅支持x.509的数字证书</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> certificatePath  证书路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span>   证书</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Certificate <span class="title">getCertificate</span><span class="params">(String certificatePath)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		<span class="comment">//实例化证书工厂</span></span><br><span class="line">		CertificateFactory certificateFactory = CertificateFactory.getInstance(<span class="string">"x.509"</span>);</span><br><span class="line">		<span class="comment">//取得证书文件流</span></span><br><span class="line">		FileInputStream in = <span class="keyword">new</span> FileInputStream(certificatePath);</span><br><span class="line">		<span class="comment">//生成证书</span></span><br><span class="line">		Certificate certificate = certificateFactory.generateCertificate(in);</span><br><span class="line">		<span class="comment">//关闭证书文件流</span></span><br><span class="line">		in.close();</span><br><span class="line">		<span class="keyword">return</span> certificate;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 获得Certificate</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> keyStorePath 密钥库路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> alias 别名</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> password  密码</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span>  证书</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Certificate <span class="title">getCertificate</span><span class="params">(String keyStorePath,String alias,String password)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		<span class="comment">//由密钥库获得数字证书构建数字签名对象</span></span><br><span class="line">		<span class="comment">//获得密钥库</span></span><br><span class="line">		KeyStore ks = getKeyStore(keyStorePath,password);</span><br><span class="line">		<span class="comment">//获得证书</span></span><br><span class="line">		<span class="keyword">return</span> ks.getCertificate(alias);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 加载密钥库，加载了以后，我们就能通过相应的方法获得私钥，也可以获得数字证书</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> keyStorePath 密钥库路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> password 密码</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span>  密钥库</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">static</span> KeyStore <span class="title">getKeyStore</span><span class="params">(String keyStorePath,String password)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		<span class="comment">//实例化密钥库</span></span><br><span class="line">		KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType());</span><br><span class="line">		<span class="comment">//获得密钥库文件流</span></span><br><span class="line">		FileInputStream is = <span class="keyword">new</span> FileInputStream(keyStorePath);</span><br><span class="line">		<span class="comment">//加载密钥库</span></span><br><span class="line">		ks.load(is,password.toCharArray());</span><br><span class="line">		<span class="comment">//关闭密钥库文件流</span></span><br><span class="line">		is.close();</span><br><span class="line">		<span class="keyword">return</span> ks;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 私钥加密</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> data  待加密的数据</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> keyStorePath  密钥库路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> alias  别名</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> password   密码</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span>  加密数据</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] encryptByPriateKey(<span class="keyword">byte</span>[] data,String keyStorePath,String alias,String password) <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">		<span class="comment">//获得私钥</span></span><br><span class="line">		PrivateKey privateKey = getPrivateKeyByKeyStore(keyStorePath,alias,password);</span><br><span class="line">		<span class="comment">//对数据加密</span></span><br><span class="line">		Cipher cipher = Cipher.getInstance(privateKey.getAlgorithm());</span><br><span class="line">		<span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 私钥解密</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> data  待解密数据</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> keyStorePath 密钥库路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> alias  别名</span></span><br><span class="line"><span class="comment"> 	 * <span class="doctag">@param</span> password  密码</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span>  解密数据</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] decryptByPrivateKey(<span class="keyword">byte</span>[] data,String keyStorePath,String alias,String password) <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">		<span class="comment">//取得私钥</span></span><br><span class="line">		PrivateKey privateKey = getPrivateKeyByKeyStore(keyStorePath,alias,password);</span><br><span class="line">		<span class="comment">//对数据解密</span></span><br><span class="line">		Cipher cipher = Cipher.getInstance(privateKey.getAlgorithm());</span><br><span class="line">		cipher.init(Cipher.DECRYPT_MODE,privateKey);</span><br><span class="line">		<span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 公钥加密</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> data  等待加密数据</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> certificatePath  证书路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span>   加密数据</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] encryptByPublicKey(<span class="keyword">byte</span>[] data,String certificatePath) <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">		<span class="comment">//取得公钥</span></span><br><span class="line">		PublicKey publicKey = getPublicKeyByCertificate(certificatePath);</span><br><span class="line">		<span class="comment">//对数据加密</span></span><br><span class="line">		Cipher cipher = Cipher.getInstance(publicKey.getAlgorithm());</span><br><span class="line">		cipher.init(Cipher.ENCRYPT_MODE,publicKey);</span><br><span class="line">		<span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 公钥解密</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> data  等待解密的数据</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> certificatePath  证书路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span>  解密数据</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] decryptByPublicKey(<span class="keyword">byte</span>[] data,String certificatePath)<span class="keyword">throws</span> Exception&#123;</span><br><span class="line">		<span class="comment">//取得公钥</span></span><br><span class="line">		PublicKey publicKey = getPublicKeyByCertificate(certificatePath);</span><br><span class="line">		<span class="comment">//对数据解密</span></span><br><span class="line">		Cipher cipher = Cipher.getInstance(publicKey.getAlgorithm());</span><br><span class="line">		cipher.init(Cipher.DECRYPT_MODE, publicKey);</span><br><span class="line">		<span class="keyword">return</span> cipher.doFinal(data);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> sign  签名</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> keyStorePath 密钥库路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> alias 别名</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> password 密码</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> 签名</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">byte</span>[] sign(<span class="keyword">byte</span>[] sign,String keyStorePath,String alias,String password)<span class="keyword">throws</span> Exception&#123;</span><br><span class="line">		<span class="comment">//获得证书</span></span><br><span class="line">		X509Certificate x509Certificate = (X509Certificate) getCertificate(keyStorePath,alias,password);</span><br><span class="line">		<span class="comment">//构建签名,由证书指定签名算法</span></span><br><span class="line">		Signature signature = Signature.getInstance(x509Certificate.getSigAlgName());</span><br><span class="line">	    <span class="comment">//获取私钥</span></span><br><span class="line">		PrivateKey privateKey = getPrivateKeyByKeyStore(keyStorePath,alias,password);</span><br><span class="line">		<span class="comment">//初始化签名，由私钥构建</span></span><br><span class="line">		signature.initSign(privateKey);</span><br><span class="line">        signature.update(sign);</span><br><span class="line">        <span class="keyword">return</span> signature.sign();</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 验证签名</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> data  数据</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> sign  签名</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> certificatePath  证书路径</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span>  验证通过为真</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">verify</span><span class="params">(<span class="keyword">byte</span>[] data,<span class="keyword">byte</span>[] sign,String certificatePath)</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		<span class="comment">//获得证书</span></span><br><span class="line">		X509Certificate x509Certificate = (X509Certificate)getCertificate(certificatePath);</span><br><span class="line">		<span class="comment">//由证书构建签名</span></span><br><span class="line">		Signature signature = Signature.getInstance(x509Certificate.getSigAlgName());</span><br><span class="line">		<span class="comment">//由证书初始化签名，实际上是使用了证书中的公钥</span></span><br><span class="line">		signature.initVerify(x509Certificate);</span><br><span class="line">		signature.update(data);</span><br><span class="line">		<span class="keyword">return</span> signature.verify(sign);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//我们假定密钥库文件yale.keystore存储在D盘根目录，数字证书文件yale.cer也存储在D盘根目录</span></span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 公钥加密---私钥解密</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test1</span><span class="params">()</span> <span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		System.err.println(<span class="string">"公钥加密---私钥解密"</span>);</span><br><span class="line">		String inputStr = <span class="string">"数字证书"</span>;</span><br><span class="line">		<span class="keyword">byte</span>[] data = inputStr.getBytes();</span><br><span class="line">		<span class="comment">//公钥加密</span></span><br><span class="line">		<span class="keyword">byte</span>[] encrypt = CertificateCoder.encryptByPublicKey(data, certificatePath);</span><br><span class="line">		<span class="comment">//私钥解密</span></span><br><span class="line">		<span class="keyword">byte</span>[] decrypt = CertificateCoder.decryptByPrivateKey(encrypt, keyStorePath, alias, password);</span><br><span class="line">		String outputStr = <span class="keyword">new</span> String(decrypt);</span><br><span class="line">		System.err.println(<span class="string">"加密前：\n"</span> + inputStr);</span><br><span class="line">		System.err.println(<span class="string">"解密后：\n"</span> + outputStr);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="comment">/****</span></span><br><span class="line"><span class="comment">	 * 私钥加密---公钥解密</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@throws</span> Exception</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">test2</span><span class="params">()</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		System.err.println(<span class="string">"私钥加密---公钥解密"</span>);</span><br><span class="line">		String inputStr = <span class="string">"数字签名"</span>;</span><br><span class="line">		<span class="keyword">byte</span>[] data = inputStr.getBytes();</span><br><span class="line">		<span class="comment">//私钥加密</span></span><br><span class="line">		<span class="keyword">byte</span>[] encodedData = CertificateCoder.encryptByPriateKey(data, keyStorePath, alias, password);</span><br><span class="line">		<span class="comment">//公钥加密</span></span><br><span class="line">		<span class="keyword">byte</span>[] decodeData = CertificateCoder.decryptByPublicKey(encodedData, certificatePath);</span><br><span class="line">		String outputStr = <span class="keyword">new</span> String (decodeData);</span><br><span class="line">		System.err.println(<span class="string">"加密前：\n"</span> + inputStr);</span><br><span class="line">		System.err.println(<span class="string">"解密后：\n"</span> + outputStr);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">testSign</span><span class="params">()</span><span class="keyword">throws</span> Exception</span>&#123;</span><br><span class="line">		String inputStr = <span class="string">"签名"</span>;</span><br><span class="line">		<span class="keyword">byte</span>[] data = inputStr.getBytes();</span><br><span class="line">		System.err.println(<span class="string">"私钥签名---公钥验证"</span>);</span><br><span class="line">		<span class="comment">//产生签名</span></span><br><span class="line">		<span class="keyword">byte</span>[] sign = CertificateCoder.sign(data, keyStorePath, alias, password);</span><br><span class="line">		System.err.println(<span class="string">"签名:\n"</span> + Hex.encodeHexString(sign));</span><br><span class="line">		<span class="comment">//验证签名</span></span><br><span class="line">		<span class="keyword">boolean</span> status = CertificateCoder.verify(data, sign, certificatePath);</span><br><span class="line">		System.err.println(<span class="string">"状态：\n "</span> + status);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="RSA非对称加密的2个用途及在HTTPS"><a href="#RSA非对称加密的2个用途及在HTTPS" class="headerlink" title="RSA非对称加密的2个用途及在HTTPS"></a>RSA非对称加密的2个用途及在HTTPS</h3><p><strong>加密（防窃听）</strong></p>
+<p>RSA非对称加密会用到一对密钥，分别称为公钥和私钥，公钥加密之后的数据可以通过私钥来进行解密，私钥加密的数据也同样可以用对应的公钥进行解密。在web数据传输过程中，由于客户端和服务器端是多对一的关系，因此可以让所有的客户端持有相同的公钥，服务器持有私钥，这样一来就能方便地实现数据的加密传输。</p>
+<p><strong>签名（防篡改）</strong></p>
+<p>由于私钥只在某一个体手中，因此可以通过这一点来进行身份识别。比如用户A和B分别有一对密钥中的私钥和公钥，现在A向B发送消息”abc”，可进行如下操作：A用私钥对该文本进行加密之后变成密文”#￥%”，并附加上原文，组合成文本”#￥%：abc”(冒号起分隔作用，并无其他含义，具体实现中可自行处理)一起发送，B接收到该文本之后利用公钥对密文进行解密，将得到的解密后文本与传送过来的文本”abc”之间进行比对，如果一切正常，那么公钥解密之后的文本就是私钥加密之前的文本”abc”，比对结果一致，因此可以说明这段”abc”文本确实是A发送过来的，因为只有A才有对文本进行签名的私钥。能得到这个结论的前提是——A所用的私钥跟B所用的公钥确实是一对。</p>
+<p>假如在传送途中别人篡改了”abc”，改成”aaa”，由于中间人没有A所持有的私钥，因此无法对篡改之后的数据生成新的正确签名，那么B在收到数据之后用公钥进行解密，再与传送的文本进行比对的话就不会一致。或者中间人篡改了数据之后用另一私钥对篡改之后的数据进行签名，同样由于B没有中间人的私钥对应的公钥，因此比对也不会一致。记住一点：B的公钥所对应的私钥只在A的手中，因此比对一致就说明该文本来自A。</p>
+<h4 id="https如何保证安全？"><a href="#https如何保证安全？" class="headerlink" title="https如何保证安全？"></a>https如何保证安全？</h4><p><strong>如何保证客户端所持有的公钥就是某合法服务器声明的公钥？</strong></p>
+<p>如果不能保证这一点，那么客户端发送的信息就有可能存在被窃听的危险，因为用此公钥加密的数据可以被其对应的私钥拥有者获取，而该私钥并不在客户端所认为的服务器上。<br>因此可采用一个权威机构进行证书的颁发，所谓证书就是包含了服务器声明的公钥以及组织名称等信息，这里我们只考虑最关键的公钥信息。该权威机构会对申请证书的组织进行审核，确保其身份合法，然后将服务器公钥信息发布给客户端，客户端可利用该公钥与对应的服务器进行通信。整个过程可归纳为以下几步：<br>1、服务器生成一对密钥，私钥自己留着，公钥交给数字证书认证机构（CA）<br>2、CA进行审核，并用CA自己的私钥对服务器提供的公钥进行签名（参照上文RSA签名）<br>3、客户端从CA获取证书（即服务器端公钥），用CA的公钥对签名的证书进行验证，比对一致，说明该服务器公钥确实是CA颁发的（得此结论有一个前提就是：客户端的CA公钥确实是CA的公钥，即该CA的公钥与CA对证书进行签名的私钥确实是一对。参照上文RSA签名中所论述的情况），而CA又作为权威机构保证该公钥的确是服务器端提供的，从而可以确认该证书中的公钥确实是合法服务器端提供的   </p>
+<p>注：为保证第3步中提到的前提条件，CA的公钥必须要安全地转交给客户端，因此，CA的公钥一般来说由浏览器开发商内置在浏览器的内部。于是，该前提条件在各种信任机制上，基本保证成立。<br>由此可见：所谓的安全的HTTP，其实也是要建立在信任的机制上。   </p>
+<p><strong>总结：整个过程涉及2对公私密钥对，一对由服务器产生，用于加密，一对由CA产生，用于签名。<br>整个过程还涉及2个信任：客户端信任CA，CA发布的证书中的公钥就是合法服务器的公钥。客户端信任浏览器内置的CA公钥就是与CA私钥对应的公钥。最后要说明的是，非对称加密在https中只是用来对对称加密密钥进行协商的过程才使用，在两端协商完对称加密的密钥之后，数据的加密传输均采用对称加密的方式。</strong></p>
+<p>HTTPS在传输数据之前需要客户端（浏览器）与服务端（网站）之间进行一次握手，在握手过程中将确立双方加密传输数据的密码信息。TLS/SSL协议不仅仅是一套加密传输的协议，更是一件经过艺术家精心设计的艺术品，TLS/SSL中使用了非对称加密，对称加密以及HASH算法。握手过程的具体描述如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">1. 浏览器将自己支持的一套加密规则发送给网站。 </span><br><span class="line">2.网站从中选出一组加密算法与HASH算法，并将自己的身份信息以证书的形式发回给浏览器。证书里面包含了网站地址，加密公钥，以及证书的颁发机构等信息。 </span><br><span class="line">3.浏览器获得网站证书之后浏览器要做以下工作： </span><br><span class="line">  a) 验证证书的合法性（颁发证书的机构是否合法，证书中包含的网站地址是否与正在访问的地址一致等），如果证书受信任，则浏览器栏里面会显示一个小锁头，否则会给出证书不受信的提示。 </span><br><span class="line">  b) 如果证书受信任，或者是用户接受了不受信的证书，浏览器会生成一串随机数的密码，并用证书中提供的公钥加密。 </span><br><span class="line">  c) 使用约定好的HASH算法计算握手消息，并使用生成的随机数对消息进行加密，最后将之前生成的所有信息发送给网站。 </span><br><span class="line"></span><br><span class="line">4.网站接收浏览器发来的数据之后要做以下的操作： </span><br><span class="line"> a) 使用自己的私钥将信息解密取出密码，使用密码解密浏览器发来的握手消息，并验证HASH是否与浏览器发来的一致。 </span><br><span class="line"> b) 使用密码加密一段握手消息，发送给浏览器。 </span><br><span class="line"></span><br><span class="line">5.浏览器解密并计算握手消息的HASH，如果与服务端发来的HASH一致，此时握手过程结束，之后所有的通信数据将由之前浏览器生成的随机密码并利用对称加密算法进行加密。</span><br></pre></td></tr></table></figure></p>
+<h3 id="linux下生成https的crt和key证书"><a href="#linux下生成https的crt和key证书" class="headerlink" title="linux下生成https的crt和key证书"></a>linux下生成https的crt和key证书</h3><p><a href="http://blog.csdn.net/xuplus/article/details/51613883" target="_blank" rel="noopener">http://blog.csdn.net/xuplus/article/details/51613883</a><br>linux下openssl生成 签名的步骤：<br>x509证书一般会用到三类文，key，csr，crt。<br>Key 是私用密钥openssl格，通常是rsa算法。<br>Csr 是证书请求文件，用于申请证书。在制作csr文件的时，必须使用自己的私钥来签署申，还可以设定一个密钥。<br>crt是CA认证后的证书文，（windows下面的，其实是crt），签署人用自己的key给你签署的凭证。 </p>
+<p>1.key的生成<br>openssl genrsa -des3 -out server.key 2048<br>这样是生成rsa私钥，des3算法，openssl格式，2048位强度。server.key是密钥文件名。为了生成这样的密钥，需要一个至少四位的密码。可以通过以下方法生成没有密码的key:<br>openssl rsa -in server.key -out server.key </p>
+<p>server.key就是没有密码的版本了。 </p>
+<ol>
+<li><p>生成CA的crt<br>openssl req -new -x509 -key server.key -out ca.crt -days 3650<br>生成的ca.crt文件是用来签署下面的server.csr文件。 </p>
+</li>
+<li><p>csr的生成方法<br>openssl req -new -key server.key -out server.csr<br>需要依次输入国家，地区，组织，email。最重要的是有一个common name，可以写你的名字或者域名。如果为了https申请，这个必须和域名吻合，否则会引发浏览器警报。生成的csr文件交给CA签名后形成服务端自己的证书。 </p>
+</li>
+<li><p>crt生成方法<br>CSR文件必须有CA的签名才可形成证书，可将此文件发送到verisign等地方由它验证，要交一大笔钱，何不自己做CA呢。<br>openssl x509 -req -days 3650 -in server.csr -CA ca.crt -CAkey server.key -CAcreateserial -out server.crt<br>输入key的密钥后，完成证书生成。-CA选项指明用于被签名的csr证书，-CAkey选项指明用于签名的密钥，-CAserial指明序列号文件，而-CAcreateserial指明文件不存在时自动生成。<br>最后生成了私用密钥：server.key和自己认证的SSL证书：server.crt<br>证书合并：<br>cat server.key server.crt &gt; server.pem</p>
+</li>
+</ol>
+<h3 id="什么是数字签名和证书？"><a href="#什么是数字签名和证书？" class="headerlink" title="什么是数字签名和证书？"></a>什么是数字签名和证书？</h3><p><a href="http://www.jianshu.com/p/9db57e761255" target="_blank" rel="noopener">http://www.jianshu.com/p/9db57e761255</a><br>1.信息安全三要素</p>
+<p>信息安全中有三个需要解决的问题：</p>
+<ul>
+<li>保密性(Confidentiality)：信息在传输时不被泄露</li>
+<li>完整性（Integrity）：信息在传输时不被篡改</li>
+<li><p>有效性（Availability）：信息的使用者是合法的<br>这三要素统称为CIA Triad。</p>
+</li>
+<li><p>公钥密码解决保密性问题</p>
+</li>
+<li>数字签名解决完整性问题和有效性问题</li>
+</ul>
+<p><strong>2.数字签名</strong></p>
+<p>现实生活中，签名有什么作用？在一封信中，文末的签名是为了表示这封信是签名者写的。计算机中，数字签名也是相同的含义：证明消息是某个特定的人，而不是随随便便一个人发送的（有效性）；除此之外，数字签名还能证明消息没有被篡改（完整性）。</p>
+<p>简单来说，<strong>数字签名（digital signature）是公钥密码的逆应用：用私钥加密消息，用公钥解密消息。</strong></p>
+<ul>
+<li>用私钥加密的消息称为签名，只有拥有私钥的用户可以生成签名。</li>
+<li>用公钥解密签名这一步称为验证签名，所有用户都可以验证签名(因为公钥是公开的)</li>
+</ul>
+<p>一旦签名验证成功，根据公私钥数学上的对应关系，就可以知道该消息是唯一拥有私钥的用户发送的，而不是随便一个用户发送的。</p>
+<p>由于私钥是唯一的，因此数字签名可以保证发送者事后不能抵赖对报文的签名。由此，消息的接收者可以通过数字签名，使第三方确信签名人的身份及发出消息的事实。当双方就消息发出与否及其内容出现争论时，数字签名就可成为一个有力的证据。</p>
+<p><strong>生成签名</strong></p>
+<p>一般来说，不直接对消息进行签名，而是对消息的哈希值进行签名，步骤如下。</p>
+<ul>
+<li>对消息进行哈希计算，得到哈希值</li>
+<li>利用私钥对哈希值进行加密，生成签名</li>
+<li>将签名附加在消息后面，一起发送过去</li>
+</ul>
+<p><strong>验证签名</strong></p>
+<ul>
+<li>收到消息后，提取消息中的签名</li>
+<li>用公钥对签名进行解密，得到哈希值1。</li>
+<li>对消息中的正文进行哈希计算，得到哈希值2。</li>
+<li>比较哈希值1和哈希值2，如果相同，则验证成功。</li>
+</ul>
+<p><strong>3.证书</strong></p>
+<p>证书实际上就是对公钥进行数字签名，它是对公钥合法性提供证明的技术。</p>
+<p>考虑这样一种场景：我们对签名进行验证时，需要用到公钥。如果公钥也是伪造的，那怎么办？如果公钥是假的，验证数字签名那就无从谈起，根本不可能从数字签名确定对方的合法性。<br>这时候证书就派上用场了。</p>
+<p>证书一般包含：公钥（记住证书中是带有公钥的），公钥的数字签名，公钥拥有者的信息<br>若证书验证成功，这表示该公钥是合法，可信的。</p>
+<p>接下来又有问题了：验证证书中的数字签名需要另一个公钥，那么这个公钥的合法性又该如何保证？该问题可以无限循环下去，岂不是到不了头了？这已经是个社会学问题了。我们为什么把钱存进银行？因为我们相信银行，它是一个可信的机构（虽然也有破产的风险）。跟银行一样，我们需要一个可信的机构来颁发证书和提供公钥，只要是它提供的公钥，我们就相信是合法的。</p>
+<p>这种机构称为<strong>认证机构(Certification Authority， CA)</strong>。CA就是能够认定”公钥确实属于此人”，并能生成公钥的数字签名的组织或机构。CA有国际性组织和政府设立的组织，也有通过提供认证服务来盈利的组织。</p>
+<p><strong>如何生成证书？</strong></p>
+<ul>
+<li>服务器将公钥A给CA（公钥是服务器的）</li>
+<li>CA用自己的私钥B给公钥A加密，生成数字签名A</li>
+<li>CA把公钥A，数字签名A，附加一些服务器信息整合在一起，生成证书，发回给服务器。<br>注：私钥B是用于加密公钥A的，私钥B和公钥A并不是配对的。</li>
+</ul>
+<p><strong>如何验证证书？</strong></p>
+<ul>
+<li>客户端得到证书</li>
+<li>客户端得到证书的公钥B（通过CA或其它途径）</li>
+<li>客户端用公钥B对证书中的数字签名解密，得到哈希值</li>
+<li>客户端对公钥进行哈希值计算</li>
+<li>两个哈希值对比，如果相同，则证书合法。<br>注：公钥B和上述的私钥B是配对的，分别用于对证书的验证（解密）和生成（加密）。</li>
+</ul>
+<p><strong>证书作废</strong></p>
+<p>当用户私钥丢失、被盗时，认证机构需要对证书进行作废(revoke)。要作废证书，认证机构需要制作一张<strong>证书作废清单(Certificate Revocation List)，简称CRL   </strong><br>假设我们有Bob的证书，该证书有合法的认证机构签名，而且在有效期内，但仅凭这些还不能说明该证书一定有效，还需要查询认证机构最新的CRL，并确认该证书是否有效。</p>
+
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xby1993.net/2017/12/17/读书笔记-chapter3-互联网安全架构-大型网站分布式架构与设计实践/" title="[读书笔记]chapter3-互联网安全架构-大型网站分布式架构与设计实践">http://xby1993.net/2017/12/17/读书笔记-chapter3-互联网安全架构-大型网站分布式架构与设计实践/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/soa/" rel="tag"><i class="fa fa-tag"></i> soa</a>
+          
+            <a href="/tags/msa/" rel="tag"><i class="fa fa-tag"></i> msa</a>
+          
+            <a href="/tags/架构/" rel="tag"><i class="fa fa-tag"></i> 架构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/17/读书笔记-chapter2-分布式基础设施-大型网站分布式架构与设计实践/" rel="next" title="[读书笔记]chapter2-分布式基础设施-大型网站分布式架构与设计实践">
+                <i class="fa fa-chevron-left"></i> [读书笔记]chapter2-分布式基础设施-大型网站分布式架构与设计实践
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/17/读书笔记-chapter4-系统稳定性-大型网站分布式架构与设计实践/" rel="prev" title="[读书笔记]chapter4-系统稳定性-大型网站分布式架构与设计实践">
+                [读书笔记]chapter4-系统稳定性-大型网站分布式架构与设计实践 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ3OS85MDQw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256"
+                alt="xbynet" />
+            
+              <p class="site-author-name" itemprop="name">xbynet</p>
+              <p class="site-description motion-element" itemprop="description">走路人</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xbynet" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xbynet@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          <div id="aplayer1" class="aplayer"></div>
+<script src="/asserts/js/APlayer.min.js"></script>
+<script>
+    var ap = new APlayer({
+        element: document.getElementById('aplayer1'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: '素雨',
+            author: '孙雪宁',
+            url: 'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',
+            pic: 'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'
+        }
+    });
+</script>
+
+<!-- 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+-->
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS攻击"><span class="nav-number">1.</span> <span class="nav-text"><a href="#XSS&#x653B;&#x51FB;" class="headerlink" title="XSS&#x653B;&#x51FB;"></a>XSS&#x653B;&#x51FB;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSRF攻击"><span class="nav-number">2.</span> <span class="nav-text"><a href="#CSRF&#x653B;&#x51FB;" class="headerlink" title="CSRF&#x653B;&#x51FB;"></a>CSRF&#x653B;&#x51FB;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SQL注入攻击"><span class="nav-number">3.</span> <span class="nav-text"><a href="#SQL&#x6CE8;&#x5165;&#x653B;&#x51FB;" class="headerlink" title="SQL&#x6CE8;&#x5165;&#x653B;&#x51FB;"></a>SQL&#x6CE8;&#x5165;&#x653B;&#x51FB;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件上传漏洞"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x6F0F;&#x6D1E;" class="headerlink" title="&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x6F0F;&#x6D1E;"></a>&#x6587;&#x4EF6;&#x4E0A;&#x4F20;&#x6F0F;&#x6D1E;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DDoS攻击"><span class="nav-number">5.</span> <span class="nav-text"><a href="#DDoS&#x653B;&#x51FB;" class="headerlink" title="DDoS&#x653B;&#x51FB;"></a>DDoS&#x653B;&#x51FB;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安全算法"><span class="nav-number">6.</span> <span class="nav-text"><a href="#&#x5B89;&#x5168;&#x7B97;&#x6CD5;" class="headerlink" title="&#x5B89;&#x5168;&#x7B97;&#x6CD5;"></a>&#x5B89;&#x5168;&#x7B97;&#x6CD5;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字摘要"><span class="nav-number">6.1.</span> <span class="nav-text"><a href="#&#x6570;&#x5B57;&#x6458;&#x8981;" class="headerlink" title="&#x6570;&#x5B57;&#x6458;&#x8981;"></a>&#x6570;&#x5B57;&#x6458;&#x8981;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#对称加密算法"><span class="nav-number">6.2.</span> <span class="nav-text"><a href="#&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#x7B97;&#x6CD5;" class="headerlink" title="&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#x7B97;&#x6CD5;"></a>&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#x7B97;&#x6CD5;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非对称加密"><span class="nav-number">6.3.</span> <span class="nav-text"><a href="#&#x975E;&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;" class="headerlink" title="&#x975E;&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;"></a>&#x975E;&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字签名"><span class="nav-number">6.4.</span> <span class="nav-text"><a href="#&#x6570;&#x5B57;&#x7B7E;&#x540D;" class="headerlink" title="&#x6570;&#x5B57;&#x7B7E;&#x540D;"></a>&#x6570;&#x5B57;&#x7B7E;&#x540D;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数字证书"><span class="nav-number">6.5.</span> <span class="nav-text"><a href="#&#x6570;&#x5B57;&#x8BC1;&#x4E66;" class="headerlink" title="&#x6570;&#x5B57;&#x8BC1;&#x4E66;"></a>&#x6570;&#x5B57;&#x8BC1;&#x4E66;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RSA非对称加密的2个用途及在HTTPS"><span class="nav-number">6.6.</span> <span class="nav-text"><a href="#RSA&#x975E;&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#x7684;2&#x4E2A;&#x7528;&#x9014;&#x53CA;&#x5728;HTTPS" class="headerlink" title="RSA&#x975E;&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#x7684;2&#x4E2A;&#x7528;&#x9014;&#x53CA;&#x5728;HTTPS"></a>RSA&#x975E;&#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#x7684;2&#x4E2A;&#x7528;&#x9014;&#x53CA;&#x5728;HTTPS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#https如何保证安全？"><span class="nav-number">6.6.1.</span> <span class="nav-text"><a href="#https&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x5B89;&#x5168;&#xFF1F;" class="headerlink" title="https&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x5B89;&#x5168;&#xFF1F;"></a>https&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x5B89;&#x5168;&#xFF1F;</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#linux下生成https的crt和key证书"><span class="nav-number">6.7.</span> <span class="nav-text"><a href="#linux&#x4E0B;&#x751F;&#x6210;https&#x7684;crt&#x548C;key&#x8BC1;&#x4E66;" class="headerlink" title="linux&#x4E0B;&#x751F;&#x6210;https&#x7684;crt&#x548C;key&#x8BC1;&#x4E66;"></a>linux&#x4E0B;&#x751F;&#x6210;https&#x7684;crt&#x548C;key&#x8BC1;&#x4E66;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是数字签名和证书？"><span class="nav-number">6.8.</span> <span class="nav-text"><a href="#&#x4EC0;&#x4E48;&#x662F;&#x6570;&#x5B57;&#x7B7E;&#x540D;&#x548C;&#x8BC1;&#x4E66;&#xFF1F;" class="headerlink" title="&#x4EC0;&#x4E48;&#x662F;&#x6570;&#x5B57;&#x7B7E;&#x540D;&#x548C;&#x8BC1;&#x4E66;&#xFF1F;"></a>&#x4EC0;&#x4E48;&#x662F;&#x6570;&#x5B57;&#x7B7E;&#x540D;&#x548C;&#x8BC1;&#x4E66;&#xFF1F;</span></a></li></ol></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xbynet</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">38.3k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("sHIc70OVniNsR5OI1atIhMuk-gzGzoHsz", "wt266j1nbmoGAFrXdwXt7TeS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>
