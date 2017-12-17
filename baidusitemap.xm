@@ -82,33 +82,6 @@
 
     
   <url>
-    <loc>http://xby1993.net/2017/12/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-chapter2-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD-%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/</loc>
-    <lastmod>2017-12-17T06:38:27.033Z</lastmod>
-    <data>
-        <display>
-        <title>[读书笔记]chapter2-分布式基础设施-大型网站分布式架构与设计实践</title>
-        <pubTime>2017-12-17T05:02:13.000Z</pubTime>
-        
-        <tag>soa</tag>
-         
-        <tag>msa</tag>
-         
-        <tag>架构</tag>
-         
-         
-           
-             
-              <breadCrumb title="读书笔记" url="http://xby1993.net/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-          
-             
-              <breadCrumb title="大型网站分布式架构与设计实践" url="http://xby1993.net/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://xby1993.net/2017/12/16/%E4%BD%BF%E7%94%A8hexo%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2017-12-17T06:38:27.033Z</lastmod>
     <data>
@@ -137,6 +110,33 @@
         <display>
         <title>[读书笔记]chapter1-SOA面向服务的体系架构-大型网站分布式架构与设计实践</title>
         <pubTime>2017-12-17T04:57:41.000Z</pubTime>
+        
+        <tag>soa</tag>
+         
+        <tag>msa</tag>
+         
+        <tag>架构</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://xby1993.net/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="大型网站分布式架构与设计实践" url="http://xby1993.net/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xby1993.net/2017/12/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-chapter2-%E5%88%86%E5%B8%83%E5%BC%8F%E5%9F%BA%E7%A1%80%E8%AE%BE%E6%96%BD-%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/</loc>
+    <lastmod>2017-12-17T06:38:27.033Z</lastmod>
+    <data>
+        <display>
+        <title>[读书笔记]chapter2-分布式基础设施-大型网站分布式架构与设计实践</title>
+        <pubTime>2017-12-17T05:02:13.000Z</pubTime>
         
         <tag>soa</tag>
          
