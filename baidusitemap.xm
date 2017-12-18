@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>http://xbynet.top/2017/12/18/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloud-Netflix/</loc>
-    <lastmod>2017-12-18T10:55:17.887Z</lastmod>
+    <loc>http://xbynet.top/2017/12/18/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloudConfig/</loc>
+    <lastmod>2017-12-18T10:56:38.564Z</lastmod>
     <data>
         <display>
-        <title>[SpringCloud官文笔记]SpringCloud-Netflix</title>
-        <pubTime>2017-12-18T06:38:52.000Z</pubTime>
+        <title>[SpringCloud官文笔记]SpringCloudConfig</title>
+        <pubTime>2017-12-18T03:37:47.000Z</pubTime>
         
         <tag>springcloud</tag>
          
@@ -27,12 +27,12 @@
 
     
   <url>
-    <loc>http://xbynet.top/2017/12/18/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloudConfig/</loc>
-    <lastmod>2017-12-18T10:54:51.716Z</lastmod>
+    <loc>http://xbynet.top/2017/12/18/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloud-Netflix/</loc>
+    <lastmod>2017-12-18T10:55:17.887Z</lastmod>
     <data>
         <display>
-        <title>[SpringCloud官文笔记]SpringCloudConfig</title>
-        <pubTime>2017-12-18T03:37:47.000Z</pubTime>
+        <title>[SpringCloud官文笔记]SpringCloud-Netflix</title>
+        <pubTime>2017-12-18T06:38:52.000Z</pubTime>
         
         <tag>springcloud</tag>
          
