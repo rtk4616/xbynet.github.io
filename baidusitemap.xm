@@ -3,6 +3,33 @@
 
 
     
+  <url>
+    <loc>http://xbynet.top/2017/12/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-chapter4-%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E6%80%A7-%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/</loc>
+    <lastmod>2017-12-18T01:18:47.136Z</lastmod>
+    <data>
+        <display>
+        <title>[读书笔记]chapter4-系统稳定性-大型网站分布式架构与设计实践</title>
+        <pubTime>2017-12-17T05:17:13.000Z</pubTime>
+        
+        <tag>soa</tag>
+         
+        <tag>msa</tag>
+         
+        <tag>架构</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="大型网站分布式架构与设计实践" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
     
     
@@ -28,66 +55,12 @@
 
     
   <url>
-    <loc>http://xbynet.top/2017/12/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-chapter4-%E7%B3%BB%E7%BB%9F%E7%A8%B3%E5%AE%9A%E6%80%A7-%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/</loc>
-    <lastmod>2017-12-17T06:38:27.035Z</lastmod>
-    <data>
-        <display>
-        <title>[读书笔记]chapter4-系统稳定性-大型网站分布式架构与设计实践</title>
-        <pubTime>2017-12-17T05:17:13.000Z</pubTime>
-        
-        <tag>soa</tag>
-         
-        <tag>msa</tag>
-         
-        <tag>架构</tag>
-         
-         
-           
-             
-              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-          
-             
-              <breadCrumb title="大型网站分布式架构与设计实践" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://xbynet.top/2017/12/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-chapter3-%E4%BA%92%E8%81%94%E7%BD%91%E5%AE%89%E5%85%A8%E6%9E%B6%E6%9E%84-%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/</loc>
     <lastmod>2017-12-17T06:38:27.034Z</lastmod>
     <data>
         <display>
         <title>[读书笔记]chapter3-互联网安全架构-大型网站分布式架构与设计实践</title>
         <pubTime>2017-12-17T05:03:05.000Z</pubTime>
-        
-        <tag>soa</tag>
-         
-        <tag>msa</tag>
-         
-        <tag>架构</tag>
-         
-         
-           
-             
-              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-          
-             
-              <breadCrumb title="大型网站分布式架构与设计实践" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://xbynet.top/2017/12/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-chapter1-SOA%E9%9D%A2%E5%90%91%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84-%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/</loc>
-    <lastmod>2017-12-17T06:38:27.033Z</lastmod>
-    <data>
-        <display>
-        <title>[读书笔记]chapter1-SOA面向服务的体系架构-大型网站分布式架构与设计实践</title>
-        <pubTime>2017-12-17T04:57:41.000Z</pubTime>
         
         <tag>soa</tag>
          
@@ -151,6 +124,33 @@
            
              
               <breadCrumb title="杂项" url="http://xbynet.top/categories/%E6%9D%82%E9%A1%B9/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xbynet.top/2017/12/17/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0-chapter1-SOA%E9%9D%A2%E5%90%91%E6%9C%8D%E5%8A%A1%E7%9A%84%E4%BD%93%E7%B3%BB%E6%9E%B6%E6%9E%84-%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/</loc>
+    <lastmod>2017-12-17T06:38:27.033Z</lastmod>
+    <data>
+        <display>
+        <title>[读书笔记]chapter1-SOA面向服务的体系架构-大型网站分布式架构与设计实践</title>
+        <pubTime>2017-12-17T04:57:41.000Z</pubTime>
+        
+        <tag>soa</tag>
+         
+        <tag>msa</tag>
+         
+        <tag>架构</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="大型网站分布式架构与设计实践" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E5%A4%A7%E5%9E%8B%E7%BD%91%E7%AB%99%E5%88%86%E5%B8%83%E5%BC%8F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E5%AE%9E%E8%B7%B5/"/>
           
         </display>
     </data>
