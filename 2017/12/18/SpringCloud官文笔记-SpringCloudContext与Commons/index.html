@@ -71,7 +71,7 @@
 
 
 
-  <meta name="keywords" content="java,linux,python,cloud" />
+  <meta name="keywords" content="springcloud," />
 
 
 
@@ -84,17 +84,18 @@
 
 
 
-<meta name="description" content="倚楼听风雨，淡看江湖路">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于">
-<meta property="og:url" content="http://xbynet.top/about/index.html">
+<meta name="description" content="基于Edgware版本，此篇为SpringCloud官方文档学习笔记的开篇。笔记就是散乱，还望各位看官见谅。http://cloud.spring.io/spring-cloud-static/Edgware.RELEASE/single/spring-cloud.html Spring Cloud Context为Spring Cloud应用程序（引导上下文，加密，刷新范围和环境端点）的Appl">
+<meta name="keywords" content="springcloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[SpringCloud官文笔记]SpringCloudContext与Commons">
+<meta property="og:url" content="http://xbynet.top/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/index.html">
 <meta property="og:site_name" content="倚楼听风雨">
-<meta property="og:description" content="倚楼听风雨，淡看江湖路">
+<meta property="og:description" content="基于Edgware版本，此篇为SpringCloud官方文档学习笔记的开篇。笔记就是散乱，还望各位看官见谅。http://cloud.spring.io/spring-cloud-static/Edgware.RELEASE/single/spring-cloud.html Spring Cloud Context为Spring Cloud应用程序（引导上下文，加密，刷新范围和环境端点）的Appl">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-17T06:38:27.037Z">
+<meta property="og:updated_time" content="2017-12-18T10:52:43.444Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于">
-<meta name="twitter:description" content="倚楼听风雨，淡看江湖路">
+<meta name="twitter:title" content="[SpringCloud官文笔记]SpringCloudContext与Commons">
+<meta name="twitter:description" content="基于Edgware版本，此篇为SpringCloud官方文档学习笔记的开篇。笔记就是散乱，还望各位看官见谅。http://cloud.spring.io/spring-cloud-static/Edgware.RELEASE/single/spring-cloud.html Spring Cloud Context为Spring Cloud应用程序（引导上下文，加密，刷新范围和环境端点）的Appl">
 
 
 
@@ -124,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://xbynet.top/about/"/>
+  <link rel="canonical" href="http://xbynet.top/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/"/>
 
 
 
 
 
-  <title>关于 | 倚楼听风雨</title>
+  <title>[SpringCloud官文笔记]SpringCloudContext与Commons | 倚楼听风雨</title>
   
 
 
@@ -308,34 +309,276 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">关于</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <script src="\assets\js\APlayer.min.js"> </script><p>倚楼听风雨，淡看江湖路</p>
-
+          <h1 class="post-title" itemprop="name headline">[SpringCloud官文笔记]SpringCloudContext与Commons</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T11:26:49+08:00">
+                2017-12-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/SpringCloud/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringCloud</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/" class="leancloud_visitors" data-flag-title="[SpringCloud官文笔记]SpringCloudContext与Commons">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,377
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>基于Edgware版本，此篇为SpringCloud官方文档学习笔记的开篇。笔记就是散乱，还望各位看官见谅。<br><a href="http://cloud.spring.io/spring-cloud-static/Edgware.RELEASE/single/spring-cloud.html" target="_blank" rel="noopener">http://cloud.spring.io/spring-cloud-static/Edgware.RELEASE/single/spring-cloud.html</a></p>
+<p>Spring Cloud Context为Spring Cloud应用程序（引导上下文，加密，刷新范围和环境端点）的ApplicationContext提供实用程序和特殊服务。<br>Spring Cloud Commons是一组在不同的Spring Cloud实现中使用的抽象和常用类</p>
+<a id="more"></a>
+<h2 id="SpringCloud-Context"><a href="#SpringCloud-Context" class="headerlink" title="SpringCloud Context"></a>SpringCloud Context</h2><p>Bootstrap ApplicationContext：<br>这个上下文是主应用程序的父上下文。Bootstrap属性的优先级高，因此默认情况下不能被本地配置覆盖。这两个上下文共享一个<code>Environment</code>。<br>引导上下文使用与主应用程序上下文不同的外部配置约定，因此使用<code>bootstrap.yml application.yml</code>（或.properties）代替引导和主上下文的外部配置。<br><code>SpringApplicationBuilder，SpringApplication</code> </p>
+<p>bootstrap.yml.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  application:</span><br><span class="line">	name: foo</span><br><span class="line">  cloud:</span><br><span class="line">	config:</span><br><span class="line">	  uri: $&#123;SPRING_CONFIG_URI:http://localhost:8888&#125;</span><br></pre></td></tr></table></figure></p>
+<p>boostrap.yml支持profiles:<br>通过指定<code>spring.profiles.active</code>的值来指定不同环境下的配置文件:<code>bootstrap-development.properties</code><br>一般实际场景中boostrap context中的property source都来自于远程，如Config Server，默认情况下是无法被本地环境覆盖的(除非通过命令行)。不过你可以通过在远程的属性源中配置:<code>spring.cloud.config.allowOverride=true</code>来授权(在本地配置无效)，然后在远程的配置中可配置<code>spring.cloud.config.overrideNone=true(可覆盖所有)或者spring.cloud.config.overrideSystemProperties=false(仅可覆盖环境变量)</code></p>
+<p>bootstrap configuration配置方式是通过在<code>/META-INF/spring.factories</code>下的org.springframework.cloud.bootstrap.BootstrapConfiguration添加条目。<br>bootstrap context首先会被来自spring.factories的类创建 ，然后所有的 @Beans of type <code>ApplicationContextInitializer</code> are added to the main SpringApplication before it is started.<br>默认的来自外部配置的property source是Config Server,如果你向添加其他外部源如database，可以通过添加一个继承<code>PropertySourceLocator</code>的bean，然后配置到/META-INF/spring.factories来实现.如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomPropertySourceLocator</span> <span class="keyword">implements</span> <span class="title">PropertySourceLocator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">public</span> PropertySource&lt;?&gt; locate(Environment environment) &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> MapPropertySource(<span class="string">"customProperty"</span>,</span><br><span class="line">				Collections.&lt;String, Object&gt;singletonMap(<span class="string">"property.from.sample.custom.source"</span>, <span class="string">"worked as intended"</span>));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Environment Changes：<br>应用会通过监听<code>EnvironmentChangeEvent</code>来响应环境变量的改变，用户也可以通过添加ApplicationListerner的bean来实现。<br>一旦环境变量改变，应用会</p>
+<ul>
+<li>Re-bind any @ConfigurationProperties beans in the context</li>
+<li>Set the logger levels for any properties in logging.level.*</li>
+</ul>
+<p>Refresh Scope：@Bean被标记为<code>@RefreshScope</code>时，当属性改变时，可以进行改变响应。<br>注意：不要将@RefreshScope放到@Configuration上</p>
+<p>属性加解密：当属性名是:{cipher}开头时，如<code>{cipher}*</code>，就代表它是加密过的。config server在获取该属性发送到客户端之前是会进行解密，但有几个前提条件：1、添加<code>Spring Security RSA</code>依赖，2、确保JCE在JDK中；3、确保有效的公钥在应用中。</p>
+<p>Spring Boot Actuator Endpoints：</p>
+<ul>
+<li>POST to <code>/env</code> to update the Environment and rebind @ConfigurationProperties and log levels</li>
+<li><code>/refresh</code> for re-loading the boot strap context and refreshing the @RefreshScope beans</li>
+<li>/restart for closing the ApplicationContext and restarting it (disabled by default)</li>
+<li>/pause and /resume for calling the Lifecycle methods (stop() and start() on the ApplicationContext)</li>
+</ul>
+<h2 id="Spring-Cloud-Commons"><a href="#Spring-Cloud-Commons" class="headerlink" title="Spring Cloud Commons"></a>Spring Cloud Commons</h2><p><code>@EnableDiscoveryClient</code>:它会在/META-INF/spring.factories的org.springframework.cloud.client.discovery.EnableDiscoveryClient键中查找DiscoveryClient 的实现，如Spring Cloud Netflix Eureka, Spring Cloud Consul Discovery and Spring Cloud Zookeeper Discovery.但该注解不是必须的，因为如果在classpath中存在DiscoveryClient 的实现，会自动启用。</p>
+<p>HealthIndicator：一般被DiscoveryClient实现<code>DiscoveryHealthIndicator</code>,用来支持健康检查。</p>
+<p><code>ServiceRegistry</code>:默认会自动注册到注册中心。</p>
+<p>A <code>/service-registry</code> actuator endpoint is provided by Commons. This endpoint relys on a Registration bean in the Spring Application Context. Calling /service-registry/instance-status via a GET will return the status of the Registration. A POST to the same endpoint with a String body will change the status of the current Registration to the new value. </p>
+<p><strong>Spring RestTemplate as a Load Balancer Client</strong>：<br><code>RestTemplate</code> can be automatically configured to use <code>ribbon</code>. To create a load balanced RestTemplate create a RestTemplate @Bean and use the <code>@LoadBalanced</code> qualifier.<br>如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@LoadBalanced</span></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function">RestTemplate <span class="title">restTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> RestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">doOtherStuff</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		String results = restTemplate.getForObject(<span class="string">"http://stores/stores"</span>, String.class);</span><br><span class="line">		<span class="keyword">return</span> results;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>注意，此处url需要使用<code>server name</code>,而不是hostname或者ip，否则就无法实现负载均衡了。具体实现见：<a href="https://github.com/spring-cloud/spring-cloud-netflix/blob/master/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/ribbon/RibbonAutoConfiguration.java" target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-netflix/blob/master/spring-cloud-netflix-core/src/main/java/org/springframework/cloud/netflix/ribbon/RibbonAutoConfiguration.java</a></p>
+<p>Retrying Failed Requests：<br>负载均衡RestTemplate可以配置请求失败重试，默认是禁用的，如果在classpath中发现<code>Spring Retry</code>依赖，它会自动启用，如果你想禁用该行为：<code>spring.cloud.loadbalancer.retry.enabled=false</code>。 或者，你只是想自定义重试次数：<code>client.ribbon.MaxAutoRetries, client.ribbon.MaxAutoRetriesNextServer, and client.ribbon.OkToRetryOnAllOperations</code>。<br><strong>注意：这里的client需要替换为你的 Ribbon client’s name.</strong><br>详情见：<a href="https://github.com/Netflix/ribbon/wiki/Getting-Started#the-properties-file-sample-clientproperties%E3%80%82" target="_blank" rel="noopener">https://github.com/Netflix/ribbon/wiki/Getting-Started#the-properties-file-sample-clientproperties%E3%80%82</a></p>
+<p>如果你想自定义降级策略,可以实现<code>BackOffPolicy</code>接口，然后创建<code>LoadBalancedBackOffPolicyFactory</code>来返回它，如下:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function">LoadBalancedBackOffPolicyFactory <span class="title">backOffPolciyFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> LoadBalancedBackOffPolicyFactory() &#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> BackOffPolicy <span class="title">createBackOffPolicy</span><span class="params">(String service)</span> </span>&#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">new</span> ExponentialBackOffPolicy();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>多个RestTemplate Objects:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@LoadBalanced</span></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function">RestTemplate <span class="title">loadBalanced</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Primary</span>  <span class="comment">//为了消除歧义，此bean为非负载均衡的普通的restTemplate bean</span></span><br><span class="line">	<span class="meta">@Bean</span></span><br><span class="line">	<span class="function">RestTemplate <span class="title">restTemplate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">new</span> RestTemplate();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Ignore Network Interfaces:<br>有个时候，在<code>Service Discovery registration</code>时，你需要忽略特定的网卡<br>application.yml.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  cloud:</span><br><span class="line">	inetutils:</span><br><span class="line">	  ignoredInterfaces:</span><br><span class="line">		- docker0</span><br><span class="line">		- veth.*</span><br></pre></td></tr></table></figure></p>
+<p>或者直接指定<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  cloud:</span><br><span class="line">	inetutils:</span><br><span class="line">	  preferredNetworks:</span><br><span class="line">		- 192.168</span><br><span class="line">		- 10.0</span><br></pre></td></tr></table></figure></p>
+<p>或者直接这样<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  cloud:</span><br><span class="line">	inetutils:</span><br><span class="line">	  useOnlySiteLocalInterfaces: true</span><br></pre></td></tr></table></figure></p>
+<p>HTTP Client Factories：<br>支持<code>ApachenHttpClientFactory/ApacheHttpClientConnectionManagerFactory和OkHttpClientFactory/OkHttpClientConnectionPoolFactory</code>.启用哪个，取决于jar是否在classpath中，当然也可以通过配置来禁用。</p>
+
       
     </div>
     
     
     
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xbynet.top/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/" title="[SpringCloud官文笔记]SpringCloudContext与Commons">http://xbynet.top/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/18/杂记-有趣的句子/" rel="next" title="[杂记]有趣的句子">
+                <i class="fa fa-chevron-left"></i> [杂记]有趣的句子
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/18/SpringCloud官文笔记-SpringCloudConfig/" rel="prev" title="[SpringCloud官文笔记]SpringCloudConfig">
+                [SpringCloud官文笔记]SpringCloudConfig <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -373,8 +616,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -483,6 +735,21 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Context"><span class="nav-number">1.</span> <span class="nav-text"><a href="#SpringCloud-Context" class="headerlink" title="SpringCloud Context"></a>SpringCloud Context</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Spring-Cloud-Commons"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Spring-Cloud-Commons" class="headerlink" title="Spring Cloud Commons"></a>Spring Cloud Commons</span></a></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
       
 
       
