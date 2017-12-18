@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="SpringCloud提供分布式系统中的外部化、多环境、版本化、跨语言的配置管理。概念上与Spring的Environment和PropertySource等同映射。它基于git作为配置存储实现。 QuickStart1234567$ cd spring-cloud-config-server$ ../mvnw spring-boot:run$ curl localhost:8888/foo/d">
+<meta name="description" content="SpringCloud提供分布式系统中的外部化、多环境、版本化、跨语言的配置管理。概念上与Spring的Environment和PropertySource等同映射。它基于git作为配置存储实现。">
 <meta name="keywords" content="springcloud">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[SpringCloud官文笔记]SpringCloudConfig">
 <meta property="og:url" content="http://xbynet.top/2017/12/18/SpringCloud官文笔记-SpringCloudConfig/index.html">
 <meta property="og:site_name" content="倚楼听风雨">
-<meta property="og:description" content="SpringCloud提供分布式系统中的外部化、多环境、版本化、跨语言的配置管理。概念上与Spring的Environment和PropertySource等同映射。它基于git作为配置存储实现。 QuickStart1234567$ cd spring-cloud-config-server$ ../mvnw spring-boot:run$ curl localhost:8888/foo/d">
+<meta property="og:description" content="SpringCloud提供分布式系统中的外部化、多环境、版本化、跨语言的配置管理。概念上与Spring的Environment和PropertySource等同映射。它基于git作为配置存储实现。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-18T06:37:05.213Z">
+<meta property="og:updated_time" content="2017-12-18T10:54:51.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[SpringCloud官文笔记]SpringCloudConfig">
-<meta name="twitter:description" content="SpringCloud提供分布式系统中的外部化、多环境、版本化、跨语言的配置管理。概念上与Spring的Environment和PropertySource等同映射。它基于git作为配置存储实现。 QuickStart1234567$ cd spring-cloud-config-server$ ../mvnw spring-boot:run$ curl localhost:8888/foo/d">
+<meta name="twitter:description" content="SpringCloud提供分布式系统中的外部化、多环境、版本化、跨语言的配置管理。概念上与Spring的Environment和PropertySource等同映射。它基于git作为配置存储实现。">
 
 
 
@@ -464,6 +464,7 @@
 
       
         <script src="\assets\js\APlayer.min.js"> </script><p>SpringCloud提供分布式系统中的外部化、多环境、版本化、跨语言的配置管理。概念上与Spring的Environment和PropertySource等同映射。它基于git作为配置存储实现。</p>
+<a id="more"></a>
 <h2 id="QuickStart"><a href="#QuickStart" class="headerlink" title="QuickStart"></a>QuickStart</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$ cd spring-cloud-config-server</span><br><span class="line">$ ../mvnw spring-boot:run</span><br><span class="line">$ curl localhost:8888/foo/development</span><br><span class="line">&#123;&quot;name&quot;:&quot;foo&quot;,&quot;label&quot;:&quot;master&quot;,&quot;propertySources&quot;:[</span><br><span class="line">  &#123;&quot;name&quot;:&quot;https://github.com/scratches/config-repo/foo-development.properties&quot;,&quot;source&quot;:&#123;&quot;bar&quot;:&quot;spam&quot;&#125;&#125;,</span><br><span class="line">  &#123;&quot;name&quot;:&quot;https://github.com/scratches/config-repo/foo.properties&quot;,&quot;source&quot;:&#123;&quot;foo&quot;:&quot;bar&quot;&#125;&#125;</span><br><span class="line">]&#125;</span><br></pre></td></tr></table></figure>
 <p>请求url的格式：</p>
 <ul>
