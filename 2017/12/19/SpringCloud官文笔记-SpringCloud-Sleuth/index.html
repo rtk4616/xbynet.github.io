@@ -1,0 +1,1479 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="springcloud," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="倚楼听风雨" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Spring Cloud Sleuth implements a distributed tracing solution for Spring Cloud.它是基于google的Dapper实现的。Span：基本工作单元，span通过一个64位ID唯一标识，trace以另一个64位ID表示，span还有其他数据信息，比如摘要、时间戳事件、键值对注释、span的ID、以及span父ID等span在">
+<meta name="keywords" content="springcloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[SpringCloud官文笔记]SpringCloud-Sleuth">
+<meta property="og:url" content="http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Sleuth/index.html">
+<meta property="og:site_name" content="倚楼听风雨">
+<meta property="og:description" content="Spring Cloud Sleuth implements a distributed tracing solution for Spring Cloud.它是基于google的Dapper实现的。Span：基本工作单元，span通过一个64位ID唯一标识，trace以另一个64位ID表示，span还有其他数据信息，比如摘要、时间戳事件、键值对注释、span的ID、以及span父ID等span在">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-35-01.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-37-09.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-39-20.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-39-58.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-46-00.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-46-13.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-47-18.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-48-25.png">
+<meta property="og:updated_time" content="2017-12-19T09:09:12.068Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[SpringCloud官文笔记]SpringCloud-Sleuth">
+<meta name="twitter:description" content="Spring Cloud Sleuth implements a distributed tracing solution for Spring Cloud.它是基于google的Dapper实现的。Span：基本工作单元，span通过一个64位ID唯一标识，trace以另一个64位ID表示，span还有其他数据信息，比如摘要、时间戳事件、键值对注释、span的ID、以及span父ID等span在">
+<meta name="twitter:image" content="http://xbynet.top/img/2017-12-19-15-35-01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Sleuth/"/>
+
+
+
+
+
+  <title>[SpringCloud官文笔记]SpringCloud-Sleuth | 倚楼听风雨</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9e6e9198259e7a598474c9df6397dc";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">倚楼听风雨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡看江湖路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-相册">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Sleuth/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[SpringCloud官文笔记]SpringCloud-Sleuth</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T15:31:57+08:00">
+                2017-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/SpringCloud/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringCloud</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/19/SpringCloud官文笔记-SpringCloud-Sleuth/" class="leancloud_visitors" data-flag-title="[SpringCloud官文笔记]SpringCloud-Sleuth">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,175
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>Spring Cloud Sleuth implements a distributed tracing solution for Spring Cloud.它是基于google的Dapper实现的。<br>Span：基本工作单元，span通过一个64位ID唯一标识，trace以另一个64位ID表示，span还有其他数据信息，比如摘要、时间戳事件、键值对注释、span的ID、以及span父ID等<br>span在不断的启动和停止，同时记录了时间信息，当你创建了一个span，你必须在未来的某个时刻停止它。初始化span称为”root span”,该span的id和trace的id相等。<br>Trace：一系列spans组成的一个树状结构(root span为根共享),trace也用一个64位的id唯一标识，trace中的所有span都共享该trace id。<br>Annotation：用来及时记录一个事件的存在，一些核心annotations用来定义一个请求的开始和结束 </p>
+<ul>
+<li>cs - Client Sent -客户端发起一个请求，这个annotion描述了这个span的开始</li>
+<li>sr - Server Received -服务端获得请求并准备开始处理它，如果将其sr减去cs时间戳，便可得到网络延迟</li>
+<li>ss - Server Sent -注解表明请求处理的完成(当请求返回客户端)，如果ss减去sr时间戳，便可得到服务端需要的处理请求所需的时间</li>
+<li>cr - Client Received -表明span的结束，客户端成功接收到服务端的回复，如果cr减去cs时间戳，便可得到客户端从服务端获取回复的所有所需时间 </li>
+</ul>
+<p><img src="/img/2017-12-19-15-35-01.png" alt=""><br>Each color of a note signifies a span (7 spans - from A to G). If you have such information in the note:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Trace Id = X</span><br><span class="line">Span Id = D</span><br><span class="line">Client Sent</span><br></pre></td></tr></table></figure></p>
+<p>That means that the current span has Trace-Id set to X, Span-Id set to D. It also has emitted Client Sent event.<br>span的父子关系如下：<br><img src="/img/2017-12-19-15-37-09.png" alt=""></p>
+<a id="more"></a>
+<h2 id="Distributed-tracing-with-Zipkin"><a href="#Distributed-tracing-with-Zipkin" class="headerlink" title="Distributed tracing with Zipkin"></a>Distributed tracing with Zipkin</h2><p>Altogether there are 7 spans . If you go to traces in Zipkin you will see this number in the second trace:<br><img src="/img/2017-12-19-15-39-20.png" alt=""><br>However if you pick a particular trace then you will see 4 spans:<br><img src="/img/2017-12-19-15-39-58.png" alt=""><br>注意：When picking a particular trace you will see merged spans. That means that if there were 2 spans sent to Zipkin with Server Received and Server Sent / Client Received and Client Sent annotations then they will presented as a single span.</p>
+<p><strong>Why is there a difference between the 7 and 4 spans in this case?</strong></p>
+<ul>
+<li>2 spans come from http:/start span. It has the Server Received (SR) and Server Sent (SS) annotations.</li>
+<li>2 spans come from the RPC call from service1 to service2 to the http:/foo endpoint. It has the Client Sent (CS) and Client Received (CR) annotations on service1 side. It also has Server Received (SR) and Server Sent (SS) annotations on the service2 side. Physically there are 2 spans but they form 1 logical span related to an RPC call.</li>
+<li>2 spans come from the RPC call from service2 to service3 to the http:/bar endpoint. It has the Client Sent (CS) and Client Received (CR) annotations on service2 side. It also has Server Received (SR) and Server Sent (SS) annotations on the service3 side. Physically there are 2 spans but they form 1 logical span related to an RPC call.</li>
+<li>2 spans come from the RPC call from service2 to service4 to the http:/baz endpoint. It has the Client Sent (CS) and Client Received (CR) annotations on service2 side. It also has Server Received (SR) and Server Sent (SS) annotations on the service4 side. Physically there are 2 spans but they form 1 logical span related to an RPC call.<br><strong>So if we count the physical spans we have 1 from http:/start, 2 from service1 calling service2, 2 form service2 calling service3 and 2 from service2 calling service4. Altogether 7 spans.</strong></li>
+</ul>
+<p><strong>Logically we see the information of Total Spans: 4 because we have 1 span related to the incoming request to service1 and 3 spans related to RPC calls.</strong></p>
+<h3 id="Visualizing-errors"><a href="#Visualizing-errors" class="headerlink" title="Visualizing errors"></a>Visualizing errors</h3><p><img src="/img/2017-12-19-15-46-00.png" alt=""><br>Then if you click on one of the spans you’ll see the following<br><img src="/img/2017-12-19-15-46-13.png" alt=""></p>
+<h3 id="Live-examples"><a href="#Live-examples" class="headerlink" title="Live examples"></a>Live examples</h3><p>The dependency graph in Zipkin would look like this:<br><img src="/img/2017-12-19-15-47-18.png" alt=""></p>
+<p>Log correlation：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">service1.log:2016-02-26 11:15:47.561  INFO [service1,2485ec27856c56f4,2485ec27856c56f4,true] 68058 --- [nio-8081-exec-1] i.s.c.sleuth.docs.service1.Application   : Hello from service1. Calling service2</span><br><span class="line">service2.log:2016-02-26 11:15:47.710  INFO [service2,2485ec27856c56f4,9aa10ee6fbde75fa,true] 68059 --- [nio-8082-exec-1] i.s.c.sleuth.docs.service2.Application   : Hello from service2. Calling service3 and then service4</span><br><span class="line">service3.log:2016-02-26 11:15:47.895  INFO [service3,2485ec27856c56f4,1210be13194bfe5,true] 68060 --- [nio-8083-exec-1] i.s.c.sleuth.docs.service3.Application   : Hello from service3</span><br><span class="line">service2.log:2016-02-26 11:15:47.924  INFO [service2,2485ec27856c56f4,9aa10ee6fbde75fa,true] 68059 --- [nio-8082-exec-1] i.s.c.sleuth.docs.service2.Application   : Got response from service3 [Hello from service3]</span><br><span class="line">service4.log:2016-02-26 11:15:48.134  INFO [service4,2485ec27856c56f4,1b1845262ffba49d,true] 68061 --- [nio-8084-exec-1] i.s.c.sleuth.docs.service4.Application   : Hello from service4</span><br><span class="line">service2.log:2016-02-26 11:15:48.156  INFO [service2,2485ec27856c56f4,9aa10ee6fbde75fa,true] 68059 --- [nio-8082-exec-1] i.s.c.sleuth.docs.service2.Application   : Got response from service4 [Hello from service4]</span><br><span class="line">service1.log:2016-02-26 11:15:48.182  INFO [service1,2485ec27856c56f4,2485ec27856c56f4,true] 68058 --- [nio-8081-exec-1] i.s.c.sleuth.docs.service1.Application   : Got response from service2 [Hello from service2, response from service3 [Hello from service3] and from service4 [Hello from service4]]</span><br></pre></td></tr></table></figure></p>
+<p>If you’re using a log aggregating tool like Kibana, Splunk etc. you can order the events that took place. An example of Kibana would look like this:<br><img src="/img/2017-12-19-15-48-25.png" alt=""></p>
+<p>Logstash配置<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">filter &#123;</span><br><span class="line">       # pattern matching logback pattern</span><br><span class="line">       grok &#123;</span><br><span class="line">              match =&gt; &#123; &quot;message&quot; =&gt; &quot;%&#123;TIMESTAMP_ISO8601:timestamp&#125;\s+%&#123;LOGLEVEL:severity&#125;\s+\[%&#123;DATA:service&#125;,%&#123;DATA:trace&#125;,%&#123;DATA:span&#125;,%&#123;DATA:exportable&#125;\]\s+%&#123;DATA:pid&#125;\s+---\s+\[%&#123;DATA:thread&#125;\]\s+%&#123;DATA:class&#125;\s+:\s+%&#123;GREEDYDATA:rest&#125;&quot; &#125;</span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>JSON Logback with Logstash:<br>添加依赖：net.logstash.logback:logstash-logback-encoder:4.6，<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">include</span> <span class="attr">resource</span>=<span class="string">"org/springframework/boot/logging/logback/defaults.xml"</span>/&gt;</span></span><br><span class="line">	​</span><br><span class="line">	<span class="tag">&lt;<span class="name">springProperty</span> <span class="attr">scope</span>=<span class="string">"context"</span> <span class="attr">name</span>=<span class="string">"springAppName"</span> <span class="attr">source</span>=<span class="string">"spring.application.name"</span>/&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- Example for logging into the build folder of your project --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"LOG_FILE"</span> <span class="attr">value</span>=<span class="string">"$&#123;BUILD_FOLDER:-build&#125;/$&#123;springAppName&#125;"</span>/&gt;</span>​</span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- You can override this to have a custom pattern --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"CONSOLE_LOG_PATTERN"</span></span></span><br><span class="line"><span class="tag">			  <span class="attr">value</span>=<span class="string">"%clr(%d&#123;yyyy-MM-dd HH:mm:ss.SSS&#125;)&#123;faint&#125; %clr($&#123;LOG_LEVEL_PATTERN:-%5p&#125;) %clr($&#123;PID:- &#125;)&#123;magenta&#125; %clr(---)&#123;faint&#125; %clr([%15.15t])&#123;faint&#125; %clr(%-40.40logger&#123;39&#125;)&#123;cyan&#125; %clr(:)&#123;faint&#125; %m%n$&#123;LOG_EXCEPTION_CONVERSION_WORD:-%wEx&#125;"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Appender to log to console --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"console"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.ConsoleAppender"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">filter</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.classic.filter.ThresholdFilter"</span>&gt;</span></span><br><span class="line">			<span class="comment">&lt;!-- Minimum logging level to be presented in the console logs--&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">level</span>&gt;</span>DEBUG<span class="tag">&lt;/<span class="name">level</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">filter</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">encoder</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">pattern</span>&gt;</span>$&#123;CONSOLE_LOG_PATTERN&#125;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">charset</span>&gt;</span>utf8<span class="tag">&lt;/<span class="name">charset</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- Appender to log to file --&gt;</span>​</span><br><span class="line">	<span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"flatfile"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.RollingFileAppender"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">file</span>&gt;</span>$&#123;LOG_FILE&#125;<span class="tag">&lt;/<span class="name">file</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">rollingPolicy</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.TimeBasedRollingPolicy"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">fileNamePattern</span>&gt;</span>$&#123;LOG_FILE&#125;.%d&#123;yyyy-MM-dd&#125;.gz<span class="tag">&lt;/<span class="name">fileNamePattern</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">maxHistory</span>&gt;</span>7<span class="tag">&lt;/<span class="name">maxHistory</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">rollingPolicy</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">encoder</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">pattern</span>&gt;</span>$&#123;CONSOLE_LOG_PATTERN&#125;<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">charset</span>&gt;</span>utf8<span class="tag">&lt;/<span class="name">charset</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line">	​</span><br><span class="line">	<span class="comment">&lt;!-- Appender to log to file in a JSON format --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">appender</span> <span class="attr">name</span>=<span class="string">"logstash"</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.RollingFileAppender"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">file</span>&gt;</span>$&#123;LOG_FILE&#125;.json<span class="tag">&lt;/<span class="name">file</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">rollingPolicy</span> <span class="attr">class</span>=<span class="string">"ch.qos.logback.core.rolling.TimeBasedRollingPolicy"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">fileNamePattern</span>&gt;</span>$&#123;LOG_FILE&#125;.json.%d&#123;yyyy-MM-dd&#125;.gz<span class="tag">&lt;/<span class="name">fileNamePattern</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">maxHistory</span>&gt;</span>7<span class="tag">&lt;/<span class="name">maxHistory</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">rollingPolicy</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">encoder</span> <span class="attr">class</span>=<span class="string">"net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder"</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">providers</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">timestamp</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">timeZone</span>&gt;</span>UTC<span class="tag">&lt;/<span class="name">timeZone</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">timestamp</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">pattern</span>&gt;</span></span><br><span class="line">					<span class="tag">&lt;<span class="name">pattern</span>&gt;</span></span><br><span class="line">						&#123;</span><br><span class="line">						"severity": "%level",</span><br><span class="line">						"service": "$&#123;springAppName:-&#125;",</span><br><span class="line">						"trace": "%X&#123;X-B3-TraceId:-&#125;",</span><br><span class="line">						"span": "%X&#123;X-B3-SpanId:-&#125;",</span><br><span class="line">						"parent": "%X&#123;X-B3-ParentSpanId:-&#125;",</span><br><span class="line">						"exportable": "%X&#123;X-Span-Export:-&#125;",</span><br><span class="line">						"pid": "$&#123;PID:-&#125;",</span><br><span class="line">						"thread": "%thread",</span><br><span class="line">						"class": "%logger&#123;40&#125;",</span><br><span class="line">						"rest": "%message"</span><br><span class="line">						&#125;</span><br><span class="line">					<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;/<span class="name">pattern</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">providers</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">encoder</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">appender</span>&gt;</span></span><br><span class="line">	​</span><br><span class="line">	<span class="tag">&lt;<span class="name">root</span> <span class="attr">level</span>=<span class="string">"INFO"</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">appender-ref</span> <span class="attr">ref</span>=<span class="string">"console"</span>/&gt;</span></span><br><span class="line">		<span class="comment">&lt;!-- uncomment this to have also JSON logs --&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;appender-ref ref="logstash"/&gt;--&gt;</span></span><br><span class="line">		<span class="comment">&lt;!--&lt;appender-ref ref="flatfile"/&gt;--&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">root</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="Adding-to-the-project"><a href="#Adding-to-the-project" class="headerlink" title="Adding to the project"></a>Adding to the project</h2><p><strong>注意：你需要在 bootstrap.yml中配置spring.application.name，这样才能在Zipkin中正确显示出来。</strong><br>几种配置方式：<br>1、Sleuth with Zipkin via HTTP<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt; </span><br><span class="line">    &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">    &lt;artifactId&gt;spring-cloud-starter-zipkin&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>它默认包含了spring-cloud-starter-sleuth依赖。</p>
+<p>2、Sleuth with Zipkin via RabbitMQ or Kafka<br>If you want to use RabbitMQ or Kafka instead of http, add the <code>spring-rabbit</code> or <code>spring-kafka</code> dependencies. The default destination name is <code>zipkin</code>.</p>
+<p>注意: <code>spring-cloud-sleuth-stream</code>已经被废弃 and incompatible with these destinations<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span> </span><br><span class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.cloud<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-cloud-starter-zipkin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">dependency</span>&gt;</span> </span><br><span class="line">       <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.amqp<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-rabbit<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>注意：通过<code>spring.sleuth.sampler.percentage</code> (default 0.1, i.e. 10%).配置采样比率，如果你的访问量不大，采样比率太低，可能会导致你在Zipkin中看不到结果。</p>
+<p>注意：<br>the <code>SLF4J MDC</code> is always set and <code>logback</code> users will immediately see the trace and span ids in logs per the example above. Other logging systems have to configure their own formatter to get the same result. The default is logging.pattern.level set to<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%5p [$&#123;spring.zipkin.service.name:$&#123;spring.application.name:-&#125;&#125;,%X&#123;X-B3-TraceId:-&#125;,%X&#123;X-B3-SpanId:-&#125;,%X&#123;X-Span-Export:-&#125;]</span><br></pre></td></tr></table></figure></p>
+<p>(this is a Spring Boot feature for logback users). <strong>This means that if you’re not using SLF4J this pattern WILL NOT be automatically applied.</strong></p>
+<p>Example logs:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2016-02-02 15:30:57.902  INFO [bar,6bfd228dc00d216b,6bfd228dc00d216b,false] 23030 --- [nio-8081-exec-3] ...</span><br><span class="line">2016-02-02 15:30:58.372 ERROR [bar,6bfd228dc00d216b,6bfd228dc00d216b,false] 23030 --- [nio-8081-exec-3] ...</span><br><span class="line">2016-02-02 15:31:01.936  INFO [bar,46ab0d418373cbc9,46ab0d418373cbc9,false] 23030 --- [nio-8081-exec-4] ...</span><br></pre></td></tr></table></figure></p>
+<p>notice the [appname,traceId,spanId,exportable] entries from the MDC:</p>
+<ul>
+<li>spanId - the id of a specific operation that took place</li>
+<li>appname - the name of the application that logged the span</li>
+<li>traceId - the id of the latency graph that contains the span</li>
+<li>exportable - whether the log should be exported to Zipkin or not. When would you like the span not to be exportable? In the case in which you want to wrap some operation in a Span and have it written to the logs only.</li>
+</ul>
+<h2 id="Sampling"><a href="#Sampling" class="headerlink" title="Sampling"></a>Sampling</h2><p>自定义采样器：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Sampler <span class="title">defaultSampler</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> AlwaysSampler();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>You can set the HTTP header X-B3-Flags to 1 or when doing messaging you can set spanFlags header to 1. Then the current span will be forced to be exportable regardless of the sampling decision.</p>
+<h2 id="Instrumentation"><a href="#Instrumentation" class="headerlink" title="Instrumentation"></a>Instrumentation</h2><p>Spring Cloud Sleuth instruments all your Spring application automatically, so you shouldn’t have to do anything to activate it. The instrumentation is added using a variety of technologies according to the stack that is available, e.g. for a servlet web application we use a Filter, and for Spring Integration we use ChannelInterceptors.</p>
+<h2 id="Span-lifecycle"><a href="#Span-lifecycle" class="headerlink" title="Span lifecycle"></a>Span lifecycle</h2><p>略</p>
+<h2 id="Customizations"><a href="#Customizations" class="headerlink" title="Customizations"></a>Customizations</h2><p>略</p>
+<h2 id="Sending-spans-to-Zipkin"><a href="#Sending-spans-to-Zipkin" class="headerlink" title="Sending spans to Zipkin"></a>Sending spans to Zipkin</h2><p>By default if you add spring-cloud-starter-zipkin as a dependency to your project, when the span is closed, it will be sent to Zipkin over HTTP. The communication is asynchronous. You can configure the URL by setting the spring.zipkin.baseUrl property as follows:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.zipkin.baseUrl: http://192.168.99.100:9411/</span><br></pre></td></tr></table></figure></p>
+<p>If you want to find Zipkin via service discovery it’s enough to pass the Zipkin’s service id inside the URL (example for zipkinserver service id)<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">spring.zipkin.baseUrl: http://zipkinserver/</span><br></pre></td></tr></table></figure></p>
+<h2 id="Span-Data-as-Messages"><a href="#Span-Data-as-Messages" class="headerlink" title="Span Data as Messages"></a>Span Data as Messages</h2><p>略</p>
+<h2 id="Metrics"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</h2><p>略。</p>
+<h2 id="Integrations"><a href="#Integrations" class="headerlink" title="Integrations"></a>Integrations</h2><p>略</p>
+
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Sleuth/" title="[SpringCloud官文笔记]SpringCloud-Sleuth">http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Sleuth/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/19/SpringCloud官文笔记-SpringCloud-Bus/" rel="next" title="[SpringCloud官文笔记]SpringCloud-Bus">
+                <i class="fa fa-chevron-left"></i> [SpringCloud官文笔记]SpringCloud-Bus
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/19/SpringCloud官文笔记-SpringCloud-Security/" rel="prev" title="[SpringCloud官文笔记]SpringCloud-Security">
+                [SpringCloud官文笔记]SpringCloud-Security <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ3OS85MDQw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256"
+                alt="xbynet" />
+            
+              <p class="site-author-name" itemprop="name">xbynet</p>
+              <p class="site-description motion-element" itemprop="description">青苔边，折梅不赏;古道旁，煮酒不饮。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xbynet" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xbynet@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          <div id="aplayer1" class="aplayer"></div>
+<script src="/asserts/js/APlayer.min.js"></script>
+<script>
+    var musiclist=[
+        {title:'素雨',author:'孙雪宁',url:'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'},
+        {title:'不再联系',author:'崔子格、夏天Alex',url:'http://fs.open.kugou.com/4fe679644672bffdc5f0e07c35909c6e/5a37c9b6/G012/M02/1A/03/rIYBAFUJf-CAVewbADhGLyITk-M373.mp3',pic:'http://p1.music.126.net/px-tKcVk3BATYlEuVqyCFw==/1328210046402323.jpg?param=130y130'}
+    ]
+    var tmpindex=Math.floor(Math.random()*musiclist.length);
+    var music=musiclist[tmpindex];
+    var ap = new APlayer({
+        element: document.getElementById('aplayer1'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: music.title,
+            author: music.author,
+            url: music.url,
+            pic: music.pic
+        }
+    });
+</script>
+
+<!-- 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+-->
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Distributed-tracing-with-Zipkin"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Distributed-tracing-with-Zipkin" class="headerlink" title="Distributed tracing with Zipkin"></a>Distributed tracing with Zipkin</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Visualizing-errors"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#Visualizing-errors" class="headerlink" title="Visualizing errors"></a>Visualizing errors</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Live-examples"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#Live-examples" class="headerlink" title="Live examples"></a>Live examples</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adding-to-the-project"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Adding-to-the-project" class="headerlink" title="Adding to the project"></a>Adding to the project</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sampling"><span class="nav-number">3.</span> <span class="nav-text"><a href="#Sampling" class="headerlink" title="Sampling"></a>Sampling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Instrumentation"><span class="nav-number">4.</span> <span class="nav-text"><a href="#Instrumentation" class="headerlink" title="Instrumentation"></a>Instrumentation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Span-lifecycle"><span class="nav-number">5.</span> <span class="nav-text"><a href="#Span-lifecycle" class="headerlink" title="Span lifecycle"></a>Span lifecycle</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Customizations"><span class="nav-number">6.</span> <span class="nav-text"><a href="#Customizations" class="headerlink" title="Customizations"></a>Customizations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sending-spans-to-Zipkin"><span class="nav-number">7.</span> <span class="nav-text"><a href="#Sending-spans-to-Zipkin" class="headerlink" title="Sending spans to Zipkin"></a>Sending spans to Zipkin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Span-Data-as-Messages"><span class="nav-number">8.</span> <span class="nav-text"><a href="#Span-Data-as-Messages" class="headerlink" title="Span Data as Messages"></a>Span Data as Messages</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Metrics"><span class="nav-number">9.</span> <span class="nav-text"><a href="#Metrics" class="headerlink" title="Metrics"></a>Metrics</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Integrations"><span class="nav-number">10.</span> <span class="nav-text"><a href="#Integrations" class="headerlink" title="Integrations"></a>Integrations</span></a></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xbynet</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">53.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("sHIc70OVniNsR5OI1atIhMuk-gzGzoHsz", "wt266j1nbmoGAFrXdwXt7TeS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>

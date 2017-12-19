@@ -2,6 +2,55 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://xbynet.top/2017/12/19/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloud-Bus/</loc>
+    
+    <lastmod>2017-12-19T09:09:35.669Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xbynet.top/2017/12/19/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloud-Sleuth/</loc>
+    
+    <lastmod>2017-12-19T09:09:12.068Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xbynet.top/2017/12/19/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloud-Security/</loc>
+    
+    <lastmod>2017-12-19T09:08:49.510Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xbynet.top/2017/12/19/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloud-Contract/</loc>
+    
+    <lastmod>2017-12-19T09:08:39.810Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xbynet.top/2017/12/19/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloud-Stream/</loc>
+    
+    <lastmod>2017-12-19T07:14:48.986Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xbynet.top/about/index.html</loc>
+    
+    <lastmod>2017-12-19T03:15:04.490Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://xbynet.top/photos/index.html</loc>
+    
+    <lastmod>2017-12-18T17:49:53.796Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://xbynet.top/2017/12/18/SpringCloud%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0-SpringCloudConfig/</loc>
     
     <lastmod>2017-12-18T10:56:38.564Z</lastmod>
@@ -47,13 +96,6 @@
     <loc>http://xbynet.top/categories/index.html</loc>
     
     <lastmod>2017-12-17T06:38:27.039Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://xbynet.top/about/index.html</loc>
-    
-    <lastmod>2017-12-17T06:38:27.037Z</lastmod>
     
   </url>
   

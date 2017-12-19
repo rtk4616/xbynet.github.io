@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="springcloud," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="倚楼听风雨" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="Spring Cloud Stream is a framework for building message-driven microservice applications.使用SpringBoot作为独立应用，使用Spring Integration 来提供对message brokers的连接。支持几种代理中间件。核心观念:发布-订阅机制，消费组，分区通过@EnableBinding来使应">
+<meta name="keywords" content="springcloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[SpringCloud官文笔记]SpringCloud-Stream">
+<meta property="og:url" content="http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Stream/index.html">
+<meta property="og:site_name" content="倚楼听风雨">
+<meta property="og:description" content="Spring Cloud Stream is a framework for building message-driven microservice applications.使用SpringBoot作为独立应用，使用Spring Integration 来提供对message brokers的连接。支持几种代理中间件。核心观念:发布-订阅机制，消费组，分区通过@EnableBinding来使应">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-11-34-19.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-11-54-54.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-14-20-43.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-03-52.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-19-15-14-09.png">
+<meta property="og:updated_time" content="2017-12-19T07:14:48.986Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[SpringCloud官文笔记]SpringCloud-Stream">
+<meta name="twitter:description" content="Spring Cloud Stream is a framework for building message-driven microservice applications.使用SpringBoot作为独立应用，使用Spring Integration 来提供对message brokers的连接。支持几种代理中间件。核心观念:发布-订阅机制，消费组，分区通过@EnableBinding来使应">
+<meta name="twitter:image" content="http://xbynet.top/img/2017-12-19-11-34-19.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Stream/"/>
+
+
+
+
+
+  <title>[SpringCloud官文笔记]SpringCloud-Stream | 倚楼听风雨</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9e6e9198259e7a598474c9df6397dc";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">倚楼听风雨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡看江湖路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-相册">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Stream/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">[SpringCloud官文笔记]SpringCloud-Stream</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-19T11:23:18+08:00">
+                2017-12-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/SpringCloud/" itemprop="url" rel="index">
+                    <span itemprop="name">SpringCloud</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/19/SpringCloud官文笔记-SpringCloud-Stream/" class="leancloud_visitors" data-flag-title="[SpringCloud官文笔记]SpringCloud-Stream">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2,294
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  12
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>Spring Cloud Stream is a framework for building <code>message-driven microservice</code> applications.<br>使用SpringBoot作为独立应用，使用Spring Integration 来提供对message brokers的连接。支持几种代理中间件。<br>核心观念:发布-订阅机制，消费组，分区<br>通过<code>@EnableBinding</code>来使应用程序立马连接到message broker,通过<code>@StreamListener</code>来定义消费者。下面的例子定义了一个用来处理接收外部消息的应用。</p>
+<p>注意：<code>@EnableBinding</code>只能注解the application’s configuration classes. 不要将其注解在普通的bean上面。</p>
+<p>官方例子见：<a href="https://github.com/spring-cloud/spring-cloud-stream-samples" target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-stream-samples</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@EnableBinding</span>(Sink.class) <span class="comment">//Source, Sink, and Processor,An interface declares input and/or output channels.</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VoteRecordingSinkApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    SpringApplication.run(VoteRecordingSinkApplication.class, args);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@StreamListener</span>(Sink.INPUT)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">processVote</span><span class="params">(Vote vote)</span> </span>&#123;</span><br><span class="line">      votingService.recordVote(vote);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Sink接口如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Sink</span> </span>&#123;</span><br><span class="line">  String INPUT = <span class="string">"input"</span>;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Input</span>(Sink.INPUT)<span class="comment">//An interface declares input and/or output channels.@Input,@Output</span></span><br><span class="line">  <span class="function">SubscribableChannel <span class="title">input</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>SpringCloud Stream会为你创建接口实现，在使用时，你只需要简单地通过bean注入即可<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith</span>(SpringJUnit4ClassRunner.class)</span><br><span class="line"><span class="meta">@SpringApplicationConfiguration</span>(classes = VoteRecordingSinkApplication.class)</span><br><span class="line"><span class="meta">@WebAppConfiguration</span></span><br><span class="line"><span class="meta">@DirtiesContext</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StreamApplicationTests</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> Sink sink;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Test</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">contextLoads</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    assertNotNull(<span class="keyword">this</span>.sink.input());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<a id="more"></a>
+<h2 id="Main-Concepts"><a href="#Main-Concepts" class="headerlink" title="Main Concepts"></a>Main Concepts</h2><ul>
+<li>Spring Cloud Stream’s application model</li>
+<li>The Binder abstraction   实现支持Kafka and Rabbit MQ以及测试用的TestSupportBinder</li>
+<li>Persistent publish-subscribe support</li>
+<li>Consumer group support</li>
+<li>Partitioning support</li>
+<li>A pluggable Binder API</li>
+</ul>
+<p>The application communicates with the outside world through input and output channels injected into it by Spring Cloud Stream. Channels are connected to external brokers through middleware-specific Binder implementations.<br><img src="/img/2017-12-19-11-34-19.png" alt=""></p>
+<p>Stream的broker默认提供了两个实现以支持Kafka and Rabbit MQ，具体用哪个，是通过检测classpath。<br>采用 publish-subscribe model<br>定义消息来源：spring.cloud.stream.bindings.input.destination</p>
+<p>消费者分组：(该分组下仅有一个消费者能消费到消息)<br>spring.cloud.stream.bindings.&lt; channelName&gt;.group=组名<br>All groups which subscribe to a given destination receive a copy of published data, but only one member of each group receives a given message from that destination. </p>
+<p>消息持久性： That is, a binder implementation ensures that group subscriptions are persistent, and once at least one subscription for a group has been created, the group will receive messages, <strong>even if they are sent while all applications in the group are stopped</strong>. Anonymous subscriptions are non-durable by nature.<br>所以，建议指定消息目的地的时候指定好分组。</p>
+<p>主题分区：Stream提供对一个应用多个实例情况下的数据分区支持，在这种场景下，the broker topic会被视为拥有很多分区的结构，这样确保含有特定标识的数据总是会被同一个消费者实例消费。不管中间件是否原生支持，由于Stream的通用抽象，都可以使用这一特性。<br><img src="/img/2017-12-19-11-54-54.png" alt=""></p>
+<p>To set up a partitioned processing scenario, you must configure both the data-producing and the data-consuming ends.</p>
+<h2 id="Programming-Model"><a href="#Programming-Model" class="headerlink" title="Programming Model"></a>Programming Model</h2><p>注解:@EnableBinding(仅可用于配置类中)支持多个channels的绑定声明，@Input,@Output定义不同通道.<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Barista</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Input</span></span><br><span class="line">    <span class="function">SubscribableChannel <span class="title">orders</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Output</span></span><br><span class="line">    <span class="function">MessageChannel <span class="title">hotDrinks</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Input</span>(<span class="string">"inboundOrders"</span>)</span><br><span class="line">    <span class="function">SubscribableChannel <span class="title">myorders</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@EnableBinding</span>(Barista.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CafeConfiguration</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">   ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>Source, Sink, and Processor</code>:For easy addressing of the most common use cases, which involve either an input channel, an output channel, or both, Spring Cloud Stream provides three predefined interfaces out of the box.</p>
+<h3 id="访问绑定的channels"><a href="#访问绑定的channels" class="headerlink" title="访问绑定的channels"></a>访问绑定的channels</h3><p>Injecting the Bound Interfaces<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendingBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Source source;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SendingBean</span><span class="params">(Source source)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.source = source;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">         source.output().send(MessageBuilder.withPayload(name).build());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Injecting Channels Directly<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendingBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MessageChannel output;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SendingBean</span><span class="params">(MessageChannel output)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.output = output;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">         output.send(MessageBuilder.withPayload(name).build());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果你自定义了channelname,那么需要修改为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">CustomSource</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="meta">@Output</span>(<span class="string">"customOutput"</span>)</span><br><span class="line">    <span class="function">MessageChannel <span class="title">output</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SendingBean</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> MessageChannel output;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">SendingBean</span><span class="params">(@Qualifier(<span class="string">"customOutput"</span>)</span> MessageChannel output) </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.output = output;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">         <span class="keyword">this</span>.output.send(MessageBuilder.withPayload(name).build());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Producing-and-Consuming-Messages"><a href="#Producing-and-Consuming-Messages" class="headerlink" title="Producing and Consuming Messages"></a>Producing and Consuming Messages</h3><p> @StreamListener 可以自动进行类型转换<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableBinding</span>(Sink.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VoteHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  VotingService votingService;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@StreamListener</span>(Sink.INPUT)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handle</span><span class="params">(Vote vote)</span> </span>&#123;</span><br><span class="line">    votingService.record(vote);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同时参数可以用@Payload, @Headers and @Header标注<br>如果方法同时需要接收和发送消息：还需要加入@SendTo标注<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableBinding</span>(Processor.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TransformProcessor</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  VotingService votingService;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@StreamListener</span>(Processor.INPUT)</span><br><span class="line">  <span class="meta">@SendTo</span>(Processor.OUTPUT)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> VoteResult <span class="title">handle</span><span class="params">(Vote vote)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> votingService.record(vote);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>利用@StreamListener分发消息到多个满足不同condition的方法，要满足支持条件派发，使之生效，那么被派发的方法必须满足：1、返回值为void，2、必须是一个独立的消息处理方法(reactive API方式不被支持)<br>同时，condition的写法是满足SpEL表达式的。如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableBinding</span>(Sink.class)</span><br><span class="line"><span class="meta">@EnableAutoConfiguration</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">TestPojoWithAnnotatedArguments</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@StreamListener</span>(target = Sink.INPUT, condition = <span class="string">"headers['type']=='foo'"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receiveFoo</span><span class="params">(@Payload FooPojo fooPojo)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// handle the message</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@StreamListener</span>(target = Sink.INPUT, condition = <span class="string">"headers['type']=='bar'"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">receiveBar</span><span class="params">(@Payload BarPojo barPojo)</span> </span>&#123;</span><br><span class="line">       <span class="comment">// handle the message</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Aggregation"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</h3><p>Stream支持聚合多个application，并直接连接它们的input和output而不需要通过message broker。<br>注意aggregation仅支持以下类型的applications:</p>
+<ul>
+<li>sources - applications with a single output channel named output, typically having a single binding of the type org.springframework.cloud.stream.messaging.Source</li>
+<li>sinks - applications with a single input channel named input, typically having a single binding of the type org.springframework.cloud.stream.messaging.Sink</li>
+<li>processors - applications with a single input channel named input and a single output channel named output, typically having a single binding of the type org.springframework.cloud.stream.messaging.Processor.</li>
+</ul>
+<p>例如：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SampleAggregateApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">new</span> AggregateApplicationBuilder()</span><br><span class="line">			.from(SourceApplication.class).args(<span class="string">"--fixedDelay=5000"</span>)</span><br><span class="line">			.via(ProcessorApplication.class)</span><br><span class="line">			.to(SinkApplication.class).args(<span class="string">"--debug=true"</span>).run(args);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Binders"><a href="#Binders" class="headerlink" title="Binders"></a>Binders</h2><p><img src="/img/2017-12-19-14-20-43.png" alt=""><br>bindProducer() 方法的第三个参数 contains properties (such as a partition key expression) to be used within the adapter that is created for that channel.<br>bindConsumer()方法的第一个参数为 destination name,第二个参数为消费者组名.</p>
+<h3 id="Binder-SPI"><a href="#Binder-SPI" class="headerlink" title="Binder SPI"></a>Binder SPI</h3><p>提供一些系列接口，优秀得到工具类，插件化连接中间件的自动发现策略。<br>关键接口:<code>Binder</code><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Binder</span>&lt;<span class="title">T</span>, <span class="title">C</span> <span class="keyword">extends</span> <span class="title">ConsumerProperties</span>, <span class="title">P</span> <span class="keyword">extends</span> <span class="title">ProducerProperties</span>&gt; </span>&#123;</span><br><span class="line">	<span class="function">Binding&lt;T&gt; <span class="title">bindConsumer</span><span class="params">(String name, String group, T inboundBindTarget, C consumerProperties)</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">Binding&lt;T&gt; <span class="title">bindProducer</span><span class="params">(String name, T outboundBindTarget, P producerProperties)</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>A typical binder implementation consists of the following</p>
+<ul>
+<li>实现Binder接口</li>
+<li>a Spring <code>@Configuration</code> class that creates a bean of the type above along with the middleware connection infrastructure;</li>
+<li>a <code>META-INF/spring.binders</code> file found on the classpath containing one or more binder definitions, e.g.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kafka:\</span><br><span class="line">org.springframework.cloud.stream.binder.kafka.config.KafkaBinderConfiguration</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="Binder-Detection"><a href="#Binder-Detection" class="headerlink" title="Binder Detection"></a>Binder Detection</h3><p>Classpath Detection,比如<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-stream-binder-rabbit&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>会导致自动绑定到rabbitmq</p>
+<p>Multiple Binders on the Classpath:<br>在<code>META-INF/spring.binders</code>中指定, which is a simple properties file:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rabbit:\</span><br><span class="line">org.springframework.cloud.stream.binder.rabbit.config.RabbitServiceAutoConfiguration</span><br></pre></td></tr></table></figure></p>
+<p>除了上述的方式外也可以通过<code>spring.cloud.stream.defaultBinder=rabbit</code>来指定全局默认的实现，也可以指定到channel，如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spring.cloud.stream.bindings.input.binder=kafka</span><br><span class="line">spring.cloud.stream.bindings.output.binder=rabbit</span><br></pre></td></tr></table></figure></p>
+<h3 id="Connecting-to-Multiple-Systems"><a href="#Connecting-to-Multiple-Systems" class="headerlink" title="Connecting to Multiple Systems:"></a>Connecting to Multiple Systems:</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  cloud:</span><br><span class="line">    stream:</span><br><span class="line">      bindings:</span><br><span class="line">        input:</span><br><span class="line">          destination: foo</span><br><span class="line">          binder: rabbit1</span><br><span class="line">        output:</span><br><span class="line">          destination: bar</span><br><span class="line">          binder: rabbit2</span><br><span class="line">      binders:</span><br><span class="line">        rabbit1:</span><br><span class="line">          type: rabbit</span><br><span class="line">          environment:</span><br><span class="line">            spring:</span><br><span class="line">              rabbitmq:</span><br><span class="line">                host: &lt;host1&gt;</span><br><span class="line">        rabbit2:</span><br><span class="line">          type: rabbit</span><br><span class="line">          environment:</span><br><span class="line">            spring:</span><br><span class="line">              rabbitmq:</span><br><span class="line">                host: &lt;host2&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Binder-configuration-properties"><a href="#Binder-configuration-properties" class="headerlink" title="Binder configuration properties"></a>Binder configuration properties</h3><p>前缀spring.cloud.stream.binders.&lt; configurationName&gt;.<br>略。</p>
+<h2 id="Configuration-Options"><a href="#Configuration-Options" class="headerlink" title="Configuration Options"></a>Configuration Options</h2><p>1、Spring Cloud Stream Properties<br>2、Binding Properties<br>spring.cloud.stream.bindings.&lt; channelName&gt;.&lt; property&gt;=&lt; value&gt;<br>spring.cloud.stream.default.&lt; property&gt;=&lt; value&gt;<br>如:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spring.cloud.stream.bindings.input.destination=ticktock</span><br><span class="line">spring.cloud.stream.default.contentType=application/json</span><br></pre></td></tr></table></figure></p>
+<p>除了上面设置的destination,contentType外，还可以设置group，binder</p>
+<p>还有一些关于消费者和生产者特定的配置，请参考官文。</p>
+<h3 id="Using-dynamically-bound-destinations"><a href="#Using-dynamically-bound-destinations" class="headerlink" title="Using dynamically bound destinations"></a>Using dynamically bound destinations</h3><p> BinderAwareChannelResolver bean，当然也可以用spring.cloud.stream.dynamicDestinations来配destination的可选范围，否则所有的destination都是可选的。<br> <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">@EnableBinding</span></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SourceWithDynamicDestination</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Autowired</span></span><br><span class="line">	<span class="keyword">private</span> BinderAwareChannelResolver resolver;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@RequestMapping</span>(path = <span class="string">"/&#123;target&#125;"</span>, method = POST, consumes = <span class="string">"*/*"</span>)</span><br><span class="line">	<span class="meta">@ResponseStatus</span>(HttpStatus.ACCEPTED)</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">handleRequest</span><span class="params">(@RequestBody String body, @PathVariable(<span class="string">"target"</span>)</span> target,</span></span><br><span class="line"><span class="function">	       @<span class="title">RequestHeader</span><span class="params">(HttpHeaders.CONTENT_TYPE)</span> Object contentType) </span>&#123;</span><br><span class="line">		sendMessage(body, target, contentType);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">sendMessage</span><span class="params">(String body, String target, Object contentType)</span> </span>&#123;</span><br><span class="line">		resolver.resolveDestination(target).send(MessageBuilder.createMessage(body,</span><br><span class="line">				<span class="keyword">new</span> MessageHeaders(Collections.singletonMap(MessageHeaders.CONTENT_TYPE, contentType))));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -H <span class="string">"Content-Type: application/json"</span> -X POST -d <span class="string">"customer-1"</span> http:<span class="comment">//localhost:8080/customers</span></span><br><span class="line"></span><br><span class="line">curl -H <span class="string">"Content-Type: application/json"</span> -X POST -d <span class="string">"order-1"</span> http:<span class="comment">//localhost:8080/orders</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="类型转换支持"><a href="#类型转换支持" class="headerlink" title="类型转换支持"></a>类型转换支持</h3><ul>
+<li>JSON to/from POJO</li>
+<li>JSON to/from org.springframework.tuple.Tuple</li>
+<li>Object to/from byte[] : Either the raw bytes serialized for remote transport, bytes emitted by an application, or converted to bytes using Java serialization(requires the object to be Serializable)</li>
+<li>String to/from byte[]</li>
+<li>Object to plain text (invokes the object’s toString() method)</li>
+</ul>
+<p>Spring Cloud Stream can handle messages based on this information in two ways:</p>
+<ul>
+<li>Through its contentType settings on inbound and outbound channels，通过spring.cloud.stream.bindings.&lt; channelName&gt;.content-type来配置</li>
+<li>Through its argument mapping performed for methods annotated with @StreamListener</li>
+</ul>
+<p>注意：If no <code>content-type</code> property is set on an <code>outbound channel</code>, Spring Cloud Stream will serialize the payload using a serializer based on the <code>Kryo serialization</code> framework.因此反序列化的时候需要保证消费端有payload class在classpath中。</p>
+<p>MIME types：详细介绍见官文<br><img src="/img/2017-12-19-15-03-52.png" alt=""></p>
+<h3 id="Customizing-message-conversion"><a href="#Customizing-message-conversion" class="headerlink" title="Customizing message conversion"></a>Customizing message conversion</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@EnableBinding</span>(Sink.class)</span><br><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">SinkApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  ...</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> MessageConverter <span class="title">customMessageConverter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> MyCustomMessageConverter();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyCustomMessageConverter</span> <span class="keyword">extends</span> <span class="title">AbstractMessageConverter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">MyCustomMessageConverter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>(<span class="keyword">new</span> MimeType(<span class="string">"application"</span>, <span class="string">"bar"</span>));</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">supports</span><span class="params">(Class&lt;?&gt; clazz)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (Bar.class == clazz);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> Object <span class="title">convertFromInternal</span><span class="params">(Message&lt;?&gt; message, Class&lt;?&gt; targetClass, Object conversionHint)</span> </span>&#123;</span><br><span class="line">		Object payload = message.getPayload();</span><br><span class="line">		<span class="keyword">return</span> (payload <span class="keyword">instanceof</span> Bar ? payload : <span class="keyword">new</span> Bar((<span class="keyword">byte</span>[]) payload));</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Schema-evolution-support"><a href="#Schema-evolution-support" class="headerlink" title="Schema evolution support"></a>Schema evolution support</h2><p>略</p>
+<h2 id="Inter-Application-Communication"><a href="#Inter-Application-Communication" class="headerlink" title="Inter-Application Communication"></a>Inter-Application Communication</h2><p>略</p>
+<h2 id="Binder-Implementations"><a href="#Binder-Implementations" class="headerlink" title="Binder Implementations"></a>Binder Implementations</h2><h3 id="Apache-Kafka-Binder"><a href="#Apache-Kafka-Binder" class="headerlink" title="Apache Kafka Binder"></a>Apache Kafka Binder</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-stream-binder-kafka&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>或者<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-starter-stream-kafka&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p>具体见官文</p>
+<h3 id="RabbitMQ-Binder"><a href="#RabbitMQ-Binder" class="headerlink" title="RabbitMQ Binder"></a>RabbitMQ Binder</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-stream-binder-rabbit&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<p>或<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;org.springframework.cloud&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;spring-cloud-starter-stream-rabbit&lt;/artifactId&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/2017-12-19-15-14-09.png" alt=""><br>具体见官文</p>
+
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Stream/" title="[SpringCloud官文笔记]SpringCloud-Stream">http://xbynet.top/2017/12/19/SpringCloud官文笔记-SpringCloud-Stream/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/springcloud/" rel="tag"><i class="fa fa-tag"></i> springcloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/18/SpringCloud官文笔记-SpringCloud-Netflix/" rel="next" title="[SpringCloud官文笔记]SpringCloud-Netflix">
+                <i class="fa fa-chevron-left"></i> [SpringCloud官文笔记]SpringCloud-Netflix
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/19/SpringCloud官文笔记-SpringCloud-Bus/" rel="prev" title="[SpringCloud官文笔记]SpringCloud-Bus">
+                [SpringCloud官文笔记]SpringCloud-Bus <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ3OS85MDQw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256"
+                alt="xbynet" />
+            
+              <p class="site-author-name" itemprop="name">xbynet</p>
+              <p class="site-description motion-element" itemprop="description">青苔边，折梅不赏;古道旁，煮酒不饮。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xbynet" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xbynet@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          <div id="aplayer1" class="aplayer"></div>
+<script src="/asserts/js/APlayer.min.js"></script>
+<script>
+    var musiclist=[
+        {title:'素雨',author:'孙雪宁',url:'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'},
+        {title:'不再联系',author:'崔子格、夏天Alex',url:'http://fs.open.kugou.com/4fe679644672bffdc5f0e07c35909c6e/5a37c9b6/G012/M02/1A/03/rIYBAFUJf-CAVewbADhGLyITk-M373.mp3',pic:'http://p1.music.126.net/px-tKcVk3BATYlEuVqyCFw==/1328210046402323.jpg?param=130y130'}
+    ]
+    var tmpindex=Math.floor(Math.random()*musiclist.length);
+    var music=musiclist[tmpindex];
+    var ap = new APlayer({
+        element: document.getElementById('aplayer1'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: music.title,
+            author: music.author,
+            url: music.url,
+            pic: music.pic
+        }
+    });
+</script>
+
+<!-- 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+-->
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Main-Concepts"><span class="nav-number">1.</span> <span class="nav-text"><a href="#Main-Concepts" class="headerlink" title="Main Concepts"></a>Main Concepts</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Programming-Model"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Programming-Model" class="headerlink" title="Programming Model"></a>Programming Model</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#访问绑定的channels"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#&#x8BBF;&#x95EE;&#x7ED1;&#x5B9A;&#x7684;channels" class="headerlink" title="&#x8BBF;&#x95EE;&#x7ED1;&#x5B9A;&#x7684;channels"></a>&#x8BBF;&#x95EE;&#x7ED1;&#x5B9A;&#x7684;channels</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Producing-and-Consuming-Messages"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#Producing-and-Consuming-Messages" class="headerlink" title="Producing and Consuming Messages"></a>Producing and Consuming Messages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Aggregation"><span class="nav-number">2.3.</span> <span class="nav-text"><a href="#Aggregation" class="headerlink" title="Aggregation"></a>Aggregation</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binders"><span class="nav-number">3.</span> <span class="nav-text"><a href="#Binders" class="headerlink" title="Binders"></a>Binders</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Binder-SPI"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#Binder-SPI" class="headerlink" title="Binder SPI"></a>Binder SPI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binder-Detection"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#Binder-Detection" class="headerlink" title="Binder Detection"></a>Binder Detection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Connecting-to-Multiple-Systems"><span class="nav-number">3.3.</span> <span class="nav-text"><a href="#Connecting-to-Multiple-Systems" class="headerlink" title="Connecting to Multiple Systems:"></a>Connecting to Multiple Systems:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Binder-configuration-properties"><span class="nav-number">3.4.</span> <span class="nav-text"><a href="#Binder-configuration-properties" class="headerlink" title="Binder configuration properties"></a>Binder configuration properties</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Configuration-Options"><span class="nav-number">4.</span> <span class="nav-text"><a href="#Configuration-Options" class="headerlink" title="Configuration Options"></a>Configuration Options</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Using-dynamically-bound-destinations"><span class="nav-number">4.1.</span> <span class="nav-text"><a href="#Using-dynamically-bound-destinations" class="headerlink" title="Using dynamically bound destinations"></a>Using dynamically bound destinations</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类型转换支持"><span class="nav-number">4.2.</span> <span class="nav-text"><a href="#&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x652F;&#x6301;" class="headerlink" title="&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x652F;&#x6301;"></a>&#x7C7B;&#x578B;&#x8F6C;&#x6362;&#x652F;&#x6301;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Customizing-message-conversion"><span class="nav-number">4.3.</span> <span class="nav-text"><a href="#Customizing-message-conversion" class="headerlink" title="Customizing message conversion"></a>Customizing message conversion</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Schema-evolution-support"><span class="nav-number">5.</span> <span class="nav-text"><a href="#Schema-evolution-support" class="headerlink" title="Schema evolution support"></a>Schema evolution support</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Inter-Application-Communication"><span class="nav-number">6.</span> <span class="nav-text"><a href="#Inter-Application-Communication" class="headerlink" title="Inter-Application Communication"></a>Inter-Application Communication</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binder-Implementations"><span class="nav-number">7.</span> <span class="nav-text"><a href="#Binder-Implementations" class="headerlink" title="Binder Implementations"></a>Binder Implementations</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Apache-Kafka-Binder"><span class="nav-number">7.1.</span> <span class="nav-text"><a href="#Apache-Kafka-Binder" class="headerlink" title="Apache Kafka Binder"></a>Apache Kafka Binder</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RabbitMQ-Binder"><span class="nav-number">7.2.</span> <span class="nav-text"><a href="#RabbitMQ-Binder" class="headerlink" title="RabbitMQ Binder"></a>RabbitMQ Binder</span></a></li></ol></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xbynet</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">53.4k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("sHIc70OVniNsR5OI1atIhMuk-gzGzoHsz", "wt266j1nbmoGAFrXdwXt7TeS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>
