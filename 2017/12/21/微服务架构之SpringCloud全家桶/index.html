@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="MicroService,msa,SpringCloud," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="倚楼听风雨" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="What’s SpringCloud?SpringCloud是基于微服务理念，并在基于Netflix OSS的基础上开发的一套全生态的微服务治理框架。模块众多:如Eureka服务发现与注册(CAP中的AP模式)，Hystrix断路器，Sleuth分布式链路追踪，Zuul统一api网关，Config配置中心，Ribbon客户端负载均衡，Sidecar异构系统集成等等。SpringCloud中的微服务">
+<meta name="keywords" content="MicroService,msa,SpringCloud">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务架构之SpringCloud全家桶">
+<meta property="og:url" content="http://xbynet.top/2017/12/21/微服务架构之SpringCloud全家桶/index.html">
+<meta property="og:site_name" content="倚楼听风雨">
+<meta property="og:description" content="What’s SpringCloud?SpringCloud是基于微服务理念，并在基于Netflix OSS的基础上开发的一套全生态的微服务治理框架。模块众多:如Eureka服务发现与注册(CAP中的AP模式)，Hystrix断路器，Sleuth分布式链路追踪，Zuul统一api网关，Config配置中心，Ribbon客户端负载均衡，Sidecar异构系统集成等等。SpringCloud中的微服务">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-15-10-03.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-15-22-26.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-14-53-59.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-15-29-41.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-15-55-08.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-15-55-24.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-15-56-53.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-02-05.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-15-51.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-20-06.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-25-06.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-33-29.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-36-40.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-29-07.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-29-42.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-30-09.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-30-45.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-38-55.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-40-15.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-40-30.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-41-11.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-41-30.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-41-53.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-46-06.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-48-53.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-51-03.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-51-19.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-52-37.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-56-55.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-16-59-31.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-04-36.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-09-38.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-06-07.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-06-17.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-08-59.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-12-06.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-15-51.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-19-40.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-35-32.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-31-26.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-38-18.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-38-26.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-39-39.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-45-43.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-46-01.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-46-09.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-49-26.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-17-49-18.png">
+<meta property="og:updated_time" content="2017-12-21T09:52:21.460Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务架构之SpringCloud全家桶">
+<meta name="twitter:description" content="What’s SpringCloud?SpringCloud是基于微服务理念，并在基于Netflix OSS的基础上开发的一套全生态的微服务治理框架。模块众多:如Eureka服务发现与注册(CAP中的AP模式)，Hystrix断路器，Sleuth分布式链路追踪，Zuul统一api网关，Config配置中心，Ribbon客户端负载均衡，Sidecar异构系统集成等等。SpringCloud中的微服务">
+<meta name="twitter:image" content="http://xbynet.top/img/2017-12-21-15-10-03.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xbynet.top/2017/12/21/微服务架构之SpringCloud全家桶/"/>
+
+
+
+
+
+  <title>微服务架构之SpringCloud全家桶 | 倚楼听风雨</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9e6e9198259e7a598474c9df6397dc";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">倚楼听风雨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡看江湖路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-相册">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/21/微服务架构之SpringCloud全家桶/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微服务架构之SpringCloud全家桶</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T14:07:00+08:00">
+                2017-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MicroService/" itemprop="url" rel="index">
+                    <span itemprop="name">MicroService</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/21/微服务架构之SpringCloud全家桶/" class="leancloud_visitors" data-flag-title="微服务架构之SpringCloud全家桶">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  13,944
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  51
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>What’s SpringCloud?<br>SpringCloud是基于<a href="/2017/12/21/微服务架构之服务架构演进/">微服务</a>理念，并在基于Netflix OSS的基础上开发的一套全生态的微服务治理框架。模块众多:如Eureka服务发现与注册(CAP中的AP模式)，Hystrix断路器，Sleuth分布式链路追踪，Zuul统一api网关，Config配置中心，Ribbon客户端负载均衡，Sidecar异构系统集成等等。<br>SpringCloud中的微服务通常需要运行在Docker容器中，而Docker是一个类似于虚拟机的虚拟化主机环境，提供独立、快速发布、运行的能力。Kubernetes是Google开源的容器集群管理系统，其提供应用部署、维护、 扩展机制等功能，利用Kubernetes能方便地管理跨机器运行容器化的应用。<br>值得一提的是SpringCloud是基于<a href="/2017/12/20/历史博文迁移-Spring-Boot学习笔记/">SpringBoot</a>的.<br><a id="more"></a></p>
+<h2 id="SpringCloud-vs-Dubbo"><a href="#SpringCloud-vs-Dubbo" class="headerlink" title="SpringCloud vs Dubbo"></a>SpringCloud vs Dubbo</h2><p>我们选取几个指标进行比较：开发团队背景，社区活跃度，平台架构(功能齐全度，通信协议，文档质量)，技术发展，及国内外应用现状</p>
+<p>1、开发团队背景：<br>Alibaba VS Spring Source + Pivotal + Netfix<br>阿里巴巴:BAT三座大山之一，是中国最大的互联网电商平台，旗下还有个全国最大的云服务提供品牌的阿里云。技术实力也是非常雄厚的:除了为Apache捐过几个顶级项目外，还有很多国内特别流行的开源库，如Dubbo,Druid,Fastjson,Weex,Antd等，同时还持续为Linux内核贡献代码。<br>SpringSource:JavaEE事实标准的建立和主导者<br>Pivotal:由EMC和VMware联合成立的公司.是一家下一代云计算和大数据应用相结合的公司.其下有Cloud Foundry公有云，Redis,SpringSource,RabbitMQ等多个超牛逼开源产品。目前归属于Dell(EMC已被Dell收购)。<br>Netfix:是一家在线影片租赁提供商，主要提供Netflix超大数量的DVD并免费递送。Netflix也是被业界称为拥有最优秀的微服务实践经验的公司。</p>
+<p>总之，都很牛逼，分个高低就很难了。不过有一点是比较明确的，阿里巴巴虽然开源了很多产品，但其在国内开源界名声不是特别好，因为其开源的产品大都是以KPI驱动的，所以导致很难有长期的维护。而国外的开源氛围和精神就很好。</p>
+<p>2、社区活跃度：<br>Dubbo与2013年左右停止维护，2017年下半年重启维护。也就是说，社区基本上从火爆到清冷，现在重启维护，社区活跃度也令人堪忧，很多公司都已经或正在考虑迁移到SpringCloud。<br>SpringCloud:有SpringSource的社区优势和可信度，社区也是非常活跃的.举例来说，但就spring-cloud-netflix这核心模块，就有2000多次commit，123个contributors.而dubbo这么多年来总共才2000次commit，45个contributors.</p>
+<p>3、平台架构<br><img src="/img/2017-12-21-15-10-03.png" alt=""><br><img src="/img/2017-12-21-15-22-26.png" alt=""><br>Dubbo算是Spring Cloud的一个子集好了,大致相当于Spring Cloud里的 Eureka + Feign + 1/2Hystrix<br>先对比下功能:<br><img src="/img/2017-12-21-14-53-59.png" alt=""></p>
+<p>Dubbo是一套RPC的半完善解决方案，配套的软件基础设施不全，好处是编码环节基本没有侵入性。问题定位、熔断和监控方面的问题让人没有那么的放心。<br>Dubbo实践通常以ZooKeeper为注册中心。针对分布式领域著名的CAP理论（C——数据一致性，A——服务可用性，P——服务对网络分区故障的容错性），Zookeeper 保证的是CP ，但对于服务发现而言，可用性比数据一致性更加重要 ，而 Eureka 设计则遵循AP原则 。</p>
+<p>RPC vs REST<br>RPC优点：性能比REST高。<br>微服务提倡轻量级通信协议，并能够跨语言，而RESTful符合这一点，RPC有点违背此理念，比较难以实现异构系统。<br>RPC服务提供方与调用方接口依赖方式太强。而微服务强调松耦合，微服务间独立开发，互不影响。而REST接口相比RPC更为轻量化，服务提供方和调用方的依赖只是依靠一纸契约，不存在代码级别的强依赖。<br>当然REST接口也有痛点，因为接口定义过轻，很容易导致定义文档与实际实现不一致导致服务集成时的问题，但是该问题很好解决，只需要通过每个服务整合swagger，让每个服务的代码与文档一体化，就能解决。(如果还是会存在问题，可以采用SpringCloud基于CDC理念开发的Contract模块)。</p>
+<p>文档质量：都很全。</p>
+<p>4、技术发展：<br>由于Dubbo期间停止维护了几年，现在重启维护，但前景并不明朗，说不定哪天又会停止维护。<br>SpringCloud目前正处于告诉发展期，而且Spring生态开源精神是不容置疑的。<br>总之，Dubbo以前确实很牛逼，但SpringCloud代表未来。</p>
+<p>5、国内外应用现状：<br>Dubbo在国内一直是主流，但由于其开源态度问题，已经或正在流水很多开发者或公司。比如阿里巴巴内部已经不再采用Dubbo了，而且之前网易基于Dubbo开发了Dubbox,但网易也已经开始转向SpringCloud阵营了。虽然有流失，但流行程度仍然很高，就类似于xp。国外采用情况不详。<br>SpringCloud国外是主流，国内也正在普及，应用案例如：网易、华为、饿了么、DaoCloud、拍拍贷、新浪等待。</p>
+<h2 id="SpringCloud-Config"><a href="#SpringCloud-Config" class="headerlink" title="SpringCloud Config"></a>SpringCloud Config</h2><p>随着线上项目变的日益庞大，每个项目都散落着各种配置文件，如果采用分布式的开发模式，需要的配置文件随着服务增加而不断增多。某一个基础服务信息变更，都会引起一系列的更新和重启，运维苦不堪言也容易出错。配置中心便是解决此类问题的灵丹妙药。</p>
+<p>配置中心提供的核心功能：</p>
+<ul>
+<li>集中管理各环境的配置文件</li>
+<li>配置文件修改之后，可以实时快速的生效</li>
+<li>可以进行版本管理</li>
+</ul>
+<p>Spring Cloud Config项目是一个解决分布式系统的配置管理方案。它包含了Client和Server两个部分，server提供配置文件的存储、以接口的形式将配置文件的内容提供出去，client通过接口获取数据、并依据此数据初始化自己的应用。Spring cloud使用git或svn存放配置文件，默认情况下使用git。<br>仓库中的配置文件会被转换成web接口，访问可以参照以下的规则：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">/&#123;application&#125;/&#123;profile&#125;[/&#123;label&#125;]</span><br><span class="line">/&#123;application&#125;-&#123;profile&#125;.yml</span><br><span class="line">/&#123;label&#125;/&#123;application&#125;-&#123;profile&#125;.yml</span><br><span class="line">/&#123;application&#125;-&#123;profile&#125;.properties</span><br><span class="line">/&#123;label&#125;/&#123;application&#125;-&#123;profile&#125;.properties</span><br></pre></td></tr></table></figure></p>
+<p>spring.application.name：对应{application}部分<br>spring.cloud.config.profile：对应{profile}部分<br>spring.cloud.config.label：对应git的分支。</p>
+<h3 id="Refresh"><a href="#Refresh" class="headerlink" title="Refresh"></a>Refresh</h3><p>Spring Cloud Config分服务端和客户端，服务端负责将git（svn）中存储的配置文件发布成REST接口，客户端可以从服务端REST接口获取配置。<br>但客户端并不能主动感知到配置的变化，从而主动去获取新的配置。客户端如何去主动获取新的配置信息呢，springcloud已经给我们提供了解决方案，每个客户端通过POST方法触发各自的/refresh。<br><code>curl -X POST http://localhost:8002/refresh</code><br>每次手动刷新客户端也很麻烦，有没有什么办法只要提交代码就自动调用客户端来更新呢，github/gitlab的webhook是一个好的办法。<br>但是当客户端越来越多的时候hook支持的已经不够优雅，另外每次增加客户端都需要改动hook也是不现实的。使用Spring Cloud Bus可以完美解决这一问题。</p>
+<p>所以最终方案：SpringCloud Config+SpringCloud Bus+Gitlab WebHook优雅地解决刷新问题：<br><img src="/img/2017-12-21-15-29-41.png" alt=""></p>
+<p>这时Spring Cloud Bus做配置更新步骤如下:<br>1、提交代码触发WebHooK post请求给/bus/refresh<br>2、server端接收到请求并发送给Spring Cloud Bus<br>3、Spring Cloud bus接到消息并通知给其它客户端<br>4、其它客户端接收到通知，请求Server端获取最新配置<br>5、全部客户端均获取到最新的配置<br>6、注解为@RefreshScope的类中的@Value都将得到刷新。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RefreshScope</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ConfigClientController</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Value</span>(<span class="string">"$&#123;profile&#125;"</span>)</span><br><span class="line">  <span class="keyword">private</span> String profile;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@GetMapping</span>(<span class="string">"/profile"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">hello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.profile;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>配置:bootstrap.yml,而非application.yml<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spring:</span></span><br><span class="line"><span class="attr">  application:</span></span><br><span class="line"><span class="attr">    name:</span> <span class="string">microservice-foo</span>    <span class="comment"># 对应config server所获取的配置文件的&#123;application&#125;</span></span><br><span class="line"><span class="attr">  cloud:</span></span><br><span class="line"><span class="attr">    config:</span></span><br><span class="line"><span class="attr">      uri:</span> <span class="attr">http://localhost:8080/</span></span><br><span class="line"><span class="attr">      profile:</span> <span class="string">dev</span>            <span class="comment"># profile对应config server所获取的配置文件中的&#123;profile&#125; </span></span><br><span class="line"><span class="attr">      label:</span> <span class="string">master</span>           <span class="comment"># 指定Git仓库的分支，对应config server所获取的配置文件的&#123;label&#125;</span></span><br><span class="line"><span class="attr">  rabbitmq:</span>            <span class="comment"># SpringCloud Bus需要用到AMQP来广播消息</span></span><br><span class="line"><span class="attr">    host:</span> <span class="string">localhost</span></span><br><span class="line"><span class="attr">    port:</span> <span class="number">5672</span></span><br><span class="line"><span class="attr">    username:</span> <span class="string">guest</span></span><br><span class="line"><span class="attr">    password:</span> <span class="string">guest</span></span><br></pre></td></tr></table></figure></p>
+<p>那么，可不可以支持局部刷新?<br>某些场景下（例如灰度发布），我们可能只想刷新部分微服务的配置，此时可通过/bus/refresh端点的destination参数来定位要刷新的应用程序。<br>例如：/bus/refresh?destination=customers:8000，这样消息总线上的微服务实例就会根据destination参数的值来判断是否需要要刷新。其中，customers:8000指的是各个微服务的ApplicationContext ID。<br>destination参数也可以用来定位特定的微服务。例如：/bus/refresh?destination=customers:**，这样就可以触发customers微服务所有实例的配置刷新。</p>
+<p>SpringCloud Config还支持的功能：</p>
+<p><strong>属性自动加密解密：</strong><br>当属性名是:{cipher}开头时，如{cipher}*，就代表它是加密过的。config server在获取该属性发送到客户端之前是会进行解密。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">spring:</span><br><span class="line">  datasource:</span><br><span class="line">    username: dbuser</span><br><span class="line">    password: &apos;&#123;cipher&#125;FKSAJDFGYOS8F7GLHAKERGFHLSAJ&apos;</span><br></pre></td></tr></table></figure></p>
+<p>前提条件：1、添加Spring Security RSA依赖，2、确保JCE在JDK中；3、确保有效的公钥在应用中。<br>同时config server提供方便的/encrypt and /decrypt端点，<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ curl localhost:8888/encrypt -d mysecret</span><br><span class="line">682bc583f4641835fa2db009355293665d2647dade3375c0ee201de2a49f7bda</span><br><span class="line">$ curl localhost:8888/decrypt -d 682bc583f4641835fa2db009355293665d2647dade3375c0ee201de2a49f7bda</span><br><span class="line">mysecret</span><br></pre></td></tr></table></figure></p>
+<h2 id="SpringCloud-Netflix-Eureka"><a href="#SpringCloud-Netflix-Eureka" class="headerlink" title="SpringCloud Netflix Eureka"></a>SpringCloud Netflix Eureka</h2><p>Eureka是Netflix开源的一款提供服务注册和发现的产品，它提供了完整的Service Registry和Service Discovery实现。类似与ZooKeeper。<br>通过服务中心来获取服务你不需要关注你调用的项目IP地址，由几台服务器组成，每次直接去服务中心获取可以使用的服务去调用即可。<br>由于各种服务都注册到了服务中心，就有了去做很多高级功能条件。比如几台服务提供相同服务来做均衡负载；监控服务器调用成功率来做熔断，移除服务列表中的故障点；监控服务调用时间来对不同的服务器设置不同的权重等等。  </p>
+<p><strong>CAP理论：</strong><br>在分布式系统领域有个著名的CAP(Consistency、Availablity和Partition Tolerance)定理：C——数据一致性，A——服务可用性，P——服务对网络分区故障的容错性。这三个特性在任何分布式系统中不能同时满足，最多同时满足两个。</p>
+<p><strong>ZoopKeeper是基于CP原则构建的:</strong><br>Zookeeper保证的是CP，即任何时刻对Zookeeper的访问请求能得到一致的数据结果，同时系统对网络分割具备容错性，但是它不能保证每次服务请求的可用性。从实际情况来分析，在使用Zookeeper获取服务列表时，如果zookeeper正在选主，或者Zookeeper集群中半数以上机器不可用，那么将就无法获得数据了。<br>ZK有一个Leader，而且在Leader无法使用的时候通过Paxos（ZAB）算法选举出一个新的Leader。这个Leader的目的就是保证写信息的时候只向这个Leader写入，Leader会同步信息到Followers。这个过程就可以保证数据的一致性。<br>但是对于服务发现场景来说，情况就不太一样了：针对同一个服务，即使注册中心的不同节点保存的服务提供者信息不尽相同，也并不会造成灾难性的后果。因为对于服务消费者来说，<strong>能消费才是最重要的——拿到可能不正确的服务实例信息后尝试消费一下，也好过因为无法获取实例信息而不去消费。</strong><br>所以，对于服务发现而言，可用性比数据一致性更加重要——<strong>AP胜过CP</strong>。</p>
+<p><strong>Eureka是基于AP原则构建的:</strong><br>对比下ZK，Eureka不用选举一个Leader。每个Eureka服务器单独保存服务注册地址，Eureka也没有Leader的概念。这也因此产生了无法保证每个Eureka服务器都保存一致数据的特性。当Eureka与注册者心跳无法保持的时候，依然保存注册列表的信息很长一段时间。当然了，客户端中必须用有效的机制屏蔽坏掉的服务器，这个Spring Cloud中的体现是<code>Ribbon</code>。</p>
+<p>Eureka因为没有选举过程来选举Leader，因此写的信息可以独立进行。因此有可能出现数据信息不一致的情况。但是当网络出现问题的时候，每台服务器也可以完成独立的服务。当然了，一些<strong>客户端的负载平衡和Fail Over机制</strong>需要来辅助完成额外的功能。</p>
+<p><strong>关于一致性：</strong><br>一致性是指从系统外部读取系统内部的数据时，在一定约束条件下相同，即数据变动在系统内部各节点应该是同步的。根据一致性的强弱程度不同，可以将一致性级别分为如下几种：</p>
+<ul>
+<li>强一致性（strong consistency）。任何时刻，任何用户都能读取到最近一次成功更新的数据。</li>
+<li>单调一致性（monotonic consistency）。任何时刻，任何用户一旦读到某个数据在某次更新后的值，那么就不会再读到比这个值更旧的值。也就是说，可获取的数据顺序必是单调递增的。</li>
+<li>会话一致性（session consistency）。任何用户在某次会话中，一旦读到某个数据在某次更新后的值，那么在本次会话中就不会再读到比这值更旧的值　　 会话一致性是在单调一致性的基础上进一步放松约束，只保证单个用户单个会话内的单调性，在不同用户或同一用户不同会话间则没有保障。示例case：php的session概念。</li>
+<li>最终一致性（eventual consistency）。用户只能读到某次更新后的值，但系统保证数据将最终达到完全一致的状态，只是所需时间不能保障。(幂等)</li>
+<li>弱一致性（weak consistency）。用户无法在确定时间内读到最新更新的值。</li>
+</ul>
+<h3 id="Eureka高可用集群"><a href="#Eureka高可用集群" class="headerlink" title="Eureka高可用集群"></a>Eureka高可用集群</h3><p>Eureka Server可以运行多个实例来构建集群，解决单点问题，但不同于ZooKeeper的选举leader的过程，Eureka Server采用的是<code>Peer to Peer对等通信</code>。这是一种<code>去中心化</code>的架构，无master/slave区分，每一个Peer都是对等的。在这种架构中，节点通过彼此互相注册来提高可用性，每个节点需要添加一个或多个有效的serviceUrl指向其他节点。每个节点都可被视为其他节点的副本。</p>
+<p>如果某台Eureka Server宕机，Eureka Client的请求会自动切换到新的Eureka Server节点，当宕机的服务器重新恢复后，Eureka会再次将其纳入到服务器集群管理之中。当节点开始接受客户端请求时，所有的操作都会进行<code>replicateToPeer（节点间复制）</code>操作，将请求复制到其他Eureka Server当前所知的所有节点中。</p>
+<p>一个新的Eureka Server节点启动后，会首先尝试从邻近节点获取所有实例注册表信息，完成初始化。并且会通过<code>心跳续约</code>的方式定期更新。默认配置下，如果Eureka Server在一定时间内没有接收到某个服务实例的心跳，Eureka Server将会注销该实例（默认为90秒，通过<code>eureka.instance.lease-expiration-duration-in-seconds</code>配置）。当Eureka Server节点在短时间内丢失过多的心跳时（比如发生了网络分区故障），那么这个节点就会进入<code>自我保护模式</code></p>
+<h3 id="Eureka架构"><a href="#Eureka架构" class="headerlink" title="Eureka架构"></a>Eureka架构</h3><p>Eureka包含两个组件：Eureka Server 和 Eureka Client，它们的作用如下：<br>Eureka Client是一个Java客户端，用于简化与Eureka Server的交互；<br>Eureka Server提供服务发现的能力，各个微服务启动时，会通过Eureka Client向Eureka Server进行注册自己的信息，Eureka Server会存储该服务的信息；<br>微服务启动后，会周期性地向Eureka Server发送心跳（<code>默认周期为30秒</code>）以续约自己的信息。如果Eureka Server在一定时间内没有接收到某个微服务节点的心跳，Eureka Server将会注销该微服务节点（<code>默认90秒</code>）；<br>每个Eureka Server同时也是Eureka Client，多个Eureka Server之间通过复制的方式完成服务注册表的同步；<br>Eureka Client会缓存Eureka Server中的信息。即使所有的Eureka Server节点都宕掉，服务消费者依然可以使用缓存中的信息找到服务提供者。<br>综上，Eureka通过<code>心跳检测、健康检查和客户端缓存</code>等机制，提高了系统的灵活性、可伸缩性和可用性。<br><img src="/img/2017-12-21-15-55-08.png" alt=""><br><img src="/img/2017-12-21-15-55-24.png" alt=""></p>
+<h3 id="监控界面"><a href="#监控界面" class="headerlink" title="监控界面"></a>监控界面</h3><p>Eureka为我们提供了监控界面来监控服务的监控程度。<br><img src="/img/2017-12-21-15-56-53.png" alt=""></p>
+<h3 id="Eureka的自我保护模式"><a href="#Eureka的自我保护模式" class="headerlink" title="Eureka的自我保护模式"></a>Eureka的自我保护模式</h3><p>如果在Eureka Server的首页看到以下这段提示，则说明Eureka已经进入了保护模式。</p>
+<blockquote>
+<p>EMERGENCY! EUREKA MAY BE INCORRECTLY CLAIMING INSTANCES ARE UP WHEN THEY’RE NOT. RENEWALS ARE LESSER THAN THRESHOLD AND HENCE THE INSTANCES ARE NOT BEING EXPIRED JUST TO BE SAFE.<br>保护模式主要用于一组客户端和Eureka Server之间存在<code>网络分区</code>场景下的保护。一旦进入保护模式，Eureka Server将会尝试保护其服务注册表中的信息，不再删除服务注册表中的数据（也就是不会注销任何微服务）。<br>详见：<a href="https://github.com/Netflix/eureka/wiki/Understanding-Eureka-Peer-to-Peer-Communication" target="_blank" rel="noopener">https://github.com/Netflix/eureka/wiki/Understanding-Eureka-Peer-to-Peer-Communication</a><br>默认情况下，如果Eureka Server在一定时间内没有接收到某个微服务实例的心跳，Eureka Server将会注销该实例（默认90秒）。但是当网络分区故障发生时，微服务与Eureka Server之间无法正常通信，以上行为可能变得非常危险了——因为微服务本身其实是健康的，此时本不应该注销这个微服务。<br>Eureka通过“自我保护模式”来解决这个问题——当Eureka Server节点在短时间内丢失过多客户端时（可能发生了网络分区故障），那么这个节点就会进入自我保护模式。一旦进入该模式，Eureka Server就会保护服务注册表中的信息，不再删除服务注册表中的数据（也就是不会注销任何微服务）。当网络故障恢复后，该Eureka Server节点会自动退出自我保护模式。<br>综上，自我保护模式是一种应对网络异常的安全保护措施。<strong>它的架构哲学是宁可同时保留所有微服务（健康的微服务和不健康的微服务都会保留），也不盲目注销任何健康的微服务</strong>。使用自我保护模式，可以让Eureka集群更加的健壮、稳定。<br>在Spring Cloud中，可以使用<code>eureka.server.enable-self-preservation = false</code> 禁用自我保护模式。</p>
+</blockquote>
+<h3 id="开发、测试时如何解决Eureka注册服务慢的问题"><a href="#开发、测试时如何解决Eureka注册服务慢的问题" class="headerlink" title="开发、测试时如何解决Eureka注册服务慢的问题?"></a>开发、测试时如何解决Eureka注册服务慢的问题?</h3><p>使用配置项：eureka.instance.leaseRenewalIntervalInSeconds<br>作为实例还涉及到与注册中心的周期性心跳，默认持续时间为30秒（通过serviceUrl）。在实例、服务器、客户端都在本地缓存中具有相同的元数据之前，服务不可用于客户端发现（所以可能需要3次心跳）。你可以使用eureka.instance.leaseRenewalIntervalInSeconds 配置，这将加快客户端连接到其他服务的过程。在生产中，最好坚持使用默认值，因为在服务器内部有一些计算，他们对续约做出假设。</p>
+<h3 id="如何解决Eureka-Server不踢出已关停的节点的问题"><a href="#如何解决Eureka-Server不踢出已关停的节点的问题" class="headerlink" title="如何解决Eureka Server不踢出已关停的节点的问题"></a>如何解决Eureka Server不踢出已关停的节点的问题</h3><p>在开发过程中，我们常常希望Eureka Server能够迅速有效地踢出已关停的节点，但是新手由于Eureka自我保护模式，以及心跳周期长的原因，常常会遇到Eureka Server不踢出已关停的节点的问题。解决方法如下：</p>
+<p>(1) Eureka Server端：配置关闭自我保护，并按需配置Eureka Server清理无效节点的时间间隔。<br>eureka.server.enable-self-preservation            # 设为false，关闭自我保护<br>eureka.server.eviction-interval-timer-in-ms     # 清理间隔（单位毫秒，默认是60*1000）<br>(2) Eureka Client端：配置开启健康检查，并按需配置续约更新时间和到期时间。<br>eureka.client.healthcheck.enabled            # 开启健康检查（需要spring-boot-starter-actuator依赖）<br>eureka.instance.lease-renewal-interval-in-seconds        # 续约更新时间间隔（默认30秒）<br>eureka.instance.lease-expiration-duration-in-seconds     # 续约到期时间（默认90秒）<br>注意：<br>更改Eureka更新频率将打破服务器的自我保护功能，生产环境下不建议自定义这些配置。<br>详见：<a href="https://github.com/spring-cloud/spring-cloud-netflix/issues/373" target="_blank" rel="noopener">https://github.com/spring-cloud/spring-cloud-netflix/issues/373</a></p>
+<p>注意点：eureka.client.healthcheck.enabled=true配置项必须设置在application.yml中<br>eureka.client.healthcheck.enabled=true 只应该在application.yml中设置。如果设置在bootstrap.yml中将会导致一些不良的副作用，例如在Eureka中注册的应用名称是UNKNOWN等。</p>
+<h2 id="SpringCloud-Netflix-Ribbon"><a href="#SpringCloud-Netflix-Ribbon" class="headerlink" title="SpringCloud Netflix Ribbon"></a>SpringCloud Netflix Ribbon</h2><p>Spring Cloud Ribbon是基于Netflix Ribbon实现的一套客户端负载均衡的工具。它是一个基于HTTP和TCP的客户端负载均衡器。它可以通过在客户端中配置ribbonServerList或者使用Eureka服务发现来设置服务端列表去轮询访问以达到均衡负载的作用。<br>目前已经被集合进Feign中了，平常我们直接使用Feign就可以了。<br>它主要包括六个组件：</p>
+<ul>
+<li>ServerList，负载均衡使用的服务器列表。这个列表会缓存在负载均衡器中，并定期更新。当Ribbon与Eureka结合使用时，ServerList的实现类就是DiscoveryEnabledNIWSServerList，它会保存Eureka Server中注册的服务实例表。</li>
+<li>ServerListFilter，服务器列表过滤器。这是一个接口，主要用于对Service Consumer获取到的服务器列表进行预过滤，过滤的结果也是ServerList。Ribbon提供了多种过滤器的实现。</li>
+<li>IPing，探测服务实例是否存活的策略。</li>
+<li>IRule，负载均衡策略，其实现类表述的策略包括：轮询、随机、根据响应时间加权等，其类结构如下图所示。<br><img src="/img/2017-12-21-16-02-05.png" alt=""></li>
+</ul>
+<p>我们也可以自己定义负载均衡策略，比如我们就利用自己实现的策略，实现了服务的版本控制和直连配置。实现好之后，将实现类重新注入到Ribbon中即可。</p>
+<ul>
+<li>ILoadBalancer，负载均衡器。这也是一个接口，Ribbon为其提供了多个实现，比如ZoneAwareLoadBalancer。而上层代码通过调用其API进行服务调用的负载均衡选择。一般ILoadBalancer的实现类中会引用一个IRule。</li>
+<li>RestClient，服务调用器。顾名思义，这就是负载均衡后，Ribbon向Service Provider发起REST请求的工具。</li>
+</ul>
+<p>Ribbon工作时会做四件事情：</p>
+<ul>
+<li>优先选择在同一个Zone且负载较少的Eureka Server；</li>
+<li>定期从Eureka更新并过滤服务实例列表；</li>
+<li>根据用户指定的策略，在从Server取到的服务注册列表中选择一个实例的地址；</li>
+<li>通过RestClient进行服务调用。</li>
+</ul>
+<h2 id="SpringCloud-Netflix-Feign"><a href="#SpringCloud-Netflix-Feign" class="headerlink" title="SpringCloud Netflix Feign"></a>SpringCloud Netflix Feign</h2><p>Spring Cloud Feign是一套基于Netflix Feign实现的声明式服务调用客户端。它使得编写Web服务客户端变得更加简单。类似于RPC调用。<br>我们只需要通过创建接口并用注解来配置它既可完成对Web服务接口的绑定。它具备可插拔的注解支持，包括Feign注解、JAX-RS注解。它也支持可插拔的编码器和解码器。<strong>Spring Cloud Feign还扩展了对Spring MVC注解的支持，同时还整合了Ribbon和Eureka来提供均衡负载的HTTP客户端实现。</strong></p>
+<p>由于Feign是基于Ribbon实现的，所以它自带了客户端负载均衡功能，也可以通过Ribbon的IRule进行策略扩展。另外，Feign还整合的Hystrix来实现服务的容错保护，不过Feign的Hystrix默认是关闭的。<br>你可以通过配置来开启<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">feign.hystrix.enabled=true</span><br></pre></td></tr></table></figure></p>
+<p>Feign具有如下特性：</p>
+<ul>
+<li>可插拔的注解支持，包括Feign注解和JAX-RS注解、Spring MVC注解</li>
+<li>支持可插拔的HTTP编码器和解码器</li>
+<li>支持Hystrix和它的Fallback</li>
+<li>支持Ribbon的负载均衡</li>
+<li>支持HTTP请求和响应的压缩</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@FeignClient</span>(<span class="string">"stores"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StoreClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@RequestMapping</span>(method = RequestMethod.GET, value = <span class="string">"/stores"</span>)</span><br><span class="line">    <span class="function">List&lt;Store&gt; <span class="title">getStores</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping</span>(method = RequestMethod.POST, value = <span class="string">"/stores/&#123;storeId&#125;"</span>, consumes = <span class="string">"application/json"</span>)</span><br><span class="line">    <span class="function">Store <span class="title">update</span><span class="params">(@PathVariable(<span class="string">"storeId"</span>)</span> Long storeId, Store store)</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* Feign fallback支持</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">@FeignClient</span>(name = <span class="string">"microservice-provider-user"</span>, fallback = FeignClientFallback.class)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">UserFeignClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@RequestMapping</span>(value = <span class="string">"/&#123;id&#125;"</span>, method = RequestMethod.GET)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(@PathVariable(<span class="string">"id"</span>)</span> Long id)</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 回退类FeignClientFallback需实现Feign Client接口</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">FeignClientFallback</span> <span class="keyword">implements</span> <span class="title">UserFeignClient</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(Long id)</span> </span>&#123;</span><br><span class="line">    User user = <span class="keyword">new</span> User();</span><br><span class="line">    user.setId(-<span class="number">1L</span>);</span><br><span class="line">    user.setUsername(<span class="string">"默认用户"</span>);</span><br><span class="line">    <span class="keyword">return</span> user;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MovieController</span> </span>&#123;</span><br><span class="line">  <span class="meta">@Autowired</span></span><br><span class="line">  <span class="keyword">private</span> UserFeignClient userFeignClient;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@GetMapping</span>(<span class="string">"/user/&#123;id&#125;"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> User <span class="title">findById</span><span class="params">(@PathVariable Long id)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.userFeignClient.findById(id);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h3><p>如何使用Feign构造多参数的请求<br>1、原生参数+@RequestParam<br>2、map +@RequestParam<br>3、post + @ResponseBody</p>
+<p>Spring Cloud中，Feign和Ribbon在整合了Hystrix后，可能会出现首次调用失败的问题，要如何解决该问题呢？<br>Hystrix默认的超时时间是1秒，如果超过这个时间尚未响应，将会进入fallback代码。而首次请求往往会比较慢（因为Spring的懒加载机制，要实例化一些类），这个响应时间可能就大于1秒了。解决方案有三种。<br>方法一：hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 5000<br>该配置是让Hystrix的超时时间改为5秒<br>方法二：hystrix.command.default.execution.timeout.enabled: false<br>该配置，用于禁用Hystrix的超时时间<br>方法三：feign.hystrix.enabled: false<br>该配置，用于索性禁用feign的hystrix。该做法除非一些特殊场景，不推荐使用。</p>
+<h2 id="SpringCloud-Netflix-Hystrix"><a href="#SpringCloud-Netflix-Hystrix" class="headerlink" title="SpringCloud Netflix Hystrix"></a>SpringCloud Netflix Hystrix</h2><p><strong>雪崩效应:</strong><br>在微服务架构中通常会有多个服务层调用，基础服务的故障可能会导致级联故障，进而造成整个系统不可用的情况，这种现象被称为服务雪崩效应。服务雪崩效应是一种因“服务提供者”的不可用导致“服务消费者”的不可用,并将不可用逐渐放大的过程。<br>如果下图所示：A作为服务提供者，B为A的服务消费者，C和D是B的服务消费者。A不可用(网络延迟，服务出现不稳定，响应缓慢或者掉调用超时，宕机等)引起了B的不可用(系统的线程和可用连接数用完)，并将不可用像滚雪球一样放大到C和D时。导致新的请求进不来，服务僵死，这便是故障传递。最终形成雪崩效应/多米诺骨牌效应。使得整个集群都不能对外提供服务。<br><img src="/img/2017-12-21-16-15-51.png" alt=""></p>
+<p><strong>断路器/熔断器（CircuitBreaker）</strong><br>断路器的原理很简单，如同电力过载保护器。它可以实现<code>快速失败(fast-fail)</code>，如果它在一段时间内侦测到许多类似的错误，会强迫其以后的多个调用快速失败，不再访问远程服务器，从而防止应用程序不断地尝试执行可能会失败的操作，使得应用程序继续执行而不用等待修正错误，或者浪费CPU时间去等到长时间的超时产生。<strong>断路器也可以使应用程序能够诊断错误是否已经修正，如果已经修正，应用程序会再次尝试调用操作。</strong><br>Hystrix对其实现分为三部分:熔断，fallback，资源隔离</p>
+<p>1、熔断：<br><img src="/img/2017-12-21-16-20-06.png" alt=""></p>
+<p>这里涉及到断路器的三个重要参数：<code>快照时间窗、请求总数下限、错误百分比下限</code>。这个参数的作用分别是：</p>
+<ul>
+<li>快照时间窗：断路器确定是否打开需要统计一些请求和错误数据，而统计的时间范围就是快照时间窗，默认为最近的10秒。</li>
+<li>请求总数下限：在快照时间窗内，必须满足请求总数下限才有资格根据熔断。默认为20，意味着在10秒内，如果该hystrix命令的调用此时不足20次，即时所有的请求都超时或其他原因失败，断路器都不会打开。</li>
+<li>错误百分比下限：当请求总数在快照时间窗内超过了下限，比如发生了30次调用，如果在这30次调用中，有16次发生了超时异常，也就是超过50%的错误百分比，在默认设定50%下限情况下，这时候就会将断路器打开。</li>
+</ul>
+<p>当断路器打开，对主逻辑进行熔断之后，hystrix会启动一个<code>休眠时间窗</code>，在这个时间窗内，<code>降级</code>逻辑是临时的成为主逻辑，当休眠时间窗到期，断路器将进入<code>半开</code>状态，释放一次请求到原来的主逻辑上，如果此次请求正常返回，那么断路器将继续闭合，主逻辑恢复，如果这次请求依然有问题，断路器继续进入打开状态，休眠时间窗重新计时。</p>
+<p>2、Fallback<br>Fallback相当于是降级操作(前面Feign时已有提到). 如对于查询操作, 我们可以实现一个fallback方法, 当请求后端服务出现异常的时候, 可以使用fallback方法返回的值. fallback方法的返回值一般是设置的默认值或者来自缓存.</p>
+<p>3、资源隔离：<br><img src="/img/2017-12-21-16-25-06.png" alt=""><img src="/img/2017-12-21-16-33-29.png" alt=""><br>两种模式:多个线程池隔离模式和信号量隔离模式</p>
+<p>在Hystrix中, 主要通过线程池来实现资源隔离. 通常在使用的时候我们会根据调用的远程服务划分出多个线程池. 例如调用产品服务的Command放入A线程池, 调用账户服务的Command放入B线程池. 这样做的主要优点是运行环境被隔离开了. 这样就算调用服务的代码存在bug或者由于其他原因导致自己所在线程池被耗尽时, 不会对系统的其他服务造成影响.<br>但是带来的代价就是维护多个线程池会对系统带来额外的性能开销.<br>如果是对性能有严格要求而且确信自己调用服务的客户端代码不会出问题的话, 可以使用Hystrix的信号模式(Semaphores)来隔离资源.与线程隔离最大不同在于执行依赖代码的线程依然是请求线程（该线程需要通过信号申请）,如果客户端是可信的且可以快速返回，可以使用信号隔离替换线程隔离,降低开销.</p>
+<p><img src="/img/2017-12-21-16-36-40.png" alt=""></p>
+<p>因为熔断只是作用在服务调用这一端，而Feign已经依赖了Hystrix。故而配置好相关策略后，仅仅使用Feign和书写fallback类或方法即可。  (前面Feign时已提及)</p>
+<p>隔离分析：<a href="http://hot66hot.iteye.com/blog/2155036" target="_blank" rel="noopener">http://hot66hot.iteye.com/blog/2155036</a></p>
+<h2 id="Hystrix-dashboard-amp-Turbine"><a href="#Hystrix-dashboard-amp-Turbine" class="headerlink" title="Hystrix-dashboard &amp; Turbine"></a>Hystrix-dashboard &amp; Turbine</h2><p>Hystrix-dashboard是一款针对Hystrix进行实时监控的工具，通过Hystrix Dashboard我们可以在直观地看到各Hystrix Command的请求响应时间, 请求成功率等数据。但是只使用Hystrix Dashboard的话, 你只能看到单个应用内的服务信息, 这明显不够. 我们需要一个工具能让我们汇总系统内多个服务的数据并显示到Hystrix Dashboard上, 这个工具就是Turbine.</p>
+<p>Turbine是聚合服务器发送事件流数据的一个工具，用来监控集群下hystrix的metrics情况。</p>
+<p><img src="/img/2017-12-21-16-29-07.png" alt=""><br><img src="/img/2017-12-21-16-29-42.png" alt=""><br>Delay：该参数用来控制服务器上轮询监控信息的延迟时间，默认为2000毫秒，我们可以通过配置该属性来降低客户端的网络和CPU消耗。<br><img src="/img/2017-12-21-16-30-09.png" alt=""><img src="/img/2017-12-21-16-30-45.png" alt=""><br>们可以在监控信息的左上部分找到两个重要的图形信息：一个实心圆和一条曲线。<br>实心圆：共有两种含义。它通过颜色的变化代表了实例的健康程度，如下图所示，它的健康度从绿色、黄色、橙色、红色递减。该实心圆除了颜色的变化之外，它的大小也会根据实例的请求流量(request traffic)发生变化，流量越大该实心圆就越大。所以通过该实心圆的展示，我们就可以在大量的实例中快速的发现故障实例和高压力实例。<br>曲线：用来记录2分钟内流量的相对变化，我们可以通过它来观察到流量的上升和下降趋势。</p>
+<h2 id="SpringCloud-Sleuth"><a href="#SpringCloud-Sleuth" class="headerlink" title="SpringCloud Sleuth"></a>SpringCloud Sleuth</h2><p>Spring Cloud Sleuth 主要功能就是在分布式系统中提供追踪解决方案.<br>spring cloud sleuth可以结合zipkin，将信息发送到zipkin，利用zipkin的存储来存储信息，利用zipkin ui来展示数据。同时也可以只是简单的将数据记在日志中。</p>
+<ul>
+<li>提供链路追踪。通过sleuth可以很清楚的看出一个请求都经过了哪些服务。可以很方便的理清服务间的调用关系。</li>
+<li>可视化错误。对于程序未捕捉的异常，可以在zipkin界面上看到。</li>
+<li>分析耗时。通过sleuth可以很方便的看出每个采样请求的耗时，分析出哪些服务调用比较耗时。当服务调用的耗时随着请求量的增大而增大时，也可以对服务的扩容提供一定的提醒作用。</li>
+<li>优化链路。对于频繁地调用一个服务，或者并行地调用等，可以针对业务做一些优化措施。</li>
+</ul>
+<p>服务追踪分析:<br>微服务架构上通过业务来划分服务的，通过REST调用，对外暴露的一个接口，可能需要很多个服务协同才能完成这个接口功能，如果链路上任何一个服务出现问题或者网络超时，都会形成导致接口调用失败。随着业务的不断扩张，服务之间互相调用会越来越复杂。<br><img src="/img/2017-12-21-16-38-55.png" alt=""></p>
+<p>术语:<br>Span：基本工作单元，span通过一个64位ID唯一标识，trace以另一个64位ID表示，span还有其他数据信息，比如摘要、时间戳事件、键值对注释、span的ID、以及span父ID等<br>span在不断的启动和停止，同时记录了时间信息，当你创建了一个span，你必须在未来的某个时刻停止它。初始化span称为”root span”,该span的id和trace的id相等。<br>Trace：一系列spans组成的一个树状结构(root span为根共享),trace也用一个64位的id唯一标识，trace中的所有span都共享该trace id。<br>Annotation：用来及时记录一个事件的存在，一些核心annotations用来定义一个请求的开始和结束 </p>
+<ul>
+<li>cs - Client Sent -客户端发起一个请求，这个annotion描述了这个span的开始</li>
+<li>sr - Server Received -服务端获得请求并准备开始处理它，如果将其sr减去cs时间戳，便可得到<code>网络延迟</code></li>
+<li>ss - Server Sent -注解表明请求处理的完成(当请求返回客户端)，如果ss减去sr时间戳，便可得到<code>服务端需要的处理请求所需的时间</code></li>
+<li>cr - Client Received -表明span的结束，客户端成功接收到服务端的回复，如果cr减去cs时间戳，便可得到<code>客户端从服务端获取回复的所有所需时间</code> </li>
+</ul>
+<p><img src="/img/2017-12-21-16-40-15.png" alt=""><br>这个过程中span的父子关系：<br><img src="/img/2017-12-21-16-40-30.png" alt=""></p>
+<p>Sleuth可以配合ELK使用，来查询分析跟踪日志。<br>sleuth可以配合Zipkin使用。Zipkin时Twitter开源的分布式跟踪系统，主要功能是收集系统的时序数据，从而跟踪微服务架构的系统延时等问题。Zipkin还提供了一个非常与友好的界面，来帮助分析跟踪数据。<br><img src="/img/2017-12-21-16-41-11.png" alt=""></p>
+<p>ZipKin还可以分析微服务间的依赖关系<br><img src="/img/2017-12-21-16-41-30.png" alt=""></p>
+<p>还可以看Span的详细分析界面：<br><img src="/img/2017-12-21-16-41-53.png" alt=""></p>
+<h3 id="改进：解耦微服务与zipkinserver"><a href="#改进：解耦微服务与zipkinserver" class="headerlink" title="改进：解耦微服务与zipkinserver"></a>改进：解耦微服务与zipkinserver</h3><p>sleuth+sleuth-zipkin-stream+MQ+Elasticsearch(此处作为存储,默认zipkin的数据是放在内存中的)<br><img src="/img/2017-12-21-16-46-06.png" alt=""></p>
+<h2 id="SpringCloud-Netflix-Zuul"><a href="#SpringCloud-Netflix-Zuul" class="headerlink" title="SpringCloud Netflix Zuul"></a>SpringCloud Netflix Zuul</h2><p>提示:最近新出了一个SpringCloud-gateway，值得关注，不过问题还挺多的。</p>
+<p>外部的应用如何来访问内部各种各样的微服务呢？在微服务架构中，后端服务往往不直接开放给调用端，而是通过一个API网关根据请求的url，路由到相应的服务。当添加API网关后，在第三方调用端和服务提供方之间就创建了一面墙，这面墙直接与调用方通信进行权限控制后将请求均衡分发给后台服务端。<br><img src="/img/2017-12-21-16-48-53.png" alt=""><br>有了api gateway之后，一些与业务关系并不大的通用处理逻辑可以从api gateway中剥离出来，api gateway仅仅负责服务的编排与结果的组装。</p>
+<p>为什么需要API Gateway?<br>1、简化客户端调用复杂度<br>2、数据裁剪以及聚合<br>通常而言不同的客户端对于显示时对于数据的需求是不一致的，比如手机端或者Web端又或者在低延迟的网络环境或者高延迟的网络环境。因此为了优化客户端的使用体验，API Gateway可以对通用性的响应数据进行裁剪以适应不同客户端的使用需求。同时还可以将多个API调用逻辑进行聚合，从而减少客户端的请求数，优化客户端用户体验.<br>3、多渠道支持<br>当然我们还可以针对不同的渠道和客户端提供不同的API Gateway,对于该模式的使用由另外一个大家熟知的方式叫Backend for front-end(BFF), 在Backend for front-end模式当中，我们可以针对不同的客户端分别创建其BFF.<br><img src="/img/2017-12-21-16-51-03.png" alt=""><br>4、遗留系统的微服务化改造<br><img src="/img/2017-12-21-16-51-19.png" alt=""></p>
+<p>zuul 是netflix开源的一个API Gateway 服务器, 本质上是一个web servlet应用。<br>Zuul 是提供动态路由，监控，弹性，安全等边缘功能的框架。<br>Zuul的主要功能是路由转发和过滤器。路由功能是微服务的一部分，比如／api/user转发到到user服务，/api/shop转发到到shop服务。zuul默认和Ribbon结合实现了负载均衡的功能。</p>
+<p><img src="/img/2017-12-21-16-52-37.png" alt=""></p>
+<p>Zuul可以通过过滤机制，从而实现以下各项功能：</p>
+<ul>
+<li>验证与安全保障(默认未提供): 识别面向各类资源的验证要求并拒绝那些与要求不符的请求。</li>
+<li>审查与监控: 在边缘位置追踪有意义数据及统计结果，从而为我们带来准确的生产状态结论。</li>
+<li>动态路由(默认未提供): 以动态方式根据需要将请求路由至不同后端集群处。</li>
+<li>压力测试(默认未提供): 逐渐增加指向集群的负载流量，从而计算性能水平。</li>
+<li>负载分配: 为每一种负载类型分配对应容量，并弃用超出限定值的请求。</li>
+<li>静态响应处理: 在边缘位置直接建立部分响应，从而避免其流入内部集群。<br>默认情况下，Zuul会代理所有注册到Eureka Server的微服务，并且Zuul的路由规则如下：<a href="http://ZUUL_HOST:ZUUL_PORT/serviceId/**" target="_blank" rel="noopener">http://ZUUL_HOST:ZUUL_PORT/serviceId/**</a> 会被转发到特定的微服务下.<br>但支持的路由规则非常丰富。</li>
+</ul>
+<p>Zuul存在的问题，包括：<br>性能问题：没有Nginx牛逼，所以一般结合Nginx来使用。<br>WebSocket的支持问题： Zuul中并不直接提供对WebSocket的支持，需要添加额外的过滤器实现对WebSocket的支持；<br>为了解决以上问题，可以通过在Zuul前端部署Nginx实现对Zuul实例的反向代理，同时适当的通过添加Cache以及请求压缩减少对后端Zuul实例的压力。<br><img src="/img/2017-12-21-16-56-55.png" alt=""></p>
+<p>注意:Zuul通过Eureka是支持集群高可用模式的。</p>
+<h3 id="Q-amp-A-1"><a href="#Q-amp-A-1" class="headerlink" title="Q&amp;A:"></a>Q&amp;A:</h3><p>1、会话保持问题<br>通过跟踪一个HTTP请求经过Zuul到具体服务，再到返回结果的全过程。我们很容易就能发现，在传递的过程中，HTTP请求头信息中的Cookie和Authorization都没有被正确地传递给具体服务，所以最终导致会话状态没有得到保持的现象。<br>那么这些信息是在哪里丢失的呢？<br>解决该问题的思路也很简单，我们只需要通过设置sensitiveHeaders即可，设置方法分为两种：<br>全局设置：<br>zuul.sensitive-headers=<br>指定路由设置：<br>zuul.routes.&lt; routeName&gt;.sensitive-headers=<br>zuul.routes.&lt; routeName&gt;.custom-sensitive-headers=true</p>
+<p>2、重定向问题<br>在使用Spring Cloud Zuul对接Web网站的时候，处理完了会话控制问题之后。往往我们还会碰到如下图所示的问题，我们在浏览器中通过Zuul发起了登录请求，该请求会被路由到某WebSite服务，该服务在完成了登录处理之后，会进行重定向到某个主页或欢迎页面。此时，仔细的开发者会发现，在登录完成之后，我们浏览器中URL的HOST部分发生的改变，该地址变成了具体WebSite服务的地址了。<br><img src="/img/2017-12-21-16-59-31.png" alt=""><br>解决：<code>zuul.add-host-header=true</code>。</p>
+<h2 id="SpringCloud-Stream"><a href="#SpringCloud-Stream" class="headerlink" title="SpringCloud Stream"></a>SpringCloud Stream</h2><p>Spring Cloud Stream提供了很多抽象和基础组件来简化消息驱动型微服务应用。包含以下内容：</p>
+<ul>
+<li>绑定broker抽象</li>
+<li>持久化发布／订阅支持</li>
+<li>消费者组支持</li>
+<li>分区支持（Partitioning Support）</li>
+</ul>
+<p><img src="/img/2017-12-21-17-04-36.png" alt=""><img src="/img/2017-12-21-17-09-38.png" alt=""></p>
+<p>Spring Cloud Stream提供对 Kafka, Rabbit MQ的绑定实现。<br>Spring Cloud Stream 最大的方便之处，莫过于抽象了事件驱动的一些概念，对于消息中间件的进一步封装，可以做到代码层面对中间件的无感知，甚至于动态的切换中间件，切换topic。使得微服务开发的高度解耦，服务可以关注更多自己的业务流程。</p>
+<p>引用了发布-订阅、消费组、分区的三个核心概念。</p>
+<p>1、发布-订阅模式：<br>当一条消息被投递到消息中间件之后，所有订阅次消息的Consumer都可以消费到这条消息。<br>RabbitMQ里是通过Topic的Exchange来实现的。<br>Kafka里是通过Topic会被每个ConsumerGroup消费一次这个特性决定的。<br><img src="/img/2017-12-21-17-06-07.png" alt=""><img src="/img/2017-12-21-17-06-17.png" alt=""></p>
+<p>2、消费组：<br>在微服务架构中，每个服务节点为了实现高可用和负载均衡实际上都会部署多个实例，如果只有发布-订阅模式就会导致同一个功能的服务节点会重复消费。为了解决这个问题，Spring Cloud Stream中提供了消费组的概念。<br>通过<code>spring.cloud.stream.bindings.input.group</code>属性为应用指定一个组名，MQ中的一条消息只能被同一个组名中的一个实例消费。（每个微服务结点启动后会默认获得一个独立的组）。</p>
+<p>需要注意的是：<strong>每个发送到消费组的数据，仅由消费组中的一个消费者处理。</strong></p>
+<p>3、主题分区：<br>Stream提供对一个应用多个实例情况下的数据分区支持，在这种场景下，the broker topic会被视为拥有很多分区的结构，这样确保含有特定标识的数据总是会被同一个消费者实例消费。不管中间件是否原生支持，由于Stream的通用抽象，都可以使用这一特性。<br><img src="/img/2017-12-21-17-08-59.png" alt=""></p>
+<h2 id="SpringCloud-Bus"><a href="#SpringCloud-Bus" class="headerlink" title="SpringCloud Bus"></a>SpringCloud Bus</h2><p>Spring cloud bus通过轻量消息代理连接各个分布的节点。这会用在广播状态的变化（例如配置变化）或者其他的消息指令。<br>Spring bus的一个核心思想是通过分布式的启动器对spring boot应用进行扩展，可以用来建立一个多个应用之间的通信频道。目前唯一实现的方式是用AMQP消息代理作为通道(因为它依赖于SpringCloud Stream)。<br>利用bus的机制可以做很多的事情，其中配置中心客户端刷新就是典型的应用场景之一，我们用一张图来描述bus在配置中心使用的机制。<br><img src="/img/2017-12-21-17-12-06.png" alt=""></p>
+<p>跟踪总线事件<br>一些场景下，我们可能希望知道Spring Cloud Bus事件传播的细节。此时，我们可以跟踪总线事件（RemoteApplicationEvent的子类都是总线事件）。<br>跟踪总线事件非常简单，只需设置spring.cloud.bus.trace.enabled=true，这样在/bus/refresh端点被请求后，访问/trace端点就可获得</p>
+<h2 id="SpringCloud-Sidecar"><a href="#SpringCloud-Sidecar" class="headerlink" title="SpringCloud Sidecar"></a>SpringCloud Sidecar</h2><p>关于Sidecar模式，在微服务架构演进一文中已有介绍，这里不重复了。<br>Sidecar是作为一个代理的服务来间接性的让其他语言可以使用Eureka等相关组件。通过与Zuul的来进行路由的映射，从而可以做到服务的获取，然后可以使用Ribbon，Feign对服务进行消费，以及对Config Server的间接性调用。<br>非jvm需要应该实现一个健康检查，Sidecar能够以此来报告给Eureka注册中心该应用是up还是down状态。<br>做完了我们可以通过服务名称访问异构语言的接口，走网关，直接通过服务名称访问都是可以的。</p>
+<p><img src="/img/2017-12-21-17-15-51.png" alt=""></p>
+<p>建议参考：<br><a href="http://www.cnblogs.com/YrlixJoe/p/7506222.html" target="_blank" rel="noopener">http://www.cnblogs.com/YrlixJoe/p/7506222.html</a><br><a href="https://www.cnblogs.com/YrlixJoe/p/7509655.html" target="_blank" rel="noopener">https://www.cnblogs.com/YrlixJoe/p/7509655.html</a><br><a href="https://www.cnblogs.com/waterlufei/p/7145746.html" target="_blank" rel="noopener">https://www.cnblogs.com/waterlufei/p/7145746.html</a></p>
+<h2 id="OAuth2-JWT与身份验证"><a href="#OAuth2-JWT与身份验证" class="headerlink" title="OAuth2+JWT与身份验证"></a>OAuth2+JWT与身份验证</h2><p>在微服务演进一文中已有提到一些实现机制。这里仅提供图<br><img src="/img/2017-12-21-17-19-40.png" alt=""></p>
+<p>概念：<br>OAUTH2:<br>Spring Cloud可以使用OAUTH2(Spring Security OAuth2)来实现多个微服务的统一认证授权<br>通过向OAUTH2服务进行集中认证和授权，获得access_token<br>而这个token是受其他微服务信任的，在后续的访问中都把access_token带过去，从而实现了微服务的统一认证授权。</p>
+<h3 id="OAUth2"><a href="#OAUth2" class="headerlink" title="OAUth2"></a>OAUth2</h3><p>OAuth 2 在整个流程中有四种角色:</p>
+<ul>
+<li>资源拥有者(Resource Owner) - 这里是Tom</li>
+<li>资源服务器(Resource Server) - 这里是Facebook</li>
+<li>授权服务器(Authorization Server) - 这里当然还是Facebook，因为Facebook有相关数据</li>
+<li>客户端(Client) - 这里是某App<br><img src="/img/2017-12-21-17-35-32.png" alt=""><br>任何类型的应用都提供用户登录，登录结果是一个Access Token，所有的之后的API调用都将这个Access Token加入HTTP请求头中，被调用服务去授权服务器验证Access Token并获取该Token可访问的权限信息。这样一来，所有服务的访问都会请求另外的服务来完成鉴权。</li>
+</ul>
+<h3 id="JWT-JSON-Web-Token"><a href="#JWT-JSON-Web-Token" class="headerlink" title="JWT:JSON Web Token"></a>JWT:JSON Web Token</h3><p>JWT是一种安全标准。基本思路就是用户提供用户名和密码给认证服务器，服务器验证用户提交信息信息的合法性；如果验证成功，会产生并返回一个Token，用户可以使用这个token访问服务器上受保护的资源。<br>感觉这2种好像没多大区别呀，其实是有区别的：OAuth2是一种授权框架 ，JWT是一种认证协议<br>无论使用哪种方式切记用HTTPS来保证数据的安全性。</p>
+<p>四种面向微服务系统的身份验证方案：<br>在传统的单体架构中，单个服务保存所有的用户数据，可以校验用户，并在认证成功后创建HTTP会话。<br>在微服务架构中：<br>方案1：单点登录（SSO）方案。<br>方案2：分布式会话方案。</p>
+<p>但微服务中提倡stateless,所以考虑采用单点登录方案OAUTH2+JWT实现。<br>基于token的鉴权机制类似于http协议也是无状态的，它不需要在服务端去保留用户的认证信息或者会话信息。这就意味着基于token认证机制的应用不需要去考虑用户在哪一台服务器登录了，这就为应用的扩展提供了便利。</p>
+<p>流程上是这样的：</p>
+<ul>
+<li>用户使用用户名密码来请求服务器</li>
+<li>服务器进行验证用户的信息</li>
+<li>服务器通过验证发送给用户一个token</li>
+<li>客户端存储token，并在每次请求时附送上这个token值</li>
+<li>服务端验证token值，并返回数据</li>
+<li>这个token必须要在每次请求时传递给服务端，它应该保存在请求头里， 另外，服务端要支持CORS(跨来源资源共享)策略，一般我们在服务端这么做就可以了Access-Control-Allow-Origin: *。</li>
+</ul>
+<p>JWT是由三段信息构成的，将这三段信息文本用.链接一起就构成了Jwt字符串。就像这样:<br><code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.TJVA95OrM7E2cBab30RMHrHDcEfxjoYZgeFONFh7HgQ</code></p>
+<p>第一部分我们称它为头部（header),第二部分我们称其为载荷（payload, 类似于飞机上承载的物品)，第三部分是签证（signature).<br>1、header<br>jwt的头部承载两部分信息：<br>声明类型，这里是jwt<br>声明加密的算法 通常直接使用 HMAC SHA256<br>完整的头部就像下面这样的JSON：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  &apos;typ&apos;: &apos;JWT&apos;,</span><br><span class="line">  &apos;alg&apos;: &apos;HS256&apos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>然后将头部进行base64编码,构成了第一部分.<br>eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9</p>
+<p>2、playload<br>载荷就是存放有效信息的地方。这些有效信息包含三个部分</p>
+<ul>
+<li>标准中注册的声明</li>
+<li>公共的声明</li>
+<li>私有的声明</li>
+</ul>
+<p>标准中注册的声明 (建议但不强制使用) ：</p>
+<ul>
+<li>iss: jwt签发者</li>
+<li>sub: jwt所面向的用户</li>
+<li>aud: 接收jwt的一方</li>
+<li>exp: jwt的过期时间，这个过期时间必须要大于签发时间</li>
+<li>nbf: 定义在什么时间之前，该jwt都是不可用的.</li>
+<li>iat: jwt的签发时间</li>
+<li>jti: jwt的唯一身份标识，主要用来作为一次性token,从而回避重放攻击。</li>
+</ul>
+<p>公共的声明 ：<br>公共的声明可以添加任何的信息，一般添加用户的相关信息或其他业务需要的必要信息.但不建议添加敏感信息，因为该部分在客户端可解密.</p>
+<p>私有的声明 ：<br>私有声明是提供者和消费者所共同定义的声明，一般不建议存放敏感信息，因为base64是对称解密的，意味着该部分信息可以归类为明文信息。</p>
+<p>3、signature<br>jwt的第三部分是一个签证信息，这个签证信息由三部分组成：</p>
+<ul>
+<li>header (base64后的)</li>
+<li>payload (base64后的)</li>
+<li>secret<br>注意：secret是保存在服务器端的，jwt的签发生成也是在服务器端的，secret就是用来进行jwt的签发和jwt的验证，所以，它就是你服务端的私钥。(可以采用对称或非对称RSA加密)</li>
+</ul>
+<p>如何应用<br>一般是在请求头里加入Authorization，并加上Bearer标注：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">fetch('api/user/1', &#123;</span><br><span class="line">  headers: &#123;</span><br><span class="line">	'Authorization': 'Bearer ' + token</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+<p>服务端会验证token，如果验证通过就会返回相应的资源。整个流程就是这样的:<br><img src="/img/2017-12-21-17-31-26.png" alt=""></p>
+<p>优点</p>
+<ul>
+<li>因为json的通用性，所以JWT是可以进行跨语言支持的，像JAVA,JavaScript,NodeJS,PHP等很多语言都可以使用。</li>
+<li>因为有了payload部分，所以JWT可以在自身存储一些其他业务逻辑所必要的非敏感信息。</li>
+<li>便于传输，jwt的构成非常简单，字节占用很小，所以它是非常便于传输的。</li>
+<li>相比于session，它无需保存在服务器，所以不占用服务器内存开销, 它易于应用的扩展</li>
+<li>无状态、可拓展性强：比如有3台机器（A、B、C）组成服务器集群，若session存在机器A上，session只能保存在其中一台服务器，此时你便不能访问机器B、C，因为B、C上没有存放该Session，而使用token就能够验证用户请求合法性，并且我再加几台机器也没事，所以可拓展性好就是这个意思。</li>
+<li>前后端分离，支持跨域访问</li>
+</ul>
+<p>安全相关</p>
+<ul>
+<li>不应该在jwt的payload部分存放敏感信息，因为该部分是客户端可解密的部分。</li>
+<li>保护好secret私钥，该私钥非常重要。</li>
+<li>如果可以，请使用https协议</li>
+</ul>
+<p>JWT缺点：<br>一旦拿到token， 可用它访问服务器，直到过期，中间服务器无法控制它，如是它失效(（自己放出去的token，含着泪也要用到底。)（有解决方案： 在 token 中保存信息，可添加额外的验证，如加一个 flag， 把数据库对应的flag失效，来控制token有效性，但这又相当于在内存中保存session id了）。<br>token 的过期时间设置很关键，一般把它设到凌晨少人访问时失效，以免用户使用过程中失效而丢失数据。</p>
+<p><strong>总结：</strong><br>使用spring-cloud-security-oauth2来实现oauth server和resource server，oauth Server和resource Server分开，oauth Server和resource Server使用了jwt的方式进行了实现。认证服务器生成jwt格式的token，并不对其进行持久化，然后资源服务器使用密钥进行校验token。</p>
+<h2 id="Service接口约束-Swagger2"><a href="#Service接口约束-Swagger2" class="headerlink" title="Service接口约束-Swagger2"></a>Service接口约束-Swagger2</h2><p>Swagger2，它可以轻松的整合到Spring Boot中，并与Spring MVC程序配合组织出强大RESTful API文档。它既可以减少我们创建文档的工作量，同时说明内容又整合入实现代码中，让维护文档和修改代码整合为一体，可以让我们在修改代码逻辑的同时方便的修改文档说明。另外Swagger2也提供了强大的页面测试功能来调试每个RESTful API。具体效果如下图所示:<br><img src="/img/2017-12-21-17-38-18.png" alt=""><img src="/img/2017-12-21-17-38-26.png" alt=""></p>
+<h3 id="与Eureka-Server集成"><a href="#与Eureka-Server集成" class="headerlink" title="与Eureka Server集成"></a>与Eureka Server集成</h3><p>整和Eureka和Swagger2，当点击链接的时候，直接跳转到Swagger2的UI界面，怎么做了？<br><img src="/img/2017-12-21-17-39-39.png" alt=""><br>在服务配置中添加配置<br>以上面注册到Eureka Server上的服务RDCLOUD-JPA为例，在该服务的配置文件中加上如下配置即可：<br>eureka.instance.status-page-url=<a href="http://localhost:${server.port}/swagger-ui.html" target="_blank" rel="noopener">http://localhost:${server.port}/swagger-ui.html</a> # ${server.port}为该服务的端口号(不知道是否支持ServiceId的形式，待验证)</p>
+<h2 id="集成监控"><a href="#集成监控" class="headerlink" title="集成监控"></a>集成监控</h2><p>上面我们提到了<br>SpringBoot有Actuator监控,配合SpringBoot Amin可以界面化<br>Eureka也有监控监控<br>Hystix有DashBoard<br>Sleuth有Zipkin UI界面</p>
+<p>那么如何集成起来监控呢？<br>两种方案：<br>1、Spring Boot Amin集成<br>2、Atlas+Spectator+Grafana</p>
+<p>1、Spring Boot Amin特点：<br>特点：</p>
+<ul>
+<li>Show health status</li>
+<li>Show details, like JVM &amp; memory metrics Counter &amp; gauge metrics Datasource metrics - Cache metrics</li>
+<li>Show build-info number</li>
+<li>Follow and download logfile</li>
+<li>View jvm system- &amp; environment-properties</li>
+<li>Support for Spring Cloud’s postable /env- &amp;/refresh-endpoint</li>
+<li>Easy loglevel management (currently for Logback only)</li>
+<li>Interact with JMX-beans</li>
+<li>View thread dump</li>
+<li>View HTTP traces</li>
+<li>Hystrix-Dashboard integration</li>
+<li>Download heapdump</li>
+<li>Notification on status change (via mail, Slack, Hipchat, …)</li>
+<li>Event journal of status changes (non persistent)</li>
+</ul>
+<p><img src="/img/2017-12-21-17-45-43.png" alt=""><img src="/img/2017-12-21-17-46-01.png" alt=""><img src="/img/2017-12-21-17-46-09.png" alt=""></p>
+<p>建议参考：<br><a href="https://juejin.im/entry/593e447e61ff4b006c9be676" target="_blank" rel="noopener">https://juejin.im/entry/593e447e61ff4b006c9be676</a><br><a href="https://github.com/codecentric/spring-boot-admin" target="_blank" rel="noopener">https://github.com/codecentric/spring-boot-admin</a><br><a href="http://cxytiandi.com/blog/detail/12880" target="_blank" rel="noopener">http://cxytiandi.com/blog/detail/12880</a></p>
+<p>2、Atlas+Spectator+Grafana搭建实时监控平台<br>建议参考<a href="https://my.oschina.net/u/2408085/blog/733900" target="_blank" rel="noopener">https://my.oschina.net/u/2408085/blog/733900</a><br><a href="https://medium.com/@brunosimioni/near-real-time-monitoring-charts-with-spring-boot-actuator-jolokia-and-grafana-1ce267c50bcc" target="_blank" rel="noopener">https://medium.com/@brunosimioni/near-real-time-monitoring-charts-with-spring-boot-actuator-jolokia-and-grafana-1ce267c50bcc</a><br><a href="https://segmentfault.com/a/1190000008527553" target="_blank" rel="noopener">https://segmentfault.com/a/1190000008527553</a><br><img src="/img/2017-12-21-17-49-26.png" alt=""><br><img src="/img/2017-12-21-17-49-18.png" alt=""></p>
+
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xbynet.top/2017/12/21/微服务架构之SpringCloud全家桶/" title="微服务架构之SpringCloud全家桶">http://xbynet.top/2017/12/21/微服务架构之SpringCloud全家桶/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MicroService/" rel="tag"><i class="fa fa-tag"></i> MicroService</a>
+          
+            <a href="/tags/msa/" rel="tag"><i class="fa fa-tag"></i> msa</a>
+          
+            <a href="/tags/SpringCloud/" rel="tag"><i class="fa fa-tag"></i> SpringCloud</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/21/微服务架构之服务架构演进/" rel="next" title="微服务架构之服务架构演进">
+                <i class="fa fa-chevron-left"></i> 微服务架构之服务架构演进
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/21/微服务架构之DevOps/" rel="prev" title="微服务架构之DevOps">
+                微服务架构之DevOps <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ3OS85MDQw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256"
+                alt="xbynet" />
+            
+              <p class="site-author-name" itemprop="name">xbynet</p>
+              <p class="site-description motion-element" itemprop="description">青苔边，折梅不赏;古道旁，煮酒不饮。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xbynet" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xbynet@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          <div id="aplayer1" class="aplayer"></div>
+<script src="/asserts/js/APlayer.min.js"></script>
+<script>
+    var musiclist=[
+        {title:'素雨',author:'孙雪宁',url:'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'},
+        {title:'爱在上',author:'崔子格',url:'http://dl.stream.qqmusic.qq.com/M8000019Hx0J3tqcaV.mp3?vkey=93EB395793C648848684E76AE3B2D6E08F9EC8C7412B177750792C7CEC73BDC4FD06C1F78C02D9186339549C042F2CA5955914BA8322F6E4&guid=5150825362&fromtag=1',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003ksYhQ1EmEcr.jpg?max_age=2592000'}
+    ]
+    var tmpindex=Math.floor(Math.random()*musiclist.length);
+    var music=musiclist[tmpindex];
+    var ap = new APlayer({
+        element: document.getElementById('aplayer1'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: music.title,
+            author: music.author,
+            url: music.url,
+            pic: music.pic
+        }
+    });
+</script>
+
+<!-- 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+-->
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-vs-Dubbo"><span class="nav-number">1.</span> <span class="nav-text"><a href="#SpringCloud-vs-Dubbo" class="headerlink" title="SpringCloud vs Dubbo"></a>SpringCloud vs Dubbo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Config"><span class="nav-number">2.</span> <span class="nav-text"><a href="#SpringCloud-Config" class="headerlink" title="SpringCloud Config"></a>SpringCloud Config</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Refresh"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#Refresh" class="headerlink" title="Refresh"></a>Refresh</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Netflix-Eureka"><span class="nav-number">3.</span> <span class="nav-text"><a href="#SpringCloud-Netflix-Eureka" class="headerlink" title="SpringCloud Netflix Eureka"></a>SpringCloud Netflix Eureka</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Eureka高可用集群"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#Eureka&#x9AD8;&#x53EF;&#x7528;&#x96C6;&#x7FA4;" class="headerlink" title="Eureka&#x9AD8;&#x53EF;&#x7528;&#x96C6;&#x7FA4;"></a>Eureka&#x9AD8;&#x53EF;&#x7528;&#x96C6;&#x7FA4;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eureka架构"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#Eureka&#x67B6;&#x6784;" class="headerlink" title="Eureka&#x67B6;&#x6784;"></a>Eureka&#x67B6;&#x6784;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#监控界面"><span class="nav-number">3.3.</span> <span class="nav-text"><a href="#&#x76D1;&#x63A7;&#x754C;&#x9762;" class="headerlink" title="&#x76D1;&#x63A7;&#x754C;&#x9762;"></a>&#x76D1;&#x63A7;&#x754C;&#x9762;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Eureka的自我保护模式"><span class="nav-number">3.4.</span> <span class="nav-text"><a href="#Eureka&#x7684;&#x81EA;&#x6211;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;" class="headerlink" title="Eureka&#x7684;&#x81EA;&#x6211;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;"></a>Eureka&#x7684;&#x81EA;&#x6211;&#x4FDD;&#x62A4;&#x6A21;&#x5F0F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发、测试时如何解决Eureka注册服务慢的问题"><span class="nav-number">3.5.</span> <span class="nav-text"><a href="#&#x5F00;&#x53D1;&#x3001;&#x6D4B;&#x8BD5;&#x65F6;&#x5982;&#x4F55;&#x89E3;&#x51B3;Eureka&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x6162;&#x7684;&#x95EE;&#x9898;" class="headerlink" title="&#x5F00;&#x53D1;&#x3001;&#x6D4B;&#x8BD5;&#x65F6;&#x5982;&#x4F55;&#x89E3;&#x51B3;Eureka&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x6162;&#x7684;&#x95EE;&#x9898;?"></a>&#x5F00;&#x53D1;&#x3001;&#x6D4B;&#x8BD5;&#x65F6;&#x5982;&#x4F55;&#x89E3;&#x51B3;Eureka&#x6CE8;&#x518C;&#x670D;&#x52A1;&#x6162;&#x7684;&#x95EE;&#x9898;?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何解决Eureka-Server不踢出已关停的节点的问题"><span class="nav-number">3.6.</span> <span class="nav-text"><a href="#&#x5982;&#x4F55;&#x89E3;&#x51B3;Eureka-Server&#x4E0D;&#x8E22;&#x51FA;&#x5DF2;&#x5173;&#x505C;&#x7684;&#x8282;&#x70B9;&#x7684;&#x95EE;&#x9898;" class="headerlink" title="&#x5982;&#x4F55;&#x89E3;&#x51B3;Eureka Server&#x4E0D;&#x8E22;&#x51FA;&#x5DF2;&#x5173;&#x505C;&#x7684;&#x8282;&#x70B9;&#x7684;&#x95EE;&#x9898;"></a>&#x5982;&#x4F55;&#x89E3;&#x51B3;Eureka Server&#x4E0D;&#x8E22;&#x51FA;&#x5DF2;&#x5173;&#x505C;&#x7684;&#x8282;&#x70B9;&#x7684;&#x95EE;&#x9898;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Netflix-Ribbon"><span class="nav-number">4.</span> <span class="nav-text"><a href="#SpringCloud-Netflix-Ribbon" class="headerlink" title="SpringCloud Netflix Ribbon"></a>SpringCloud Netflix Ribbon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Netflix-Feign"><span class="nav-number">5.</span> <span class="nav-text"><a href="#SpringCloud-Netflix-Feign" class="headerlink" title="SpringCloud Netflix Feign"></a>SpringCloud Netflix Feign</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-amp-A"><span class="nav-number">5.1.</span> <span class="nav-text"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Netflix-Hystrix"><span class="nav-number">6.</span> <span class="nav-text"><a href="#SpringCloud-Netflix-Hystrix" class="headerlink" title="SpringCloud Netflix Hystrix"></a>SpringCloud Netflix Hystrix</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Hystrix-dashboard-amp-Turbine"><span class="nav-number">7.</span> <span class="nav-text"><a href="#Hystrix-dashboard-amp-Turbine" class="headerlink" title="Hystrix-dashboard &amp; Turbine"></a>Hystrix-dashboard &amp; Turbine</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Sleuth"><span class="nav-number">8.</span> <span class="nav-text"><a href="#SpringCloud-Sleuth" class="headerlink" title="SpringCloud Sleuth"></a>SpringCloud Sleuth</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#改进：解耦微服务与zipkinserver"><span class="nav-number">8.1.</span> <span class="nav-text"><a href="#&#x6539;&#x8FDB;&#xFF1A;&#x89E3;&#x8026;&#x5FAE;&#x670D;&#x52A1;&#x4E0E;zipkinserver" class="headerlink" title="&#x6539;&#x8FDB;&#xFF1A;&#x89E3;&#x8026;&#x5FAE;&#x670D;&#x52A1;&#x4E0E;zipkinserver"></a>&#x6539;&#x8FDB;&#xFF1A;&#x89E3;&#x8026;&#x5FAE;&#x670D;&#x52A1;&#x4E0E;zipkinserver</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Netflix-Zuul"><span class="nav-number">9.</span> <span class="nav-text"><a href="#SpringCloud-Netflix-Zuul" class="headerlink" title="SpringCloud Netflix Zuul"></a>SpringCloud Netflix Zuul</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q-amp-A-1"><span class="nav-number">9.1.</span> <span class="nav-text"><a href="#Q-amp-A-1" class="headerlink" title="Q&amp;A:"></a>Q&amp;A:</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Stream"><span class="nav-number">10.</span> <span class="nav-text"><a href="#SpringCloud-Stream" class="headerlink" title="SpringCloud Stream"></a>SpringCloud Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Bus"><span class="nav-number">11.</span> <span class="nav-text"><a href="#SpringCloud-Bus" class="headerlink" title="SpringCloud Bus"></a>SpringCloud Bus</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SpringCloud-Sidecar"><span class="nav-number">12.</span> <span class="nav-text"><a href="#SpringCloud-Sidecar" class="headerlink" title="SpringCloud Sidecar"></a>SpringCloud Sidecar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#OAuth2-JWT与身份验证"><span class="nav-number">13.</span> <span class="nav-text"><a href="#OAuth2-JWT&#x4E0E;&#x8EAB;&#x4EFD;&#x9A8C;&#x8BC1;" class="headerlink" title="OAuth2+JWT&#x4E0E;&#x8EAB;&#x4EFD;&#x9A8C;&#x8BC1;"></a>OAuth2+JWT&#x4E0E;&#x8EAB;&#x4EFD;&#x9A8C;&#x8BC1;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#OAUth2"><span class="nav-number">13.1.</span> <span class="nav-text"><a href="#OAUth2" class="headerlink" title="OAUth2"></a>OAUth2</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JWT-JSON-Web-Token"><span class="nav-number">13.2.</span> <span class="nav-text"><a href="#JWT-JSON-Web-Token" class="headerlink" title="JWT:JSON Web Token"></a>JWT:JSON Web Token</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service接口约束-Swagger2"><span class="nav-number">14.</span> <span class="nav-text"><a href="#Service&#x63A5;&#x53E3;&#x7EA6;&#x675F;-Swagger2" class="headerlink" title="Service&#x63A5;&#x53E3;&#x7EA6;&#x675F;-Swagger2"></a>Service&#x63A5;&#x53E3;&#x7EA6;&#x675F;-Swagger2</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#与Eureka-Server集成"><span class="nav-number">14.1.</span> <span class="nav-text"><a href="#&#x4E0E;Eureka-Server&#x96C6;&#x6210;" class="headerlink" title="&#x4E0E;Eureka Server&#x96C6;&#x6210;"></a>&#x4E0E;Eureka Server&#x96C6;&#x6210;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#集成监控"><span class="nav-number">15.</span> <span class="nav-text"><a href="#&#x96C6;&#x6210;&#x76D1;&#x63A7;" class="headerlink" title="&#x96C6;&#x6210;&#x76D1;&#x63A7;"></a>&#x96C6;&#x6210;&#x76D1;&#x63A7;</span></a></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xbynet</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">103.7k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("sHIc70OVniNsR5OI1atIhMuk-gzGzoHsz", "wt266j1nbmoGAFrXdwXt7TeS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>

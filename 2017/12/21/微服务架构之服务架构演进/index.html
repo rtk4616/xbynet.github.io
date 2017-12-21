@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="MicroService,msa,架构," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="倚楼听风雨" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="微服务MicroService(MSA),在近几年被炒得火热,但,What’s MicroService? 我相信是很多人都想问的，难道就是小服务?先别急，其实，微服务并没有明确的定义，它只是一种架构风格(Restful不也是一种架构风格不)，我们先看看传统单体与微服务架构的区别图示： 微服务架构特性MartinFlower大神给出了关于微服务特性很好的归纳：大神原文见此.  In short,">
+<meta name="keywords" content="MicroService,msa,架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="微服务架构之服务架构演进">
+<meta property="og:url" content="http://xbynet.top/2017/12/21/微服务架构之服务架构演进/index.html">
+<meta property="og:site_name" content="倚楼听风雨">
+<meta property="og:description" content="微服务MicroService(MSA),在近几年被炒得火热,但,What’s MicroService? 我相信是很多人都想问的，难道就是小服务?先别急，其实，微服务并没有明确的定义，它只是一种架构风格(Restful不也是一种架构风格不)，我们先看看传统单体与微服务架构的区别图示： 微服务架构特性MartinFlower大神给出了关于微服务特性很好的归纳：大神原文见此.  In short,">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-09-52-50.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-09-37-56.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-03-12.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-03-40.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-07-39.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-16-50.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-28-00.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-30-41.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-34-22.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-35-18.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-35-28.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-42-45.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-43-23.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-48-38.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-10-52-31.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-12-06-13.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-06-55.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-07-39.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-08-19.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-54-14.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-56-15.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-17-41.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-17-26.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-17-56.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-18-05.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-19-53.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-19-59.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-20-08.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-20-32.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-24-14.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-20-32.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-25-23.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-26-15.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-35-17.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-38-47.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-39-45.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-40-50.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-42-52.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-44-20.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-45-09.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-21-11-51-17.png">
+<meta property="og:updated_time" content="2017-12-21T06:06:07.815Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="微服务架构之服务架构演进">
+<meta name="twitter:description" content="微服务MicroService(MSA),在近几年被炒得火热,但,What’s MicroService? 我相信是很多人都想问的，难道就是小服务?先别急，其实，微服务并没有明确的定义，它只是一种架构风格(Restful不也是一种架构风格不)，我们先看看传统单体与微服务架构的区别图示： 微服务架构特性MartinFlower大神给出了关于微服务特性很好的归纳：大神原文见此.  In short,">
+<meta name="twitter:image" content="http://xbynet.top/img/2017-12-21-09-52-50.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xbynet.top/2017/12/21/微服务架构之服务架构演进/"/>
+
+
+
+
+
+  <title>微服务架构之服务架构演进 | 倚楼听风雨</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9e6e9198259e7a598474c9df6397dc";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">倚楼听风雨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡看江湖路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-相册">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/21/微服务架构之服务架构演进/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">微服务架构之服务架构演进</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T09:21:31+08:00">
+                2017-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MicroService/" itemprop="url" rel="index">
+                    <span itemprop="name">MicroService</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/21/微服务架构之服务架构演进/" class="leancloud_visitors" data-flag-title="微服务架构之服务架构演进">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  11,781
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  45
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>微服务MicroService(MSA),在近几年被炒得火热,但,What’s MicroService? 我相信是很多人都想问的，难道就是小服务?先别急，其实，微服务并没有明确的定义，它只是一种架构风格(Restful不也是一种架构风格不)，我们先看看传统单体与微服务架构的区别图示：<br><img src="/img/2017-12-21-09-52-50.png" alt=""><br><img src="/img/2017-12-21-09-37-56.png" alt=""></p>
+<h2 id="微服务架构特性"><a href="#微服务架构特性" class="headerlink" title="微服务架构特性"></a>微服务架构特性</h2><p><code>MartinFlower</code>大神给出了关于微服务特性很好的归纳：大神原文<a href="https://martinfowler.com/articles/microservices.html" target="_blank" rel="noopener">见此</a>.</p>
+<blockquote>
+<p>In short, the microservice architectural style  is an approach to developing a single application as a suite of small services, each running in its own process and communicating with lightweight mechanisms, often an HTTP resource API. These services are built around business capabilities and independently deployable by fully automated deployment machinery. There is a bare minimum of centralized management of these services, which may be written in different programming languages and use different data storage technologies.</p>
+</blockquote>
+<a id="more"></a>
+<p>总之，微服务架构风格，是一种将一哥单一应用拆分为多个微小服务的方式，每个微小服务在独立的进程中运行(注:服务之间由原先的进程内通信，编程进程间甚至跨网络跨主机间的通信)并使用轻量级的通信协议(如HTTP Restful API).这些服务围绕业务能力而组织，并通过自动化部署方式单独部署。这小微服务只需要很弱的集中管理(甚至不需要),同时可以使用不用的编程语言和不用的数据库技术。</p>
+<p>根据MartinFowler的分析，微服务架构有以下的一些通用特性：<br>1、<strong>通过服务实现应用的组件化(Componentization via Services)</strong>：微服务架构中将组件定义为<strong>可被独立替换和升级的软件单元</strong>，在应用架构设计中通过将整体应用切分成可独立部署及升级的微服务方式进行组件化设计。<br>2、<strong>围绕业务能力组织服务(Organized around Business Capabilities)</strong>：微服务架构采取<strong>以业务能力为出发点组织服务</strong>的策略，因此微服务团队的组织结构必须是<strong>跨功能</strong>的（如：既管应用，也管数据库）、强搭配的<strong>DevOps开发运维一体化</strong>团队，通常这些团队不会太大（如：亚马逊的“Two<br> pizzateam”- 不超过12人）。<br>3、<strong>产品而非项目模式(Productsnot Projects)</strong>：传统的应用模式是一个团队以项目模式开发完整的应用，开发完成后就交付给运维团队负责维护；微服务架构则倡导一个团队应该如开发产品般<strong>负责一个“微服务”完整的生命周期</strong>，倡导”<strong>谁开发，谁运维(you build, you run it)</strong>“的开发运维一体化方法。<br>4、<strong>智能端点与管道扁平化/弱通信(Smartendpoints and dumb pipes)</strong>：微服务架构主张将组件间通讯的相关业务逻辑/智能放在<strong>组件端点侧</strong>而非放在通讯组件中，通讯机制或组件应该尽量<strong>简单及松耦合</strong>。RESTful HTTP协议和仅提供消息路由功能的轻量级异步机制是微服务架构中最常用的通讯机制。<br>5、<strong>“去中心化”治理(Decentralized Governance)</strong>：整体式应用往往倾向于采用单一技术平台，微服务架构则鼓励使用合适的工具完成各自的任务，<strong>每个微服务可以考虑选用最佳工具完成</strong>(如不同的编程语言)。微服务的技术标准倾向于寻找其他开发者已成功验证解决类似问题的技术。<br>6、<strong>“去中心化”数据管理(Decentralized Data Management)</strong>：微服务架构倡导采用多样性持久化(PolyglotPersistence)的方法，让每个微服务管理其自有数据库，并允许不同微服务采用不同的数据持久化技术。<br>7、<strong>基础设施自动化(Infrastructure Automation)</strong>：云化及<strong>自动化部署</strong>等技术极大地降低了微服务构建、部署和运维的难度，通过应用<strong>持续集成和持续交付</strong>等方法有助于达到加速推出市场的目的。<br>8、<strong>故障处理设计(Design for failure)</strong>：微服务架构所带来的一个后果是必须考虑每个服务的<strong>失败容错</strong>机制。因此，微服务非常重视建立架构及业务相关指标的<strong>实时监控和日志</strong>机制。<br>9、<strong>演进式的设计(Evolutionary Design)</strong>：微服务应用更注重<strong>快速更新</strong>，因此系统的计会随时间不断变化及演进。微服务的设计受业务功能的生命周期等因素影响。如某应用是整体式应用，但逐渐朝微应用架构方向演进，整体式应用仍是核心，但新功能将使用应用所提供的API构建。再如在某微服务应用中，<strong>可替代性模块化设计</strong>的基本原则，在实施后发现某两个微服务经常必须同时更新，则这很可能意味着应将其<strong>合并</strong>为一个微服务。<br>个人认为比较关键的四个词:you build,you run it,Decentralized,Automation,Design for failure.</p>
+<h3 id="理论基础-康威定律-Conway’s-Law"><a href="#理论基础-康威定律-Conway’s-Law" class="headerlink" title="理论基础-康威定律(Conway’s Law)"></a>理论基础-康威定律(Conway’s Law)</h3><blockquote>
+<p>Any organization that designs a system (defined broadly) will produce a design whose structure is a copy of the organization’s communication structure.</p>
+<p>– Melvyn Conway, 1967</p>
+</blockquote>
+<p>翻译起来就是:系统架构等同于组织的沟通结构。组织架构会在潜移默化中约束软件系统架构的形态。<br>提示：违背康威定律，非常容易出现系统设计盲区，出现 “两不管” 互相推脱的局面，当业务边界与组织架构冲突时，从业内的实践经验来看，宁愿选择更加符合组织架构的服务拆分边界。这也是一种符合康威定律的做法。</p>
+<p>关于康威定律，阿里云的一篇文章解释的比较详细，<a href="https://yq.aliyun.com/articles/8611" target="_blank" rel="noopener">见此</a><br>值得一提的是，这是1967年提出的，而微服务是2014年左右开始火起来的，至少在中国是这样。</p>
+<p>单体式架构环境下的康威定律：<br><img src="/img/2017-12-21-10-03-12.png" alt=""><br>微服务架构下的康威定律:<br><img src="/img/2017-12-21-10-03-40.png" alt=""></p>
+<h3 id="微服务架构-vs-SOA"><a href="#微服务架构-vs-SOA" class="headerlink" title="微服务架构 vs. SOA"></a>微服务架构 vs. SOA</h3><p>同：<br>两者都是架构风格范畴，都强调服务化。<br>异：<br>但其关注领域与涉及范围不同。SOA更关注企业规模范围，微服务架构则更关注应用规模范围。<br>微服务组件 vs. 服务组件 – 两者都是描述业务功能的具体实现，其区别在于粒度不同，此外还有在可管理性、灵活性上的差异。<br>通信协议上：微服务强调轻量级协议及弱通信，SOA有ESB这个重量级成员.<br>微服务强调每个服务单独部署与独立的进程，Devops，同时与Docker容器技术结合地非常好，这是SOA所不要求的。<br>网上有个比较好的表格，如下：<br><img src="/img/2017-12-21-10-07-39.png" alt=""></p>
+<h3 id="微服务的优缺点"><a href="#微服务的优缺点" class="headerlink" title="微服务的优缺点"></a>微服务的优缺点</h3><p>微服务架构的优点：</p>
+<ul>
+<li>每个服务都比较简单，只关注于一个业务功能。</li>
+<li>微服务架构方式是松耦合的，可以提供更高的灵活性。</li>
+<li>微服务可通过最佳及最合适的不同的编程语言与工具进行开发，能够做到有的放矢地解决针对性问题。</li>
+<li>每个微服务可由不同团队独立开发，互不影响，加快推出市场的速度。</li>
+<li>微服务架构是持续交付(CD)的巨大推动力，允许在频繁发布不同服务的同时保持系统其他部分的可用性和稳定性。</li>
+</ul>
+<p>微服务架构的缺点：</p>
+<ul>
+<li>运维开销及成本增加：整体应用可能只需部署至一小片应用服务区集群，而微服务架构可能变成需要构建/测试/部署/运行数十个独立的服务，并可能需要支持多种语言和环境。这导致一个整体式系统如果由20个微服务组成，可能需要40~60个进程。</li>
+<li>必须有坚实的DevOps开发运维一体化技能：开发人员需要熟知运维与投产环境，开发人员也需要掌握必要的数据存储技术如NoSQL，具有较强DevOps技能的人员比较稀缺，会带来招聘人才方面的挑战。</li>
+<li>隐式接口及接口匹配问题：把系统分为多个协作组件后会产生新的接口，这意味着简单的交叉变化可能需要改变许多组件，并需协调一起发布。在实际环境中，一个新品发布可能被迫同时发布大量服务，由于集成点的大量增加，微服务架构会有更高的发布风险。</li>
+<li>代码重复：某些底层功能需要被多个服务所用，为了避免将“同步耦合引入到系统中”，有时需要向不同服务添加一些代码，这就会导致代码重复。</li>
+<li>分布式系统的复杂性：作为一种分布式系统，微服务引入了复杂性和其他若干问题，例如<code>网络延迟、容错性、消息序列化、不可靠的网络、异步机制、版本化、差异化的工作负载</code>等，开发人员需要考虑以上的分布式系统问题。</li>
+<li>异步机制：微服务往往使用异步编程、消息与并行机制，如果应用存在<code>跨微服务的事务性处理</code>，其实现机制会变得复杂化。<br>另外一个关于微服务的挑战来自于分区的数据库架构。商业交易中同时给多个业务分主体更新消息很普遍。这种交易对于单体式应用来说很容易，因为只有一个数据库。在微服务架构应用中，需要更新不同服务所使用的不同的数据库。使用分布式交易并不一定是好的选择，不仅仅是因为CAP理论，还因为今天高扩展性的NoSQL数据库和消息传递中间件并不支持这一需求。最终你不得不使用一个<code>最终一致性(冥等)</code>的方法，从而对开发者提出了更高的要求和挑战。</li>
+<li>可测性的挑战：在动态环境下服务间的交互会产生非常微妙的行为，<code>难以可视化及全面测试。经典微服务往往不太重视测试，更多的是通过监控发现生产环境的异常，进而快速回滚或采取其他必要的行动</code>。但对于特别在意风险规避监管或投产环境错误会产生显著影响的场景下需要特别注意。<br>以上某些缺点不是不可降服的，实践中可以通过某些方式解决。</li>
+</ul>
+<h2 id="微服务实践"><a href="#微服务实践" class="headerlink" title="微服务实践"></a>微服务实践</h2><p>参考<code>Kasun</code>的两篇博文，可以有个较好的理解，地址传送：<br><a href="http://kasunpanorama.blogspot.com/2015/11/microservices-in-practice.html" target="_blank" rel="noopener">http://kasunpanorama.blogspot.com/2015/11/microservices-in-practice.html</a><br><a href="http://kasunpanorama.blogspot.com/2016/02/microservices-enterprise-integration.html?view=sidebar" target="_blank" rel="noopener">http://kasunpanorama.blogspot.com/2016/02/microservices-enterprise-integration.html?view=sidebar</a><br>其中关于单体应用(Monolithic application)，及SOA的部分，我就不多说了。主要说说MSA的。</p>
+<p>Microservices Architecture：<br><img src="/img/2017-12-21-10-16-50.png" alt=""><br>1、a suite of small and <code>independent</code> services that are  <code>running in its own process, developed and deployed independently</code>.<br>2、Microservices is not just about splitting the services available in monolith into independent services.<br>The business capabilities can be implemented as <code>fully independent, fine-grained and self contained (micro)services</code>.</p>
+<p>Guidelines for Designing microservices:(微服务设计原则)</p>
+<ul>
+<li><code>Single Responsibility Principle(SRP)</code>: Having a limited and a focused business scope for a microservice helps us to meet the agility in development and delivery of services.</li>
+<li>During the designing phase of the microservices, we should <code>find their boundaries and align them with the business capabilities</code> (also known as bounded context in Domain-Driven-Design).</li>
+<li>Make sure the microservices design <code>ensures the agile/independent development and deployment of the service.</code></li>
+<li>Our focus should be on the scope of the microservice, but not about making the the service smaller. <code>The (right)size of the service should be the required size to facilitate a given business capability.</code></li>
+<li>Unlike service in SOA, a given microservice should have a very <code>few operations/functionalities and simple message format</code>. </li>
+<li>It is often a good practice to start with relatively broad service boundaries to begin with, <code>refactoring</code> to smaller ones (based on business requirements) as time goes on. </li>
+</ul>
+<h3 id="微服务中的消息传递-Messaging-in-Microservices"><a href="#微服务中的消息传递-Messaging-in-Microservices" class="headerlink" title="微服务中的消息传递(Messaging in Microservices)"></a>微服务中的消息传递(Messaging in Microservices)</h3><p>单体应用一般采用进程内函数或方法调用，SOA中，在web service层次解耦了消息传递，同时支持不同的协议，如HTTP,JMS,WebServices，但采用比较复杂的消息模式，及通过ESB来总管消息<br>而微服务采用简单和轻量级的消息传递格式和协议,一般而言就是HTTP Restful API+JSON/XML<br>1、Synchronous Messaging - REST, Thrift<br>2、Asynchronous Messaging - AMQP, STOMP, MQTT<br>3、Message Formats - JSON, XML, Thrift, ProtoBuf, Avro<br>4、Service Contracts- Defining the service interfaces(服务端接口约束)  - Swagger, RAML, Thrift IDL,在SpringCloud的架构中，习惯性采用Swagger2生成接口文档，可以选择SpringCloud Contract来实现强制约定和CDC.</p>
+<p><strong>Integrating Microservices (Inter-service/process Communication)：</strong><br>in order to realize a business use case, it is required to have the communication structures between different microservices/processes.</p>
+<p>1、Point-to-point style - Invoking services directly<br><img src="/img/2017-12-21-10-28-00.png" alt=""><br>缺点：<br>非功能性需求如:用户认证，限流，监控，需要在每个微服务层去实现。导致重复实现(当然可以做成公共依赖，但仍然不够优雅，也没法控制好)<br>同时也满足不了微服务要求的高伸缩性要求。</p>
+<p>2、API-Gateway style<br><img src="/img/2017-12-21-10-30-41.png" alt=""><br>将非功能性需求如:用户认证，限流，监控等，放在api-gateway中来实现。提供统一的抽象。并对外可灵活提供不同接入方式。<br>注意： If a microservice wants to consume another microservice that also needs to be done through the API-GW. (貌似SpringCloud中的Zuul并不是这么干的)<br>缺点：较直接调用，多了一层代理转发，不过一般这不会称为什么问题。</p>
+<p>3、Message Broker style:<br>利于解耦和快速响应<br><img src="/img/2017-12-21-10-34-22.png" alt=""></p>
+<h3 id="去中心化-Decentralized"><a href="#去中心化-Decentralized" class="headerlink" title="去中心化(Decentralized)"></a>去中心化(Decentralized)</h3><p>1、Decentralized Data Management<br><img src="/img/2017-12-21-10-35-18.png" alt=""><img src="/img/2017-12-21-10-35-28.png" alt=""><br>左边是单体应用，右边是微服务应用</p>
+<p>数据去中心化的要点:</p>
+<ul>
+<li>Each microservice can have a <code>private database</code> to persist the data that requires to implement the business functionality offered from it.</li>
+<li>A given microservice <code>can only access the dedicated private database but not the databases of other microservices</code>.</li>
+<li>In some business scenarios, you might have to update several database for a single transaction. In such scenarios, the databases of other microservices should be updated <code>through its service API only (not allowed to access the database directly)</code></li>
+<li>The de-centralized data management give you the <code>fully decoupled</code> microservices and the liberty of choosing disparate data management techniques (SQL or NoSQL etc.)</li>
+</ul>
+<p>2、Decentralized Governance：<br>In general ‘governance’ means establishing and enforcing how people and solutions work together to achieve organizational objectives.(“治理”意味着建立执行者和解决方案如何协同工作以实现组织目标)<br>在微服务架构中，微服务的是完全独立并与其他微服务解耦的，实现上也采用不同的技术和平台。所以不需要定义一个统一的标准来约束服务的设计和开发。(主要针对技术选项，比如某些公司就一套SSH框架解决所有问题.)<br> we can summarize the decentralized governance capabilities of Microservices as follows.：</p>
+<ul>
+<li>In microservices architecture there is no requirement to have centralized design-time governance.</li>
+<li>Microservices can make their own decisions about its design and implementation.</li>
+<li>Microservices architecture foster the sharing of common/reusable services.</li>
+<li>Some of the run-time governances aspects such as SLAs, throttling, monitoring, common security requirements and service discovery may be implemented at API-GW level. </li>
+</ul>
+<h3 id="Service-Registry-and-Service-Discovery"><a href="#Service-Registry-and-Service-Discovery" class="headerlink" title="Service Registry and Service Discovery"></a>Service Registry and Service Discovery</h3><p>服务注册，一般启动时注册，退出时注销。<br>服务发现：有两种形式，客户端发现和服务端发现。<br>1、客户端发现：<br><img src="/img/2017-12-21-10-42-45.png" alt=""><br>2、服务端发现：<br><img src="/img/2017-12-21-10-43-23.png" alt=""></p>
+<p>注：这里的客户端与服务端都是相对而言的。</p>
+<h3 id="Deployment"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</h3><p>要求：</p>
+<ul>
+<li>每个服务独立部署.</li>
+<li>确保可以在服务级别达到伸缩性(a given service may get <code>more traffic</code> than other services). </li>
+<li>快速构建和部署服务. </li>
+<li>Failure in one microservice must not affect any of the other services.</li>
+</ul>
+<p><strong>Docker</strong> (an open source engine that lets developers and system administrators deploy <code>self-sufficient application containers</code> in Linux environments) provides a great way to deploy microservices addressing the above requirements. 关键步骤如下：</p>
+<ul>
+<li>Package the microservice as a (Docker) container image.</li>
+<li>Deploy each service instance as a container.</li>
+<li>Scaling is done based on changing the number of container instances.</li>
+<li>Building, deploying and starting microservice will be much faster as we are using docker containers (which is much faster than  a regular VM)<br><img src="/img/2017-12-21-10-48-38.png" alt=""></li>
+</ul>
+<p><strong>Kubernetes</strong> is extending Docker’s capabilities by allowing to <strong>manage a cluster of Linux containers as a single system, managing and running Docker containers across multiple hosts, offering co-location of containers, service discovery and replication control</strong>. As you can see, most of these features are essential in our microservices context too. Hence using Kubernetes (on top of Docker) for microservices deployment has become an extremely powerful approach, specially for large scale microservices deployments.(注意点:K8s与msa的一些功能有重叠，实践时需要进行取舍)</p>
+<h3 id="Security"><a href="#Security" class="headerlink" title="Security"></a>Security</h3><ul>
+<li><code>OAuth2</code> - Is an access delegation protocol. The client authenticates with <code>authorization server</code> and get an opaque token which is known as ‘<code>Access token</code>‘. Access token has zero information about the user/client. It only has a reference to the user information that can only be retrieved by the Authorization server. Hence this is known as a ‘<code>by-reference token</code>‘ and it is safe to use this token even in the public network/internet.  </li>
+<li><code>OpenID</code> Connect behaves similar to OAuth but in addition to the Access token, the authorization server issues an <code>ID token which contains information about the user</code>. This is often implement by a <code>JWT (JSON Web Token)</code> and that is <code>signed by authorization server</code>. So, this ensures the trust between the authorization server and the client. JWT token is therefore known as a ‘<code>By-value token</code>‘ as it contains the information of the user and obviously it is not safe to use it outside the internal network. </li>
+</ul>
+<p>OAuth2与OpenID的异同点:同，都有一个Token，都有认证server,异，前者token不包含用户信息，后者包含。<br>实践中一般两种结合。对外用by-reference token,对内用JWT格式的By-value token.</p>
+<p><img src="/img/2017-12-21-10-52-31.png" alt=""></p>
+<p>实现微服务安全的步骤要点:</p>
+<ul>
+<li>Leave authentication to OAuth and the OpenID Connect server(Authorization Server), so that microservices successfully provide access given someone has the right to use the data.</li>
+<li>Use the API-GW style, in which there is a single entry point for all the client request. </li>
+<li>Client connects to authorization server and obtains the Access Token (<code>by-reference token</code>).Then send the access token to the API-GW along with the request. </li>
+<li>Token Translation at the Gateway - API-GW extracts the access token and send it to the authorization server to <code>retrieve the JWT (by value-token)</code>. </li>
+<li>Then GW passes this JWT along with the request to the microservices layer. </li>
+<li><code>JWTs contains the necessary information to help in storing user sessions</code> etc. If each service can understand a JSON web token, then you have distributed your identity mechanism which is allowing you to transport identity throughout your system.</li>
+<li>At each microservice layer, we can have a component that process the JWT, which is a quite trivial implementation. </li>
+</ul>
+<p>其实上面的实现就是一种statless或sessionless模式。已经看不到传统http session及cookie发挥作用了。<br>什么是JWT?后续文章再讲。</p>
+<h3 id="Transactions"><a href="#Transactions" class="headerlink" title="Transactions"></a>Transactions</h3><p>在分布式系统中要实现事务是非常复杂的。微服务架构风格提倡transaction-less between services。如果确实需要事务，可以采用补偿操作(compensating operation) The key idea is, a given microservice is based on the single responsibility principle and if a given microservice failed to execute a given operation, we can consider that as a failure of that entire microservice. Then all the other (upstream) operations has to be <code>undone by invoking the respective compensating operation</code> of those microservice</p>
+<h3 id="Design-for-Failures原则"><a href="#Design-for-Failures原则" class="headerlink" title="Design for Failures原则"></a>Design for Failures原则</h3><p>(基于雪崩效应，多米诺股牌效应的考虑，fast-fail,failover等)<br>An unavailable or unresponsive microservice should not bring the whole microservices-based application down. Thus microservices should be <code>fault tolerant, be able to recover</code> when that is possible and the client has to handle it gracefully.<br>Also, since services can fail at any time, it’s important to be able to <code>detect(real-time monitoring) the failures quickly</code> and, if possible, <code>automatically restore the services</code>.</p>
+<p>微服务中的几种处理错误的模式：<br>1、Circuit Breaker(断路器)<br>MatinFlower大神也有篇文章介绍,<a href="https://martinfowler.com/bliki/CircuitBreaker.html" target="_blank" rel="noopener">见此</a><br><img src="/img/2017-12-21-12-06-13.png" alt=""><br>When you are doing an external call to a microservice, you configure a fault monitor component with each invocation and when the failures reach a certain threshold then that component stops any further invocations of the service (<code>trips the circuit</code>). After certain number of requests in open state (which you can configure), change the circuit back to close state.<br>This pattern is quite useful to <code>avoid unnecessary resource consumption, request delay due to timeouts and also give us to chance to monitor the system (based on the active open circuits states)</code>. </p>
+<p>2、Bulkhead(隔离)<br>As microservice application comprises of number of microservices, the failures of one part of the microservices-based application <code>should not affect the rest of the application</code>. Bulkhead pattern is about isolating different parts of your application so that a failure of a service in such part of the application does not affect any of the other services.  </p>
+<p>3、Timeout</p>
+<p>很多情况下，一般把这些实现在网关层次(SpringCloud Zuul也支持，但每个微服务也支持)</p>
+<h2 id="微服务在企业中的实践"><a href="#微服务在企业中的实践" class="headerlink" title="微服务在企业中的实践"></a>微服务在企业中的实践</h2><p>这里所说的时，已有旧系统的情况下。<br><img src="/img/2017-12-21-11-06-55.png" alt=""></p>
+<h3 id="Orchestration-业务流程-编排"><a href="#Orchestration-业务流程-编排" class="headerlink" title="Orchestration(业务流程/编排)"></a>Orchestration(业务流程/编排)</h3><p>1、Orchestration at Microservices Layer<br><img src="/img/2017-12-21-11-07-39.png" alt=""></p>
+<p>2、Orchestration at the Gateway Layer<br><img src="/img/2017-12-21-11-08-19.png" alt=""></p>
+<p>3、基于AMQP或Kafka的异步消息</p>
+<h2 id="微服务部署模式"><a href="#微服务部署模式" class="headerlink" title="微服务部署模式"></a>微服务部署模式</h2><p>主要参考地址：<br><a href="https://martinfowler.com/bliki/BlueGreenDeployment.html" target="_blank" rel="noopener">https://martinfowler.com/bliki/BlueGreenDeployment.html</a><br><a href="http://blog.csdn.net/zyqduron/article/details/59507525" target="_blank" rel="noopener">http://blog.csdn.net/zyqduron/article/details/59507525</a></p>
+<p>1、Blue/Green Deployment（蓝绿部署）<br><img src="/img/2017-12-21-11-54-14.png" alt=""><br>(1) 部署版本1的应用（一开始的状态）<br>所有外部请求的流量都打到这个版本上。<br>(2) 部署版本2的应用<br>版本2的代码与版本1不同(新功能、Bug修复等)。<br>(3) 将流量从版本1切换到版本2。<br>(4) 如版本2测试正常，就删除版本1正在使用的资源（例如实例），从此正式用版本2。<br>从过程不难发现，在部署的过程中，我们的应用始终在线。并且，新版本上线的过程中，并没有修改老版本的任何内容，在部署期间，老版本的状态不受影响。这样风险很小，并且，只要老版本的资源不被删除，理论上，我们可以在任何时间回滚到老版本。</p>
+<p>2、Rolling update（滚动发布）<br>滚动发布，一般是取出一个或者多个服务器停止服务，执行更新，并重新将其投入使用。周而复始，直到集群中所有的实例都更新成新版本。<br>这种部署方式相对于蓝绿部署，更加节约资源——它不需要运行两个集群、两倍的实例数。我们可以部分部署，例如每次只取出集群的20%进行升级。</p>
+<p>这种方式也有很多缺点，例如：<br>(1) 没有一个确定OK的环境。使用蓝绿部署，我们能够清晰地知道老版本是OK的，而使用滚动发布，我们无法确定。<br>(2) 修改了现有的环境。<br>(3) 如果需要回滚，很困难。举个例子，在某一次发布中，我们需要更新100个实例，每次更新10个实例，每次部署需要5分钟。当滚动发布到第80个实例时，发现了问题，需要回滚。此时，脾气不好的程序猿很可能想掀桌子，因为回滚是一个痛苦，并且漫长的过程。<br>(4) 有的时候，我们还可能对系统进行动态伸缩，如果部署期间，系统自动扩容/缩容了，我们还需判断到底哪个节点使用的是哪个代码。</p>
+<p>3、灰度发布/金丝雀部署/AB test<br><img src="/img/2017-12-21-11-56-15.png" alt=""><br>灰度发布是在原有版本可用的情况下，同时部署一个新版本应用作为“金丝雀”（金丝雀对瓦斯极敏感，矿井工人携带金丝雀，以便及时发发现危险），测试新版本的性能和表现，以保障整体系统稳定的情况下，尽早发现、调整问题。<br>灰度发布是指在黑与白之间，能够平滑过渡的一种发布方式。AB test就是一种灰度发布方式，让一部分用户继续用A，一部分用户开始用B，如果用户对B没有什么反对意见，那么逐步扩大范围，把所有用户都迁移到B上面来。灰度发布可以保证整体系统的稳定，在初始灰度的时候就可以发现、调整问题，以保证其影响度。<br>很多人把灰度发布与蓝绿部署混为一谈，笔者认为，与灰度发布最类似的应该是金丝雀部署。</p>
+<p>注意：概念上来说，A/B测试是用来测试应用功能表现的方法，例如可用性、受欢迎程度、可见性等等</p>
+<p>灰度发布／金丝雀发布由以下几个步骤组成：</p>
+<ul>
+<li>准备好部署各个阶段的工件，包括：构建工件，测试脚本，配置文件和部署清单文件。</li>
+<li>从负载均衡列表中移除掉“金丝雀”服务器。</li>
+<li>升级“金丝雀”应用（排掉原有流量并进行部署）。</li>
+<li>对应用进行自动化测试。</li>
+<li>将“金丝雀”服务器重新添加到负载均衡列表中（连通性和健康检查）。</li>
+<li>如果“金丝雀”在线使用测试成功，升级剩余的其他服务器。（否则就回滚）</li>
+</ul>
+<p>总结<br>(1) 蓝绿部署：不停止老版本，额外搞一套新版本，等测试发现新版本OK后，删除老版本。<br>(2) 滚动发布：按批次停止老版本实例，启动新版本实例。<br>(3) 灰度发布/金丝雀部署：不停止老版本，额外搞一套新版本，常常按照用户设置路由权重，例如90%的用户维持使用老版本，10%的用户尝鲜新版本。不同版本应用共存，经常与A/B测试一起使用，用于测试选择多种方案。</p>
+<p>通过docker和kubernetes，我们可以很简单的实现蓝绿部署、A/B测试、灰度发布.（这点需待后续实践中体会）</p>
+<h2 id="Service-Mesh-服务网格"><a href="#Service-Mesh-服务网格" class="headerlink" title="Service Mesh(服务网格)"></a>Service Mesh(服务网格)</h2><p>首先摆出参考文章地址:<br><a href="http://philcalcado.com/2017/08/03/pattern_service_mesh.html" target="_blank" rel="noopener">http://philcalcado.com/2017/08/03/pattern_service_mesh.html</a><br><a href="http://geek.csdn.net/news/detail/239953" target="_blank" rel="noopener">http://geek.csdn.net/news/detail/239953</a><br><a href="http://blog.csdn.net/zvayivqt0ufji/article/details/78351355" target="_blank" rel="noopener">http://blog.csdn.net/zvayivqt0ufji/article/details/78351355</a><br><a href="https://istio.io/docs/welcome/index.html" target="_blank" rel="noopener">https://istio.io/docs/welcome/index.html</a><br><a href="https://istio.io/docs/welcome/index.html" target="_blank" rel="noopener">https://istio.io/docs/welcome/index.html</a></p>
+<p>首先我们先看看计算机网络的发展：<br><img src="/img/2017-12-21-11-17-41.png" alt=""><img src="/img/2017-12-21-11-17-26.png" alt=""><img src="/img/2017-12-21-11-17-56.png" alt=""><img src="/img/2017-12-21-11-18-05.png" alt=""></p>
+<p>第一批基于微服务构建的系统遵循了与前几代联网计算机类似的策略。这意味着落实上述需求的责任落在了编写服务的工程师身上。但是，尽管数十年前开发的TCP/IP协议栈和通用网络模型仍然是计算机之间相互通讯的有力工具，但更复杂的架构引入了另一个层面的要求，这再次需要由在这方面工作的工程师来实现。而不是应用工程师。</p>
+<p><img src="/img/2017-12-21-11-19-53.png" alt=""><img src="/img/2017-12-21-11-19-59.png" alt=""></p>
+<p>类似于我们在网络协议栈中看到的那样，大规模分布式服务所需的功能应该放到底层的平台中。<br>人们使用高级协议（如HTTP）编写非常复杂的应用程序和服务，甚至无需考虑TCP是如何控制网络上的数据包的。这种情况就是微服务所需要的，那些从事服务开发工作的工程师可以专注于业务逻辑的开发，从而避免浪费时间去编写自己的服务基础设施代码或管理整个系统的库和框架。<br><img src="/img/2017-12-21-11-20-08.png" alt=""></p>
+<p>不幸的是，通过改变网络协议栈来添加这个层并不是一个可行的任务。许多人的解决方案是通过一组代理来实现。这个的想法是，服务不会直接连接到它的下游，而是让所有的流量都将通过一个小小的软件来透明地添加所需功能。sidecars就是这样一种模式。<br>在2013年，Airbnb写了一篇有关Synapse和Nerve的文章，这是“边三轮”的一个开源实现。一年后，Netflix推出了Prana，专门用于让非JVM应用程序从他们的NetflixOSS生态系统中受益(SpringCloud sidecar的前身)。<br><img src="/img/2017-12-21-11-20-32.png" alt=""><br>虽然有这么几个开源的代理实现，但它们往往被设计为需要与特定的基础架构组件配合使用。例如，在服务发现方面，Airbnb的Nerve和Synapse假设了服务是在Zookeeper中注册，而对于Prana，则应该使用Netflix自己的Eureka服务注册表 。<br>随着微服务架构的日益普及，我们最近看到了一波新的代理浪潮，它们足以灵活地适应不同的基础设施组件和偏好。 </p>
+<p>架构图:<br><img src="/img/2017-12-21-11-24-14.png" alt=""><img src="/img/2017-12-21-11-20-32.png" alt=""><br>服务网格是用于处理服务到服务通信的专用基础设施层。它负责通过复杂的服务拓扑来可靠地传递请求。实际上，服务网格通常被实现为与应用程序代码一起部署的轻量级网络代理矩阵，并且它不会被应用程序所感知。<br>随着微服务部署被迁移到更为复杂的运行时中去，如Kubernetes和Mesos，人们开始使用一些平台上的工具来实现网格网络这一想法。他们实现的网络正从互相之间隔离的独立代理，转移到一个合适的并且有点集中的控制面上来。<br><img src="/img/2017-12-21-11-25-23.png" alt=""></p>
+<p>图中应用作为服务的发起方，只需要用最简单的方式将请求发送给本地的服务网格代理，然后网格代理会进行后续的操作，如服务发现，负载均衡，最后将请求转发给目标服务。当有大量服务相互调用时，它们之间的服务调用关系就会形成网格，<br>来看看这个鸟瞰图，实际的服务流量仍然直接从代理流向代理，但是控制面知道每个代理实例。控制面使得代理能够实现诸如访问控制和度量收集这样的功能，但这需要它们之间进行合作：<br><img src="/img/2017-12-21-11-26-15.png" alt=""></p>
+<p>最近公布的<code>Istio</code>项目<a href="https://istio.io/是这类系统中最著名的例子。" target="_blank" rel="noopener">https://istio.io/是这类系统中最著名的例子。</a><br>服务网格是用于处理服务到服务通信的“专用基础设施层”。它通过这些代理来管理复杂的服务拓扑，可靠地传递服务之间的请求。 从某种程度上说，这些代理接管了应用程序的网络通信层。</p>
+<p>值得一提的是：Service Mesh概念是今年才开始提出来的，而相关项目Istio是2017.5.才启动的。目前最新版本0.4.</p>
+<h3 id="什么是Service-Mesh"><a href="#什么是Service-Mesh" class="headerlink" title="什么是Service Mesh"></a>什么是Service Mesh</h3><ul>
+<li>一种基础设施层服务，服务间的通信通过service mesh进行</li>
+<li>可靠地传输复杂拓扑中服务的请求，将它们变成现代的云原生服务</li>
+<li>一种网络代理的实现，通常与业务服务部署在一起，业务服务不感知</li>
+<li>一种网络模型，在TCP/IP之上的抽象层，TCP/IP负责将字节码可靠地在网络节点间传递，Service mesh则复杂将服务间的协议请求可靠地在服务间进行传输。它们不关心传输的内容</li>
+<li>TCP/IP仅仅负责传输，但Service mesh可对运行时进行控制，使服务变得可监控，可管理。</li>
+</ul>
+<p>为什么使用Service Mesh</p>
+<ul>
+<li>无需考虑每种语言都要解决的问题</li>
+<li>对业务代码0侵入，开发者无需关心分布式架构带来的复杂性以及引入的技术问题</li>
+<li>对于不适合改造的老旧单体应用，提供了一种接入分布式环境的方式</li>
+<li>微服务化的进程通常不是一蹴而就的，很多应用选择了演进的方式，就是将单体应用一部分一部分地进行拆分。而在这个过程中，使用Service Mesh就可以很好地保证未拆分的应用与已经拆分出来的微服务之间的互通和统一治理</li>
+<li>开发出的应用既是云原生的又具有云独立性，不将业务代码与任何框架，平台或者服务绑定</li>
+</ul>
+<p>Service mesh解决不了的问题</p>
+<ul>
+<li>无分布式事务方案</li>
+<li>Service Mesh组件代理请求转发，会在一定程度上降低系统通信性能</li>
+<li>没有Event Driven的框架</li>
+<li>侵入式框架以源码和业务代码结合，有较强定制和扩展能力，Service mesh相对不易定制扩展</li>
+<li>在运行时，依赖单独的Service Mesh代理，多了一个故障点。整个系统的运行和运维也强依赖于Service Mesh组件的能力</li>
+</ul>
+<h2 id="Service-Mesh新生代Istio"><a href="#Service-Mesh新生代Istio" class="headerlink" title="Service Mesh新生代Istio"></a>Service Mesh新生代Istio</h2><p>Istio是Service Mesh的一种实现，由Google，IBM和Lyft于2017.5开始主导开发，目前最新版本0.4<br>官方定义:Istio：一个连接，管理和保护微服务的开放平台。<br>Istio提供一种简单的方式来建立已部署的服务的网络，具备负载均衡，服务到服务认证，监控等等功能，而不需要改动任何服务代码。<br>简单的说，有了Istio，你的服务就不再需要任何微服务开发框架（典型如Spring Cloud，Dubbo），也不再需要自己动手实现各种复杂的服务治理的功能（很多是Spring Cloud和Dubbo也不能提供的，需要自己动手）。只要服务的客户端和服务器可以进行简单的直接网络访问，就可以通过将网络层委托给Istio，从而获得一系列的完备功能。<br>可以近似的理解为：<code>Istio = 微服务框架 + 服务治理</code></p>
+<p>Istio的关键功能:</p>
+<ul>
+<li>HTTP/1.1，HTTP/2，gRPC和TCP流量的自动区域感知负载平衡和故障切换。</li>
+<li>通过丰富的路由规则，容错和故障注入，对流行为的细粒度控制。</li>
+<li>支持访问控制，速率限制和配额的可插拔策略层和配置API。</li>
+<li>集群内所有流量的自动量度，日志和跟踪，包括集群入口和出口。</li>
+<li>安全的服务到服务身份验证，在集群中的服务之间具有强大的身份标识。 </li>
+</ul>
+<p>为什么要使用Istio?<br>微服务的两面性:虽然微服务对开发进行了简化，通过将复杂系统切分为若干个微服务来分解和降低复杂度，使得这些微服务易于被小型的开发团队所理解和维护。但是，复杂度并非从此消失。微服务拆分之后，单个微服务的复杂度大幅降低，但是由于系统被从一个单体拆分为几十甚至更多的微服务， 就带来了另外一个复杂度：微服务的连接、管理和监控。<br>试想， 对于一个大型系统， 需要对多达上百个甚至上千个微服务的管理、部署、版本控制、安全、故障转移、策略执行、遥测和监控等，谈何容易。更不要说更复杂的运维需求，例如A/B测试，金丝雀发布，限流，访问控制和端到端认证。<br>开发人员和运维人员在单体应用程序向分布式微服务架构的转型中， 不得不面临上述挑战。</p>
+<p>Istio在服务网络中统一提供了许多关键功能：</p>
+<ul>
+<li>流量管理：控制服务之间的流量和API调用的流向，使得调用更可靠，并使网络在恶劣情况下更加健壮。</li>
+<li>可观察性：了解服务之间的依赖关系，以及它们之间流量的本质和流向，从而提供快速识别问题的能力。</li>
+<li>策略执行：将组织策略应用于服务之间的互动，确保访问策略得以执行，资源在消费者之间良好分配。策略的更改是通过配置网格而不是修改应用程序代码。</li>
+<li>服务身份和安全：为网格中的服务提供可验证身份，并提供保护服务流量的能力，使其可以在不同可信度的网络上流转。</li>
+<li>平台支持：Istio旨在在各种环境中运行，包括跨云， 预置，Kubernetes，Mesos等。最初专注于Kubernetes，但很快将支持其他环境。</li>
+<li>集成和定制：策略执行组件可以扩展和定制，以便与现有的ACL，日志，监控，配额，审核等解决方案集成。<br>这些功能极大的减少了应用程序代码，底层平台和策略之间的耦合，使微服务更容易实现。</li>
+</ul>
+<p>要体会Istio的好处，不妨设想一下，在平时理解的微服务开发过程中，在没有Istio这样的服务网格的情况下，要如何开发我们的应用程序，才可以做到前面列出的这些丰富多彩的功能? 这数以几十记的各种特性，如何才可以加入到应用程序?</p>
+<p>无外乎，找个Spring Cloud或者Dubbo的成熟框架，直接搞定服务注册，服务发现，负载均衡，熔断等基础功能。然后自己开发服务路由等高级功能， 接入Zipkin等Apm做全链路监控，自己做加密、认证、授权。 想办法搞定灰度方案，用Redis等实现限速、配额。 诸如此类，一大堆的事情， 都需要自己做，无论是找开源项目还是自己操刀，最后整出一个带有一大堆功能的应用程序，上线部署。然后给个配置说明到运维，告诉他说如何需要灰度，要如何如何， 如果要限速，配置哪里哪里。</p>
+<p>这里就有一个很严肃的问题， 给每个业务程序的开发人员: 你到底想往你的业务程序里面塞多少管理和运维的功能? 就算你hold的住技术和时间，你有能力一个一个的满足各种运维和管理的需求吗？ 当你发现你开始疲于响应各种非功能性的需求时，就该开始反省了: 我们开发的是业务程序，它的核心价值在业务逻辑的处理和实现，将如此之多的时间精力花费在这些非业务功能上， 这真的合理吗? 而且即使是在实现层面，微服务实施时，最重要的是如何划分微服务，如何制定接口协议，你该如何分配你有限的时间和资源？<br>Istio 超越 spring cloud和dubbo 等传统开发框架之处， 就在于不仅仅带来了远超这些框架所能提供的功能， 而且也不需要应用程序为此做大量的改动， 开发人员也不必为上面的功能实现进行大量的知识储备。</p>
+<h3 id="整体架构"><a href="#整体架构" class="headerlink" title="整体架构"></a>整体架构</h3><p>Istio服务网格逻辑上分为数据面板和控制面板。<br>数据面板由一组智能代理（Envoy）组成，代理部署为Sidecar，调解和控制微服务之间所有的网络通信。<br>控制面板负责管理和配置代理来路由流量，以及在运行时执行策略。<br><img src="/img/2017-12-21-11-35-17.png" alt=""></p>
+<p>Istio 中的主要模块 Envoy/Mixer/Pilot/Auth。<br>Envoy在其中扮演的负责搬砖的民工角色，而指挥Envoy工作的民工头就是Pilot模块。<br>Pilot负责收集和验证配置并将其传播到各种Istio组件。它从Mixer和Envoy中抽取环境特定的实现细节，为他们提供独立于底层平台的用户服务的抽象表示。此外，流量管理规则（即通用4层规则和7层HTTP/gRPC路由规则）可以在运行时通过Pilot进行编程。<br>每个Envoy实例根据其从Pilot获得的信息以及其负载均衡池中的其他实例的定期健康检查来维护 负载均衡信息，从而允许其在目标实例之间智能分配流量，同时遵循其指定的路由规则。<br>Pilot负责在Istio服务网格中部署的Envoy实例的生命周期。</p>
+<h3 id="Envory"><a href="#Envory" class="headerlink" title="Envory"></a>Envory</h3><p>Istio 使用Envoy代理的扩展版本，Envoy是以C++开发的高性能代理，用于调解服务网格中所有服务的所有入站和出站流量。<br>Istio利用了Envoy的许多内置功能，例如动态服务发现，负载均衡，TLS termination，HTTP/2&amp;gRPC代理，熔断器，健康检查，基于百分比流量拆分的分段推出，故障注入和丰富的metrics。<br>Envoy实现了过滤和路由、服务发现、健康检查，提供了具有弹性的负载均衡。它在安全上支持TLS，在通信方面支持gRPC。<br>概括说，Envoy提供的是服务间网络通讯的能力、以及网络通讯直接相关的功能：</p>
+<ul>
+<li>服务发现：从Pilot得到服务发现信息</li>
+<li>过滤</li>
+<li>负载均衡</li>
+<li>健康检查</li>
+<li>执行路由规则(Rule): 规则来自Polit,包括路由和目的地策略</li>
+<li>加密和认证: TLS certs来自 Istio-Auth<br>此外, Envoy 也吐出各种数据给Mixer:</li>
+<li>Metrics</li>
+<li>Logging</li>
+<li>Distribution Trace: 目前支持 Zipkin</li>
+</ul>
+<p>总结: Envoy是Istio中负责”干活”的模块,如果将整个Istio体系比喻为一个施工队,那么 Envoy 就是最底层负责搬砖的民工，所有体力活都由Envoy完成。所有需要控制，决策，管理的功能都是其他模块来负责，然后配置给Envoy。</p>
+<p>Envoy的竞争者：<br>基于Scala的Linkerd。 Linkerd的功能和定位和Envoy非常相似，而且就在今年上半年成功进入CNCF。而在 Istio 推出之后，Linkerd做了一个很有意思的动作：Linkerd推出了和Istio的集成，实际为替换Envoy作为Istio的数据面板，和Istio的控制面板对接。</p>
+<p>目前，Nginx推出了自己的服务网格产品Nginmesh，功能类似，比较有意思的地方是Ngxinmesh一出来就直接宣布要和Istio集成，替换Envoy。</p>
+<h3 id="Pilot"><a href="#Pilot" class="headerlink" title="Pilot"></a>Pilot</h3><p>流量管理，Istio最核心的功能是流量管理，前面我们看到的数据面板，由Envoy组成的服务网格，将整个服务间通讯和入口/出口请求都承载于其上。使用Istio的流量管理模型，本质上将流量和基础设施扩展解耦，让运维人员通过Pilot指定它们希望流量遵循什么规则，而不是哪些特定的pod/VM应该接收流量。<br>对这段话的理解, 可以看下图：假定我们原有服务B，部署在Pod1/2/3上，现在我们部署一个新版本在Pod4在，希望实现切5%的流量到新版本。<br><img src="/img/2017-12-21-11-38-47.png" alt=""><br>我们还可以玩的更炫一点, 比如根据请求的内容来源将流量发送到特定版本：<br><img src="/img/2017-12-21-11-39-45.png" alt=""><br>每个Envoy实例根据其从Pilot获得的信息以及其负载均衡池中的其他实例的定期健康检查来维护 负载均衡信息，从而允许其在目标实例之间智能分配流量，同时遵循其指定的路由规则。<br>Pilot负责在Istio服务网格中部署的Envoy实例的生命周期。<br><img src="/img/2017-12-21-11-40-50.png" alt=""><br>Envoy API负责和Envoy的通讯, 主要是发送服务发现信息和流量控制规则给Envoy<br>Envoy提供服务发现，负载均衡池和路由表的动态更新的API。这些API将Istio和Envoy的实现解耦。<br>Polit定了一个抽象模型，以从特定平台细节中解耦，为跨平台提供基础<br>Platform Adapter则是这个抽象模型的现实实现版本, 用于对接外部的不同平台<br>最后是 Rules API，提供接口给外部调用以管理Pilot，包括命令行工具Istioctl以及未来可能出现的第三方管理界面<br>Pilot架构中, 最重要的是Abstract Model和Platform Adapter，我们详细介绍。<br>Abstract Model：是对服务网格中”服务”的规范表示, 即定义在istio中什么是服务，这个规范独立于底层平台。<br>Platform Adapter：这里有各种平台的实现，目前主要是Kubernetes，另外0.2版本的代码中出现了Consul和Eureka。 </p>
+<p>基于上述的架构设计，Pilot提供以下重要功能：</p>
+<ul>
+<li>请求路由</li>
+<li>服务发现和负载均衡</li>
+<li>故障处理</li>
+<li>故障注入</li>
+<li>规则配置 </li>
+</ul>
+<h3 id="Mixer"><a href="#Mixer" class="headerlink" title="Mixer"></a>Mixer</h3><p>功能概括：Mixer负责在服务网格上执行访问控制和使用策略，并收集Envoy代理和其他服务的遥测数据。<br>我们的系统通常会基于大量的基础设施而构建，这些基础设施的后端服务为业务服务提供各种支持功能。包括访问控制系统，遥测捕获系统，配额执行系统，计费系统等。在传统设计中, 服务直接与这些后端系统集成，容易产生硬耦合。<br>在Istio中，为了避免应用程序的微服务和基础设施的后端服务之间的耦合，提供了 Mixer 作为两者的通用中介层：<br><img src="/img/2017-12-21-11-42-52.png" alt=""><br>Mixer 设计将策略决策从应用层移出并用配置替代，并在运维人员控制下。应用程序代码不再将应用程序代码与特定后端集成在一起，而是与Mixer进行相当简单的集成，然后 Mixer 负责与后端系统连接。<br>Mixer 提供三个核心功能：</p>
+<ul>
+<li>前提条件检查。允许服务在响应来自服务消费者的传入请求之前验证一些前提条件。前提条件包括认证，黑白名单，ACL检查等等。</li>
+<li>配额管理。使服务能够在多个维度上分配和释放配额。典型例子如限速。</li>
+<li>遥测报告。使服务能够上报日志和监控。<br><img src="/img/2017-12-21-11-44-20.png" alt=""></li>
+</ul>
+<h3 id="Istio-Auth"><a href="#Istio-Auth" class="headerlink" title="Istio-Auth"></a>Istio-Auth</h3><p>Istio-Auth提供强大的服务到服务和终端用户认证，使用交互TLS，内置身份和凭据管理。它可用于升级服务网格中的未加密流量，并为运维人员提供基于服务身份而不是网络控制实施策略的能力。Istio的未来版本将增加细粒度的访问控制和审计，以使用各种访问控制机制（包括基于属性和角色的访问控制以及授权钩子）来控制和监视访问您的服务，API或资源的人员。<br><img src="/img/2017-12-21-11-45-09.png" alt=""><br>其中包括三个组件：身份，密钥管理和通信安全。<br>在这个例子中, 服务A以服务帐户“foo”运行, 服务B以服务帐户“bar”运行, 他们之间的通讯原来是没有加密的. 但是Istio在不修改代码的情况, 依托Envoy形成的服务网格, 直接在客户端Envoy和服务器端Envoy之间进行通讯加密。<br>目前在Kubernetes上运行的 Istio，使用Kubernetes service account/服务帐户来识别运行该服务的人员。<br>未来则规划有非常多的特性：</p>
+<ul>
+<li>细粒度授权和审核</li>
+<li>安全Istio组件（Mixer, Pilot等）</li>
+<li>集群间服务到服务认证</li>
+<li>使用JWT/OAuth2/OpenID_Connect终端到服务的认证</li>
+<li>支持GCP服务帐户和AWS服务帐户</li>
+<li>非http流量（MySql，Redis等）支持</li>
+<li>Unix域套接字，用于服务和Envoy之间的本地通信</li>
+<li>中间代理支持</li>
+<li>可插拔密钥管理组件<br>需要提醒的是：这些功能都是不改动业务应用代码的前提下实现的。</li>
+</ul>
+<h3 id="Benefits-of-Istio"><a href="#Benefits-of-Istio" class="headerlink" title="Benefits of Istio"></a>Benefits of Istio</h3><p>Fleet-wide Visibility: Failures happen, and operators need tools to stay on top of the health of clusters and their graphs of microservices. Istio produces <code>detailed monitoring data about application and network</code> behaviors that is rendered using <code>Prometheus &amp; Grafana</code>, and can be easily extended to send metrics and logs to any collection, aggregation and querying system. Istio enables analysis of <code>performance hotspots and diagnosis(性能热点和诊断)</code> of distributed failure modes with <code>Zipkin</code> tracing.<br><img src="/img/2017-12-21-11-51-17.png" alt=""></p>
+<p>存在问题<br>Istio毕竟目前才是0.4 release版本，毕竟5月份才出来，因此还是存在大量的问题，集中表现为：</p>
+<ul>
+<li>仅对k8s有较好的支持，其他的支持还在完善</li>
+<li>性能较低,后续版本有待提高(Envoy每次访问请求Mixer API导致性能下降)</li>
+<li>很多功能尚未完成 </li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xbynet.top/2017/12/21/微服务架构之服务架构演进/" title="微服务架构之服务架构演进">http://xbynet.top/2017/12/21/微服务架构之服务架构演进/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MicroService/" rel="tag"><i class="fa fa-tag"></i> MicroService</a>
+          
+            <a href="/tags/msa/" rel="tag"><i class="fa fa-tag"></i> msa</a>
+          
+            <a href="/tags/架构/" rel="tag"><i class="fa fa-tag"></i> 架构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/20/历史博文迁移-Java8新特性学习笔记/" rel="next" title="[历史博文迁移]Java8新特性学习笔记">
+                <i class="fa fa-chevron-left"></i> [历史博文迁移]Java8新特性学习笔记
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/21/微服务架构之SpringCloud全家桶/" rel="prev" title="微服务架构之SpringCloud全家桶">
+                微服务架构之SpringCloud全家桶 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ3OS85MDQw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256"
+                alt="xbynet" />
+            
+              <p class="site-author-name" itemprop="name">xbynet</p>
+              <p class="site-description motion-element" itemprop="description">青苔边，折梅不赏;古道旁，煮酒不饮。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xbynet" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xbynet@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          <div id="aplayer1" class="aplayer"></div>
+<script src="/asserts/js/APlayer.min.js"></script>
+<script>
+    var musiclist=[
+        {title:'素雨',author:'孙雪宁',url:'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'},
+        {title:'爱在上',author:'崔子格',url:'http://dl.stream.qqmusic.qq.com/M8000019Hx0J3tqcaV.mp3?vkey=93EB395793C648848684E76AE3B2D6E08F9EC8C7412B177750792C7CEC73BDC4FD06C1F78C02D9186339549C042F2CA5955914BA8322F6E4&guid=5150825362&fromtag=1',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003ksYhQ1EmEcr.jpg?max_age=2592000'}
+    ]
+    var tmpindex=Math.floor(Math.random()*musiclist.length);
+    var music=musiclist[tmpindex];
+    var ap = new APlayer({
+        element: document.getElementById('aplayer1'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: music.title,
+            author: music.author,
+            url: music.url,
+            pic: music.pic
+        }
+    });
+</script>
+
+<!-- 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+-->
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务架构特性"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x7279;&#x6027;" class="headerlink" title="&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x7279;&#x6027;"></a>&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;&#x7279;&#x6027;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#理论基础-康威定律-Conway’s-Law"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x7406;&#x8BBA;&#x57FA;&#x7840;-&#x5EB7;&#x5A01;&#x5B9A;&#x5F8B;-Conway&#x2019;s-Law" class="headerlink" title="&#x7406;&#x8BBA;&#x57FA;&#x7840;-&#x5EB7;&#x5A01;&#x5B9A;&#x5F8B;(Conway&#x2019;s Law)"></a>&#x7406;&#x8BBA;&#x57FA;&#x7840;-&#x5EB7;&#x5A01;&#x5B9A;&#x5F8B;(Conway&#x2019;s Law)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微服务架构-vs-SOA"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784;-vs-SOA" class="headerlink" title="&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784; vs. SOA"></a>&#x5FAE;&#x670D;&#x52A1;&#x67B6;&#x6784; vs. SOA</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#微服务的优缺点"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#&#x5FAE;&#x670D;&#x52A1;&#x7684;&#x4F18;&#x7F3A;&#x70B9;" class="headerlink" title="&#x5FAE;&#x670D;&#x52A1;&#x7684;&#x4F18;&#x7F3A;&#x70B9;"></a>&#x5FAE;&#x670D;&#x52A1;&#x7684;&#x4F18;&#x7F3A;&#x70B9;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务实践"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x5FAE;&#x670D;&#x52A1;&#x5B9E;&#x8DF5;" class="headerlink" title="&#x5FAE;&#x670D;&#x52A1;&#x5B9E;&#x8DF5;"></a>&#x5FAE;&#x670D;&#x52A1;&#x5B9E;&#x8DF5;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#微服务中的消息传递-Messaging-in-Microservices"><span class="nav-number">2.1.</span> <span class="nav-text"><a href="#&#x5FAE;&#x670D;&#x52A1;&#x4E2D;&#x7684;&#x6D88;&#x606F;&#x4F20;&#x9012;-Messaging-in-Microservices" class="headerlink" title="&#x5FAE;&#x670D;&#x52A1;&#x4E2D;&#x7684;&#x6D88;&#x606F;&#x4F20;&#x9012;(Messaging in Microservices)"></a>&#x5FAE;&#x670D;&#x52A1;&#x4E2D;&#x7684;&#x6D88;&#x606F;&#x4F20;&#x9012;(Messaging in Microservices)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#去中心化-Decentralized"><span class="nav-number">2.2.</span> <span class="nav-text"><a href="#&#x53BB;&#x4E2D;&#x5FC3;&#x5316;-Decentralized" class="headerlink" title="&#x53BB;&#x4E2D;&#x5FC3;&#x5316;(Decentralized)"></a>&#x53BB;&#x4E2D;&#x5FC3;&#x5316;(Decentralized)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Service-Registry-and-Service-Discovery"><span class="nav-number">2.3.</span> <span class="nav-text"><a href="#Service-Registry-and-Service-Discovery" class="headerlink" title="Service Registry and Service Discovery"></a>Service Registry and Service Discovery</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deployment"><span class="nav-number">2.4.</span> <span class="nav-text"><a href="#Deployment" class="headerlink" title="Deployment"></a>Deployment</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Security"><span class="nav-number">2.5.</span> <span class="nav-text"><a href="#Security" class="headerlink" title="Security"></a>Security</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Transactions"><span class="nav-number">2.6.</span> <span class="nav-text"><a href="#Transactions" class="headerlink" title="Transactions"></a>Transactions</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Design-for-Failures原则"><span class="nav-number">2.7.</span> <span class="nav-text"><a href="#Design-for-Failures&#x539F;&#x5219;" class="headerlink" title="Design for Failures&#x539F;&#x5219;"></a>Design for Failures&#x539F;&#x5219;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务在企业中的实践"><span class="nav-number">3.</span> <span class="nav-text"><a href="#&#x5FAE;&#x670D;&#x52A1;&#x5728;&#x4F01;&#x4E1A;&#x4E2D;&#x7684;&#x5B9E;&#x8DF5;" class="headerlink" title="&#x5FAE;&#x670D;&#x52A1;&#x5728;&#x4F01;&#x4E1A;&#x4E2D;&#x7684;&#x5B9E;&#x8DF5;"></a>&#x5FAE;&#x670D;&#x52A1;&#x5728;&#x4F01;&#x4E1A;&#x4E2D;&#x7684;&#x5B9E;&#x8DF5;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Orchestration-业务流程-编排"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#Orchestration-&#x4E1A;&#x52A1;&#x6D41;&#x7A0B;-&#x7F16;&#x6392;" class="headerlink" title="Orchestration(&#x4E1A;&#x52A1;&#x6D41;&#x7A0B;/&#x7F16;&#x6392;)"></a>Orchestration(&#x4E1A;&#x52A1;&#x6D41;&#x7A0B;/&#x7F16;&#x6392;)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#微服务部署模式"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x5FAE;&#x670D;&#x52A1;&#x90E8;&#x7F72;&#x6A21;&#x5F0F;" class="headerlink" title="&#x5FAE;&#x670D;&#x52A1;&#x90E8;&#x7F72;&#x6A21;&#x5F0F;"></a>&#x5FAE;&#x670D;&#x52A1;&#x90E8;&#x7F72;&#x6A21;&#x5F0F;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-Mesh-服务网格"><span class="nav-number">5.</span> <span class="nav-text"><a href="#Service-Mesh-&#x670D;&#x52A1;&#x7F51;&#x683C;" class="headerlink" title="Service Mesh(&#x670D;&#x52A1;&#x7F51;&#x683C;)"></a>Service Mesh(&#x670D;&#x52A1;&#x7F51;&#x683C;)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Service-Mesh"><span class="nav-number">5.1.</span> <span class="nav-text"><a href="#&#x4EC0;&#x4E48;&#x662F;Service-Mesh" class="headerlink" title="&#x4EC0;&#x4E48;&#x662F;Service Mesh"></a>&#x4EC0;&#x4E48;&#x662F;Service Mesh</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Service-Mesh新生代Istio"><span class="nav-number">6.</span> <span class="nav-text"><a href="#Service-Mesh&#x65B0;&#x751F;&#x4EE3;Istio" class="headerlink" title="Service Mesh&#x65B0;&#x751F;&#x4EE3;Istio"></a>Service Mesh&#x65B0;&#x751F;&#x4EE3;Istio</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#整体架构"><span class="nav-number">6.1.</span> <span class="nav-text"><a href="#&#x6574;&#x4F53;&#x67B6;&#x6784;" class="headerlink" title="&#x6574;&#x4F53;&#x67B6;&#x6784;"></a>&#x6574;&#x4F53;&#x67B6;&#x6784;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Envory"><span class="nav-number">6.2.</span> <span class="nav-text"><a href="#Envory" class="headerlink" title="Envory"></a>Envory</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pilot"><span class="nav-number">6.3.</span> <span class="nav-text"><a href="#Pilot" class="headerlink" title="Pilot"></a>Pilot</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mixer"><span class="nav-number">6.4.</span> <span class="nav-text"><a href="#Mixer" class="headerlink" title="Mixer"></a>Mixer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Istio-Auth"><span class="nav-number">6.5.</span> <span class="nav-text"><a href="#Istio-Auth" class="headerlink" title="Istio-Auth"></a>Istio-Auth</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Benefits-of-Istio"><span class="nav-number">6.6.</span> <span class="nav-text"><a href="#Benefits-of-Istio" class="headerlink" title="Benefits of Istio"></a>Benefits of Istio</span></a></li></ol></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xbynet</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">103.7k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("sHIc70OVniNsR5OI1atIhMuk-gzGzoHsz", "wt266j1nbmoGAFrXdwXt7TeS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>

@@ -71,7 +71,7 @@
 
 
 
-  <meta name="keywords" content="soa,msa,架构," />
+  <meta name="keywords" content="MicroService,msa,架构,soa," />
 
 
 
@@ -85,7 +85,7 @@
 
 
 <meta name="description" content="主要内容:常用的日志分析命令，如cat,grep,wc,less,sed,awk等如何进行集群的监控，包括监控指标的定义、心跳检测、容量评估等如何保障高并发系统的稳定运行，如采用流量控制、依赖管理、服务分级、开关等策略。如何优化应用的性能，包括前端优化、Java程序优化、数据库查询优化等如何进行Java应用故障的在线排查，包括一系列排查工具的使用，及案例。    “You can’t contro">
-<meta name="keywords" content="soa,msa,架构">
+<meta name="keywords" content="MicroService,msa,架构,soa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="[读书笔记]chapter4-系统稳定性-大型网站分布式架构与设计实践">
 <meta property="og:url" content="http://xbynet.top/2017/12/17/读书笔记-chapter4-系统稳定性-大型网站分布式架构与设计实践/index.html">
@@ -93,7 +93,7 @@
 <meta property="og:description" content="主要内容:常用的日志分析命令，如cat,grep,wc,less,sed,awk等如何进行集群的监控，包括监控指标的定义、心跳检测、容量评估等如何保障高并发系统的稳定运行，如采用流量控制、依赖管理、服务分级、开关等策略。如何优化应用的性能，包括前端优化、Java程序优化、数据库查询优化等如何进行Java应用故障的在线排查，包括一系列排查工具的使用，及案例。    “You can’t contro">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://xbynet.top/data/upload/2a31f4f8-de13-11e7-99e4-d46a6ad5b910.png">
-<meta property="og:updated_time" content="2017-12-18T01:18:47.136Z">
+<meta property="og:updated_time" content="2017-12-21T01:23:33.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[读书笔记]chapter4-系统稳定性-大型网站分布式架构与设计实践">
 <meta name="twitter:description" content="主要内容:常用的日志分析命令，如cat,grep,wc,less,sed,awk等如何进行集群的监控，包括监控指标的定义、心跳检测、容量评估等如何保障高并发系统的稳定运行，如采用流量控制、依赖管理、服务分级、开关等策略。如何优化应用的性能，包括前端优化、Java程序优化、数据库查询优化等如何进行Java应用故障的在线排查，包括一系列排查工具的使用，及案例。    “You can’t contro">
@@ -684,11 +684,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/soa/" rel="tag"><i class="fa fa-tag"></i> soa</a>
+            <a href="/tags/MicroService/" rel="tag"><i class="fa fa-tag"></i> MicroService</a>
           
             <a href="/tags/msa/" rel="tag"><i class="fa fa-tag"></i> msa</a>
           
             <a href="/tags/架构/" rel="tag"><i class="fa fa-tag"></i> 架构</a>
+          
+            <a href="/tags/soa/" rel="tag"><i class="fa fa-tag"></i> soa</a>
           
         </div>
       
@@ -731,6 +733,33 @@
 
 
     <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
       
     </div>
   </div>
@@ -801,7 +830,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -812,7 +841,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -823,7 +852,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -869,7 +898,7 @@
 <script>
     var musiclist=[
         {title:'素雨',author:'孙雪宁',url:'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'},
-        {title:'不再联系',author:'崔子格、夏天Alex',url:'http://fs.open.kugou.com/4fe679644672bffdc5f0e07c35909c6e/5a37c9b6/G012/M02/1A/03/rIYBAFUJf-CAVewbADhGLyITk-M373.mp3',pic:'http://p1.music.126.net/px-tKcVk3BATYlEuVqyCFw==/1328210046402323.jpg?param=130y130'}
+        {title:'爱在上',author:'崔子格',url:'http://dl.stream.qqmusic.qq.com/M8000019Hx0J3tqcaV.mp3?vkey=93EB395793C648848684E76AE3B2D6E08F9EC8C7412B177750792C7CEC73BDC4FD06C1F78C02D9186339549C042F2CA5955914BA8322F6E4&guid=5150825362&fromtag=1',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003ksYhQ1EmEcr.jpg?max_age=2592000'}
     ]
     var tmpindex=Math.floor(Math.random()*musiclist.length);
     var music=musiclist[tmpindex];
@@ -940,7 +969,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">75.0k</span>
+    <span title="Site words total count">103.7k</span>
   
 </div>
 
