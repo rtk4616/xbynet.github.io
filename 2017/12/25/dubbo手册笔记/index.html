@@ -1,0 +1,1708 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="dubbo,microservice," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="倚楼听风雨" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="用户手册架构图：provider.xml:123456789101112131415161718192021&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSch">
+<meta name="keywords" content="dubbo,microservice">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dubbo手册笔记">
+<meta property="og:url" content="http://xbynet.top/2017/12/25/dubbo手册笔记/index.html">
+<meta property="og:site_name" content="倚楼听风雨">
+<meta property="og:description" content="用户手册架构图：provider.xml:123456789101112131415161718192021&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSch">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-10-32-30.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-10-37-16.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-10-45-09.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-10-58-23.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-11-04-56.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-11-39-11.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-11-41-44.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-11-56-52.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-14-23-22.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-14-33-28.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-14-52-46.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-15-02-56.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-15-55-38.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-15-58-06.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-16-00-14.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-16-00-31.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-16-01-17.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-16-04-52.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-16-05-27.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-16-06-24.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-25-16-09-46.png">
+<meta property="og:updated_time" content="2017-12-25T08:33:36.002Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dubbo手册笔记">
+<meta name="twitter:description" content="用户手册架构图：provider.xml:123456789101112131415161718192021&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&amp;lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSch">
+<meta name="twitter:image" content="http://xbynet.top/img/2017-12-25-10-32-30.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xbynet.top/2017/12/25/dubbo手册笔记/"/>
+
+
+
+
+
+  <title>dubbo手册笔记 | 倚楼听风雨</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9e6e9198259e7a598474c9df6397dc";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">倚楼听风雨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">淡看江湖路</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-相册">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/25/dubbo手册笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">dubbo手册笔记</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-25T10:31:31+08:00">
+                2017-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/dubbo/" itemprop="url" rel="index">
+                    <span itemprop="name">dubbo</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/25/dubbo手册笔记/" class="leancloud_visitors" data-flag-title="dubbo手册笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  10,513
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  42
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><h2 id="用户手册"><a href="#用户手册" class="headerlink" title="用户手册"></a>用户手册</h2><p>架构图：<br><img src="/img/2017-12-25-10-32-30.png" alt=""><br>provider.xml:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xmlns:dubbo</span>=<span class="string">"http://code.alibabatech.com/schema/dubbo"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans.xsd        http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 提供方应用信息，用于计算依赖关系 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"hello-world-app"</span>  /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 使用multicast广播注册中心暴露服务地址 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"multicast://224.5.6.7:1234"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 用dubbo协议在20880端口暴露服务 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"dubbo"</span> <span class="attr">port</span>=<span class="string">"20880"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 声明需要暴露的服务接口 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.dubbo.demo.DemoService"</span> <span class="attr">ref</span>=<span class="string">"demoService"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">&lt;!-- 和本地bean一样实现服务 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"demoService"</span> <span class="attr">class</span>=<span class="string">"com.alibaba.dubbo.demo.provider.DemoServiceImpl"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>consumer.xml：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xmlns:dubbo</span>=<span class="string">"http://code.alibabatech.com/schema/dubbo"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans.xsd        http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"consumer-of-helloworld-app"</span>  /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 使用multicast广播注册中心暴露发现服务地址 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"multicast://224.5.6.7:1234"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- 生成远程服务代理，可以和本地bean一样使用demoService --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"demoService"</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.dubbo.demo.DemoService"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><img src="/img/2017-12-25-10-37-16.png" alt=""></p>
+<p>属性配置：<br>Dubbo 将自动加载 classpath 根目录下的 dubbo.properties，可以通过JVM启动参数 -Ddubbo.properties.file=xxx.properties 改变缺省配置位置。</p>
+<a id="more"></a>
+<h3 id="启动时检查"><a href="#启动时检查" class="headerlink" title="启动时检查"></a>启动时检查</h3><p>Dubbo 缺省会在启动时检查依赖的服务是否可用，不可用时会抛出异常，阻止 Spring 初始化完成，以便上线时，能及早发现问题，默认 check=”true”。<br>可以通过 check=”false” 关闭检查，比如，测试时，有些服务不关心，或者出现了循环依赖，必须有一方先启动。<br>另外，如果你的 Spring 容器是懒加载的，或者通过 API 编程延迟引用服务，请关闭 check，否则服务临时不可用时，会抛出异常，拿到 null 引用，如果 check=”false”，总是会返回引用，当服务恢复时，能自动连上。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">关闭某个服务的启动时检查 (没有提供者时报错)：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">关闭所有服务的启动时检查 (没有提供者时报错)：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:consumer</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line">关闭注册中心启动时检查 (注册订阅失败时报错)：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">check</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>通过 dubbo.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">dubbo.reference.com.foo.BarService.check=false</span><br><span class="line">dubbo.reference.check=false</span><br><span class="line">dubbo.consumer.check=false</span><br><span class="line">dubbo.registry.check=false</span><br></pre></td></tr></table></figure></p>
+<h3 id="集群容错"><a href="#集群容错" class="headerlink" title="集群容错"></a>集群容错</h3><p>在集群调用失败时，Dubbo 提供了多种容错方案，缺省为 failover 重试。<br><img src="/img/2017-12-25-10-45-09.png" alt=""></p>
+<p>Failover Cluster<br>失败自动切换，当出现失败，重试其它服务器。通常用于读操作，但重试会带来更长延迟。可通过 retries=”2” 来设置重试次数(不含第一次)。</p>
+<p>重试次数配置如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:service retries=&quot;2&quot; /&gt;</span><br><span class="line">或</span><br><span class="line">&lt;dubbo:reference retries=&quot;2&quot; /&gt;</span><br><span class="line">或</span><br><span class="line">&lt;dubbo:reference&gt;</span><br><span class="line">    &lt;dubbo:method name=&quot;findFoo&quot; retries=&quot;2&quot; /&gt;</span><br><span class="line">&lt;/dubbo:reference&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Failfast Cluster<br>快速失败，只发起一次调用，失败立即报错。通常用于非幂等性的写操作，比如新增记录。<br>Failsafe Cluster<br>失败安全，出现异常时，直接忽略。通常用于写入审计日志等操作。<br>Failback Cluster<br>失败自动恢复，后台记录失败请求，定时重发。通常用于消息通知操作。<br>Forking Cluster<br>并行调用多个服务器，只要一个成功即返回。通常用于实时性要求较高的读操作，但需要浪费更多服务资源。可通过 forks=”2” 来设置最大并行数。<br>Broadcast Cluster<br>广播调用所有提供者，逐个调用，任意一台报错则报错 2。通常用于通知所有提供者更新缓存或日志等本地资源信息。</p>
+<p>集群模式配置<br>按照以下示例在服务提供方和消费方配置集群模式<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:service cluster=&quot;failsafe&quot; /&gt;</span><br><span class="line">或</span><br><span class="line">&lt;dubbo:reference cluster=&quot;failsafe&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h3><p>在集群负载均衡时，Dubbo 提供了多种均衡策略，缺省为 random 随机调用。</p>
+<p>Random LoadBalance:随机，按权重设置随机概率。<br>在一个截面上碰撞的概率高，但调用量越大分布越均匀，而且按概率使用权重后也比较均匀，有利于动态调整提供者权重。</p>
+<p>RoundRobin LoadBalance:轮循，按公约后的权重设置轮循比率。<br>存在慢的提供者累积请求的问题，比如：第二台机器很慢，但没挂，当请求调到第二台时就卡在那，久而久之，所有请求都卡在调到第二台上。</p>
+<p>LeastActive LoadBalance:最少活跃调用数，相同活跃数的随机，活跃数指调用前后计数差。<br>使慢的提供者收到更少请求，因为越慢的提供者的调用前后计数差会越大。</p>
+<p>ConsistentHash LoadBalance:一致性 Hash，相同参数的请求总是发到同一提供者。<br>当某一台提供者挂时，原本发往该提供者的请求，基于虚拟节点，平摊到其它提供者，不会引起剧烈变动。<br>缺省只对第一个参数 Hash，如果要修改，请配置 &lt; dubbo:parameter key=”hash.arguments” value=”0,1” /&gt;<br>缺省用 160 份虚拟节点，如果要修改，请配置 &lt; dubbo:parameter key=”hash.nodes” value=”320” /&gt;</p>
+<p>服务端服务级别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:service interface=&quot;...&quot; loadbalance=&quot;roundrobin&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>客户端服务级别<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:reference interface=&quot;...&quot; loadbalance=&quot;roundrobin&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="线程模型"><a href="#线程模型" class="headerlink" title="线程模型"></a>线程模型</h3><p><img src="/img/2017-12-25-10-58-23.png" alt=""><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:protocol name=&quot;dubbo&quot; dispatcher=&quot;all&quot; threadpool=&quot;fixed&quot; threads=&quot;100&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>Dispatcher</p>
+<ul>
+<li>all 所有消息都派发到线程池，包括请求，响应，连接事件，断开事件，心跳等。</li>
+<li>direct 所有消息都不派发到线程池，全部在 IO 线程上直接执行。</li>
+<li>message 只有请求响应消息派发到线程池，其它连接断开事件，心跳等消息，直接在 IO 线程上执行。</li>
+<li>execution 只请求消息派发到线程池，不含响应，响应和其它连接断开事件，心跳等消息，直接在 IO 线程上执行。</li>
+<li>connection 在 IO 线程上，将连接断开事件放入队列，有序逐个执行，其它消息派发到线程池。</li>
+</ul>
+<p>ThreadPool</p>
+<ul>
+<li>fixed 固定大小线程池，启动时建立线程，不关闭，一直持有。(缺省)</li>
+<li>cached 缓存线程池，空闲一分钟自动删除，需要时重建。</li>
+<li>limited 可伸缩线程池，但池中的线程数只会增长不会收缩。只增长不收缩的目的是为了避免收缩时突然来了大流量引起的性能问题。</li>
+</ul>
+<p>策略选择原则：<br>如果事件处理的逻辑能迅速完成，并且不会发起新的 IO 请求，比如只是在内存中记个标识，则直接在 IO 线程上处理更快，因为减少了线程池调度。<br>但如果事件处理逻辑较慢，或者需要发起新的 IO 请求，比如需要查询数据库，则必须派发到线程池，否则 IO 线程阻塞，将导致不能接收其它请求。</p>
+<h3 id="直连提供者"><a href="#直连提供者" class="headerlink" title="直连提供者"></a>直连提供者</h3><p>在开发及测试环境下，经常需要绕过注册中心，只测试指定服务提供者，这时候可能需要点对点直连，点对点直联方式，将以服务接口为单位，忽略注册中心的提供者列表，A 接口配置点对点，不影响 B 接口从注册中心获取列表。<br><img src="/img/2017-12-25-11-04-56.png" alt=""></p>
+<p>通过文件映射<br>如果服务比较多，也可以用文件映射，用 -Ddubbo.resolve.file 指定映射文件路径，此配置优先级高于 &lt; dubbo:reference&gt; 中的配置，如：<br><code>java -Ddubbo.resolve.file=xxx.properties</code><br>然后在映射文件 xxx.properties 中加入配置，其中 key 为服务名，value 为服务提供者 URL：<br><code>com.alibaba.xxx.XxxService=dubbo://localhost:20890</code></p>
+<h3 id="多协议支持"><a href="#多协议支持" class="headerlink" title="多协议支持"></a>多协议支持</h3><p>Dubbo 允许配置多协议，在不同服务上支持不同协议或者同一服务上同时支持多种协议。不同服务在性能上适用不同协议进行传输，比如大数据用短连接协议，小数据大并发用长连接协议.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:application</span> <span class="attr">name</span>=<span class="string">"world"</span>  /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">id</span>=<span class="string">"registry"</span> <span class="attr">address</span>=<span class="string">"10.20.141.150:9090"</span> <span class="attr">username</span>=<span class="string">"admin"</span> <span class="attr">password</span>=<span class="string">"hello1234"</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 多协议配置 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"dubbo"</span> <span class="attr">port</span>=<span class="string">"20880"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"rmi"</span> <span class="attr">port</span>=<span class="string">"1099"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">name</span>=<span class="string">"hessian"</span> <span class="attr">port</span>=<span class="string">"8080"</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 使用dubbo协议暴露服务 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.hello.api.HelloService"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> <span class="attr">ref</span>=<span class="string">"helloService"</span> <span class="attr">protocol</span>=<span class="string">"dubbo"</span> /&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 使用rmi协议暴露服务 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.hello.api.DemoService"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> <span class="attr">ref</span>=<span class="string">"demoService"</span> <span class="attr">protocol</span>=<span class="string">"rmi"</span> /&gt;</span> </span><br><span class="line"><span class="comment">&lt;!-- 使用多个协议暴露服务 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">id</span>=<span class="string">"helloService"</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.hello.api.HelloService"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> <span class="attr">protocol</span>=<span class="string">"dubbo,hessian"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="服务分组"><a href="#服务分组" class="headerlink" title="服务分组"></a>服务分组</h3><p>当一个接口有多种实现时，可以用 group 区分。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">服务</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">group</span>=<span class="string">"feedback"</span> <span class="attr">interface</span>=<span class="string">"com.xxx.IndexService"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">group</span>=<span class="string">"member"</span> <span class="attr">interface</span>=<span class="string">"com.xxx.IndexService"</span> /&gt;</span></span><br><span class="line">引用</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"feedbackIndexService"</span> <span class="attr">group</span>=<span class="string">"feedback"</span> <span class="attr">interface</span>=<span class="string">"com.xxx.IndexService"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"memberIndexService"</span> <span class="attr">group</span>=<span class="string">"member"</span> <span class="attr">interface</span>=<span class="string">"com.xxx.IndexService"</span> /&gt;</span></span><br><span class="line">任意组：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"barService"</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">group</span>=<span class="string">"*"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="多版本"><a href="#多版本" class="headerlink" title="多版本"></a>多版本</h3><p>当一个接口实现，出现不兼容升级时，可以用版本号过渡，版本号不同的服务相互间不引用。<br>可以按照以下的步骤进行版本迁移：</p>
+<ul>
+<li>在低压力时间段，先升级一半提供者为新版本</li>
+<li>再将所有消费者升级为新版本</li>
+<li>然后将剩下的一半提供者升级为新版本<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">老版本服务提供者配置：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> /&gt;</span></span><br><span class="line">新版本服务提供者配置：</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">version</span>=<span class="string">"2.0.0"</span> /&gt;</span></span><br><span class="line">老版本服务消费者配置：</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"barService"</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> /&gt;</span></span><br><span class="line">新版本服务消费者配置：</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"barService"</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">version</span>=<span class="string">"2.0.0"</span> /&gt;</span></span><br><span class="line">如果不需要区分版本，可以按照以下的方式配置 1：</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"barService"</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">version</span>=<span class="string">"*"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="分组聚合"><a href="#分组聚合" class="headerlink" title="分组聚合"></a>分组聚合</h3><p>按组合并返回结果，比如菜单服务，接口一样，但有多种实现，用group区分，现在消费方需从每种group中调用一次返回结果，合并结果返回，这样就可以实现聚合菜单项。参考<a href="https://github.com/alibaba/dubbo/tree/master/dubbo-test/dubbo-test-examples/src/main/java/com/alibaba/dubbo/examples/merge" target="_blank" rel="noopener">见此</a></p>
+<h3 id="参数验证"><a href="#参数验证" class="headerlink" title="参数验证"></a>参数验证</h3><p>参数验证功能是基于 JSR303 实现的，用户只需标识 JSR303 标准的验证 annotation，并通过声明 filter 来实现验证。<br>具体略。</p>
+<h3 id="结果缓存"><a href="#结果缓存" class="headerlink" title="结果缓存"></a>结果缓存</h3><ul>
+<li>lru 基于最近最少使用原则删除多余缓存，保持最热的数据被缓存。</li>
+<li>threadlocal 当前线程缓存，比如一个页面渲染，用到很多 portal，每个 portal 都要去查用户信息，通过线程缓存，可以减少这种多余访问。</li>
+<li>jcache 与 JSR107 集成，可以桥接各种缓存实现。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:reference interface=&quot;com.foo.BarService&quot; cache=&quot;lru&quot; /&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="上下文信息"><a href="#上下文信息" class="headerlink" title="上下文信息"></a>上下文信息</h3><p>RpcContext 是一个 ThreadLocal 的临时状态记录器，当接收到 RPC 请求，或发起 RPC 请求时，RpcContext 的状态都会变化。<br>服务消费方<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 远程调用</span></span><br><span class="line">xxxService.xxx();</span><br><span class="line"><span class="comment">// 本端是否为消费端，这里会返回true</span></span><br><span class="line"><span class="keyword">boolean</span> isConsumerSide = RpcContext.getContext().isConsumerSide();</span><br><span class="line"><span class="comment">// 获取最后一次调用的提供方IP地址</span></span><br><span class="line">String serverIP = RpcContext.getContext().getRemoteHost();</span><br><span class="line"><span class="comment">// 获取当前服务配置信息，所有配置信息都将转换为URL的参数</span></span><br><span class="line">String application = RpcContext.getContext().getUrl().getParameter(<span class="string">"application"</span>);</span><br><span class="line"><span class="comment">// 注意：每发起RPC调用，上下文状态会变化</span></span><br><span class="line">yyyService.yyy();</span><br></pre></td></tr></table></figure></p>
+<p>服务提供方<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XxxServiceImpl</span> <span class="keyword">implements</span> <span class="title">XxxService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">xxx</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 本端是否为提供端，这里会返回true</span></span><br><span class="line">        <span class="keyword">boolean</span> isProviderSide = RpcContext.getContext().isProviderSide();</span><br><span class="line">        <span class="comment">// 获取调用方IP地址</span></span><br><span class="line">        String clientIP = RpcContext.getContext().getRemoteHost();</span><br><span class="line">        <span class="comment">// 获取当前服务配置信息，所有配置信息都将转换为URL的参数</span></span><br><span class="line">        String application = RpcContext.getContext().getUrl().getParameter(<span class="string">"application"</span>);</span><br><span class="line">        <span class="comment">// 注意：每发起RPC调用，上下文状态会变化</span></span><br><span class="line">        yyyService.yyy();</span><br><span class="line">        <span class="comment">// 此时本端变成消费端，这里会返回false</span></span><br><span class="line">        <span class="keyword">boolean</span> isProviderSide = RpcContext.getContext().isProviderSide();</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="隐式参数"><a href="#隐式参数" class="headerlink" title="隐式参数"></a>隐式参数</h3><p>可以通过 RpcContext 上的 setAttachment 和 getAttachment 在服务消费方和提供方之间进行参数的隐式传递。<br><img src="/img/2017-12-25-11-39-11.png" alt=""><br>在服务消费方端设置隐式参数<br>setAttachment 设置的 KV 对，在完成下面一次远程调用会被清空，即多次远程调用要多次设置。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RpcContext.getContext().setAttachment(<span class="string">"index"</span>, <span class="string">"1"</span>); <span class="comment">// 隐式传参，后面的远程调用都会隐式将这些参数发送到服务器端，类似cookie，用于框架集成，不建议常规业务使用</span></span><br><span class="line">xxxService.xxx(); <span class="comment">// 远程调用</span></span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取客户端隐式传入的参数，用于框架集成，不建议常规业务使用</span></span><br><span class="line">        String index = RpcContext.getContext().getAttachment(<span class="string">"index"</span>);</span><br></pre></td></tr></table></figure>
+<h3 id="异步调用"><a href="#异步调用" class="headerlink" title="异步调用"></a>异步调用</h3><p>基于 NIO 的非阻塞实现并行调用，客户端不需要启动多线程即可完成并行调用多个远程服务，相对多线程开销较小。<br><img src="/img/2017-12-25-11-41-44.png" alt=""><br>在 consumer.xml 中配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"fooService"</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.foo.FooService"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"findFoo"</span> <span class="attr">async</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"barService"</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.bar.BarService"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"findBar"</span> <span class="attr">async</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 此调用会立即返回null</span></span><br><span class="line">fooService.findFoo(fooId);</span><br><span class="line"><span class="comment">// 拿到调用的Future引用，当结果返回后，会被通知和设置到此Future</span></span><br><span class="line">Future&lt;Foo&gt; fooFuture = RpcContext.getContext().getFuture(); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 此调用会立即返回null</span></span><br><span class="line">barService.findBar(barId);</span><br><span class="line"><span class="comment">// 拿到调用的Future引用，当结果返回后，会被通知和设置到此Future</span></span><br><span class="line">Future&lt;Bar&gt; barFuture = RpcContext.getContext().getFuture(); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 此时findFoo和findBar的请求同时在执行，客户端不需要启动多线程来支持并行，而是借助NIO的非阻塞完成</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果foo已返回，直接拿到返回值，否则线程wait住，等待foo返回后，线程会被notify唤醒</span></span><br><span class="line">Foo foo = fooFuture.get(); </span><br><span class="line"><span class="comment">// 同理等待bar返回</span></span><br><span class="line">Bar bar = barFuture.get(); </span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果foo需要5秒返回，bar需要6秒返回，实际只需等6秒，即可获取到foo和bar，进行接下来的处理。</span></span><br></pre></td></tr></table></figure>
+<p>如果你只是想异步，完全忽略返回值，可以配置 return=”false”，以减少 Future 对象的创建和管理成本：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"findFoo"</span> <span class="attr">async</span>=<span class="string">"true"</span> <span class="attr">return</span>=<span class="string">"false"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="参数回调"><a href="#参数回调" class="headerlink" title="参数回调"></a>参数回调</h3><p>参数回调方式与调用本地 callback 或 listener 相同，只需要在 Spring 的配置文件中声明哪个参数是 callback 类型即可。Dubbo 将基于长连接生成反向代理，这样就可以从服务器端调用客户端逻辑<br>请参考<a href="https://github.com/alibaba/dubbo/tree/master/dubbo-test/dubbo-test-examples/src/main/java/com/alibaba/dubbo/examples/callback" target="_blank" rel="noopener">这里</a></p>
+<h3 id="事件通知"><a href="#事件通知" class="headerlink" title="事件通知"></a>事件通知</h3><p>在调用之前、调用之后、出现异常时，会触发 oninvoke、onreturn、onthrow 三个事件，可以配置当事件发生时，通知哪个类的哪个方法.<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span> =<span class="string">"demoCallback"</span> <span class="attr">class</span> = <span class="string">"com.alibaba.dubbo.callback.implicit.NofifyImpl"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:reference</span> <span class="attr">id</span>=<span class="string">"demoService"</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.dubbo.callback.implicit.IDemoService"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> <span class="attr">group</span>=<span class="string">"cn"</span> &gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"get"</span> <span class="attr">async</span>=<span class="string">"true"</span> <span class="attr">onreturn</span> = <span class="string">"demoCallback.onreturn"</span> <span class="attr">onthrow</span>=<span class="string">"demoCallback.onthrow"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:reference</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="本地存根"><a href="#本地存根" class="headerlink" title="本地存根"></a>本地存根</h3><p>远程服务后，客户端通常只剩下接口，而实现全在服务器端，但提供方有些时候想在客户端也执行部分逻辑，比如：做 ThreadLocal 缓存，提前验证参数，调用失败后伪造容错数据等等，此时就需要在 API 中带上 Stub，客户端生成 Proxy 实例，会把 Proxy 通过构造函数传给 Stub 1，然后把 Stub 暴露给用户，Stub 可以决定要不要去调 Proxy。<br><img src="/img/2017-12-25-11-56-52.png" alt=""></p>
+<h3 id="本地伪装"><a href="#本地伪装" class="headerlink" title="本地伪装"></a>本地伪装</h3><p>本地伪装 通常用于服务降级，比如某验权服务，当服务提供方全部挂掉后，客户端不抛出异常，而是通过 Mock 数据返回授权失败。<br>在 spring 配置文件中按以下方式配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">mock</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">或</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">mock</span>=<span class="string">"com.foo.BarServiceMock"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在工程中提供 Mock 实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.foo;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BarServiceMock</span> <span class="keyword">implements</span> <span class="title">BarService</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">sayHello</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 你可以伪造容错数据，此方法只在出现RpcException时被执行</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">"容错数据"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果只是想简单返回null:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.foo.BarService"</span> <span class="attr">mock</span>=<span class="string">"return null"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Mock 是 Stub 的一个子集，便于服务提供方在客户端执行容错逻辑，因经常需要在出现 RpcException (比如网络失败，超时等)时进行容错，而在出现业务异常(比如登录用户名密码错误)时不需要容错，如果用 Stub，可能就需要捕获并依赖 RpcException 类，而用 Mock 就可以不依赖 RpcException，<strong>因为它的约定就是只有出现 RpcException 时才执行。</strong></p>
+<h3 id="并发及连接控制"><a href="#并发及连接控制" class="headerlink" title="并发及连接控制"></a>并发及连接控制</h3><p>可以限制单个提供方或消费方的并发数，连接数，或改变负载均衡策略。</p>
+<h3 id="路由规则、配置规则、服务降级"><a href="#路由规则、配置规则、服务降级" class="headerlink" title="路由规则、配置规则、服务降级"></a>路由规则、配置规则、服务降级</h3><p><code>路由规则</code>可以实现的如：</p>
+<ul>
+<li>排除预发布机</li>
+<li>黑白名单</li>
+<li>只暴露部分机器</li>
+<li>为重要应用提供额外的机器</li>
+<li>读写分离</li>
+<li>前后台分离</li>
+<li>隔离不同网段机房</li>
+</ul>
+<p>路由规则决定一次 dubbo 服务调用的目标服务器，分为条件路由规则和脚本路由规则，并且支持可扩展。<br>向注册中心写入路由规则的操作通常由监控中心或治理中心的页面完成<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();</span><br><span class="line">Registry registry = registryFactory.getRegistry(URL.valueOf(<span class="string">"zookeeper://10.20.153.10:2181"</span>));</span><br><span class="line">registry.register(URL.valueOf(<span class="string">"condition://0.0.0.0/com.foo.BarService?category=routers&amp;dynamic=false&amp;rule="</span> + URL.</span><br></pre></td></tr></table></figure></p>
+<p>基于条件表达式的路由规则，如：host = 10.20.153.10 =&gt; host = 10.20.153.11<br>脚本路由规则支持 JDK 脚本引擎的所有脚本，比如：javascript, jruby, groovy 等，通过 type=javascript 参数设置脚本类型，缺省为 javascript。</p>
+<p><code>配置规则</code>可以实现的如:</p>
+<ul>
+<li>禁用提供者(禁用消费者访问请使用路由规则)</li>
+<li>调整权重(默认100)</li>
+<li>调整负载均衡策略(默认random)</li>
+<li>服务降级：(通常用于临时屏蔽某个出错的非关键服务)</li>
+</ul>
+<p>向注册中心写入<strong>动态配置覆盖</strong>规则。该功能通常由监控中心或治理中心的页面完成。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();</span><br><span class="line">Registry registry = registryFactory.getRegistry(URL.valueOf(<span class="string">"zookeeper://10.20.153.10:2181"</span>));</span><br><span class="line">registry.register(URL.valueOf(<span class="string">"override://0.0.0.0/com.foo.BarService?category=configurators&amp;dynamic=false&amp;application=foo&amp;timeout=1000"</span>));</span><br></pre></td></tr></table></figure></p>
+<p>服务降级<br>可以通过<code>服务降级</code>功能临时屏蔽某个出错的非关键服务，并定义降级后的<code>返回策略</code>。<br>向注册中心写入动态配置覆盖规则：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">RegistryFactory registryFactory = ExtensionLoader.getExtensionLoader(RegistryFactory.class).getAdaptiveExtension();</span><br><span class="line">Registry registry = registryFactory.getRegistry(URL.valueOf(<span class="string">"zookeeper://10.20.153.10:2181"</span>));</span><br><span class="line">registry.register(URL.valueOf(<span class="string">"override://0.0.0.0/com.foo.BarService?category=configurators&amp;dynamic=false&amp;application=foo&amp;mock=force:return+null"</span>));</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>mock=<code>force</code>:return+null 表示消费方对该服务的方法调用都直接返回 null 值，不发起远程调用。用来屏蔽不重要服务不可用时对调用方的影响。</li>
+<li>还可以改为 mock=<code>fail</code>:return+null 表示消费方对该服务的方法调用在失败后，再返回 null 值，不抛异常。用来容忍不重要服务不稳定时对调用方的影响。</li>
+</ul>
+<h3 id="优雅停机"><a href="#优雅停机" class="headerlink" title="优雅停机"></a>优雅停机</h3><p>Dubbo 是通过 JDK 的 ShutdownHook 来完成优雅停机的，所以如果用户使用 kill -9 PID 等强制关闭指令，是不会执行优雅停机的，只有通过 <code>kill PID</code> 时，才会执行。<br>设置优雅停机超时时间，缺省超时时间是 10 秒，如果超时则强制关闭。<br>dubbo.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dubbo.service.shutdown.wait=15000</span><br></pre></td></tr></table></figure></p>
+<p>如果 ShutdownHook 不能生效，可以自行调用，使用tomcat等容器部署的場景，建议通过扩展ContextListener等自行调用以下代码实现优雅停机：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ProtocolConfig.destroyAll();</span><br></pre></td></tr></table></figure></p>
+<h3 id="主机绑定"><a href="#主机绑定" class="headerlink" title="主机绑定"></a>主机绑定</h3><p>缺省主机 IP 查找顺序：</p>
+<ul>
+<li>通过 LocalHost.getLocalHost() 获取本机地址。</li>
+<li>如果是 127.* 等 loopback 地址，则扫描各网卡，获取网卡 IP。</li>
+</ul>
+<p>注册的地址如果获取不正确，比如需要注册公网地址，可以：<br>可以在 /etc/hosts 中加入：机器名 公网 IP，比如：test1 205.182.23.201<br>在 dubbo.xml 中加入主机地址的配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">host</span>=<span class="string">"205.182.23.201"</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>或在 dubbo.properties 中加入主机地址的配置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dubbo.protocol.host=205.182.23.201</span><br></pre></td></tr></table></figure></p>
+<p>端口配置:<br><img src="/img/2017-12-25-14-23-22.png" alt=""></p>
+<h3 id="日志"><a href="#日志" class="headerlink" title="日志"></a>日志</h3><p>dubbo内置 log4j、slf4j、jcl、jdk 这些日志框架的适配，也可以通过以下方式显示配置日志输出策略：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">命令行</span><br><span class="line">java -Ddubbo.application.logger=log4j</span><br><span class="line">在 dubbo.properties 中指定</span><br><span class="line">dubbo.application.logger=log4j</span><br><span class="line">在 dubbo.xml 中配置</span><br><span class="line">&lt;dubbo:application logger=&quot;log4j&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p><strong>访问日志</strong><br>如果你想记录每一次请求信息，可开启访问日志，类似于apache的访问日志。注意：此日志量比较大，请注意磁盘容量。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">将访问日志输出到当前应用的log4j日志：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">accesslog</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">将访问日志输出到指定文件：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">accesslog</span>=<span class="string">"http://10.20.160.198/wiki/display/dubbo/foo/bar.log"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="服务容器"><a href="#服务容器" class="headerlink" title="服务容器"></a>服务容器</h3><p>服务容器是一个 standalone 的启动程序,服务容器只是一个简单的 Main 方法，并加载一个简单的 Spring 容器，用于暴露服务。<br>容器类型<br>Spring Container<br>自动加载 META-INF/spring 目录下的所有 Spring 配置。<br>配置 spring 配置加载位置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dubbo.spring.config=classpath*:META-INF/spring/*.xml</span><br></pre></td></tr></table></figure></p>
+<p>Jetty Container<br>启动一个内嵌 Jetty，用于汇报状态。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dubbo.jetty.port=8080：配置 jetty 启动端口</span><br><span class="line">dubbo.jetty.directory=/foo/bar：配置可通过 jetty 直接访问的目录，用于存放静态文件</span><br><span class="line">dubbo.jetty.page=log,status,system：配置显示的页面，缺省加载所有页面</span><br></pre></td></tr></table></figure></p>
+<p>Log4j Container<br>自动配置 log4j 的配置，在多进程启动时，自动给日志文件按进程分目录。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dubbo.log4j.file=/foo/bar.log：配置日志文件路径</span><br><span class="line">dubbo.log4j.level=WARN：配置日志级别</span><br><span class="line">dubbo.log4j.subdirectory=20880：配置日志子目录，用于多进程启动，避免冲突</span><br></pre></td></tr></table></figure></p>
+<p>容器启动</p>
+<ul>
+<li>缺省只加载 spring<br>java com.alibaba.dubbo.container.Main</li>
+<li>通过 main 函数参数传入要加载的容器<br>java com.alibaba.dubbo.container.Main spring jetty log4j</li>
+<li>通过 JVM 启动参数传入要加载的容器<br>java com.alibaba.dubbo.container.Main -Ddubbo.container=spring,jetty,log4j</li>
+<li>通过 classpath 下的 dubbo.properties 配置传入要加载的容器<br>dubbo.container=spring,jetty,log4j</li>
+</ul>
+<h3 id="ReferenceConfig-缓存"><a href="#ReferenceConfig-缓存" class="headerlink" title="ReferenceConfig 缓存"></a>ReferenceConfig 缓存</h3><p>ReferenceConfig 实例很重，封装了与注册中心的连接以及与提供者的连接，需要缓存。否则重复生成 ReferenceConfig 可能造成性能问题并且会有内存和连接泄漏。在 API 方式编程时，容易忽略此问题。<br>因此，自 2.4.0 版本开始， dubbo 提供了简单的工具类 <code>ReferenceConfigCache</code>用于缓存 <code>ReferenceConfig</code> 实例。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">ReferenceConfig&lt;XxxService&gt; reference = <span class="keyword">new</span> ReferenceConfig&lt;XxxService&gt;();</span><br><span class="line">reference.setInterface(XxxService.class);</span><br><span class="line">reference.setVersion(<span class="string">"1.0.0"</span>);</span><br><span class="line">......</span><br><span class="line">ReferenceConfigCache cache = ReferenceConfigCache.getCache();</span><br><span class="line"><span class="comment">// cache.get方法中会缓存 Reference对象，并且调用ReferenceConfig.get方法启动ReferenceConfig</span></span><br><span class="line">XxxService xxxService = cache.get(reference);</span><br><span class="line"><span class="comment">// 注意！ Cache会持有ReferenceConfig，不要在外部再调用ReferenceConfig的destroy方法，导致Cache内的ReferenceConfig失效！</span></span><br><span class="line"><span class="comment">// 使用xxxService对象</span></span><br><span class="line">xxxService.sayHello();</span><br></pre></td></tr></table></figure></p>
+<p>消除 Cache 中的 ReferenceConfig，将销毁 ReferenceConfig 并释放对应的资源。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ReferenceConfigCache cache = ReferenceConfigCache.getCache();</span><br><span class="line">cache.destroy(reference);</span><br></pre></td></tr></table></figure></p>
+<p>缺省 ReferenceConfigCache 把相同服务 Group、接口、版本的 ReferenceConfig 认为是相同，缓存一份。即以服务 Group、接口、版本为缓存的 Key。<br>可以修改这个策略:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">KeyGenerator keyGenerator = <span class="keyword">new</span> ...</span><br><span class="line">ReferenceConfigCache cache = ReferenceConfigCache.getCache(keyGenerator );</span><br></pre></td></tr></table></figure></p>
+<h3 id="分布式事务-目前未实现"><a href="#分布式事务-目前未实现" class="headerlink" title="分布式事务(目前未实现)"></a>分布式事务(目前未实现)</h3><p>分布式事务基于 JTA/XA 规范实现<br>两阶段提交：<br><img src="/img/2017-12-25-14-33-28.png" alt=""></p>
+<h3 id="线程栈自动dump"><a href="#线程栈自动dump" class="headerlink" title="线程栈自动dump"></a>线程栈自动dump</h3><p>当业务线程池满时，我们需要知道线程都在等待哪些资源、条件，以找到系统的瓶颈点或异常点。dubbo通过Jstack自动导出线程堆栈来保留现场，方便排查问题<br>默认策略:<br>导出路径，user.home标识的用户主目录<br>导出间隔，最短间隔允许每隔10分钟导出一次</p>
+<p>指定导出路径：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:application ...&gt;</span><br><span class="line">    &lt;dubbo:parameter key=&quot;dump.directory&quot; value=&quot;/tmp&quot; /&gt;</span><br><span class="line">&lt;/dubbo:application&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="Netty4支持"><a href="#Netty4支持" class="headerlink" title="Netty4支持"></a>Netty4支持</h3><p>dubbo 2.5.6版本新增了对netty4通信模块的支持，启用方式如下<br>provider端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:protocol server=&quot;netty4&quot; /&gt;</span><br><span class="line">或</span><br><span class="line">&lt;dubbo:provider server=&quot;netty4&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>consumer端：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:consumer client=&quot;netty4&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="schema-配置参考手册"><a href="#schema-配置参考手册" class="headerlink" title="schema 配置参考手册"></a>schema 配置参考手册</h3><p>API参考手册：略<br>dubbo支持的配置方式:属性配置，注解配置，API配置，xml配置。<br>所有配置项分为三大类：</p>
+<ul>
+<li>服务发现：表示该配置项用于服务的注册与发现，目的是让消费方找到提供方。</li>
+<li>服务治理：表示该配置项用于治理服务间的关系，或为开发测试提供便利条件。</li>
+<li>性能调优：表示该配置项用于调优性能，不同的选项对性能会产生影响。</li>
+</ul>
+<p>所有配置最终都将转换为URL表示，并由服务提供方生成，经注册中心传递给消费方，各属性对应 URL 的参数。<br>提示：</p>
+<ol>
+<li>XML Schema: <a href="http://code.alibabatech.com/schema/dubbo/dubbo.xsd" target="_blank" rel="noopener">http://code.alibabatech.com/schema/dubbo/dubbo.xsd</a> ↩</li>
+<li>注意：只有 <code>group，interface，version</code> 是服务的匹配条件，三者决定是不是同一个服务，其它配置项均为调优和治理参数。 </li>
+<li>URL 格式：protocol://username:password@host:port/path?key=value&amp;key=value </li>
+</ol>
+<p>具体配置项与参数请参考文档</p>
+<h3 id="协议参考手册"><a href="#协议参考手册" class="headerlink" title="协议参考手册"></a>协议参考手册</h3><p>dubbo支持很多协议如:dubbo,rmi,hessian,http,webservice,thrift,redis. 官方推荐使用dubbo协议<br>Dubbo 缺省协议采用单一长连接和 NIO 异步通讯，适合于小数据量大并发的服务调用，以及服务消费者机器数远大于服务提供者机器数的情况。<br>反之，Dubbo 缺省协议不适合传送大数据量的服务，比如传文件，传视频等，除非请求量很低。<br><img src="/img/2017-12-25-14-52-46.png" alt=""></p>
+<ul>
+<li>Transporter: mina, netty, grizzy</li>
+<li>Serialization: dubbo, hessian2, java, json</li>
+<li>Dispatcher: all, direct, message, execution, connection</li>
+<li>ThreadPool: fixed, cached</li>
+</ul>
+<p>缺省协议，使用基于 mina 1.1.7 和 hessian 3.2.1 的 tbremoting 交互。</p>
+<ul>
+<li>连接个数：单连接</li>
+<li>连接方式：长连接</li>
+<li>传输协议：TCP</li>
+<li>传输方式：NIO 异步传输</li>
+<li>序列化：Hessian 二进制序列化</li>
+<li>适用范围：传入传出参数数据包较小（<strong>建议小于100K</strong>），消费者比提供者个数多，单一消费者无法压满提供者，尽量不要用 dubbo 协议传输大文件或超大字符串。</li>
+<li>适用场景：常规远程服务方法调用</li>
+</ul>
+<p>约束</p>
+<ul>
+<li>参数及返回值需实现 Serializable 接口</li>
+<li>参数及返回值不能自定义实现 List, Map, Number, Date, Calendar 等接口，只能用 JDK 自带的实现，因为 hessian 会做特殊处理，自定义实现类中的属性值都会丢失。</li>
+<li>Hessian 序列化，只传成员属性值和值的类型，不传方法或静态变量</li>
+</ul>
+<p>服务器端和客户端对领域对象并不需要完全一致，而是按照最大匹配原则。</p>
+<h3 id="注册中心参考手册"><a href="#注册中心参考手册" class="headerlink" title="注册中心参考手册"></a>注册中心参考手册</h3><p>dubbo支持Zookeeper,Multicast,Redis,Simple等作为注册中心，但推荐使用Zookeeper.<br>zookeeper 注册中心:<br><img src="/img/2017-12-25-15-02-56.png" alt=""></p>
+<p>流程说明：</p>
+<ul>
+<li>服务提供者启动时: 向 /dubbo/com.foo.BarService/providers 目录下写入自己的 URL 地址</li>
+<li>服务消费者启动时: 订阅 /dubbo/com.foo.BarService/providers 目录下的提供者 URL 地址。并向 /dubbo/com.foo.BarService/consumers 目录下写入自己的 URL 地址</li>
+<li>监控中心启动时: 订阅 /dubbo/com.foo.BarService 目录下的所有提供者和消费者 URL 地址。<br>在 provider 和 consumer 中增加 zookeeper 客户端 jar 包依赖：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.zookeeper<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zookeeper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>3.3.3<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>Dubbo 支持 zkclient 和 curator 两种 Zookeeper 客户端实现,从 2.2.0 版本开始缺省为 zkclient 实现.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:registry ... client=&quot;zkclient&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.sgroschupf<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>zkclient<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Zookeeper 单机配置:<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://10.20.153.10:2181"</span> /&gt;</span></span><br><span class="line">或：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">protocol</span>=<span class="string">"zookeeper"</span> <span class="attr">address</span>=<span class="string">"10.20.153.10:2181"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Zookeeper 集群配置：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">address</span>=<span class="string">"zookeeper://10.20.153.10:2181?backup=10.20.153.11:2181,10.20.153.12:2181"</span> /&gt;</span></span><br><span class="line">或：</span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">protocol</span>=<span class="string">"zookeeper"</span> <span class="attr">address</span>=<span class="string">"10.20.153.10:2181,10.20.153.11:2181,10.20.153.12:2181"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<h3 id="Telnet管理命令"><a href="#Telnet管理命令" class="headerlink" title="Telnet管理命令"></a>Telnet管理命令</h3><p>旧有方式：(下面会提到新方式，2.5.8之后的方式为新方式)<br>使用<code>telnet localhost 20880</code>进入交互shell后，可使用如下命令进行交互：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">ls: 显示服务列表</span><br><span class="line">ls -l: 显示服务详细信息列表</span><br><span class="line">ls XxxService: 显示服务的方法列表</span><br><span class="line">ls -l XxxService: 显示服务的方法详细信息列表</span><br><span class="line"></span><br><span class="line">ps: 显示服务端口列表</span><br><span class="line">ps -l: 显示服务地址列表</span><br><span class="line">ps 20880: 显示端口上的连接信息</span><br><span class="line">ps -l 20880: 显示端口上的连接详细信息</span><br><span class="line"></span><br><span class="line">cd XxxService: 改变缺省服务，当设置了缺省服务，凡是需要输入服务名作为参数的命令，都可以省略服务参数</span><br><span class="line">cd /: 取消缺省服务</span><br><span class="line"></span><br><span class="line">pwd: 显示当前缺省服务</span><br><span class="line"></span><br><span class="line">trace XxxService: 跟踪 1 次服务任意方法的调用情况</span><br><span class="line">trace XxxService 10: 跟踪 10 次服务任意方法的调用情况</span><br><span class="line">trace XxxService xxxMethod: 跟踪 1 次服务方法的调用情况</span><br><span class="line">trace XxxService xxxMethod 10: 跟踪 10 次服务方法的调用情况</span><br><span class="line"></span><br><span class="line">count XxxService: 统计 1 次服务任意方法的调用情况</span><br><span class="line">count XxxService 10: 统计 10 次服务任意方法的调用情况</span><br><span class="line">count XxxService xxxMethod: 统计 1 次服务方法的调用情况</span><br><span class="line">count XxxService xxxMethod 10: 统计 10 次服务方法的调用情况</span><br><span class="line"></span><br><span class="line">invoke XxxService.xxxMethod(&#123;&quot;prop&quot;: &quot;value&quot;&#125;): 调用服务的方法</span><br><span class="line">invoke xxxMethod(&#123;&quot;prop&quot;: &quot;value&quot;&#125;): 调用服务的方法(自动查找包含此方法的服务)</span><br><span class="line"></span><br><span class="line">status: 显示汇总状态，该状态将汇总所有资源的状态，当全部 OK 时则显示 OK，只要有一个 ERROR 则显示 ERROR，只要有一个 WARN 则显示 WARN</span><br><span class="line">status -l: 显示状态列表</span><br><span class="line"></span><br><span class="line">log debug: 修改 dubbo logger 的日志级别</span><br><span class="line">log 100: 查看 file logger 的最后 100 字符的日志</span><br><span class="line"></span><br><span class="line">help: 显示 telnet 命帮助信息</span><br><span class="line">help xxx: 显示xxx命令的详细帮助信息</span><br><span class="line"></span><br><span class="line">clear: 清除屏幕上的内容</span><br><span class="line">clear 100: 清除屏幕上的指定行数的内容</span><br><span class="line"></span><br><span class="line">exit: 退出当前 telnet 命令行</span><br></pre></td></tr></table></figure></p>
+<p><strong>dubbo 2.5.8 新版本重构了 telnet 模块，提供了新的 telnet 命令支持。</strong><br>端口<br>新版本的 telnet 端口 与 dubbo 协议的端口是不同的端口，默认为 <code>22222</code>，可通过配置文件dubbo.properties或JVM参数修改:<code>dubbo.qos.port=33333</code><br>安全<br>默认情况下，dubbo 接收任何主机发起的命令，可通过配置文件dubbo.properties或jvm参数修改:<code>dubbo.qos.accept.foreign.ip=false</code></p>
+<p>telnet 与 http 协议<br>telnet 模块现在同时支持 http 协议和 telnet 协议，方便各种情况的使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">➜  ~ telnet localhost 22222</span><br><span class="line">➜  ~ curl &quot;localhost:22222/ls?arg1=xxx&amp;arg2=xxxx&quot;</span><br></pre></td></tr></table></figure></p>
+<p>Online 上线服务命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//上线所有服务</span><br><span class="line">dubbo&gt;online</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">//根据正则，上线部分服务</span><br><span class="line">dubbo&gt;online com.*</span><br><span class="line">OK</span><br></pre></td></tr></table></figure></p>
+<p>Offline 下线服务命令<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">//下线所有服务</span><br><span class="line">dubbo&gt;offline</span><br><span class="line">OK</span><br><span class="line"></span><br><span class="line">//根据正则，上线部分服务</span><br><span class="line">dubbo&gt;offline com.*</span><br><span class="line">OK</span><br></pre></td></tr></table></figure></p>
+<h3 id="服务化最佳实践"><a href="#服务化最佳实践" class="headerlink" title="服务化最佳实践"></a>服务化最佳实践</h3><p>分包:<br>建议将服务接口，服务模型，服务异常等均放在 API 包中，因为服务模型及异常也是 API 的一部分，同时，这样做也符合分包原则：<code>重用发布等价原则(REP)，共同重用原则(CRP)</code>。</p>
+<p>粒度:<br>服务接口尽可能大粒度，每个服务方法应代表一个功能，而不是某功能的一个步骤，否则将面临分布式事务问题，Dubbo 暂未提供分布式事务支持。<br>服务接口建议以业务场景为单位划分，并对相近业务做抽象，防止接口数量爆炸。<br>不建议使用过于抽象的通用接口，如：Map query(Map)，这样的接口没有明确语义，会给后期维护带来不便。</p>
+<p>版本:<br>每个接口都应定义版本号，为后续不兼容升级提供可能，如：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.xxx.XxxService"</span> <span class="attr">version</span>=<span class="string">"1.0"</span> /&gt;</span>。</span><br></pre></td></tr></table></figure></p>
+<p>当不兼容时，先升级一半提供者为新版本，再将消费者全部升为新版本，然后将剩下的一半提供者升为新版本。</p>
+<p>兼容性:<br>服务接口增加方法，或服务模型增加字段，可向后兼容，删除方法或删除字段，将不兼容，枚举类型新增字段也不兼容，需通过变更版本号升级。各协议的兼容性不同，参见： 服务协议</p>
+<p>序列化:<br>服务参数及返回值建议使用 POJO 对象，即通过 setter, getter 方法表示属性的对象。<br>服务参数及返回值不建议使用接口，因为数据模型抽象的意义不大，并且序列化需要接口实现类的元信息，并不能起到隐藏实现的意图。<br>服务参数及返回值都必需是 byValue 的，而不能是 byReference 的，消费方和提供方的参数或返回值引用并不是同一个，只是值相同，Dubbo 不支持引用远程对象。</p>
+<p>异常:<br>建议使用异常汇报错误，而不是返回错误码，异常信息能携带更多信息，以及语义更友好。<br>如果担心性能问题，在必要时，可以通过 override 掉异常类的 fillInStackTrace() 方法为空方法，使其不拷贝栈信息。<br>服务提供方不应将 DAO 或 SQL 等异常抛给消费方，应在服务实现中对消费方不关心的异常进行包装，否则可能出现消费方无法反序列化相应异常。</p>
+<p>调用:<br><strong>不要只是因为是 Dubbo 调用，而把调用 try…catch 起来。try…catch 应该加上合适的回滚边界上。</strong><br>对于输入参数的校验逻辑在 Provider 端要有。如有性能上的考虑，服务实现者可以考虑在 API 包上加上服务 Stub 类来完成检验。</p>
+<h3 id="推荐配置方式"><a href="#推荐配置方式" class="headerlink" title="推荐配置方式"></a>推荐配置方式</h3><p>在 Provider 上尽量多配置 Consumer 端属性:</p>
+<ul>
+<li>作服务的提供者，比服务使用方更清楚服务性能参数，如调用的超时时间，合理的重试次数，等等</li>
+<li>在 Provider 配置后，Consumer 不配置则会使用 Provider 的配置值。否则，Consumer 会使用 Consumer 端的全局设置，这对于 Provider 不可控的，并且往往是不合理的</li>
+<li>Provider 上尽量多配置 Consumer 端的属性，让 Provider 实现者一开始就思考 Provider 服务特点、服务质量的问题。</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.hello.api.HelloService"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> <span class="attr">ref</span>=<span class="string">"helloService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">timeout</span>=<span class="string">"300"</span> <span class="attr">retry</span>=<span class="string">"2"</span> <span class="attr">loadbalance</span>=<span class="string">"random"</span> <span class="attr">actives</span>=<span class="string">"0"</span></span></span><br><span class="line"><span class="tag">/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.hello.api.WorldService"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> <span class="attr">ref</span>=<span class="string">"helloService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">timeout</span>=<span class="string">"300"</span> <span class="attr">retry</span>=<span class="string">"2"</span> <span class="attr">loadbalance</span>=<span class="string">"random"</span> <span class="attr">actives</span>=<span class="string">"0"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"findAllPerson"</span> <span class="attr">timeout</span>=<span class="string">"10000"</span> <span class="attr">retries</span>=<span class="string">"9"</span> <span class="attr">loadbalance</span>=<span class="string">"leastactive"</span> <span class="attr">actives</span>=<span class="string">"5"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+<p>在 Provider 上可以配置的 Consumer 端属性有：</p>
+<ul>
+<li>timeout 方法调用超时</li>
+<li>retries 失败重试次数，缺省是 2 </li>
+<li>loadbalance 负载均衡算法 ，缺省是随机 random。还可以有轮询 roundrobin、最不活跃优先 leastactive</li>
+<li>actives 消费者端，最大并发调用限制，即当 Consumer 对一个服务的并发调用到上限后，新调用会 Wait 直到超时.</li>
+</ul>
+<p>Provider 上配置合理的 Provider 端属性<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:protocol</span> <span class="attr">threads</span>=<span class="string">"200"</span> /&gt;</span> </span><br><span class="line"><span class="tag">&lt;<span class="name">dubbo:service</span> <span class="attr">interface</span>=<span class="string">"com.alibaba.hello.api.HelloService"</span> <span class="attr">version</span>=<span class="string">"1.0.0"</span> <span class="attr">ref</span>=<span class="string">"helloService"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">executes</span>=<span class="string">"200"</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dubbo:method</span> <span class="attr">name</span>=<span class="string">"findAllPerson"</span> <span class="attr">executes</span>=<span class="string">"50"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dubbo:service</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>Provider 上可以配置的 Provider 端属性有：</p>
+<ul>
+<li>threads 服务线程池大小</li>
+<li>executes 一个服务提供者并行执行请求上限，即当 Provider 对一个服务的并发调用到上限后，新调用会 Wait，这个时候 Consumer可能会超时。</li>
+</ul>
+<p>配置 Dubbo 缓存文件<br>提供者列表缓存文件：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dubbo:registry</span> <span class="attr">file</span>=<span class="string">”$&#123;user.home&#125;/output/dubbo.cache”</span> /&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>注意：</p>
+<ul>
+<li>文件的路径，应用可以根据需要调整，保证这个文件不会在发布过程中被清除。</li>
+<li>如果有多个应用进程注意不要使用同一个文件，避免内容被覆盖。</li>
+<li>这个文件会缓存注册中心的列表和服务提供者列表。有了这项配置后，当应用重启过程中，Dubbo 注册中心不可用时则应用会从这个缓存文件读取服务提供者列表的信息，进一步保证应用可靠性。</li>
+</ul>
+<p>监控配置<br><strong>使用固定端口暴露服务，而不要使用随机端口</strong><br>这样在注册中心推送有延迟的情况下，消费者通过缓存列表也能调用到原地址，保证调用成功。<br>使用 Dragoon 的 http 监控项监控注册中心上服务提供方<br>服务提供方，使用 Dragoon 的 telnet 或 shell 监控项<br>监控服务提供者端口状态：<code>echo status | nc -i 1 20880 | grep OK | wc -l</code>，其中的 20880 为服务端口<br>服务消费方，通过将服务强制转型为 <code>EchoService</code>，并调用 $echo() 测试该服务的提供者是可用<br>如 <code>assertEqauls(“OK”, ((EchoService)memberService).$echo(“OK”))</code>;</p>
+<p><strong>不要使用 dubbo.properties 文件配置，推荐使用对应 XML 配置</strong></p>
+<h2 id="dubbo管理手册"><a href="#dubbo管理手册" class="headerlink" title="dubbo管理手册"></a>dubbo管理手册</h2><p>1、示列提供者，消费者安装<br>2、Zookeeper安装<br>3、管理控制台安装<br>管理控制台为内部裁剪版本，开源部分主要包含：路由规则，动态配置，服务降级，访问控制，权重调整，负载均衡，等管理功能。<br>dubbo-admin </p>
+<h2 id="dubbo-dev手册"><a href="#dubbo-dev手册" class="headerlink" title="dubbo-dev手册"></a>dubbo-dev手册</h2><p><img src="/img/2017-12-25-15-55-38.png" alt=""></p>
+<ul>
+<li>config 配置层：对外配置接口，以 ServiceConfig, ReferenceConfig 为中心，可以直接初始化配置类，也可以通过 spring 解析配置生成配置类</li>
+<li>proxy 服务代理层：服务接口透明代理，生成服务的客户端 Stub 和服务器端 Skeleton, 以 ServiceProxy 为中心，扩展接口为 ProxyFactory</li>
+<li>registry 注册中心层：封装服务地址的注册与发现，以服务 URL 为中心，扩展接口为 RegistryFactory, Registry, RegistryService</li>
+<li>cluster 路由层：封装多个提供者的路由及负载均衡，并桥接注册中心，以 Invoker 为中心，扩展接口为 Cluster, Directory, Router, LoadBalance</li>
+<li>monitor 监控层：RPC 调用次数和调用时间监控，以 Statistics 为中心，扩展接口为 MonitorFactory, Monitor, MonitorService</li>
+<li>protocol 远程调用层：封将 RPC 调用，以 Invocation, Result 为中心，扩展接口为 Protocol, Invoker, Exporter</li>
+<li>exchange 信息交换层：封装请求响应模式，同步转异步，以 Request, Response 为中心，扩展接口为 Exchanger, ExchangeChannel, ExchangeClient, ExchangeServer</li>
+<li>transport 网络传输层：抽象 mina 和 netty 为统一接口，以 Message 为中心，扩展接口为 Channel, Transporter, Client, Server, Codec</li>
+<li>serialize 数据序列化层：可复用的一些工具，扩展接口为 Serialization, ObjectInput, ObjectOutput, ThreadPool</li>
+</ul>
+<p><img src="/img/2017-12-25-15-58-06.png" alt=""><br><img src="/img/2017-12-25-16-00-14.png" alt=""><br><img src="/img/2017-12-25-16-00-31.png" alt=""><br><img src="/img/2017-12-25-16-01-17.png" alt=""></p>
+<p>在 Dubbo 的核心领域模型中：</p>
+<ul>
+<li>Protocol 是服务域，它是 Invoker 暴露和引用的主功能入口，它负责 Invoker 的生命周期管理。</li>
+<li>Invoker 是实体域，它是 Dubbo 的核心模型，其它模型都向它靠扰，或转换成它，它代表一个可执行体，可向它发起 invoke 调用，它有可能是一个本地的实现，也可能是一个远程的实现，也可能一个集群实现。</li>
+<li>Invocation 是会话域，它持有调用过程中的变量，比如方法名，参数等。</li>
+</ul>
+<p>基本设计原则</p>
+<ul>
+<li>采用 Microkernel + Plugin 模式，Microkernel 只负责组装 Plugin，Dubbo 自身的功能也是通过扩展点实现的，也就是 Dubbo 的所有功能点都可被用户自定义扩展所替换。</li>
+<li>采用 URL 作为配置信息的统一格式，所有扩展点都通过传递 URL 携带配置信息。</li>
+</ul>
+<p><img src="/img/2017-12-25-16-04-52.png" alt=""><br><img src="/img/2017-12-25-16-05-27.png" alt=""><br><img src="/img/2017-12-25-16-06-24.png" alt=""><br><img src="/img/2017-12-25-16-09-46.png" alt=""></p>
+<p>更具体的请看官方dev手册。</p>
+<h3 id="扩展实现之负载均衡"><a href="#扩展实现之负载均衡" class="headerlink" title="扩展实现之负载均衡"></a>扩展实现之负载均衡</h3><p>由于dubbo采用 <code>Microkernel + Plugin</code> 模式设计原则。dubbo提供了基本上所有可以扩展的扩展点，基本上满足需求。</p>
+<p>Dubbo 的扩展点加载从 JDK 标准的 <code>SPI (Service Provider Interface)</code> 扩展点发现机制加强而来。<br>Dubbo 改进了 JDK 标准的 SPI 的以下问题：</p>
+<ul>
+<li>JDK 标准的 SPI 会一次性实例化扩展点所有实现，如果有扩展实现初始化很耗时，但如果没用上也加载，会很浪费资源。</li>
+<li>如果扩展点加载失败，连扩展点的名称都拿不到了。比如：JDK 标准的 ScriptEngine，通过 getName() 获取脚本类型的名称，但如果 RubyScriptEngine 因为所依赖的 jruby.jar 不存在，导致 RubyScriptEngine 类加载失败，这个失败原因被吃掉了，和 ruby 对应不起来，当用户执行 ruby 脚本时，会报不支持 ruby，而不是真正失败的原因。</li>
+<li>增加了对扩展点 IoC 和 AOP 的支持，一个扩展点可以直接 setter 注入其它扩展点。</li>
+</ul>
+<p>约定：<br>在扩展类的 jar 包内，放置扩展点配置文件 <code>META-INF/dubbo/接口全限定名</code>，内容为：<code>配置名=扩展实现类全限定名，多个实现类用换行符分隔</code>。</p>
+<p>以负载均衡扩展点为例：<br>扩展接口：<code>com.alibaba.dubbo.rpc.cluster.LoadBalance</code><br>默认实现：</p>
+<ul>
+<li>com.alibaba.dubbo.rpc.cluster.loadbalance.RandomLoadBalance</li>
+<li>com.alibaba.dubbo.rpc.cluster.loadbalance.RoundRobinLoadBalance</li>
+<li>com.alibaba.dubbo.rpc.cluster.loadbalance.LeastActiveLoadBalance<br>1、实现接口<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">XxxLoadBalance</span> <span class="keyword">implements</span> <span class="title">LoadBalance</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> &lt;T&gt; <span class="function">Invoker&lt;T&gt; <span class="title">select</span><span class="params">(List&lt;Invoker&lt;T&gt;&gt; invokers, Invocation invocation)</span> <span class="keyword">throws</span> RpcException </span>&#123;</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>2、在项目的META-INF/dubbo/com.alibaba.dubbo.rpc.cluster.LoadBalance：文件中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xxx=com.xxx.XxxLoadBalance</span><br></pre></td></tr></table></figure></p>
+<p>3、使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;dubbo:protocol loadbalance=&quot;xxx&quot; /&gt;</span><br><span class="line">&lt;!-- 缺省值设置，当&lt;dubbo:protocol&gt;没有配置loadbalance时，使用此配置 --&gt;</span><br><span class="line">&lt;dubbo:provider loadbalance=&quot;xxx&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="设计原则"><a href="#设计原则" class="headerlink" title="设计原则"></a>设计原则</h3><p>本文仅列举部分原则。</p>
+<p>1、采用 Microkernel + Plugin 模式<br>Microkernel 只负责组装 Plugin，Dubbo 自身的功能也是通过扩展点实现的，也就是 Dubbo 的所有功能点都可被用户自定义扩展所替换。</p>
+<p>2、API 与 SPI 分离<br>框架或组件通常有两类客户，一个是使用者，一个是扩展者。API (Application Programming Interface) 是给使用者用的，而 SPI (Service Provide Interface) 是给扩展者用的。在设计时，尽量把它们隔离开，而不要混在一起。也就是说，使用者是看不到扩展者写的实现的。</p>
+<p>3、在重要的过程上设置拦截接口、重要的状态的变更发送事件并留出监听接口</p>
+<p>4、最少概念，一致性概念模型</p>
+
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xbynet.top/2017/12/25/dubbo手册笔记/" title="dubbo手册笔记">http://xbynet.top/2017/12/25/dubbo手册笔记/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/dubbo/" rel="tag"><i class="fa fa-tag"></i> dubbo</a>
+          
+            <a href="/tags/microservice/" rel="tag"><i class="fa fa-tag"></i> microservice</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/21/微服务架构之DevOps/" rel="next" title="微服务架构之DevOps">
+                <i class="fa fa-chevron-left"></i> 微服务架构之DevOps
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/12/25/Http与TCP长短连接/" rel="prev" title="Http与TCP长短连接">
+                Http与TCP长短连接 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ3OS85MDQw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256"
+                alt="xbynet" />
+            
+              <p class="site-author-name" itemprop="name">xbynet</p>
+              <p class="site-description motion-element" itemprop="description">青苔边，折梅不赏;古道旁，煮酒不饮。</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xbynet" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xbynet@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          <div id="aplayer1" class="aplayer"></div>
+<script src="/asserts/js/APlayer.min.js"></script>
+<script>
+    var musiclist=[
+        {title:'素雨',author:'孙雪宁',url:'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'},
+        {title:'爱在上',author:'崔子格',url:'http://dl.stream.qqmusic.qq.com/M8000019Hx0J3tqcaV.mp3?vkey=93EB395793C648848684E76AE3B2D6E08F9EC8C7412B177750792C7CEC73BDC4FD06C1F78C02D9186339549C042F2CA5955914BA8322F6E4&guid=5150825362&fromtag=1',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003ksYhQ1EmEcr.jpg?max_age=2592000'}
+    ]
+    var tmpindex=Math.floor(Math.random()*musiclist.length);
+    var music=musiclist[tmpindex];
+    var ap = new APlayer({
+        element: document.getElementById('aplayer1'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: music.title,
+            author: music.author,
+            url: music.url,
+            pic: music.pic
+        }
+    });
+</script>
+
+<!-- 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+-->
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用户手册"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x7528;&#x6237;&#x624B;&#x518C;" class="headerlink" title="&#x7528;&#x6237;&#x624B;&#x518C;"></a>&#x7528;&#x6237;&#x624B;&#x518C;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#启动时检查"><span class="nav-number">1.1.</span> <span class="nav-text"><a href="#&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;" class="headerlink" title="&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;"></a>&#x542F;&#x52A8;&#x65F6;&#x68C0;&#x67E5;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#集群容错"><span class="nav-number">1.2.</span> <span class="nav-text"><a href="#&#x96C6;&#x7FA4;&#x5BB9;&#x9519;" class="headerlink" title="&#x96C6;&#x7FA4;&#x5BB9;&#x9519;"></a>&#x96C6;&#x7FA4;&#x5BB9;&#x9519;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#负载均衡"><span class="nav-number">1.3.</span> <span class="nav-text"><a href="#&#x8D1F;&#x8F7D;&#x5747;&#x8861;" class="headerlink" title="&#x8D1F;&#x8F7D;&#x5747;&#x8861;"></a>&#x8D1F;&#x8F7D;&#x5747;&#x8861;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程模型"><span class="nav-number">1.4.</span> <span class="nav-text"><a href="#&#x7EBF;&#x7A0B;&#x6A21;&#x578B;" class="headerlink" title="&#x7EBF;&#x7A0B;&#x6A21;&#x578B;"></a>&#x7EBF;&#x7A0B;&#x6A21;&#x578B;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#直连提供者"><span class="nav-number">1.5.</span> <span class="nav-text"><a href="#&#x76F4;&#x8FDE;&#x63D0;&#x4F9B;&#x8005;" class="headerlink" title="&#x76F4;&#x8FDE;&#x63D0;&#x4F9B;&#x8005;"></a>&#x76F4;&#x8FDE;&#x63D0;&#x4F9B;&#x8005;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多协议支持"><span class="nav-number">1.6.</span> <span class="nav-text"><a href="#&#x591A;&#x534F;&#x8BAE;&#x652F;&#x6301;" class="headerlink" title="&#x591A;&#x534F;&#x8BAE;&#x652F;&#x6301;"></a>&#x591A;&#x534F;&#x8BAE;&#x652F;&#x6301;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务分组"><span class="nav-number">1.7.</span> <span class="nav-text"><a href="#&#x670D;&#x52A1;&#x5206;&#x7EC4;" class="headerlink" title="&#x670D;&#x52A1;&#x5206;&#x7EC4;"></a>&#x670D;&#x52A1;&#x5206;&#x7EC4;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多版本"><span class="nav-number">1.8.</span> <span class="nav-text"><a href="#&#x591A;&#x7248;&#x672C;" class="headerlink" title="&#x591A;&#x7248;&#x672C;"></a>&#x591A;&#x7248;&#x672C;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分组聚合"><span class="nav-number">1.9.</span> <span class="nav-text"><a href="#&#x5206;&#x7EC4;&#x805A;&#x5408;" class="headerlink" title="&#x5206;&#x7EC4;&#x805A;&#x5408;"></a>&#x5206;&#x7EC4;&#x805A;&#x5408;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数验证"><span class="nav-number">1.10.</span> <span class="nav-text"><a href="#&#x53C2;&#x6570;&#x9A8C;&#x8BC1;" class="headerlink" title="&#x53C2;&#x6570;&#x9A8C;&#x8BC1;"></a>&#x53C2;&#x6570;&#x9A8C;&#x8BC1;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结果缓存"><span class="nav-number">1.11.</span> <span class="nav-text"><a href="#&#x7ED3;&#x679C;&#x7F13;&#x5B58;" class="headerlink" title="&#x7ED3;&#x679C;&#x7F13;&#x5B58;"></a>&#x7ED3;&#x679C;&#x7F13;&#x5B58;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#上下文信息"><span class="nav-number">1.12.</span> <span class="nav-text"><a href="#&#x4E0A;&#x4E0B;&#x6587;&#x4FE1;&#x606F;" class="headerlink" title="&#x4E0A;&#x4E0B;&#x6587;&#x4FE1;&#x606F;"></a>&#x4E0A;&#x4E0B;&#x6587;&#x4FE1;&#x606F;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#隐式参数"><span class="nav-number">1.13.</span> <span class="nav-text"><a href="#&#x9690;&#x5F0F;&#x53C2;&#x6570;" class="headerlink" title="&#x9690;&#x5F0F;&#x53C2;&#x6570;"></a>&#x9690;&#x5F0F;&#x53C2;&#x6570;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#异步调用"><span class="nav-number">1.14.</span> <span class="nav-text"><a href="#&#x5F02;&#x6B65;&#x8C03;&#x7528;" class="headerlink" title="&#x5F02;&#x6B65;&#x8C03;&#x7528;"></a>&#x5F02;&#x6B65;&#x8C03;&#x7528;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数回调"><span class="nav-number">1.15.</span> <span class="nav-text"><a href="#&#x53C2;&#x6570;&#x56DE;&#x8C03;" class="headerlink" title="&#x53C2;&#x6570;&#x56DE;&#x8C03;"></a>&#x53C2;&#x6570;&#x56DE;&#x8C03;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#事件通知"><span class="nav-number">1.16.</span> <span class="nav-text"><a href="#&#x4E8B;&#x4EF6;&#x901A;&#x77E5;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x901A;&#x77E5;"></a>&#x4E8B;&#x4EF6;&#x901A;&#x77E5;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地存根"><span class="nav-number">1.17.</span> <span class="nav-text"><a href="#&#x672C;&#x5730;&#x5B58;&#x6839;" class="headerlink" title="&#x672C;&#x5730;&#x5B58;&#x6839;"></a>&#x672C;&#x5730;&#x5B58;&#x6839;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地伪装"><span class="nav-number">1.18.</span> <span class="nav-text"><a href="#&#x672C;&#x5730;&#x4F2A;&#x88C5;" class="headerlink" title="&#x672C;&#x5730;&#x4F2A;&#x88C5;"></a>&#x672C;&#x5730;&#x4F2A;&#x88C5;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#并发及连接控制"><span class="nav-number">1.19.</span> <span class="nav-text"><a href="#&#x5E76;&#x53D1;&#x53CA;&#x8FDE;&#x63A5;&#x63A7;&#x5236;" class="headerlink" title="&#x5E76;&#x53D1;&#x53CA;&#x8FDE;&#x63A5;&#x63A7;&#x5236;"></a>&#x5E76;&#x53D1;&#x53CA;&#x8FDE;&#x63A5;&#x63A7;&#x5236;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路由规则、配置规则、服务降级"><span class="nav-number">1.20.</span> <span class="nav-text"><a href="#&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3001;&#x914D;&#x7F6E;&#x89C4;&#x5219;&#x3001;&#x670D;&#x52A1;&#x964D;&#x7EA7;" class="headerlink" title="&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3001;&#x914D;&#x7F6E;&#x89C4;&#x5219;&#x3001;&#x670D;&#x52A1;&#x964D;&#x7EA7;"></a>&#x8DEF;&#x7531;&#x89C4;&#x5219;&#x3001;&#x914D;&#x7F6E;&#x89C4;&#x5219;&#x3001;&#x670D;&#x52A1;&#x964D;&#x7EA7;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优雅停机"><span class="nav-number">1.21.</span> <span class="nav-text"><a href="#&#x4F18;&#x96C5;&#x505C;&#x673A;" class="headerlink" title="&#x4F18;&#x96C5;&#x505C;&#x673A;"></a>&#x4F18;&#x96C5;&#x505C;&#x673A;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#主机绑定"><span class="nav-number">1.22.</span> <span class="nav-text"><a href="#&#x4E3B;&#x673A;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x4E3B;&#x673A;&#x7ED1;&#x5B9A;"></a>&#x4E3B;&#x673A;&#x7ED1;&#x5B9A;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志"><span class="nav-number">1.23.</span> <span class="nav-text"><a href="#&#x65E5;&#x5FD7;" class="headerlink" title="&#x65E5;&#x5FD7;"></a>&#x65E5;&#x5FD7;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务容器"><span class="nav-number">1.24.</span> <span class="nav-text"><a href="#&#x670D;&#x52A1;&#x5BB9;&#x5668;" class="headerlink" title="&#x670D;&#x52A1;&#x5BB9;&#x5668;"></a>&#x670D;&#x52A1;&#x5BB9;&#x5668;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReferenceConfig-缓存"><span class="nav-number">1.25.</span> <span class="nav-text"><a href="#ReferenceConfig-&#x7F13;&#x5B58;" class="headerlink" title="ReferenceConfig &#x7F13;&#x5B58;"></a>ReferenceConfig &#x7F13;&#x5B58;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分布式事务-目前未实现"><span class="nav-number">1.26.</span> <span class="nav-text"><a href="#&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;-&#x76EE;&#x524D;&#x672A;&#x5B9E;&#x73B0;" class="headerlink" title="&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;(&#x76EE;&#x524D;&#x672A;&#x5B9E;&#x73B0;)"></a>&#x5206;&#x5E03;&#x5F0F;&#x4E8B;&#x52A1;(&#x76EE;&#x524D;&#x672A;&#x5B9E;&#x73B0;)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#线程栈自动dump"><span class="nav-number">1.27.</span> <span class="nav-text"><a href="#&#x7EBF;&#x7A0B;&#x6808;&#x81EA;&#x52A8;dump" class="headerlink" title="&#x7EBF;&#x7A0B;&#x6808;&#x81EA;&#x52A8;dump"></a>&#x7EBF;&#x7A0B;&#x6808;&#x81EA;&#x52A8;dump</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Netty4支持"><span class="nav-number">1.28.</span> <span class="nav-text"><a href="#Netty4&#x652F;&#x6301;" class="headerlink" title="Netty4&#x652F;&#x6301;"></a>Netty4&#x652F;&#x6301;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#schema-配置参考手册"><span class="nav-number">1.29.</span> <span class="nav-text"><a href="#schema-&#x914D;&#x7F6E;&#x53C2;&#x8003;&#x624B;&#x518C;" class="headerlink" title="schema &#x914D;&#x7F6E;&#x53C2;&#x8003;&#x624B;&#x518C;"></a>schema &#x914D;&#x7F6E;&#x53C2;&#x8003;&#x624B;&#x518C;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协议参考手册"><span class="nav-number">1.30.</span> <span class="nav-text"><a href="#&#x534F;&#x8BAE;&#x53C2;&#x8003;&#x624B;&#x518C;" class="headerlink" title="&#x534F;&#x8BAE;&#x53C2;&#x8003;&#x624B;&#x518C;"></a>&#x534F;&#x8BAE;&#x53C2;&#x8003;&#x624B;&#x518C;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注册中心参考手册"><span class="nav-number">1.31.</span> <span class="nav-text"><a href="#&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x53C2;&#x8003;&#x624B;&#x518C;" class="headerlink" title="&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x53C2;&#x8003;&#x624B;&#x518C;"></a>&#x6CE8;&#x518C;&#x4E2D;&#x5FC3;&#x53C2;&#x8003;&#x624B;&#x518C;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Telnet管理命令"><span class="nav-number">1.32.</span> <span class="nav-text"><a href="#Telnet&#x7BA1;&#x7406;&#x547D;&#x4EE4;" class="headerlink" title="Telnet&#x7BA1;&#x7406;&#x547D;&#x4EE4;"></a>Telnet&#x7BA1;&#x7406;&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#服务化最佳实践"><span class="nav-number">1.33.</span> <span class="nav-text"><a href="#&#x670D;&#x52A1;&#x5316;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;" class="headerlink" title="&#x670D;&#x52A1;&#x5316;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;"></a>&#x670D;&#x52A1;&#x5316;&#x6700;&#x4F73;&#x5B9E;&#x8DF5;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#推荐配置方式"><span class="nav-number">1.34.</span> <span class="nav-text"><a href="#&#x63A8;&#x8350;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;" class="headerlink" title="&#x63A8;&#x8350;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;"></a>&#x63A8;&#x8350;&#x914D;&#x7F6E;&#x65B9;&#x5F0F;</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo管理手册"><span class="nav-number">2.</span> <span class="nav-text"><a href="#dubbo&#x7BA1;&#x7406;&#x624B;&#x518C;" class="headerlink" title="dubbo&#x7BA1;&#x7406;&#x624B;&#x518C;"></a>dubbo&#x7BA1;&#x7406;&#x624B;&#x518C;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dubbo-dev手册"><span class="nav-number">3.</span> <span class="nav-text"><a href="#dubbo-dev&#x624B;&#x518C;" class="headerlink" title="dubbo-dev&#x624B;&#x518C;"></a>dubbo-dev&#x624B;&#x518C;</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#扩展实现之负载均衡"><span class="nav-number">3.1.</span> <span class="nav-text"><a href="#&#x6269;&#x5C55;&#x5B9E;&#x73B0;&#x4E4B;&#x8D1F;&#x8F7D;&#x5747;&#x8861;" class="headerlink" title="&#x6269;&#x5C55;&#x5B9E;&#x73B0;&#x4E4B;&#x8D1F;&#x8F7D;&#x5747;&#x8861;"></a>&#x6269;&#x5C55;&#x5B9E;&#x73B0;&#x4E4B;&#x8D1F;&#x8F7D;&#x5747;&#x8861;</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#设计原则"><span class="nav-number">3.2.</span> <span class="nav-text"><a href="#&#x8BBE;&#x8BA1;&#x539F;&#x5219;" class="headerlink" title="&#x8BBE;&#x8BA1;&#x539F;&#x5219;"></a>&#x8BBE;&#x8BA1;&#x539F;&#x5219;</span></a></li></ol></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xbynet</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">117.3k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("sHIc70OVniNsR5OI1atIhMuk-gzGzoHsz", "wt266j1nbmoGAFrXdwXt7TeS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>

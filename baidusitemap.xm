@@ -4,6 +4,53 @@
 
     
   <url>
+    <loc>http://xbynet.top/2017/12/25/Http%E4%B8%8ETCP%E9%95%BF%E7%9F%AD%E8%BF%9E%E6%8E%A5/</loc>
+    <lastmod>2017-12-25T09:22:13.548Z</lastmod>
+    <data>
+        <display>
+        <title>Http与TCP长短连接</title>
+        <pubTime>2017-12-25T08:32:50.000Z</pubTime>
+        
+        <tag>tcp</tag>
+         
+        <tag>http</tag>
+         
+         
+           
+             
+              <breadCrumb title="网络基础" url="http://xbynet.top/categories/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xbynet.top/2017/12/25/dubbo%E6%89%8B%E5%86%8C%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2017-12-25T08:33:36.002Z</lastmod>
+    <data>
+        <display>
+        <title>dubbo手册笔记</title>
+        <pubTime>2017-12-25T02:31:31.000Z</pubTime>
+        
+        <tag>dubbo</tag>
+         
+        <tag>microservice</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="dubbo" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/dubbo/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xbynet.top/2017/12/21/%E5%BE%AE%E6%9C%8D%E5%8A%A1%E6%9E%B6%E6%9E%84%E4%B9%8BDevOps/</loc>
     <lastmod>2017-12-21T10:03:58.529Z</lastmod>
     <data>
