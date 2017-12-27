@@ -84,23 +84,23 @@
 
 
 
-<meta name="description" content="HTTP概念HTTP是基于TCP协议之上的。在TCP/IP协议参考模型的各层对应的协议如下图,其中HTTP是应用层的协议。 HTTP1.1与1.0的区别筛选 Persistent Connection持久连接在HTTP1.0中，默认的是短连接，没有正式规定 Connection:Keep-alive 操作；在HTTP1.1中所有连接都是Keep-alive的，也就是默认都是持续连接的（Persi">
+<meta name="description" content="HTTP概念HTTP是基于TCP协议之上的。在TCP/IP协议参考模型的各层对应的协议如下图,其中HTTP是应用层的协议。 HTTP1.1与1.0的区别筛选 Persistent Connection持久连接在HTTP1.0中，默认的是短连接，没有正式规定 Connection:Keep-alive 操作；在HTTP1.1中所有连接都是Keep-alive的，也就是默认都是持续连接的（Persis">
 <meta name="keywords" content="http,tomcat">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Http1.1与1.0及2.0的区别">
 <meta property="og:url" content="http://xbynet.top/2017/12/27/Http1-1与1-0与2-0的区别/index.html">
 <meta property="og:site_name" content="倚楼听风雨">
-<meta property="og:description" content="HTTP概念HTTP是基于TCP协议之上的。在TCP/IP协议参考模型的各层对应的协议如下图,其中HTTP是应用层的协议。 HTTP1.1与1.0的区别筛选 Persistent Connection持久连接在HTTP1.0中，默认的是短连接，没有正式规定 Connection:Keep-alive 操作；在HTTP1.1中所有连接都是Keep-alive的，也就是默认都是持续连接的（Persi">
+<meta property="og:description" content="HTTP概念HTTP是基于TCP协议之上的。在TCP/IP协议参考模型的各层对应的协议如下图,其中HTTP是应用层的协议。 HTTP1.1与1.0的区别筛选 Persistent Connection持久连接在HTTP1.0中，默认的是短连接，没有正式规定 Connection:Keep-alive 操作；在HTTP1.1中所有连接都是Keep-alive的，也就是默认都是持续连接的（Persis">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-27-15-28-28.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-27-15-12-56.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-27-15-26-36.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-27-14-52-53.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-27-14-53-56.png">
-<meta property="og:updated_time" content="2017-12-27T07:46:57.508Z">
+<meta property="og:updated_time" content="2017-12-27T09:19:52.118Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Http1.1与1.0及2.0的区别">
-<meta name="twitter:description" content="HTTP概念HTTP是基于TCP协议之上的。在TCP/IP协议参考模型的各层对应的协议如下图,其中HTTP是应用层的协议。 HTTP1.1与1.0的区别筛选 Persistent Connection持久连接在HTTP1.0中，默认的是短连接，没有正式规定 Connection:Keep-alive 操作；在HTTP1.1中所有连接都是Keep-alive的，也就是默认都是持续连接的（Persi">
+<meta name="twitter:description" content="HTTP概念HTTP是基于TCP协议之上的。在TCP/IP协议参考模型的各层对应的协议如下图,其中HTTP是应用层的协议。 HTTP1.1与1.0的区别筛选 Persistent Connection持久连接在HTTP1.0中，默认的是短连接，没有正式规定 Connection:Keep-alive 操作；在HTTP1.1中所有连接都是Keep-alive的，也就是默认都是持续连接的（Persis">
 <meta name="twitter:image" content="http://xbynet.top/img/2017-12-27-15-28-28.png">
 
 
@@ -474,7 +474,7 @@
 </ol>
 <p>HTTP1.0 持久连接是通过请求头<code>Connection:keep-alive</code>实现的。<br>即使用着HTTP1.1,但现在很多客户端和服务器仍然在使用这些早期的keep-live连接。<br>实现HTTP/1.0 keep-live连接的客户端可以通过包含<code>Connection:Keep-Alive</code> 首部请求将一条连接保持在打开状态。如果服务器愿意为下一条请求将连接保持在打开状态，就在响应中包含相同的首部，<code>如果响应中没有Connection:Keep-Alive 首部，客户端就认为服务器不支持keep-live</code>，会在发回响应报文后关闭连接。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Connection:Keep-Alive</span><br><span class="line">Keep-Alive:max=5,timeout=120</span><br><span class="line">#服务器最多还会为另外5个事务保持连接的打开状态，或者将打开状态保持到连接空闲了2分钟以后。</span><br></pre></td></tr></table></figure></p>
 <p>在HTTP/1.0中，keep-alive并不是默认使用的。客户端必需发送一个Connection：Keep-Alive 请求首部来激活keep-alive连接。</p>
-<p>HTTP/1.1 逐渐停止了对keep-alive连接的支持，用一种名为持久连接的改进型设计取代了它。持久连接的目的与keep-alive连接的目的相同，但是工作机制更优些。HTTP/1.1持久连接在默认情况下是激活的，除非特别指明，否则HTTP/1.1假定所有的连接都是持久的，要在事务处理结束之后将连接关闭，HTTP/1.1应用程序必须向报文中显示地添加一个<code>Connection：close</code>首部。<br><strong>HTTP1.1客户端加载在收到响应后，除非响应中包含了Connection：close首部，不然HTTP/1.1连接就仍然维持在打开状态。</strong>但是，客户端和服务器仍然可以随时关闭空闲的连接。不发送Connection：close并不意味这服务器承诺永远将连接保持在打开状态。<br>注意：<br>1、只有当实体主体部分的长度都和相应的Content-Length一致，或者用分块传输编码方式编码的，连接才能持久保持。<br>2、如果客户端不想在连接上发送其他请求了，就应该在最后一条请求中发送一个<code>Connection：close</code>请求首部<br>3、当服务端返回头包含<code>Connection:close</code>时代表客户端可以关闭该持久连接。</p>
+<p>HTTP/1.1 逐渐停止了对keep-alive连接的支持，用一种名为持久连接的改进型设计取代了它。持久连接的目的与keep-alive连接的目的相同，但是工作机制更优些。HTTP/1.1持久连接在默认情况下是激活的，除非特别指明，否则HTTP/1.1假定所有的连接都是持久的，要在事务处理结束之后将连接关闭，HTTP/1.1应用程序必须向报文中显示地添加一个<code>Connection：close</code>首部。<br><strong>HTTP1.1客户端加载在收到响应后，除非响应中包含了Connection：close首部，不然HTTP/1.1连接就仍然维持在打开状态。</strong>但是，客户端和服务器仍然可以随时关闭空闲的连接。不发送Connection：close并不意味这服务器承诺永远将连接保持在打开状态。<br><a id="more"></a><br>注意：<br>1、只有当实体主体部分的长度都和相应的Content-Length一致，或者用分块传输编码方式编码的，连接才能持久保持。<br>2、如果客户端不想在连接上发送其他请求了，就应该在最后一条请求中发送一个<code>Connection：close</code>请求首部<br>3、当服务端返回头包含<code>Connection:close</code>时代表客户端可以关闭该持久连接。</p>
 <p>例子：HTTP 1.1支持长连接（PersistentConnection），在一个TCP连接上可以传送多个HTTP请求和响应，减少了建立和关闭连接的消耗和延迟。例如：一个包含有许多图像的网页文件的多个请求和应答可以在一个连接中传输，但每个单独的网页文件的请求和应答仍然需要使用各自的连接。</p>
 <p>持久连接会在不同事务之间保持打开状态，直到客户端或服务器决定其关闭为之。重用已对目标服务器打开的空闲持久连接，就<code>可以避开缓慢的连接建立阶段</code>。而且，已经打开的连接还可以<code>避免慢启动的拥塞适应阶段</code>，以便更快速地进行数据传输。所以，持久连接<code>降低了时延和连接建立的开销</code>，将连接保持在<code>已调谐</code>状态，而且减少了打开连接的潜在数量。</p>
 <p>HTTP 1.1请求的流水线（Pipelining）处理，还允许客户端不用等待上一次请求结果返回，就可以发出下一次请求，但服务器端必须按照接收到客户端请求的先后顺序依次回送响应结果，以保证客户端能够区分出每次请求的响应内容，这样也显著地减少了整个下载过程所需要的时间。<br><img src="/img/2017-12-27-15-26-36.png" alt=""></p>

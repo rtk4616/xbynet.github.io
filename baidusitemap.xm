@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>http://xbynet.top/2017/12/27/Http1-1%E4%B8%8E1-0%E4%B8%8E2-0%E7%9A%84%E5%8C%BA%E5%88%AB/</loc>
+    <lastmod>2017-12-27T09:19:52.118Z</lastmod>
+    <data>
+        <display>
+        <title>Http1.1与1.0及2.0的区别</title>
+        <pubTime>2017-12-27T06:22:06.000Z</pubTime>
+        
+        <tag>http</tag>
+         
+        <tag>tomcat</tag>
+         
+         
+           
+             
+              <breadCrumb title="网络基础" url="http://xbynet.top/categories/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xbynet.top/2017/12/27/tomcat%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2017-12-27T09:14:54.499Z</lastmod>
+    <lastmod>2017-12-27T09:19:23.677Z</lastmod>
     <data>
         <display>
         <title>tomcat性能优化</title>
@@ -20,28 +42,6 @@
           
              
               <breadCrumb title="tomcat" url="http://xbynet.top/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/tomcat/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://xbynet.top/2017/12/27/Http1-1%E4%B8%8E1-0%E4%B8%8E2-0%E7%9A%84%E5%8C%BA%E5%88%AB/</loc>
-    <lastmod>2017-12-27T07:46:57.508Z</lastmod>
-    <data>
-        <display>
-        <title>Http1.1与1.0及2.0的区别</title>
-        <pubTime>2017-12-27T06:22:06.000Z</pubTime>
-        
-        <tag>http</tag>
-         
-        <tag>tomcat</tag>
-         
-         
-           
-             
-              <breadCrumb title="网络基础" url="http://xbynet.top/categories/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
           
         </display>
     </data>
@@ -81,9 +81,9 @@
         <title>Http与TCP长短连接</title>
         <pubTime>2017-12-25T08:32:50.000Z</pubTime>
         
-        <tag>tcp</tag>
-         
         <tag>http</tag>
+         
+        <tag>tcp</tag>
          
          
            
