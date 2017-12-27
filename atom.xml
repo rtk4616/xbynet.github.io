@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xbynet.top/"/>
-  <updated>2017-12-27T08:46:50.312Z</updated>
+  <updated>2017-12-27T09:14:54.499Z</updated>
   <id>http://xbynet.top/</id>
   
   <author>
@@ -21,9 +21,9 @@
     <link href="http://xbynet.top/2017/12/27/tomcat%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/"/>
     <id>http://xbynet.top/2017/12/27/tomcat性能优化/</id>
     <published>2017-12-27T07:47:16.000Z</published>
-    <updated>2017-12-27T08:46:50.312Z</updated>
+    <updated>2017-12-27T09:14:54.499Z</updated>
     
-    <content type="html"><![CDATA[<script src="\assets\js\APlayer.min.js"> </script><h2 id="JVM参数优化"><a href="#JVM参数优化" class="headerlink" title="JVM参数优化"></a>JVM参数优化</h2><p>catalina.sh<br>首先通过添加<code>-server</code>选项来开启server mode，默认情况下是client mode。然后垃圾收集器选择ParNew/CMS收集器，以实现较低的STW时间。然后根据自己的系统测试来评估实际的-Xms -Xmx值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CATALINA_OPTS=&quot;-server -Xms3G -Xmx3G $CATALINA_OPTS -XX:+UseConcMarkSweepGC -XX:NewSize=1G -XX:+UseParNewGC&quot;</span><br></pre></td></tr></table></figure></p><p>那么如何看到是否合理呢<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -XX:+PrintFlagsFinal tomcat | grep HeapSize </span><br><span class="line">java -XX:+PrintFlagsFinal -Xms512m -Xmx1024m -Xss512k -XX:PermSize=64m -XX:MaxPermSize=128m</span><br></pre></td></tr></table></figure></p><p>-XX:+PrintFlagsInitial表示打印出所有XX选项的默认值，-XX:+PrintFlagsFinal表示打印出XX选项在运行程序时生效的值。<br>-Xms 设置初始堆的大小，也是最小堆的大小，它等价于：-XX:InitialHeapSize<br>-Xmx 设置最大堆的大小，它等价于-XX:MaxHeapSize。 </p><h2 id="配置连接器"><a href="#配置连接器" class="headerlink" title="配置连接器"></a>配置连接器</h2><p> there are several connectors available for Tomcat:</p><ul><li><code>BIO</code> – blocking I/O -&gt; protocol=”HTTP/1.1” (good for low concurrency, or high concurrency without keep-alive from clients)</li><li><code>NIO</code> – Non-blocking I/O -&gt; protocol=”org.apache.coyote.http11.Http11NioProtocol” (good for high currency with no keep-alive parameter from clients)</li><li>Apache Portable Runtime (<code>APR</code>) -&gt; protocol=”org.apache.coyote.http11.Http11AprProtocol”<br>比较：<br>Stability                           BIO     NIO or APR<br>SSL                                 APR     NIO      BIO<br>Low concurrency                     BIO     APR      NIO<br>High concurrency No Keep-Alive      BIO     APR      NIO<br>High concurrency Keep-Alive         APR     NIO      BIO</li></ul><p><img src="/img/2017-12-27-16-18-02.png" alt=""></p><p><strong>注意：Tomcat 8.5 and 9.0 已经移除了BIO连接器。</strong><br>Tomcat 8.5以后，仅支持 NIO, NIO2, and the APR-based connectors.</p><p>配置示例：启用nio连接器，禁用dns查询，连接池、请求数调优、压缩<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span>   </span></span><br><span class="line"><span class="tag">           <span class="attr">protocol</span>=<span class="string">"org.apache.coyote.http11.Http11NioProtocol"</span>  </span></span><br><span class="line"><span class="tag">           <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span>  </span></span><br><span class="line"><span class="tag">           <span class="attr">redirectPort</span>=<span class="string">"8443"</span>   </span></span><br><span class="line"><span class="tag">           <span class="attr">maxThreads</span>=<span class="string">"500"</span>   </span></span><br><span class="line"><span class="tag">           <span class="attr">minSpareThreads</span>=<span class="string">"100"</span>  </span></span><br><span class="line"><span class="tag">           <span class="attr">acceptCount</span>=<span class="string">"2048"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">maxConnections</span>=<span class="string">"1024"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">compression</span>=<span class="string">"on"</span> </span></span><br><span class="line"><span class="tag">           <span class="attr">disableUploadTimeout</span>=<span class="string">"true"</span> </span></span><br><span class="line"><span class="tag">           <span class="attr">enableLookups</span>=<span class="string">"false"</span>   </span></span><br><span class="line"><span class="tag">           <span class="attr">URIEncoding</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>maxThreads的值应该根据流量的大小，如果值过低，将有没有足够的线程来处理所有的请求，请求将进入等待状态，只有当一个的处理线程释放后才被处理；如果设置的太大，Tomcat的启动将花费更多时间，同时也会浪费系统资源。<br>compression压缩,默认是off.如果使用nginx代理，此项也没必要设置。<br>acceptCount=”1024”//指定当所有可以使用的处理请求的线程数都被使用时，可以放到处理队列中的请求数，超过这个数的请求将不予处理，直接拒绝。</p><p>我们可以把tomcat比做一个电影院，流程是取号、买票、观影，acceptCount比作前厅(容纳取到号的人)、maxConnections比作大厅（容纳买到票的人）、maxThreads比作影厅（可以理解一个影厅只容纳一个人，因为一个线程同时只处理一个请求），以下场景是针对已达到maxConnections最大值来讨论的<br>1）取号：如果前厅人数已达到acceptCount，则拿号失败，会得到Connection refused connect的回复信息。反之则会进入前厅，等待买票。<br>2）买票：当大厅人数小于maxConnections时，前厅的人就可以进入大厅<br>3）观影：当影厅的人离开时，大厅的部分人能进入影厅，一般来讲大厅的容量要远大于影厅的数量。</p><p>详细参数说明，可以参考：<a href="http://blog.csdn.net/lifetragedy/article/details/7708724" target="_blank" rel="noopener">http://blog.csdn.net/lifetragedy/article/details/7708724</a></p><p>注意：这里是http connector的优化，如果使用apache和tomcat做集群的负载均衡，并且使用ajp协议做apache和tomcat的协议转发，那么还需要优化ajp connector。</p><p>采用集群</p><p>采用Nginx来缓存静态资源，并对内容进行压缩</p><p>具体测试可以用ab,jmeter之类的工具。</p><p>参考：<br><a href="http://www.tecbar.net/optimize-tomcat-performance/" target="_blank" rel="noopener">http://www.tecbar.net/optimize-tomcat-performance/</a><br><a href="https://www.itworld.com/article/2764170/networking/tomcat-performance-tuning-tips.html" target="_blank" rel="noopener">https://www.itworld.com/article/2764170/networking/tomcat-performance-tuning-tips.html</a><br><a href="http://blog.csdn.net/flyliuweisky547/article/details/25161239" target="_blank" rel="noopener">http://blog.csdn.net/flyliuweisky547/article/details/25161239</a><br><a href="https://stackoverflow.com/questions/11032739/what-is-the-difference-between-tomcats-bio-connector-and-nio-connector" target="_blank" rel="noopener">https://stackoverflow.com/questions/11032739/what-is-the-difference-between-tomcats-bio-connector-and-nio-connector</a><br><a href="https://tomcat.apache.org/tomcat-8.5-doc/changelog.html" target="_blank" rel="noopener">https://tomcat.apache.org/tomcat-8.5-doc/changelog.html</a><br><a href="http://tomcat.apache.org/tomcat-7.0-doc/config/http.html#NIO_specific_configuration" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-7.0-doc/config/http.html#NIO_specific_configuration</a><br><a href="http://blog.csdn.net/architect0719/article/details/50252361" target="_blank" rel="noopener">http://blog.csdn.net/architect0719/article/details/50252361</a><br><a href="http://blog.csdn.net/jewes/article/details/42174893" target="_blank" rel="noopener">http://blog.csdn.net/jewes/article/details/42174893</a><br><a href="https://stackoverflow.com/questions/26707508/tomcat-performance-tuning" target="_blank" rel="noopener">https://stackoverflow.com/questions/26707508/tomcat-performance-tuning</a><br><a href="http://blog.csdn.net/kaka20099527/article/details/53285348" target="_blank" rel="noopener">http://blog.csdn.net/kaka20099527/article/details/53285348</a></p>]]></content>
+    <content type="html"><![CDATA[<script src="\assets\js\APlayer.min.js"> </script><h2 id="JVM参数优化"><a href="#JVM参数优化" class="headerlink" title="JVM参数优化"></a>JVM参数优化</h2><p>catalina.sh<br>首先通过添加<code>-server</code>选项来开启server mode，默认情况下是client mode。然后垃圾收集器选择ParNew/CMS收集器，以实现较低的STW时间。然后根据自己的系统测试来评估实际的-Xms -Xmx值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CATALINA_OPTS=&quot;-server -Xms3G -Xmx3G $CATALINA_OPTS -XX:+UseConcMarkSweepGC -XX:NewSize=1G -XX:+UseParNewGC&quot;</span><br></pre></td></tr></table></figure></p><p>那么如何看到是否合理呢<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -XX:+PrintFlagsFinal tomcat | grep HeapSize </span><br><span class="line">java -XX:+PrintFlagsFinal -Xms512m -Xmx1024m -Xss512k -XX:PermSize=64m -XX:MaxPermSize=128m</span><br></pre></td></tr></table></figure></p><p>-XX:+PrintFlagsInitial表示打印出所有XX选项的默认值，-XX:+PrintFlagsFinal表示打印出XX选项在运行程序时生效的值。<br>-Xms 设置初始堆的大小，也是最小堆的大小，它等价于：-XX:InitialHeapSize<br>-Xmx 设置最大堆的大小，它等价于-XX:MaxHeapSize。 </p><h2 id="配置连接器"><a href="#配置连接器" class="headerlink" title="配置连接器"></a>配置连接器</h2><p> there are several connectors available for Tomcat:</p><ul><li><code>BIO</code> – blocking I/O -&gt; protocol=”HTTP/1.1” (good for low concurrency, or high concurrency without keep-alive from clients)</li><li><code>NIO</code> – Non-blocking I/O -&gt; protocol=”org.apache.coyote.http11.Http11NioProtocol” (good for high currency with no keep-alive parameter from clients)</li><li>Apache Portable Runtime (<code>APR</code>) -&gt; protocol=”org.apache.coyote.http11.Http11AprProtocol”<br>比较：<br>Stability                           BIO     NIO or APR<br>SSL                                 APR     NIO      BIO<br>Low concurrency                     BIO     APR      NIO<br>High concurrency No Keep-Alive      BIO     APR      NIO<br>High concurrency Keep-Alive         APR     NIO      BIO</li></ul><p><img src="/img/2017-12-27-16-18-02.png" alt=""></p><p><strong>注意：Tomcat 8.5 and 9.0 已经移除了BIO连接器。</strong><br>Tomcat 8.5以后，仅支持 NIO, NIO2, and the APR-based connectors.</p><p>配置示例：启用nio连接器，<code>禁用dns查询</code>，连接池、请求数调优、压缩<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Connector</span> <span class="attr">port</span>=<span class="string">"8080"</span>   </span></span><br><span class="line"><span class="tag">           <span class="attr">protocol</span>=<span class="string">"org.apache.coyote.http11.Http11NioProtocol"</span>  </span></span><br><span class="line"><span class="tag">           <span class="attr">connectionTimeout</span>=<span class="string">"20000"</span>  </span></span><br><span class="line"><span class="tag">           <span class="attr">redirectPort</span>=<span class="string">"8443"</span>   </span></span><br><span class="line"><span class="tag">           <span class="attr">maxThreads</span>=<span class="string">"500"</span>   </span></span><br><span class="line"><span class="tag">           <span class="attr">minSpareThreads</span>=<span class="string">"100"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">maxSpareThreads</span>=<span class="string">"400"</span>   </span></span><br><span class="line"><span class="tag">           <span class="attr">acceptCount</span>=<span class="string">"2048"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">maxConnections</span>=<span class="string">"1024"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">compression</span>=<span class="string">"on"</span> </span></span><br><span class="line"><span class="tag">           <span class="attr">compressionMinSize</span>=<span class="string">"500"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">compressableMimeType</span>=<span class="string">"text/html,text/xml,text/javascript,text/css,text/plain,application/json"</span></span></span><br><span class="line"><span class="tag">           <span class="attr">disableUploadTimeout</span>=<span class="string">"true"</span> </span></span><br><span class="line"><span class="tag">           <span class="attr">enableLookups</span>=<span class="string">"false"</span>   </span></span><br><span class="line"><span class="tag">           <span class="attr">URIEncoding</span>=<span class="string">"UTF-8"</span> /&gt;</span></span><br></pre></td></tr></table></figure></p><p>maxThreads的值应该根据流量的大小，如果值过低，将有没有足够的线程来处理所有的请求，请求将进入等待状态，只有当一个的处理线程释放后才被处理；如果设置的太大，Tomcat的启动将花费更多时间，同时也会浪费系统资源。<br>compression压缩,默认是off.如果使用nginx代理，此项也没必要设置。<br>acceptCount=”1024”//指定当所有可以使用的处理请求的线程数都被使用时，可以放到处理队列中的请求数，超过这个数的请求将不予处理，直接拒绝。</p><p>公式：<code>服务器端最佳线程数量=((线程等待时间+线程cpu时间)/线程cpu时间) * cpu数量</code></p><p>我们可以把tomcat比做一个电影院，流程是取号、买票、观影，acceptCount比作前厅(容纳取到号的人)、maxConnections比作大厅（容纳买到票的人）、maxThreads比作影厅（可以理解一个影厅只容纳一个人，因为一个线程同时只处理一个请求），以下场景是针对已达到maxConnections最大值来讨论的<br>1）取号：如果前厅人数已达到acceptCount，则拿号失败，会得到Connection refused connect的回复信息。反之则会进入前厅，等待买票。<br>2）买票：当大厅人数小于maxConnections时，前厅的人就可以进入大厅<br>3）观影：当影厅的人离开时，大厅的部分人能进入影厅，一般来讲大厅的容量要远大于影厅的数量。</p><p>详细参数说明，可以参考：<a href="http://blog.csdn.net/lifetragedy/article/details/7708724" target="_blank" rel="noopener">http://blog.csdn.net/lifetragedy/article/details/7708724</a></p><p>注意：这里是http connector的优化，如果使用apache和tomcat做集群的负载均衡，并且使用ajp协议做apache和tomcat的协议转发，那么还需要优化ajp connector。</p><p>采用集群</p><p>采用Nginx来缓存静态资源，并对内容进行压缩</p><p>具体测试可以用ab,jmeter之类的工具。</p><h2 id="寻找最佳线程数"><a href="#寻找最佳线程数" class="headerlink" title="寻找最佳线程数"></a>寻找最佳线程数</h2><p>最佳线程数:<br>性能压测的情况下，起初随着用户数的增加，QPS会上升，当到了一定的阀值之后，用户数量增加QPS并不会增加，或者增加不明显，同时请求的响应时间却大幅增加。这个阀值我们认为是最佳线程数。</p><p>为什么要找最佳线程数<br>1.过多的线程只会造成，更多的内存开销，更多的CPU开销，但是对提升QPS确毫无帮助<br>2.找到最佳线程数后通过简单的设置，可以让web系统更加稳定，得到最高，最稳定的QPS输出</p><p>最佳线程数的获取：<br>1、通过用户慢慢递增来进行性能压测，观察QPS，响应时间<br>2、根据公式计算:服务器端最佳线程数量=((线程等待时间+线程cpu时间)/线程cpu时间) * cpu数量</p><p>配置依据：<br>（1）、部署的程序偏计算型，主要利用cpu资源，应该将该参数设置小一点，减小同一时间抢占cpu资源的线程个数。<br>（2）、部署的程序对io、数据库占用时间较长，线程处于等待的时间较长，应该将该参数调大一点，增加处理个数。<br>应该注意：如果线程数过大，那么cpu用在线程切换的时间占的比重会增大，系统性能会降低。</p><p>最佳线程数和jvm堆内存得关系：<br>对于java应用还有一个因素是FULL GC，我们要保证在最佳线程数量下，不会发生频繁FULL GC</p><p>参考：<br><a href="http://www.tecbar.net/optimize-tomcat-performance/" target="_blank" rel="noopener">http://www.tecbar.net/optimize-tomcat-performance/</a><br><a href="https://www.itworld.com/article/2764170/networking/tomcat-performance-tuning-tips.html" target="_blank" rel="noopener">https://www.itworld.com/article/2764170/networking/tomcat-performance-tuning-tips.html</a><br><a href="http://blog.csdn.net/flyliuweisky547/article/details/25161239" target="_blank" rel="noopener">http://blog.csdn.net/flyliuweisky547/article/details/25161239</a><br><a href="https://stackoverflow.com/questions/11032739/what-is-the-difference-between-tomcats-bio-connector-and-nio-connector" target="_blank" rel="noopener">https://stackoverflow.com/questions/11032739/what-is-the-difference-between-tomcats-bio-connector-and-nio-connector</a><br><a href="https://tomcat.apache.org/tomcat-8.5-doc/changelog.html" target="_blank" rel="noopener">https://tomcat.apache.org/tomcat-8.5-doc/changelog.html</a><br><a href="http://tomcat.apache.org/tomcat-7.0-doc/config/http.html#NIO_specific_configuration" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-7.0-doc/config/http.html#NIO_specific_configuration</a><br><a href="http://blog.csdn.net/architect0719/article/details/50252361" target="_blank" rel="noopener">http://blog.csdn.net/architect0719/article/details/50252361</a><br><a href="http://blog.csdn.net/jewes/article/details/42174893" target="_blank" rel="noopener">http://blog.csdn.net/jewes/article/details/42174893</a><br><a href="https://stackoverflow.com/questions/26707508/tomcat-performance-tuning" target="_blank" rel="noopener">https://stackoverflow.com/questions/26707508/tomcat-performance-tuning</a><br><a href="http://blog.csdn.net/kaka20099527/article/details/53285348" target="_blank" rel="noopener">http://blog.csdn.net/kaka20099527/article/details/53285348</a><br><a href="https://www.jianshu.com/p/8cfaff5d4bd6" target="_blank" rel="noopener">https://www.jianshu.com/p/8cfaff5d4bd6</a><br><a href="http://blog.csdn.net/hzzhoushaoyu/article/details/48769805" target="_blank" rel="noopener">http://blog.csdn.net/hzzhoushaoyu/article/details/48769805</a><br><a href="http://blog.csdn.net/u013802160/article/details/51701644" target="_blank" rel="noopener">http://blog.csdn.net/u013802160/article/details/51701644</a></p>]]></content>
     
     <summary type="html">
     
@@ -121,9 +121,9 @@
       <category term="网络基础" scheme="http://xbynet.top/categories/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="http" scheme="http://xbynet.top/tags/http/"/>
-    
       <category term="tcp" scheme="http://xbynet.top/tags/tcp/"/>
+    
+      <category term="http" scheme="http://xbynet.top/tags/http/"/>
     
   </entry>
   
@@ -383,9 +383,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -411,9 +411,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -447,9 +447,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -475,9 +475,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -508,9 +508,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -539,9 +539,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -567,9 +567,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -596,9 +596,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -648,9 +648,9 @@
       <category term="算法" scheme="http://xbynet.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="分布式" scheme="http://xbynet.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
@@ -675,9 +675,9 @@
       <category term="算法" scheme="http://xbynet.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="分布式" scheme="http://xbynet.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
