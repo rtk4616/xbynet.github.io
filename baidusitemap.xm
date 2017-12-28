@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>http://xbynet.top/2017/12/28/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0%E4%B9%8B%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/</loc>
+    <lastmod>2017-12-28T17:23:35.309Z</lastmod>
+    <data>
+        <display>
+        <title>HTTP权威指南笔记之连接管理</title>
+        <pubTime>2017-12-28T15:29:17.000Z</pubTime>
+        
+        <tag>http</tag>
+         
+        <tag>tcp</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="HTTP权威指南" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xbynet.top/2017/12/28/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0%E4%B9%8BHTTP%E6%8A%A5%E6%96%87/</loc>
     <lastmod>2017-12-28T10:04:13.795Z</lastmod>
     <data>

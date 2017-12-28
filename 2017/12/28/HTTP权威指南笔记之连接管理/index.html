@@ -1,0 +1,1490 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="http,tcp," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="倚楼听风雨" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="纲要：  HTTP是如何使用TCP连接的； TCP连接的时延、瓶颈、存在的障碍； HTTP的优化，并行、keep-alive/持久连接、管道化连接； 管道连接时应该及不应该做的事情  TCP连接TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)TCP流是分段的、由IP分组传送：TCP的流会被分成小块(段se">
+<meta name="keywords" content="http,tcp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP权威指南笔记之连接管理">
+<meta property="og:url" content="http://xbynet.top/2017/12/28/HTTP权威指南笔记之连接管理/index.html">
+<meta property="og:site_name" content="倚楼听风雨">
+<meta property="og:description" content="纲要：  HTTP是如何使用TCP连接的； TCP连接的时延、瓶颈、存在的障碍； HTTP的优化，并行、keep-alive/持久连接、管道化连接； 管道连接时应该及不应该做的事情  TCP连接TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)TCP流是分段的、由IP分组传送：TCP的流会被分成小块(段se">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-28-23-35-01.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-28-23-41-29.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-28-23-41-49.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-28-23-42-19.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-28-23-42-50.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-28-23-44-07.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-28-23-49-33.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-29-00-38-20.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-29-00-40-50.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-29-00-41-07.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-29-00-45-52.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-29-00-53-04.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-29-01-01-30.png">
+<meta property="og:image" content="http://xbynet.top/img/2017-12-29-01-03-53.png">
+<meta property="og:updated_time" content="2017-12-28T17:23:35.309Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP权威指南笔记之连接管理">
+<meta name="twitter:description" content="纲要：  HTTP是如何使用TCP连接的； TCP连接的时延、瓶颈、存在的障碍； HTTP的优化，并行、keep-alive/持久连接、管道化连接； 管道连接时应该及不应该做的事情  TCP连接TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)TCP流是分段的、由IP分组传送：TCP的流会被分成小块(段se">
+<meta name="twitter:image" content="http://xbynet.top/img/2017-12-28-23-35-01.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xbynet.top/2017/12/28/HTTP权威指南笔记之连接管理/"/>
+
+
+
+
+
+  <title>HTTP权威指南笔记之连接管理 | 倚楼听风雨</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9e6e9198259e7a598474c9df6397dc";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">倚楼听风雨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">淡看江湖路</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-相册">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/28/HTTP权威指南笔记之连接管理/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">HTTP权威指南笔记之连接管理</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-28T23:29:17+08:00">
+                2017-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/HTTP权威指南/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP权威指南</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/28/HTTP权威指南笔记之连接管理/" class="leancloud_visitors" data-flag-title="HTTP权威指南笔记之连接管理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,137
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  11
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>纲要：</p>
+<ul>
+<li>HTTP是如何使用TCP连接的；</li>
+<li>TCP连接的时延、瓶颈、存在的障碍；</li>
+<li>HTTP的优化，并行、keep-alive/持久连接、管道化连接；</li>
+<li>管道连接时应该及不应该做的事情</li>
+</ul>
+<h2 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h2><p>TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)<br><strong>TCP流是分段的、由IP分组传送：</strong><br>TCP的流会被分成小块(段segment)组装成IP分组(或IP数据报)来发送。<br><img src="/img/2017-12-28-23-35-01.png" alt=""></p>
+<p>每个<code>IP分组</code>包括三部分：IP分组首部(20字节，包含源和目的ip地址，及其他标记)，TCP段首部(20字节，包含tcp端口号，控制标记，及用于排序和完整性校验的值)，TCP数据块(0或多个字节)。<br>所以要注意，比如TCP流是1字节，比如分成1个段，但需要传输的字节数在41+以上。试想如果有很多个TCP流都是特别小的数据量，那么反而会对带宽造成很大的浪费。<br><img src="/img/2017-12-28-23-41-29.png" alt=""></p>
+<p>TCP是通过<code>端口号</code>来保持连接的，IP地址是用来寻址计算机，端口号是用来寻找计算机上对应应用程序的。<br>TCP连接的唯一标识，包含4个值:<code>源ip、源端口、目的ip、目的端口</code><br><img src="/img/2017-12-28-23-41-49.png" alt=""></p>
+<p>TCP套接字编程：<br><img src="/img/2017-12-28-23-42-19.png" alt=""><br><img src="/img/2017-12-28-23-42-50.png" alt=""></p>
+<h2 id="对TCP性能的考虑"><a href="#对TCP性能的考虑" class="headerlink" title="对TCP性能的考虑"></a>对TCP性能的考虑</h2><p>HTTP事务的时延:<br><img src="/img/2017-12-28-23-44-07.png" alt=""><br>TCP网络时延的大小取决于硬件速度、网络、服务器负载、请求和响应的尺寸、客户端与服务器间的距离。<br>常见的TCP时延包括：</p>
+<ul>
+<li>TCP连接建立握手</li>
+<li>TCP慢启动拥塞控制</li>
+<li>数据聚集的Nagle算法</li>
+<li>用于捎带确认的TCP延迟确认算法</li>
+<li>TIME_WAIT时延和端口耗尽</li>
+</ul>
+<p>1、TCP连接的握手时延<br><img src="/img/2017-12-28-23-49-33.png" alt=""><br>从图中可以看出，小的HTTP事务可能会在TCP建立上花费50%甚至更多的时间。</p>
+<p>2、延迟确认(ACK延迟机制)<br>背景：由于因特网无法确保可靠的分组传输(路由器超负荷的话，可以随意丢弃分组)，所以TCP实现了自己的确认机制来确保数据的成功传输。(TCP是可靠的)<br>每个TCP段都有一哥序列号和数据完整性校验和。每个段的接受者收到时都会向发送者回送小的确认分组。入股发送者没有在指定的时间窗内收到确认信息，发送者就认为分组已被损坏，并重发数据。<br>但是由于确认报文很小，所以TCP允许在发往相同方向的输出数据分组中对其进行<code>捎带</code>.TCP将返回的确认信息与输出的数据分组结合在一起，以便更有效地利用网络。为了实现这一可能，出现了”<code>延迟确认</code>算法”<br>延迟确认算法会在一个特定的时间窗(<code>100~200ms</code>)内将输出确认存放在缓冲区中，以便寻找能够捎带它的输出数据分组。但是，HTTP具有<code>双峰特征</code>的请求-应答行为降低了捎带信息的可能。当希望有相反方向回传分组的时候，偏偏没有那么多。这样延迟确认算法就会引入相当大的时延。<strong>根据操作系统不同，可以调整或禁用延迟确认算法.</strong>(禁用之前一定要确保不会引发这些算法所要避免的问题)<br>(其实在建立连接第三次握手时，客户端向服务器端发送ACK包时就已经可以携带数据)</p>
+<p>3、TCP慢启动<br>TCP连接会随着时间进行<code>自我调谐</code>,起初会限制连接的最大速度，如果数据成功传输，会随着时间的推移提高传输的速度。这种调谐被称为<code>TCP慢启动</code>(slow start),用于防止因特网的突然过载和<code>拥塞</code>。<br>TCP慢启动限制了一个TCP端点在任意时刻可以传输的分组数。(除非随着时间推移<code>打开拥塞窗口</code>后)<br>因为慢启动的存在，出现了HTTP持久连接，在持久连接中，后续的请求都会在处于<code>已调谐</code>的连接中进行。</p>
+<p>4、Nagle算法和TCP_nodelay<br>前面说过，每个IP分组中都至少装载了40个字节的标记和首部，所以如果TCP发送了大量包含少量数据的分组，，网络的性能会严重下降(发送大量单字节分组的行为称为<code>发送端傻窗口综合症</code>)。<br>Nagle算法试图在发送一个分组之前，将大量TCP数据绑定在一起，以提高网络效率。它鼓励发送全尺寸(LAN最大尺寸分组为1500字节，因特网上是几百字节)的段，只有当所有其他分组都被确认之后，Nagle算法才允许发送非全尺寸的分组。只有当挂起分组被确认，<strong>或者缓存中积累了足够发送一个全尺寸分组的数据时，才会将缓存的数据发送出去。</strong><br>这样在HTTP中会引发性能问题:<br>如果小的HTTP报文可能无法填满一个全尺寸分组，从而导致因为等待那些永远不会到来的额外数据而产生时延。<br>Nagle算法就是为了尽可能发送大块数据，避免网络中充斥着许多小数据块。<br>Nagle算法的基本定义是<code>任意时刻，最多只能有一个未被确认的小段</code>。 所谓“小段”，指的是小于MSS尺寸的数据块，所谓“未被确认”，是指一个数据块发送出去后，没有收到对方发送的ACK确认该数据已收到。</p>
+<p>Nagle算法与延迟确认之间的交互也会存在问题。<br>故而HTTP应用通常会在自己的栈中设置参数<code>TCP_NODELAY,禁用Nagle算法</code>，以提高性能。<br>当然，如果你要用Nagle算法的话，一定要确保会向TCP写入大块的数据，这样就不会产生一堆小分组了。</p>
+<p>更多参考，这篇文章介绍的也不错：<a href="http://blog.csdn.net/historyasamirror/article/details/6423235" target="_blank" rel="noopener">http://blog.csdn.net/historyasamirror/article/details/6423235</a></p>
+<p>5、<strong>TIME_WAIT累积与端口耗尽</strong><br>TIME_WAIT端口耗尽是很严重的性能问题。当某个TCP端点关闭TCP连接时，会在内存中维护一个小的控制块，用来记录最近所关闭连接的IP地址和端口号。这类信息只会维持一小段时间，即<code>2MSL(最大分段使用期的两倍</code>，以前为2分钟，但由于硬件及带宽的提升，这个时间变小了很多，而且因操作系统不同而不同，我在docker下看了ubuntu的MSL值为60),以<code>确保在这段时间内不会创建具有相同地址和端口号的新连接</code>。</p>
+<p>Linux下查看并修改MSL(Maximum Segment Lifetime)值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_fin_timeout</span><br><span class="line">或</span><br><span class="line">cat /proc/sys/net/ipv4/tcp_fin_timeout</span><br><span class="line">修改</span><br><span class="line">edit /proc/sys/net/ipv4/tcp_fin_timeout</span><br><span class="line">使上面修改永久生效</span><br><span class="line">sysctl -p /etc/sysctl.conf</span><br></pre></td></tr></table></figure></p>
+<p>需要注意的是，超过2MSL后，有分组被复制的可能性。试想，如果来自之前连接的分组插入了具有相同连接值的新TCP流，会破坏TCP数据。<br>试想只有一个客户端与一个服务端的情形下的压力测试，前面我们知道，构建一个TCP连接需要的4个值:源ip，源端口，目的ip，目的端口。这里面唯一可以改变的只有源端口。<br>而源端口可用数量有限(最大65000左右，可用一般6w个左右)，而且在2MSL秒(比如60s)内连接是无法重用的，连接率就被限制在了60000/60=1000次/s。当达到此峰值，那么客户端的端口也相应地被耗尽了。<br>注意：即使没有遇到端口耗尽问题，也要特别小心有大量连接处于打开状态的情况，这是有些操作系统的速度会严重减缓。</p>
+<h2 id="HTTP连接的处理"><a href="#HTTP连接的处理" class="headerlink" title="HTTP连接的处理"></a>HTTP连接的处理</h2><p>HTTP允许在客户端和最终的源端服务器之间存在一系列HTTP中间实体(代理，高速缓存等)。<br>Connection头部有一个由逗号分隔的连接标签列表，这些标签为此连接指定了不会传播到其他连接中去的选项。Connection头部及其标签指明的头部只能用于相邻的端点，转发时需要被移除。这种称为<code>逐跳首部</code>。</p>
+<p><img src="/img/2017-12-29-00-38-20.png" alt=""></p>
+<p>连接分类：单个串行、并行(多条tcp连接)、持久连接(重用)、管道化连接(重用、并发)、复用连接</p>
+<p><img src="/img/2017-12-29-00-40-50.png" alt=""><br><img src="/img/2017-12-29-00-41-07.png" alt=""><br>注意：并行不一定快，因为其会严重加重服务器或代理的压力。<br>浏览器通常会被并行数量作出限制(如同域名下最多4个)。</p>
+<p>持久连接：重用已对目标服务器打开的空闲持久连接，这样可以避开缓慢的连接建立阶段，避开慢启动的拥塞适应阶段，以便更快速地进行数据的传输。<br>持久连接分类：HTTP1.0+keep-alive, HTTP1.1的默认persistent连接。<br><img src="/img/2017-12-29-00-45-52.png" alt=""></p>
+<p>关于HTTP1.0Keep-Alive与Http1.1持久连接,请参考我另一篇文章。<br>HTTP1.0Keep-Alive:HTTP1.0默认不开启，需要请求和响应头都有<code>Connection: Keep-Alive</code>，否则连接就不持久。<br>Http1.1持久连接:不关心Connection: Keep-Alive,甚至需要废除这个。因为默认开启了持久连接，所以只需要在要关闭连接时发送<code>Connection: close</code>头就可以了。<br>HTTP1.0Keep-Alive与代理交互时可能出现的问题：Keep-Alive和哑代理，Connection头和盲中继，代理和逐跳首部、插入Proxy-Connection</p>
+<h2 id="管道化连接"><a href="#管道化连接" class="headerlink" title="管道化连接"></a>管道化连接</h2><p>基于Http1.1持久连接，可选地使用请求管道。<br><img src="/img/2017-12-29-00-53-04.png" alt=""><br>要求：请求顺序与响应顺序一致性。<br>限制：HTTP客户端不应该用管道化的方式发送会产生副作用的请求，一般指<code>POST(非幂等</code>方法).出错的时候，管道化方式会阻碍客户端了解服务器执行的是一系列管道化请求中的哪一些。由于无法安全地重试POS这样的非幂等请求，所以出错时，就存在某些方法永远不会被执行的风险。<br>这也就是为什么页面提交没反应过来，再次提交或者刷新时，大多数浏览器会提示你是否需要再次提交表单的原因。</p>
+<h2 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h2><p>1、任意关闭<br>2、Content-Length及截尾操作<br>3、连接关闭容限、重试、幂等性:<br>如果一个事务，不管是执行一次还是很多次，得到的结果都相同，这个事务就是幂等性。而POST是非幂等的。</p>
+<p>4、正常关闭连接<br>我们知道TCP连接是双向的。有输入与输出队列，分别负责读与写。<br><img src="/img/2017-12-29-01-01-30.png" alt=""><br>完全关闭(socket.close)与半关闭(socket.shutdown)：是否将输入输出通道都关闭，或者只关闭其中一个。<br>TCP关闭及重置错误:<br><img src="/img/2017-12-29-01-03-53.png" alt=""></p>
+<p>关闭连接的输出信道总是很安全的。连接另一端的对等实体会在从其缓冲区中读出所有数据之后收到连接关闭的通知。<br>关闭连接的输入信道比较危险，除非你知道另一端不打算发送其他数据了。否则操作系统会向另一端的机器回送一条<code>TCP连接被对端重置</code>的报文，<strong>同时删除对端还未读取的所有缓存数据(尽管其中的大部分都已抵达你的机器了)。对于管道化连接来说，这是非常糟糕的情形。</strong></p>
+<p>正常关闭流程：先关闭输出通道-等待对端关闭它的输出信道-两端都告诉了对方不会再发送任何数据(即关闭了输出信道，并且关闭通知被对端读取了)-双方完全关闭连接。这样就不会有重置及清空缓冲数据的危险。<br>实际中，由于网络的不可靠，后面的步骤不一定能正常走完，所以一般需要周期性检查，超过一定时间仍不行就执行强制关闭，以节约资源。</p>
+
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xbynet.top/2017/12/28/HTTP权威指南笔记之连接管理/" title="HTTP权威指南笔记之连接管理">http://xbynet.top/2017/12/28/HTTP权威指南笔记之连接管理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" rel="tag"><i class="fa fa-tag"></i> http</a>
+          
+            <a href="/tags/tcp/" rel="tag"><i class="fa fa-tag"></i> tcp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/28/HTTP权威指南笔记之HTTP报文/" rel="next" title="HTTP权威指南笔记之HTTP报文">
+                <i class="fa fa-chevron-left"></i> HTTP权威指南笔记之HTTP报文
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ3OS85MDQw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256"
+                alt="xbynet" />
+            
+              <p class="site-author-name" itemprop="name">xbynet</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xbynet" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xbynet@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.xby1993.net/index.html" title="旧博客笔记" target="_blank">旧博客笔记</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://segmentfault.com/blog/xbynet" title="Segmentfault旧博文" target="_blank">Segmentfault旧博文</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          <div id="aplayer1" class="aplayer"></div>
+<script src="/asserts/js/APlayer.min.js"></script>
+<script>
+    var musiclist=[
+        {title:'素雨',author:'孙雪宁',url:'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'},
+        {title:'爱在上',author:'崔子格',url:'http://dl.stream.qqmusic.qq.com/M8000019Hx0J3tqcaV.mp3?vkey=93EB395793C648848684E76AE3B2D6E08F9EC8C7412B177750792C7CEC73BDC4FD06C1F78C02D9186339549C042F2CA5955914BA8322F6E4&guid=5150825362&fromtag=1',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003ksYhQ1EmEcr.jpg?max_age=2592000'}
+    ]
+    var tmpindex=Math.floor(Math.random()*musiclist.length);
+    var music=musiclist[tmpindex];
+    var ap = new APlayer({
+        element: document.getElementById('aplayer1'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: music.title,
+            author: music.author,
+            url: music.url,
+            pic: music.pic
+        }
+    });
+</script>
+
+<!-- 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+-->
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TCP连接"><span class="nav-number">1.</span> <span class="nav-text"><a href="#TCP&#x8FDE;&#x63A5;" class="headerlink" title="TCP&#x8FDE;&#x63A5;"></a>TCP&#x8FDE;&#x63A5;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#对TCP性能的考虑"><span class="nav-number">2.</span> <span class="nav-text"><a href="#&#x5BF9;TCP&#x6027;&#x80FD;&#x7684;&#x8003;&#x8651;" class="headerlink" title="&#x5BF9;TCP&#x6027;&#x80FD;&#x7684;&#x8003;&#x8651;"></a>&#x5BF9;TCP&#x6027;&#x80FD;&#x7684;&#x8003;&#x8651;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTTP连接的处理"><span class="nav-number">3.</span> <span class="nav-text"><a href="#HTTP&#x8FDE;&#x63A5;&#x7684;&#x5904;&#x7406;" class="headerlink" title="HTTP&#x8FDE;&#x63A5;&#x7684;&#x5904;&#x7406;"></a>HTTP&#x8FDE;&#x63A5;&#x7684;&#x5904;&#x7406;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#管道化连接"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x7BA1;&#x9053;&#x5316;&#x8FDE;&#x63A5;" class="headerlink" title="&#x7BA1;&#x9053;&#x5316;&#x8FDE;&#x63A5;"></a>&#x7BA1;&#x9053;&#x5316;&#x8FDE;&#x63A5;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关闭连接"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x5173;&#x95ED;&#x8FDE;&#x63A5;" class="headerlink" title="&#x5173;&#x95ED;&#x8FDE;&#x63A5;"></a>&#x5173;&#x95ED;&#x8FDE;&#x63A5;</span></a></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xbynet</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">155.7k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("sHIc70OVniNsR5OI1atIhMuk-gzGzoHsz", "wt266j1nbmoGAFrXdwXt7TeS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>
