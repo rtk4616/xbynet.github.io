@@ -123,9 +123,9 @@
       <category term="网络基础" scheme="http://xbynet.top/categories/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80/"/>
     
     
-      <category term="http" scheme="http://xbynet.top/tags/http/"/>
-    
       <category term="tcp" scheme="http://xbynet.top/tags/tcp/"/>
+    
+      <category term="http" scheme="http://xbynet.top/tags/http/"/>
     
   </entry>
   
@@ -710,9 +710,9 @@
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
-      <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
-    
       <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
+    
+      <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   
@@ -740,9 +740,9 @@
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
-      <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
-    
       <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
+    
+      <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   
@@ -777,9 +777,9 @@
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
-      <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
-    
       <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
+    
+      <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   
@@ -810,9 +810,9 @@
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
-      <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
-    
       <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
+    
+      <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
     
   </entry>
   

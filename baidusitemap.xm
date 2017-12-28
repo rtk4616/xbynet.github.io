@@ -81,9 +81,9 @@
         <title>Http与TCP长短连接</title>
         <pubTime>2017-12-25T08:32:50.000Z</pubTime>
         
-        <tag>http</tag>
-         
         <tag>tcp</tag>
+         
+        <tag>http</tag>
          
          
            
@@ -477,9 +477,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
@@ -506,9 +506,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
@@ -535,9 +535,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
@@ -564,9 +564,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
