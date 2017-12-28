@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xbynet.top/"/>
-  <updated>2017-12-27T09:19:23.677Z</updated>
+  <updated>2017-12-28T03:04:17.907Z</updated>
   <id>http://xbynet.top/</id>
   
   <author>
@@ -15,6 +15,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Redis缓存及命中率与过期移除策略</title>
+    <link href="http://xbynet.top/2017/12/28/Redis%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E7%8E%87%E5%8F%8A%E8%BF%87%E6%9C%9F%E7%A7%BB%E9%99%A4%E7%AD%96%E7%95%A5/"/>
+    <id>http://xbynet.top/2017/12/28/Redis缓存命中率及过期移除策略/</id>
+    <published>2017-12-28T01:03:46.000Z</published>
+    <updated>2017-12-28T03:04:17.907Z</updated>
+    
+    <content type="html"><![CDATA[<script src="\assets\js\APlayer.min.js"> </script><h2 id="缓存特征"><a href="#缓存特征" class="headerlink" title="缓存特征"></a>缓存特征</h2><p>命中率<br>命中率=返回正确结果数/请求缓存次数，命中率问题是缓存中的一个非常重要的问题，它是衡量缓存有效性的重要指标。</p><p>最大元素（或最大空间）<br>缓存中可以存放的最大元素的数量，一旦缓存中元素数量超过这个值（或者缓存数据所占空间超过其最大支持空间），那么将会触发缓存启动清空策略。<br>根据不同的场景合理的设置最大元素值往往可以一定程度上提高缓存的命中率，从而更有效的时候缓存。</p><p>清空策略<br>当缓存空间被用满时，如何保证在稳定服务的同时有效提升命中率？这就由缓存清空策略来处理，设计适合自身数据特征的清空策略能有效提升命中率。常见的一般策略有：</p><ul><li><code>FIFO(first in first out)</code><br>先进先出策略，最先进入缓存的数据在缓存空间不够的情况下（超出最大元素限制）会被优先被清除掉，以腾出新的空间接受新的数据。策略算法主要比较缓存元素的创建时间。在数据<code>实效性要求</code>场景下可选择该类策略，优先<code>保障最新数据</code>可用。</li><li><code>LFU(less frequently used)</code><br><code>最少使用策略</code>，无论是否过期，根据元素的被使用次数判断，清除使用次数较少的元素释放空间。策略算法主要比较元素的hitCount（命中次数）。在<code>保证高频数据</code>有效性场景下，可选择这类策略。</li><li><code>LRU(least recently used)</code><br><code>最近最少使用策略</code>，无论是否过期，根据元素最后一次被使用的时间戳，清除最远使用时间戳的元素释放空间。策略算法主要比较元素最近一次被get使用时间。在<code>热点数据</code>场景下较适用，优先保证热点数据的有效性。</li></ul><p>除此之外，还有一些简单策略比如：</p><ul><li>根据过期时间判断，清理过期时间最长的元素；</li><li>根据过期时间判断，清理最近要过期的元素；</li><li>随机清理；</li><li>根据关键字（或元素内容）长短清理等。</li></ul><p>缓存介质<br>可以分成内存、硬盘文件、数据库。</p><p>缓存分类：分为local cache（本地缓存，如普通的map，ehcache，guava cache）和remote cache（分布式缓存,如memcache,redis）</p><p>缓存存活期 TTL(Time To Live):存活期即从缓存中创建时间点开始直到它到期的一个时间段（不管在这个时间段内有没有访问都将过期）<br>缓存空闲期 TTI(Time To Idle):空闲期即一个数据多久没被访问将从缓存中移除的时间。</p><p><img src="/img/2017-12-28-09-46-45.png" alt=""></p><p>将 Redis 作为缓存的时候应该注意：</p><ul><li>设置最大可用的内存<code>maxmemory</code></li><li>设置 Key 的清除策略（也就是缓存策略） <code>maxmemory-policy</code></li></ul><a id="more"></a><h2 id="Redis缓存命中率"><a href="#Redis缓存命中率" class="headerlink" title="Redis缓存命中率"></a>Redis缓存命中率</h2><p>缓存命中率是关于缓存性能一个很关键的指标，你产品用了缓存，但缓存能达到多大的效果呢，这得看命中率。<br>Redis缓存命中率怎么看呢？<br>其实很简单。两种方式:<br>1、telnet localhost 6379  ;<br>2、redis-cli -h localhost -p 6379<br>之后便进入交互界面，输入<code>info</code>命令即可看到如下情况：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1:6379&gt;info</span><br><span class="line">...</span><br><span class="line">keyspace_hits:14414110  </span><br><span class="line">keyspace_misses:3228654  </span><br><span class="line">used_memory:433264648  </span><br><span class="line">expired_keys:1333536  </span><br><span class="line">evicted_keys:1547380</span><br><span class="line">...</span><br></pre></td></tr></table></figure></p><p>keyspace_hits 代表命中次数<br>keyspace_misses 代表没命中次数<br>命中：可以直接通过缓存获取到需要的数据。<br>不命中：无法直接通过缓存获取到想要的数据，需要再次查询数据库或者执行其它的操作。原因可能是由于缓存中根本不存在，或者缓存已经过期。</p><p>通过计算hits和miss，我们可以得到缓存的命中率：14414110 / (14414110 + 3228654) = 81% .<br>一个缓存失效机制，和过期时间设计良好的系统，命中率可以做到95%以上</p><p>同时有个<a href="https://github.com/junegunn/redis-stat" target="_blank" rel="noopener">redis-stat</a>开源项目，它利用INFO命令展现出更直观的信息报表.提供终端界面和浏览器界面两种方式。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gem install redis-stat</span><br><span class="line">redis-stat</span><br><span class="line">redis-stat --server</span><br><span class="line">redis-stat --verbose --server=8080 5</span><br></pre></td></tr></table></figure></p><p>具体情况其github。</p><p>info命令输出的信息有很多，具体代表些什么。可以参考：<a href="http://blog.csdn.net/mysqldba23/article/details/68066322" target="_blank" rel="noopener">http://blog.csdn.net/mysqldba23/article/details/68066322</a></p><h2 id="Redis缓存失效移除策略"><a href="#Redis缓存失效移除策略" class="headerlink" title="Redis缓存失效移除策略"></a>Redis缓存失效移除策略</h2><p>Redis key的三种过期策略</p><ul><li>惰性删除：当读/写一个已经过期的key时，会触发惰性删除策略，直接删除掉这个过期key，这是被动的！</li><li>定期删除：由于惰性删除策略无法保证冷数据被及时删掉，所以 redis 会定期主动淘汰一批已过期的key。</li><li>主动删除：当前已用内存超过maxmemory限定时，触发主动清理策略，该策略由启动参数的配置决定，可配置数据淘汰策略：</li></ul><p>Redis支持6种的数据淘汰策略：</p><ul><li>volatile-lru：从已设置过期时间的数据集中挑选最近最少使用的数据淘汰；</li><li>volatile-ttl：从已设置过期时间的数据集中挑选将要过期的数据淘汰；</li><li>volatile-random：从已设置过期时间的数据集中任意选择数据淘汰 ；</li><li>allkeys-lru：从数据集中挑选最近最少使用的数据淘汰；</li><li>allkeys-random：从数据集中任意选择数据淘汰；</li><li>no-enviction（驱逐）：禁止驱逐数据。</li></ul><h2 id="影响缓存命中率的几个因素"><a href="#影响缓存命中率的几个因素" class="headerlink" title="影响缓存命中率的几个因素"></a>影响缓存命中率的几个因素</h2><p>1、业务场景和业务需求：缓存适合“读多写少”的业务场景，反之，使用缓存的意义其实并不大，命中率会很低。互联网应用的大多数业务场景下都是很适合使用缓存的。</p><p>2、缓存的设计（粒度和策略）:通常情况下，缓存的粒度越小，命中率会越高。<br>例如：当缓存单个对象的时候（例如：单个用户信息），只有当该对象对应的数据发生变化时，我们才需要更新缓存或者让移除缓存。而当缓存一个集合的时候（例如：所有用户数据），其中任何一个对象对应的数据发生变化时，都需要更新或移除缓存。<br>此外，缓存的<code>更新/过期策略</code>也直接影响到缓存的命中率。当数据发生变化时，直接更新缓存的值会比移除缓存（或者让缓存过期）的命中率更高，当然，系统复杂度也会更高。</p><p>3、缓存容量和基础设施<br>缓存的容量有限，则容易引起缓存失效和被淘汰（目前多数的缓存框架或中间件都采用了<code>LRU</code>算法）。同时，缓存的技术选型也是至关重要的，比如采用应用内置的本地缓存就比较容易出现单机瓶颈，而采用分布式缓存则毕竟容易扩展。所以需要做好系统容量规划，并考虑是否可扩展。通常，两种也可以结合使用，不过实现复杂度也会相应提升，具体看并发量。</p><p>4、其他因素<br>当缓存节点发生故障时，需要避免缓存失效并最大程度降低影响，这种特殊情况也是架构师需要考虑的。业内比较典型的做法就是通过<code>一致性Hash算法</code>，或者通过<code>节点冗余</code>的方式。</p><h2 id="提高缓存命中率的方法"><a href="#提高缓存命中率的方法" class="headerlink" title="提高缓存命中率的方法"></a>提高缓存命中率的方法</h2><p>通常来讲，在相同缓存时间和key的情况下，<code>并发越高，缓存的收益会越高，即便缓存时间很短</code>。<br>需要在业务需求，缓存粒度，缓存策略，技术选型等各个方面去通盘考虑并做权衡。尽可能的聚焦在<code>高频访问且时效性要求不高的热点业务</code>上，通过<code>缓存预加载</code>（预热）、增加存储容量、调整缓存粒度、<code>更新缓存</code>等手段来提高<code>命中率</code>。</p><p>对于时效性很高（或缓存空间有限），内容跨度很大（或访问很随机），并且访问量不高的应用来说缓存命中率可能长期很低，可能预热后的缓存还没来得被访问就已经过期了。</p><h2 id="附-Spring-Cache"><a href="#附-Spring-Cache" class="headerlink" title="附-Spring Cache"></a>附-Spring Cache</h2><p>Spring 3.1之后，引入了注解缓存技术。它只是一个缓存抽象。<br>Spring的缓存可以使用SpEL来定义缓存的key和各种condition，还提供开箱即用的缓存临时存储方案如 JDK 实现的缓存和 Guava cache，也支持和主流的专业缓存例如 EHCache 和 Redis 集成。<br>Spring Cache的关键原理就是Spring AOP，通过Spring AOP实现了在方法调用前、调用后获取方法的入参和返回值，进而实现了缓存的逻辑。<br>Spring Cache主要注解：</p><ul><li>@Cacheable 声明使用 Cache，方式是 put if not found</li><li>@CacheEvict 触发缓存清除操作</li><li>@CachePut 在方法执行的时候更新特定缓存，不影响方法执行结果</li><li>@Caching 如果一个方法有多个缓存操作可以使用</li><li>@CacheConfig 配置当前类中使用的缓存配置</li></ul><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> CachePut &#123;  </span><br><span class="line">    String[] value();              <span class="comment">//缓存的名字,可看做命名空间，可以把数据写到多个缓存  </span></span><br><span class="line">    <span class="function">String <span class="title">key</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;       <span class="comment">//缓存key，命名空间下缓存唯一key，如果不指定将使用默认的KeyGenerator生成. </span></span><br><span class="line">    <span class="function">String <span class="title">condition</span><span class="params">()</span> <span class="keyword">default</span> ""</span>; <span class="comment">//满足缓存条件的数据才会放入缓存，condition在调用方法之前和之后都会判断  </span></span><br><span class="line">    <span class="function">String <span class="title">unless</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;    <span class="comment">//用于否决缓存更新的，不像condition，该表达只在方法执行之后判断，此时可以拿到返回值result进行判断了  </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>提供的SpEL上下文数据<br><img src="/img/2017-12-28-10-26-34.png" alt=""><br>自定义缓存扩展的三步骤，首先需要提供一个CacheManager接口的实现（继承至AbstractCacheManager），管理自身的cache实例；其次，实现自己的cache实例MyCache(继承至Cache)，在这里面引入我们需要的第三方cache或自定义cache；最后就是对配置项进行声明，将MyCache实例注入CacheManager进行统一管理。</p><p>Spring cahce整合Redis:Spring-Data-Redis<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.data<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-data-redis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.8.9.RELEASE<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>redis.clients<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jedis<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure></p><p>redis.properties<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">redis.host=192.168.0.43</span><br><span class="line">redis.port=6379</span><br><span class="line">redis.pass=2015</span><br><span class="line">redis.maxIdle=50</span><br><span class="line">redis.maxActive=50</span><br><span class="line">redis.maxWait=50</span><br><span class="line">redis.testOnBorrow=true</span><br><span class="line">redis.timeout=1000</span><br><span class="line">redis.dbIndex=0</span><br></pre></td></tr></table></figure></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableCaching</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CacheConfig</span> <span class="keyword">extends</span> <span class="title">CachingConfigurerSupport</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger log = Logger.getLogger(CacheConfig.class);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> JedisConnectionFactory <span class="title">redisConnectionFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    JedisConnectionFactory factory = <span class="keyword">new</span> JedisConnectionFactory();</span><br><span class="line">        factory.afterPropertiesSet();</span><br><span class="line">        factory.setHostName(properties.getHost());</span><br><span class="line">        factory.setPort(properties.getPort());</span><br><span class="line">        factory.setUsePool(<span class="keyword">true</span>);</span><br><span class="line">        factory.setDatabase(properties.getDatabase());</span><br><span class="line">        <span class="keyword">return</span> factory;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> RedisTemplate&lt;String, String&gt; <span class="title">redisTemplate</span><span class="params">(RedisConnectionFactory cf)</span> </span>&#123;</span><br><span class="line">    RedisTemplate&lt;String, String&gt; redisTemplate = <span class="keyword">new</span> RedisTemplate&lt;String, String&gt;();</span><br><span class="line">    redisTemplate.setConnectionFactory(cf);</span><br><span class="line">    <span class="keyword">return</span> redisTemplate;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> CacheManager <span class="title">cacheManager</span><span class="params">(RedisTemplate redisTemplate)</span> </span>&#123;</span><br><span class="line">    RedisCacheManager cacheManager = <span class="keyword">new</span> RedisCacheManager(redisTemplate);</span><br><span class="line">    cacheManager.setDefaultExpiration(<span class="number">300</span>);</span><br><span class="line">    <span class="keyword">return</span> cacheManager;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//默认提供了DefaultKeyGenerator生成器（Spring 4之后使用SimpleKeyGenerator）</span></span><br><span class="line">  <span class="meta">@Bean</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> KeyGenerator <span class="title">customKeyGenerator</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> KeyGenerator() &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="function"><span class="keyword">public</span> Object <span class="title">generate</span><span class="params">(Object o, Method method, Object... params)</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        sb.append(o.getClass().getName());</span><br><span class="line">        sb.append(method.getName());</span><br><span class="line">        <span class="keyword">for</span> (Object obj : params) &#123;</span><br><span class="line">          sb.append(obj.toString());</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>使用<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExampleController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> Logger log = Logger.getLogger(ExampleController.class);</span><br><span class="line"></span><br><span class="line">  <span class="meta">@RequestMapping</span>(value = <span class="string">"/"</span>, method = RequestMethod.GET)</span><br><span class="line">  <span class="meta">@ResponseBody</span></span><br><span class="line">  <span class="meta">@Cacheable</span>(value = <span class="string">"calculateResult"</span>, keyGenerator = <span class="string">"customKeyGenerator"</span>)</span><br><span class="line">  <span class="function"><span class="keyword">public</span> String <span class="title">calculateResult</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    log.debug(<span class="string">"Performing expensive calculation..."</span>);</span><br><span class="line">    <span class="comment">// perform computationally expensive calculation</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"result"</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><p>自定义缓存注解:略。</p><h2 id="缓存在高并发场景下的常见问题"><a href="#缓存在高并发场景下的常见问题" class="headerlink" title="缓存在高并发场景下的常见问题"></a>缓存在高并发场景下的常见问题</h2><p>缓存一致性问题<br>当数据时效性要求很高时，需要保证缓存中的数据与数据库中的保持一致，而且需要保证缓存节点和副本中的数据也保持一致，不能出现差异现象。这就比较依赖<code>缓存的过期和更新策略</code>。一般会在数据发生更改的时，主动更新缓存中的数据或者移除对应的缓存。<br><img src="/img/2017-12-28-10-36-53.png" alt=""></p><p>缓存并发问题<br>缓存过期后将尝试从后端数据库获取数据，这是一个看似合理的流程。但是，在高并发场景下，有可能多个请求并发的去从数据库获取数据，对后端数据库造成极大的冲击，甚至导致 “雪崩”现象。此外，当某个缓存key在被更新时，同时也可能被大量请求在获取，这也会导致一致性的问题。那如何避免类似问题呢？我们会想到类似“锁”的机制，在缓存更新或者过期的情况下，先尝试获取到锁，当更新或者从数据库获取完成后再释放锁，其他的请求只需要牺牲一定的等待时间，即可直接从缓存中继续获取数据。<br><img src="/img/2017-12-28-10-38-28.png" alt=""></p><p>缓存穿透问题:结果为空的<br>缓存颠簸问题:一般是由于缓存节点故障导致。业内推荐的做法是通过一致性Hash算法来解决。</p><p>缓存的雪崩现象<br>缓存雪崩就是指由于缓存的原因，导致大量请求到达后端数据库，从而导致数据库崩溃，整个系统崩溃，发生灾难。<br>导致这种现象的原因有很多种，上面提到的“缓存并发”，“缓存穿透”，“缓存颠簸”等问题，其实都可能会导致缓存雪崩现象发生。还有一种情况，例如<code>某个时间点内，系统预加载的缓存周期性集中失效</code>了，也可能会导致雪崩。为了避免这种周期性失效，可以<code>通过设置不同的过期时间</code>，来<code>错开缓存过期</code>，从而避免缓存集中失效。<br>从应用架构角度，我们可以通过<code>限流、降级、熔断</code>等手段来降低影响，也可以通过<code>多级缓存</code>来避免这种灾难。</p><p>更多参考：<br><a href="https://tech.meituan.com/cache_about.html" target="_blank" rel="noopener">https://tech.meituan.com/cache_about.html</a><br><a href="https://www.tuicool.com/articles/INRZFr" target="_blank" rel="noopener">https://www.tuicool.com/articles/INRZFr</a><br><a href="https://www.jianshu.com/p/f01ac0873c23" target="_blank" rel="noopener">https://www.jianshu.com/p/f01ac0873c23</a><br><a href="https://www.cnblogs.com/dinglang/p/6117309.html" target="_blank" rel="noopener">https://www.cnblogs.com/dinglang/p/6117309.html</a><br><a href="https://github.com/caseyscarborough/spring-redis-caching-example" target="_blank" rel="noopener">https://github.com/caseyscarborough/spring-redis-caching-example</a><br><a href="http://jinnianshilongnian.iteye.com/blog/2001040" target="_blank" rel="noopener">http://jinnianshilongnian.iteye.com/blog/2001040</a><br><a href="http://blog.csdn.net/l1028386804/article/details/70946410?locationNum=12&amp;fps=1" target="_blank" rel="noopener">http://blog.csdn.net/l1028386804/article/details/70946410?locationNum=12&amp;fps=1</a><br><a href="https://www.cnblogs.com/imyijie/p/6518547.html" target="_blank" rel="noopener">https://www.cnblogs.com/imyijie/p/6518547.html</a><br><a href="http://www.cnblogs.com/dinglang/p/6133501.html" target="_blank" rel="noopener">http://www.cnblogs.com/dinglang/p/6133501.html</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;缓存特征&quot;&gt;&lt;a href=&quot;#缓存特征&quot; class=&quot;headerlink&quot; title=&quot;缓存特征&quot;&gt;&lt;/a&gt;缓存特征&lt;/h2&gt;&lt;p&gt;命中率&lt;br&gt;命中率=返回正确结果数/请求缓存次数，命中率问题是缓存中的一个非常重要的问题，它是衡量缓存有效性的重要指标。&lt;/p&gt;
+&lt;p&gt;最大元素（或最大空间）&lt;br&gt;缓存中可以存放的最大元素的数量，一旦缓存中元素数量超过这个值（或者缓存数据所占空间超过其最大支持空间），那么将会触发缓存启动清空策略。&lt;br&gt;根据不同的场景合理的设置最大元素值往往可以一定程度上提高缓存的命中率，从而更有效的时候缓存。&lt;/p&gt;
+&lt;p&gt;清空策略&lt;br&gt;当缓存空间被用满时，如何保证在稳定服务的同时有效提升命中率？这就由缓存清空策略来处理，设计适合自身数据特征的清空策略能有效提升命中率。常见的一般策略有：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;FIFO(first in first out)&lt;/code&gt;&lt;br&gt;先进先出策略，最先进入缓存的数据在缓存空间不够的情况下（超出最大元素限制）会被优先被清除掉，以腾出新的空间接受新的数据。策略算法主要比较缓存元素的创建时间。在数据&lt;code&gt;实效性要求&lt;/code&gt;场景下可选择该类策略，优先&lt;code&gt;保障最新数据&lt;/code&gt;可用。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LFU(less frequently used)&lt;/code&gt;&lt;br&gt;&lt;code&gt;最少使用策略&lt;/code&gt;，无论是否过期，根据元素的被使用次数判断，清除使用次数较少的元素释放空间。策略算法主要比较元素的hitCount（命中次数）。在&lt;code&gt;保证高频数据&lt;/code&gt;有效性场景下，可选择这类策略。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;LRU(least recently used)&lt;/code&gt;&lt;br&gt;&lt;code&gt;最近最少使用策略&lt;/code&gt;，无论是否过期，根据元素最后一次被使用的时间戳，清除最远使用时间戳的元素释放空间。策略算法主要比较元素最近一次被get使用时间。在&lt;code&gt;热点数据&lt;/code&gt;场景下较适用，优先保证热点数据的有效性。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;除此之外，还有一些简单策略比如：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;根据过期时间判断，清理过期时间最长的元素；&lt;/li&gt;
+&lt;li&gt;根据过期时间判断，清理最近要过期的元素；&lt;/li&gt;
+&lt;li&gt;随机清理；&lt;/li&gt;
+&lt;li&gt;根据关键字（或元素内容）长短清理等。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;缓存介质&lt;br&gt;可以分成内存、硬盘文件、数据库。&lt;/p&gt;
+&lt;p&gt;缓存分类：分为local cache（本地缓存，如普通的map，ehcache，guava cache）和remote cache（分布式缓存,如memcache,redis）&lt;/p&gt;
+&lt;p&gt;缓存存活期 TTL(Time To Live):存活期即从缓存中创建时间点开始直到它到期的一个时间段（不管在这个时间段内有没有访问都将过期）&lt;br&gt;缓存空闲期 TTI(Time To Idle):空闲期即一个数据多久没被访问将从缓存中移除的时间。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/img/2017-12-28-09-46-45.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;将 Redis 作为缓存的时候应该注意：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;设置最大可用的内存&lt;code&gt;maxmemory&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;设置 Key 的清除策略（也就是缓存策略） &lt;code&gt;maxmemory-policy&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+      <category term="中间件" scheme="http://xbynet.top/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+    
+      <category term="redis" scheme="http://xbynet.top/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/redis/"/>
+    
+    
+      <category term="redis" scheme="http://xbynet.top/tags/redis/"/>
+    
+  </entry>
   
   <entry>
     <title>tomcat性能优化</title>
@@ -385,9 +432,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -413,9 +460,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -449,9 +496,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -477,9 +524,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -510,9 +557,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -541,9 +588,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -569,9 +616,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -598,9 +645,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -650,9 +697,9 @@
       <category term="算法" scheme="http://xbynet.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="分布式" scheme="http://xbynet.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
@@ -677,9 +724,9 @@
       <category term="算法" scheme="http://xbynet.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="分布式" scheme="http://xbynet.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
@@ -710,9 +757,9 @@
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
-      <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
-    
       <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
     
   </entry>
   
@@ -740,9 +787,9 @@
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
-      <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
-    
       <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
     
   </entry>
   
@@ -777,9 +824,9 @@
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
-      <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
-    
       <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
     
   </entry>
   
@@ -810,9 +857,9 @@
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
-      <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
-    
       <category term="架构" scheme="http://xbynet.top/tags/%E6%9E%B6%E6%9E%84/"/>
+    
+      <category term="soa" scheme="http://xbynet.top/tags/soa/"/>
     
   </entry>
   

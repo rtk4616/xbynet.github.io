@@ -330,6 +330,230 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/28/Redis缓存命中率及过期移除策略/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/28/Redis缓存命中率及过期移除策略/" itemprop="url">Redis缓存及命中率与过期移除策略</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-28T09:03:46+08:00">
+                2017-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/中间件/" itemprop="url" rel="index">
+                    <span itemprop="name">中间件</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/中间件/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/28/Redis缓存命中率及过期移除策略/" class="leancloud_visitors" data-flag-title="Redis缓存及命中率与过期移除策略">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,616
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="缓存特征"><a href="#缓存特征" class="headerlink" title="缓存特征"></a>缓存特征</h2><p>命中率<br>命中率=返回正确结果数/请求缓存次数，命中率问题是缓存中的一个非常重要的问题，它是衡量缓存有效性的重要指标。</p>
+<p>最大元素（或最大空间）<br>缓存中可以存放的最大元素的数量，一旦缓存中元素数量超过这个值（或者缓存数据所占空间超过其最大支持空间），那么将会触发缓存启动清空策略。<br>根据不同的场景合理的设置最大元素值往往可以一定程度上提高缓存的命中率，从而更有效的时候缓存。</p>
+<p>清空策略<br>当缓存空间被用满时，如何保证在稳定服务的同时有效提升命中率？这就由缓存清空策略来处理，设计适合自身数据特征的清空策略能有效提升命中率。常见的一般策略有：</p>
+<ul>
+<li><code>FIFO(first in first out)</code><br>先进先出策略，最先进入缓存的数据在缓存空间不够的情况下（超出最大元素限制）会被优先被清除掉，以腾出新的空间接受新的数据。策略算法主要比较缓存元素的创建时间。在数据<code>实效性要求</code>场景下可选择该类策略，优先<code>保障最新数据</code>可用。</li>
+<li><code>LFU(less frequently used)</code><br><code>最少使用策略</code>，无论是否过期，根据元素的被使用次数判断，清除使用次数较少的元素释放空间。策略算法主要比较元素的hitCount（命中次数）。在<code>保证高频数据</code>有效性场景下，可选择这类策略。</li>
+<li><code>LRU(least recently used)</code><br><code>最近最少使用策略</code>，无论是否过期，根据元素最后一次被使用的时间戳，清除最远使用时间戳的元素释放空间。策略算法主要比较元素最近一次被get使用时间。在<code>热点数据</code>场景下较适用，优先保证热点数据的有效性。</li>
+</ul>
+<p>除此之外，还有一些简单策略比如：</p>
+<ul>
+<li>根据过期时间判断，清理过期时间最长的元素；</li>
+<li>根据过期时间判断，清理最近要过期的元素；</li>
+<li>随机清理；</li>
+<li>根据关键字（或元素内容）长短清理等。</li>
+</ul>
+<p>缓存介质<br>可以分成内存、硬盘文件、数据库。</p>
+<p>缓存分类：分为local cache（本地缓存，如普通的map，ehcache，guava cache）和remote cache（分布式缓存,如memcache,redis）</p>
+<p>缓存存活期 TTL(Time To Live):存活期即从缓存中创建时间点开始直到它到期的一个时间段（不管在这个时间段内有没有访问都将过期）<br>缓存空闲期 TTI(Time To Idle):空闲期即一个数据多久没被访问将从缓存中移除的时间。</p>
+<p><img src="/img/2017-12-28-09-46-45.png" alt=""></p>
+<p>将 Redis 作为缓存的时候应该注意：</p>
+<ul>
+<li>设置最大可用的内存<code>maxmemory</code></li>
+<li>设置 Key 的清除策略（也就是缓存策略） <code>maxmemory-policy</code></li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/28/Redis缓存命中率及过期移除策略/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/27/tomcat性能优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2122,222 +2346,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/20/历史博文迁移-Spring-Boot学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xbynet">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="倚楼听风雨">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/20/历史博文迁移-Spring-Boot学习笔记/" itemprop="url">[历史博文迁移]Spring-Boot学习笔记</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T16:57:08+08:00">
-                2017-12-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/SpringBoot/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringBoot</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/20/历史博文迁移-Spring-Boot学习笔记/" class="leancloud_visitors" data-flag-title="[历史博文迁移]Spring-Boot学习笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">热度&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  7,397
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  30
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>原地址在我的segmentfault专栏里:<a href="https://segmentfault.com/a/1190000009888085,现进行部分博文迁移" target="_blank" rel="noopener">https://segmentfault.com/a/1190000009888085,现进行部分博文迁移</a>.</p>
-<p>Spring-Boot 1.5 学习笔记<br>使用Spring Boot很容易创建一个独立运行（运行jar,内嵌Servlet容器）、准生产级别的基于Spring框架的项目，使用Spring Boot你可以不用或者只需要很少的Spring配置。  </p>
-<p>Spring将很多魔法带入了Spring应用程序的开发之中，其中最重要的是以下四个核心。  </p>
-<ul>
-<li>自动配置：针对很多Spring应用程序常见的应用功能，Spring Boot能自动提供相关配置</li>
-<li>起步依赖：告诉Spring Boot需要什么功能，它就能引入需要的库。</li>
-<li>命令行界面：这是Spring Boot的可选特性，借此你只需写代码就能完成完整的应用程序，无需传统项目构建。</li>
-<li>Actuator：让你能够深入运行中的Spring Boot应用程序，一探究竟。</li>
-</ul>
-<p>Java版本：推荐使用java8</p>
-<p>构建一个Sping Boot的Maven项目，强烈推荐Spring Initializr,它从本质上来说就是一个Web应用程序，它能为你生成Spring Boot项目结构。<br>Spring Initializr有几种用法：</p>
-<ul>
-<li>1、通过Web界面使用，访问：<a href="http://start.spring.io/" target="_blank" rel="noopener">http://start.spring.io/</a></li>
-<li>2、通过ide相关插件创建</li>
-</ul>
-<p>@SpringBootApplication是Sprnig Boot项目的核心注解，主要目的是开启自动配置。<br>使用命令 mvn spring-boot:run”在命令行启动该应用</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/20/历史博文迁移-Spring-Boot学习笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-
- 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2394,7 +2402,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">28</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2405,7 +2413,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2416,7 +2424,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">25</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2536,7 +2544,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">145.4k</span>
+    <span title="Site words total count">149.0k</span>
   
 </div>
 
