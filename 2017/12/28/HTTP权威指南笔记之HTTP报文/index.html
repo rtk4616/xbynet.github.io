@@ -71,7 +71,7 @@
 
 
 
-  <meta name="keywords" content="tcp,http," />
+  <meta name="keywords" content="http,tcp," />
 
 
 
@@ -84,13 +84,13 @@
 
 
 
-<meta name="description" content="一些概念：资源，资源定位符URI/URL，媒体类型MIME,HTTP事务(一次请求响应的过程)方法(GET/PUT/POST/HEAD/TRACE/OPTIONS/DELETE)，状态码(200/302/404)，报文(请求、响应消息:起始行，首部字段，主体)，连接(TCP/IP)Telnet、netcat工具协议版本:0.9,1.0,1.1,2.0Web的结构组件:  代理:请求转发，可能会进">
-<meta name="keywords" content="tcp,http">
+<meta name="description" content="一些概念：资源，资源定位符URI/URL，媒体类型MIME,HTTP事务(一次请求响应的过程)方法(GET/PUT/POST/HEAD/TRACE/OPTIONS/DELETE)，状态码(200/302/404)，报文(请求、响应消息:起始行，首部字段，主体)，连接(TCP/IP)Telnet、netcat工具协议版本:0.9,1.0,1.1,2.0Web的结构组件:  代理:请求转发，可能会进行">
+<meta name="keywords" content="http,tcp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP权威指南笔记之HTTP报文">
 <meta property="og:url" content="http://xbynet.top/2017/12/28/HTTP权威指南笔记之HTTP报文/index.html">
 <meta property="og:site_name" content="倚楼听风雨">
-<meta property="og:description" content="一些概念：资源，资源定位符URI/URL，媒体类型MIME,HTTP事务(一次请求响应的过程)方法(GET/PUT/POST/HEAD/TRACE/OPTIONS/DELETE)，状态码(200/302/404)，报文(请求、响应消息:起始行，首部字段，主体)，连接(TCP/IP)Telnet、netcat工具协议版本:0.9,1.0,1.1,2.0Web的结构组件:  代理:请求转发，可能会进">
+<meta property="og:description" content="一些概念：资源，资源定位符URI/URL，媒体类型MIME,HTTP事务(一次请求响应的过程)方法(GET/PUT/POST/HEAD/TRACE/OPTIONS/DELETE)，状态码(200/302/404)，报文(请求、响应消息:起始行，首部字段，主体)，连接(TCP/IP)Telnet、netcat工具协议版本:0.9,1.0,1.1,2.0Web的结构组件:  代理:请求转发，可能会进行">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-28-12-01-52.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-28-12-02-12.png">
@@ -100,10 +100,10 @@
 <meta property="og:image" content="http://xbynet.top/img/2017-12-28-14-09-25.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-28-14-09-41.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-28-15-40-15.png">
-<meta property="og:updated_time" content="2017-12-28T08:07:06.372Z">
+<meta property="og:updated_time" content="2017-12-28T10:04:13.795Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP权威指南笔记之HTTP报文">
-<meta name="twitter:description" content="一些概念：资源，资源定位符URI/URL，媒体类型MIME,HTTP事务(一次请求响应的过程)方法(GET/PUT/POST/HEAD/TRACE/OPTIONS/DELETE)，状态码(200/302/404)，报文(请求、响应消息:起始行，首部字段，主体)，连接(TCP/IP)Telnet、netcat工具协议版本:0.9,1.0,1.1,2.0Web的结构组件:  代理:请求转发，可能会进">
+<meta name="twitter:description" content="一些概念：资源，资源定位符URI/URL，媒体类型MIME,HTTP事务(一次请求响应的过程)方法(GET/PUT/POST/HEAD/TRACE/OPTIONS/DELETE)，状态码(200/302/404)，报文(请求、响应消息:起始行，首部字段，主体)，连接(TCP/IP)Telnet、netcat工具协议版本:0.9,1.0,1.1,2.0Web的结构组件:  代理:请求转发，可能会进行">
 <meta name="twitter:image" content="http://xbynet.top/img/2017-12-28-12-01-52.png">
 
 
@@ -491,6 +491,7 @@
 <li>Agent代理：代表用户发起HTTP请求的客户端程序，如浏览器，爬虫</li>
 </ul>
 <p>规范信息：<br><a href="http://www.w3.org/Protocols" target="_blank" rel="noopener">http://www.w3.org/Protocols</a><br><a href="http://www.ietf.org/rfc/rfc2616.txt" target="_blank" rel="noopener">http://www.ietf.org/rfc/rfc2616.txt</a> http1.1规范<br><a href="http://www.ietf.org/rfc/rfc2046.txt" target="_blank" rel="noopener">http://www.ietf.org/rfc/rfc2046.txt</a> MIME规范</p>
+<a id="more"></a>
 <h2 id="URL与资源"><a href="#URL与资源" class="headerlink" title="URL与资源"></a>URL与资源</h2><p>url语法<br>相对与绝对url：<br>支持的schema:http,https,mailto,ftp,file,news,telnet,rtsp/rtspu(音/视频,Real-Time Streaming Protocol)</p>
 <h2 id="HTTP报文"><a href="#HTTP报文" class="headerlink" title="HTTP报文"></a>HTTP报文</h2><p>术语：流入(inbound)、流出(outbound)、上游、下游、HTTP事务<br><img src="/img/2017-12-28-14-06-09.png" alt=""><br>报文组成：起始行(方法，url，版本，状态码,原因短语)、首部(冒号分隔的多行header)、主体(可文本也可二进制数据)<br>报文分类：请求报文，响应报文<br>报文构成：<br><img src="/img/2017-12-28-14-09-07.png" alt=""><br><img src="/img/2017-12-28-14-09-25.png" alt=""><br><img src="/img/2017-12-28-14-09-41.png" alt=""></p>
 <h3 id="状态码："><a href="#状态码：" class="headerlink" title="状态码："></a>状态码：</h3><p>详解请看：<a href="http://tool.oschina.net/commons?type=5" target="_blank" rel="noopener">http://tool.oschina.net/commons?type=5</a><br>1、100-199：信息性状态码<br>100 Continue:主要针对的场景是：HTTP客户端希望在发送实体之前确认下服务器是否会接受(避免因为服务器无法处理或请求实体过大时拒绝而浪费带宽)。<br>客户端发送时，加个头部<code>Expect: 100 Continue</code>,服务器返回<code>100 Continue</code>响应。<br>101 Switching Protocols: 将协议切换成Update头部所列的协议</p>
@@ -552,9 +553,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tcp/" rel="tag"><i class="fa fa-tag"></i> tcp</a>
-          
             <a href="/tags/http/" rel="tag"><i class="fa fa-tag"></i> http</a>
+          
+            <a href="/tags/tcp/" rel="tag"><i class="fa fa-tag"></i> tcp</a>
           
         </div>
       

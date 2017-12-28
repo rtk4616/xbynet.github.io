@@ -5,15 +5,15 @@
     
   <url>
     <loc>http://xbynet.top/2017/12/28/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0%E4%B9%8BHTTP%E6%8A%A5%E6%96%87/</loc>
-    <lastmod>2017-12-28T08:07:06.372Z</lastmod>
+    <lastmod>2017-12-28T10:04:13.795Z</lastmod>
     <data>
         <display>
         <title>HTTP权威指南笔记之HTTP报文</title>
         <pubTime>2017-12-28T03:53:19.000Z</pubTime>
         
-        <tag>tcp</tag>
-         
         <tag>http</tag>
+         
+        <tag>tcp</tag>
          
          
            
@@ -129,9 +129,9 @@
         <title>Http与TCP长短连接</title>
         <pubTime>2017-12-25T08:32:50.000Z</pubTime>
         
-        <tag>tcp</tag>
-         
         <tag>http</tag>
+         
+        <tag>tcp</tag>
          
          
            
