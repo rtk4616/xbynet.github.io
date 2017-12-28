@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[HTTP权威指南笔记之HTTP报文]]></title>
+    <url>%2F2017%2F12%2F28%2FHTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0%E4%B9%8BHTTP%E6%8A%A5%E6%96%87%2F</url>
+    <content type="text"><![CDATA[一些概念：资源，资源定位符URI/URL，媒体类型MIME,HTTP事务(一次请求响应的过程)方法(GET/PUT/POST/HEAD/TRACE/OPTIONS/DELETE)，状态码(200/302/404)，报文(请求、响应消息:起始行，首部字段，主体)，连接(TCP/IP)Telnet、netcat工具协议版本:0.9,1.0,1.1,2.0Web的结构组件: 代理:请求转发，可能会进行一些过滤操作。场景的有Apache Http Server,Nginx 缓存:对响应的资源进行缓存，下次请求即可直接从缓存返回，一般用于静态资源如图片，css，js，常见的有CDN,Nginx缓存。 网关:通常用于将HTTP流量转换成其他的协议。网关接受请求时就好像自己是资源的源端服务器一样。 隧道(tunnel)在一条或多条连接上对原始数据进行盲转发，转发时不会窥探数据。如TLS/SSL隧道。 Agent代理：代表用户发起HTTP请求的客户端程序，如浏览器，爬虫 规范信息：http://www.w3.org/Protocolshttp://www.ietf.org/rfc/rfc2616.txt http1.1规范http://www.ietf.org/rfc/rfc2046.txt MIME规范 URL与资源url语法相对与绝对url：支持的schema:http,https,mailto,ftp,file,news,telnet,rtsp/rtspu(音/视频,Real-Time Streaming Protocol) HTTP报文术语：流入(inbound)、流出(outbound)、上游、下游、HTTP事务报文组成：起始行(方法，url，版本，状态码,原因短语)、首部(冒号分隔的多行header)、主体(可文本也可二进制数据)报文分类：请求报文，响应报文报文构成： 状态码：详解请看：http://tool.oschina.net/commons?type=51、100-199：信息性状态码100 Continue:主要针对的场景是：HTTP客户端希望在发送实体之前确认下服务器是否会接受(避免因为服务器无法处理或请求实体过大时拒绝而浪费带宽)。客户端发送时，加个头部Expect: 100 Continue,服务器返回100 Continue响应。101 Switching Protocols: 将协议切换成Update头部所列的协议 2、200-299：成功状态码200 OK201 Created 用于PUT请求。202 Accepted 告诉客户端请求正在被执行，但还没有处理完。203 (Non-Authoritative Information/非官方信息):服务器已成功处理了请求，但返回的实体头部元信息不是在原始服务器上有效的确定集合，而是来自本地或者第三方的拷贝。当前的信息可能是原始版本的子集或者超集。 204 No Content: 服务器成功处理了请求，但不需要返回任何实体内容，并且希望返回更新了的元信息。如果客户端是浏览器的话，那么用户浏览器应保留发送了该请求的页面，而不产生任何文档视图上的变化，即使按照规范新的或更新后的元信息应当被应用到用户浏览器活动视图中的文档。由于204响应被禁止包含任何消息体，因此它始终以消息头后的第一个空行结尾。 205 Reset Content:虽然没有新文档但浏览器要重置文档显示。这个状态码用于强迫浏览器清除表单域。 206 Partial Content:在服务器完成了一个包含Range头信息的局部请求时被发送的.场景如断点续传下载. 请求包含Range来指示客户端希望得到的内容范围，并且可能包含 If-Range 来作为请求条件。 响应必须包含如下的头部域：Content-Range 用以指示本次响应中返回的内容的范围. 3、300-399:重定向状态码，响应带Location头300 Multiple Choices: 表示被请求的文档可以在多个地方找到，并将在返回的文档中列出来301 Moved Permanently:被请求的资源已永久移动到新位置，并且将来任何对此资源的引用都应该使用本响应返回的若干个 URI 之一.302 Found：请求的资源现在临时从不同的 URI 响应请求。由于这样的重定向是临时的，客户端应当继续向原有地址发送以后的请求。303 See Other：对应当前请求的响应可以在另一个 URI 上被找到，而且客户端应当采用 GET 的方式访问那个资源。这个方法的存在主要是为了允许由脚本激活的POST请求输出重定向GET到一个新的资源。304 Not Modified:当客户端有一个缓存的文档，通过提供一个 If-Modified-Since 头信息可指出客户端只希望文档在指定日期之后有所修改时才会重载此文档，用这种方式可以进行有条件的请求。305 Use Proxy307 Temporary Redirect:浏览器处理307状态的规则与302相同。307状态被加入到 HTTP 1.1中是由于许多浏览器在收到302响应时即使是原始消息为POST的情况下仍然执行了错误的转向。只有在收到303响应时才假定浏览器会在POST请求时重定向。添加这个新的状态码的目的很明确：在响应为303时按照POST请求转向GET；而在307响应时则按照GET请求转向。 302、303、307的区别：RFC 1945(http1.0规范)指明：如果客户端发出POST请求后，收到服务端的302状态码，那么不能自动的向新的URI发送重复请求，必须跟用户确认是否该重发，因为第二次POST时，环境可能已经发生变化（POST方法不是幂等的），POST操作会不符合用户预期。但是，很多客户端/浏览器在这种情况下都会把POST请求变为GET请求。RFC2616(http1.1规范)：对302的描述与http1.0一样，不过添加了303，307吗。很多浏览器都把302当作303处理了，它们获取到HTTP响应报文头部的Location字段信息，并发起一个GET请求。这种不符合文档规范的问题依然存在,所以HTTP1.1为细化，并明确含义，引入了303，307状态码:303状态码的响应，也就是上边提到的现在浏览器对302状态码的处理：POST重定向为GET.307状态码则相当于HTTP1.0文档中的302状态码:POST重定向时，必须跟用户进行确认，是否继续使用POST重发请求到Location指出的地址。即307是不会把POST转为GET的文档也说到，为兼容很多HTTP1.1之前的浏览器，服务端在需要发出303状态码时，会选择用302状态码替代；而对于307的处理，则需要在响应实体中包含信息，以便不能处理307状态码的用户有能力在新URI中发起重复请求，也就是说，把重定向的页面展示给用户，让用户去点重定向URI链接。 文档规定：浏览器对303状态码的处理跟原来浏览器对HTTP1.0的302状态码的处理方法一样；浏览器对307状态码处理则跟原来HTTP1.0文档里对302的描述一样。303和307的存在，归根结底是由于POST方法的非幂等属性引起的。在HTTP1.1中，302理论上是要被放弃掉的，它被细化为303和307，但为了兼容，它目前还在业界中大量使用。其实由于普遍是对GET请求进行重定向，而对POST请求重定向的场景很少见(做过爬虫的会遇到哦，这里要注意了。)，所以一般而言307状态码很少见，而浏览器普遍又采用不规范的302行为，故而303码也很少见。此段参考：https://www.cnblogs.com/cswuyg/p/3871976.html 4、400-499:客户端错误码400 Bad Request：在写前端ajax调试时，你可能碰到过。401 Unauthorized 当前请求需要用户验证。该响应必须包含一个适用于被请求资源的 WWW-Authenticate 信息头用以询问用户信息。客户端可以重复提交一个包含恰当的 Authorization 头信息的请求。403 Forbidden 服务器已经理解请求，但是拒绝执行它。404 Not Found405 Method Not Allowed 指出请求方法(GET, POST, HEAD, PUT, DELETE等)对某些特定的资源不允许使用406 Not Acceptable 表示请求资源的MIME类型与客户端中Accept头信息中指定的类型不一致407 Proxy Authentication Required 与401状态有些相似，只是这个状态用于代理服务器408 Request Timeout 指服务端等待客户端发送请求的时间过长413 Request Entity Too Large415 Unsupported Media Type 5、500-599：服务器错误码500 Internal Server Error 内部服务器错误，该状态经常由CGI程序引起也可能由无法正常运行的或返回头信息格式不正确的servlet引起。501 Not Implemented502 Bad Gateway 作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应。503 Service Unavailable 由于临时的服务器维护或者过载，服务器当前无法处理请求。这个状况是临时的，并且将在一段时间以后恢复。如果能够预计延迟时间，那么响应中可以包含一个 Retry-After 头用以标明这个延迟时间。如果没有给出这个 Retry-After 信息，那么客户端应当以处理500响应的方式处理它。 注意：503状态码的存在并不意味着服务器在过载的时候必须使用它。某些服务器只不过是希望拒绝客户端的连接。 504 Gateway Timeout 作为网关或者代理工作的服务器尝试执行请求时，未能及时从上游服务器（URI标识出的服务器，例如HTTP、FTP、LDAP）或者辅助服务器（例如DNS）收到响应。 头部详情：http://www.cnblogs.com/Joans/p/3956490.html通用头部：Connection 是否持久连接(Http1.1默认持久连接)，如Connection: close;Connection: Keep-Alive.DateTrailerTransfer-Encoding 如Transfer-Encoding:chunkedUpdateVia 通过的中间网关或代理服务器地址，通信协议Cache-Control 如 Cache-Control: no-cachePragma 如Pragma: no-cache 注意:对于缓存Cache-Control优先于Pragma 请求头部Host 指定请求的服务器的域名和端口号From 发出请求的用户的Email From: user@email.comRefererContent-Type 如Content-Type: application/x-www-form-urlencodedUser-AgentAccept,Accept-Charset,Accept-Encoding,Accept-LanguageAccept-Ranges:可以请求网页实体的一个或者多个子范围字段 Accept-Ranges: bytesExpect 请求的特定的服务器行为 Expect: 100-continueIf-Match,If-None-Match(是否匹配通过ETag来判断,头的值为ETag值，如If-None-Match: “737060cd8c284d8af7ad3082f209582d”)，If-Modified-Since,If-Unmodified-SinceIf-Range 如果实体未改变，服务器发送客户端丢失的部分，否则发送整个实体。参数也为Etag，如If-Range: “737060cd8c284d8af7ad3082f209582d”Range 只请求实体的一部分，指定范围Range: bytes=500-999AuthorizationCookie,Cookie2 如Cookie: $Version=1; Skin=new;Max-ForwardProxy-AuthorizationProxy-Connection 响应头部AgeRetry-After 如果实体暂时不可取，通知客户端在指定时间之后再次尝试ServerAccept-Ranges 如Accept-Ranges: bytesVary 告诉下游代理是使用缓存响应还是从原始服务器请求Proxy-AuthenticateSet-Cookie 如Set-Cookie: UserID=JohnDoe; Max-Age=3600;Set-Cookie2WWW-Authenticate 表明客户端请求实体应该使用的授权方案 WWW-Authenticate: BasicAllowLocationContent-Encoding,Content-Length,Content-LocationContent-Range 如 Content-Range: bytes 21010-4702Content-TypeETagExpiresLast-Modifiedrefresh 应用于重定向或一个新的资源被创造，在5秒之后重定向，如Refresh: 5; url=http://www.zcmhi.com/archives/94.html 问题一：如何理解Trailer参考：https://stackoverflow.com/questions/5590791/http-chunked-encoding-need-an-example-of-trailer-mentioned-in-spec/11313254Chunked body引入的原因是发送数据的时候并不确定会发送多少，因此利用chunked编码在HTTP层进行分段。Trailer引入是在chunk发送完毕后，尾部添加用户自定义的Header字段。如果使用Trailer头部，需要添加”Trailer:header_name” header,然后在chunked body 的尾部添加trailer指定的header。 trailer header可以添加0或多个。(除了Content-Encoding, Content-Type, Content-Range, and Trailer). 问题二：如何理解Vary建议参考：http://luchuan.iteye.com/blog/1058563http://mark.koli.ch/understanding-the-http-vary-header-and-caching-proxies-squid-etcVary = “Vary” “:” ( ““ | 1#field-name ) 要么是“\”，要么是header的key名称组合vary的意义在于告诉代理服务器/缓存/CDN，如何判断请求是否一样，vary中的组合就是服务器/缓存/CDN判断的依据，比如Vary中有User-Agent，那么即使相同的请求，如果用户使用IE打开了一个页面，再用Firefox打开这个页面的时候，CDN/代理会认为是不同的页面，如果Vary中没有User-Agent，那么CDN/代理会认为是相同的页面，直接给用户返回缓存的页面，而不会再去web服务器请求相应的页面。1234Vary: Accept-Encoding Vary: Accept-Encoding,User-Agent Vary: X-Some-Custom-Header,Host Vary: * 问题三：断点续传涉及的头Range:(unit=first byte pos)-[last byte pos]Content-Range: bytes (unit first byte pos) - [last byte pos]/[entity legth] 请求下载整个文件:GET /test.rar HTTP/1.1Host: 116.1.219.219Range: bytes=0-80 //一般请求下载整个文件是bytes=0- 或不用这个头 一般正常回应HTTP/1.1 206 Partial ContentAccept-Ranges: bytesContent-Length: 81Content-Type: application/octet-streamContent-Range: bytes 0-80/801 //801:文件总大小Connection: Keep-Alive 例如：1$curl -v -i --range 0-9 http://www.baidu.com/img/bdlogo.gif If-Range = “If-Range” “:” ( entity-tag | HTTP-date )IF-Range头部需配合Range，如果没有Range参数，则If-Range会被视为无效。如果If-Range匹配上，那么客户端已经存在的部分是有效的，服务器将返回缺失部分，也就是Range里指定的，然后返回206（Partial content)，否则证明客户端的部分已无效（可能已经更改），那么服务器将整个实体内容全部返回给客户端，同时返回200OK]]></content>
+      <categories>
+        <category>读书笔记</category>
+        <category>HTTP权威指南</category>
+      </categories>
+      <tags>
+        <tag>tcp</tag>
+        <tag>http</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Redis缓存及命中率与过期移除策略]]></title>
     <url>%2F2017%2F12%2F28%2FRedis%E7%BC%93%E5%AD%98%E5%91%BD%E4%B8%AD%E7%8E%87%E5%8F%8A%E8%BF%87%E6%9C%9F%E7%A7%BB%E9%99%A4%E7%AD%96%E7%95%A5%2F</url>
     <content type="text"><![CDATA[缓存特征命中率命中率=返回正确结果数/请求缓存次数，命中率问题是缓存中的一个非常重要的问题，它是衡量缓存有效性的重要指标。 最大元素（或最大空间）缓存中可以存放的最大元素的数量，一旦缓存中元素数量超过这个值（或者缓存数据所占空间超过其最大支持空间），那么将会触发缓存启动清空策略。根据不同的场景合理的设置最大元素值往往可以一定程度上提高缓存的命中率，从而更有效的时候缓存。 清空策略当缓存空间被用满时，如何保证在稳定服务的同时有效提升命中率？这就由缓存清空策略来处理，设计适合自身数据特征的清空策略能有效提升命中率。常见的一般策略有： FIFO(first in first out)先进先出策略，最先进入缓存的数据在缓存空间不够的情况下（超出最大元素限制）会被优先被清除掉，以腾出新的空间接受新的数据。策略算法主要比较缓存元素的创建时间。在数据实效性要求场景下可选择该类策略，优先保障最新数据可用。 LFU(less frequently used)最少使用策略，无论是否过期，根据元素的被使用次数判断，清除使用次数较少的元素释放空间。策略算法主要比较元素的hitCount（命中次数）。在保证高频数据有效性场景下，可选择这类策略。 LRU(least recently used)最近最少使用策略，无论是否过期，根据元素最后一次被使用的时间戳，清除最远使用时间戳的元素释放空间。策略算法主要比较元素最近一次被get使用时间。在热点数据场景下较适用，优先保证热点数据的有效性。 除此之外，还有一些简单策略比如： 根据过期时间判断，清理过期时间最长的元素； 根据过期时间判断，清理最近要过期的元素； 随机清理； 根据关键字（或元素内容）长短清理等。 缓存介质可以分成内存、硬盘文件、数据库。 缓存分类：分为local cache（本地缓存，如普通的map，ehcache，guava cache）和remote cache（分布式缓存,如memcache,redis） 缓存存活期 TTL(Time To Live):存活期即从缓存中创建时间点开始直到它到期的一个时间段（不管在这个时间段内有没有访问都将过期）缓存空闲期 TTI(Time To Idle):空闲期即一个数据多久没被访问将从缓存中移除的时间。 将 Redis 作为缓存的时候应该注意： 设置最大可用的内存maxmemory 设置 Key 的清除策略（也就是缓存策略） maxmemory-policy Redis缓存命中率缓存命中率是关于缓存性能一个很关键的指标，你产品用了缓存，但缓存能达到多大的效果呢，这得看命中率。Redis缓存命中率怎么看呢？其实很简单。两种方式:1、telnet localhost 6379 ;2、redis-cli -h localhost -p 6379之后便进入交互界面，输入info命令即可看到如下情况：12345678127.0.0.1:6379&gt;info...keyspace_hits:14414110 keyspace_misses:3228654 used_memory:433264648 expired_keys:1333536 evicted_keys:1547380... keyspace_hits 代表命中次数keyspace_misses 代表没命中次数命中：可以直接通过缓存获取到需要的数据。不命中：无法直接通过缓存获取到想要的数据，需要再次查询数据库或者执行其它的操作。原因可能是由于缓存中根本不存在，或者缓存已经过期。 通过计算hits和miss，我们可以得到缓存的命中率：14414110 / (14414110 + 3228654) = 81% .一个缓存失效机制，和过期时间设计良好的系统，命中率可以做到95%以上 同时有个redis-stat开源项目，它利用INFO命令展现出更直观的信息报表.提供终端界面和浏览器界面两种方式。1234gem install redis-statredis-statredis-stat --serverredis-stat --verbose --server=8080 5 具体情况其github。 info命令输出的信息有很多，具体代表些什么。可以参考：http://blog.csdn.net/mysqldba23/article/details/68066322 Redis缓存失效移除策略Redis key的三种过期策略 惰性删除：当读/写一个已经过期的key时，会触发惰性删除策略，直接删除掉这个过期key，这是被动的！ 定期删除：由于惰性删除策略无法保证冷数据被及时删掉，所以 redis 会定期主动淘汰一批已过期的key。 主动删除：当前已用内存超过maxmemory限定时，触发主动清理策略，该策略由启动参数的配置决定，可配置数据淘汰策略： Redis支持6种的数据淘汰策略： volatile-lru：从已设置过期时间的数据集中挑选最近最少使用的数据淘汰； volatile-ttl：从已设置过期时间的数据集中挑选将要过期的数据淘汰； volatile-random：从已设置过期时间的数据集中任意选择数据淘汰 ； allkeys-lru：从数据集中挑选最近最少使用的数据淘汰； allkeys-random：从数据集中任意选择数据淘汰； no-enviction（驱逐）：禁止驱逐数据。 影响缓存命中率的几个因素1、业务场景和业务需求：缓存适合“读多写少”的业务场景，反之，使用缓存的意义其实并不大，命中率会很低。互联网应用的大多数业务场景下都是很适合使用缓存的。 2、缓存的设计（粒度和策略）:通常情况下，缓存的粒度越小，命中率会越高。例如：当缓存单个对象的时候（例如：单个用户信息），只有当该对象对应的数据发生变化时，我们才需要更新缓存或者让移除缓存。而当缓存一个集合的时候（例如：所有用户数据），其中任何一个对象对应的数据发生变化时，都需要更新或移除缓存。此外，缓存的更新/过期策略也直接影响到缓存的命中率。当数据发生变化时，直接更新缓存的值会比移除缓存（或者让缓存过期）的命中率更高，当然，系统复杂度也会更高。 3、缓存容量和基础设施缓存的容量有限，则容易引起缓存失效和被淘汰（目前多数的缓存框架或中间件都采用了LRU算法）。同时，缓存的技术选型也是至关重要的，比如采用应用内置的本地缓存就比较容易出现单机瓶颈，而采用分布式缓存则毕竟容易扩展。所以需要做好系统容量规划，并考虑是否可扩展。通常，两种也可以结合使用，不过实现复杂度也会相应提升，具体看并发量。 4、其他因素当缓存节点发生故障时，需要避免缓存失效并最大程度降低影响，这种特殊情况也是架构师需要考虑的。业内比较典型的做法就是通过一致性Hash算法，或者通过节点冗余的方式。 提高缓存命中率的方法通常来讲，在相同缓存时间和key的情况下，并发越高，缓存的收益会越高，即便缓存时间很短。需要在业务需求，缓存粒度，缓存策略，技术选型等各个方面去通盘考虑并做权衡。尽可能的聚焦在高频访问且时效性要求不高的热点业务上，通过缓存预加载（预热）、增加存储容量、调整缓存粒度、更新缓存等手段来提高命中率。 对于时效性很高（或缓存空间有限），内容跨度很大（或访问很随机），并且访问量不高的应用来说缓存命中率可能长期很低，可能预热后的缓存还没来得被访问就已经过期了。 附-Spring CacheSpring 3.1之后，引入了注解缓存技术。它只是一个缓存抽象。Spring的缓存可以使用SpEL来定义缓存的key和各种condition，还提供开箱即用的缓存临时存储方案如 JDK 实现的缓存和 Guava cache，也支持和主流的专业缓存例如 EHCache 和 Redis 集成。Spring Cache的关键原理就是Spring AOP，通过Spring AOP实现了在方法调用前、调用后获取方法的入参和返回值，进而实现了缓存的逻辑。Spring Cache主要注解： @Cacheable 声明使用 Cache，方式是 put if not found @CacheEvict 触发缓存清除操作 @CachePut 在方法执行的时候更新特定缓存，不影响方法执行结果 @Caching 如果一个方法有多个缓存操作可以使用 @CacheConfig 配置当前类中使用的缓存配置 123456public @interface CachePut &#123; String[] value(); //缓存的名字,可看做命名空间，可以把数据写到多个缓存 String key() default ""; //缓存key，命名空间下缓存唯一key，如果不指定将使用默认的KeyGenerator生成. String condition() default ""; //满足缓存条件的数据才会放入缓存，condition在调用方法之前和之后都会判断 String unless() default ""; //用于否决缓存更新的，不像condition，该表达只在方法执行之后判断，此时可以拿到返回值result进行判断了 &#125; 提供的SpEL上下文数据自定义缓存扩展的三步骤，首先需要提供一个CacheManager接口的实现（继承至AbstractCacheManager），管理自身的cache实例；其次，实现自己的cache实例MyCache(继承至Cache)，在这里面引入我们需要的第三方cache或自定义cache；最后就是对配置项进行声明，将MyCache实例注入CacheManager进行统一管理。 Spring cahce整合Redis:Spring-Data-Redis1234567891011&lt;dependency&gt; &lt;groupId&gt;org.springframework.data&lt;/groupId&gt; &lt;artifactId&gt;spring-data-redis&lt;/artifactId&gt; &lt;version&gt;1.8.9.RELEASE&lt;/version&gt; &lt;/dependency&gt; &lt;dependency&gt; &lt;groupId&gt;redis.clients&lt;/groupId&gt; &lt;artifactId&gt;jedis&lt;/artifactId&gt; &lt;version&gt;2.9.0&lt;/version&gt; &lt;/dependency&gt; redis.properties123456789redis.host=192.168.0.43redis.port=6379redis.pass=2015redis.maxIdle=50redis.maxActive=50redis.maxWait=50redis.testOnBorrow=trueredis.timeout=1000redis.dbIndex=0 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748@Configuration@EnableCachingpublic class CacheConfig extends CachingConfigurerSupport &#123; private static final Logger log = Logger.getLogger(CacheConfig.class); @Bean public JedisConnectionFactory redisConnectionFactory() &#123; JedisConnectionFactory factory = new JedisConnectionFactory(); factory.afterPropertiesSet(); factory.setHostName(properties.getHost()); factory.setPort(properties.getPort()); factory.setUsePool(true); factory.setDatabase(properties.getDatabase()); return factory; &#125; @Bean public RedisTemplate&lt;String, String&gt; redisTemplate(RedisConnectionFactory cf) &#123; RedisTemplate&lt;String, String&gt; redisTemplate = new RedisTemplate&lt;String, String&gt;(); redisTemplate.setConnectionFactory(cf); return redisTemplate; &#125; @Bean public CacheManager cacheManager(RedisTemplate redisTemplate) &#123; RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate); cacheManager.setDefaultExpiration(300); return cacheManager; &#125;//默认提供了DefaultKeyGenerator生成器（Spring 4之后使用SimpleKeyGenerator） @Bean public KeyGenerator customKeyGenerator() &#123; return new KeyGenerator() &#123; @Override public Object generate(Object o, Method method, Object... params) &#123; StringBuilder sb = new StringBuilder(); sb.append(o.getClass().getName()); sb.append(method.getName()); for (Object obj : params) &#123; sb.append(obj.toString()); &#125; return sb.toString(); &#125; &#125;; &#125;&#125; 使用123456789101112131415@Controllerpublic class ExampleController &#123; private static final Logger log = Logger.getLogger(ExampleController.class); @RequestMapping(value = "/", method = RequestMethod.GET) @ResponseBody @Cacheable(value = "calculateResult", keyGenerator = "customKeyGenerator") public String calculateResult() &#123; log.debug("Performing expensive calculation..."); // perform computationally expensive calculation return "result"; &#125;&#125; 自定义缓存注解:略。 缓存在高并发场景下的常见问题缓存一致性问题当数据时效性要求很高时，需要保证缓存中的数据与数据库中的保持一致，而且需要保证缓存节点和副本中的数据也保持一致，不能出现差异现象。这就比较依赖缓存的过期和更新策略。一般会在数据发生更改的时，主动更新缓存中的数据或者移除对应的缓存。 缓存并发问题缓存过期后将尝试从后端数据库获取数据，这是一个看似合理的流程。但是，在高并发场景下，有可能多个请求并发的去从数据库获取数据，对后端数据库造成极大的冲击，甚至导致 “雪崩”现象。此外，当某个缓存key在被更新时，同时也可能被大量请求在获取，这也会导致一致性的问题。那如何避免类似问题呢？我们会想到类似“锁”的机制，在缓存更新或者过期的情况下，先尝试获取到锁，当更新或者从数据库获取完成后再释放锁，其他的请求只需要牺牲一定的等待时间，即可直接从缓存中继续获取数据。 缓存穿透问题:结果为空的缓存颠簸问题:一般是由于缓存节点故障导致。业内推荐的做法是通过一致性Hash算法来解决。 缓存的雪崩现象缓存雪崩就是指由于缓存的原因，导致大量请求到达后端数据库，从而导致数据库崩溃，整个系统崩溃，发生灾难。导致这种现象的原因有很多种，上面提到的“缓存并发”，“缓存穿透”，“缓存颠簸”等问题，其实都可能会导致缓存雪崩现象发生。还有一种情况，例如某个时间点内，系统预加载的缓存周期性集中失效了，也可能会导致雪崩。为了避免这种周期性失效，可以通过设置不同的过期时间，来错开缓存过期，从而避免缓存集中失效。从应用架构角度，我们可以通过限流、降级、熔断等手段来降低影响，也可以通过多级缓存来避免这种灾难。 更多参考：https://tech.meituan.com/cache_about.htmlhttps://www.tuicool.com/articles/INRZFrhttps://www.jianshu.com/p/f01ac0873c23https://www.cnblogs.com/dinglang/p/6117309.htmlhttps://github.com/caseyscarborough/spring-redis-caching-examplehttp://jinnianshilongnian.iteye.com/blog/2001040http://blog.csdn.net/l1028386804/article/details/70946410?locationNum=12&amp;fps=1https://www.cnblogs.com/imyijie/p/6518547.htmlhttp://www.cnblogs.com/dinglang/p/6133501.html]]></content>
@@ -162,8 +175,8 @@
         <category>SpringCloud</category>
       </categories>
       <tags>
-        <tag>springcloud</tag>
         <tag>MicroService</tag>
+        <tag>springcloud</tag>
         <tag>msa</tag>
       </tags>
   </entry>
@@ -176,8 +189,8 @@
         <category>SpringCloud</category>
       </categories>
       <tags>
-        <tag>springcloud</tag>
         <tag>MicroService</tag>
+        <tag>springcloud</tag>
         <tag>msa</tag>
       </tags>
   </entry>
@@ -190,8 +203,8 @@
         <category>SpringCloud</category>
       </categories>
       <tags>
-        <tag>springcloud</tag>
         <tag>MicroService</tag>
+        <tag>springcloud</tag>
         <tag>msa</tag>
       </tags>
   </entry>
@@ -204,8 +217,8 @@
         <category>SpringCloud</category>
       </categories>
       <tags>
-        <tag>springcloud</tag>
         <tag>MicroService</tag>
+        <tag>springcloud</tag>
         <tag>msa</tag>
       </tags>
   </entry>
@@ -218,8 +231,8 @@
         <category>SpringCloud</category>
       </categories>
       <tags>
-        <tag>springcloud</tag>
         <tag>MicroService</tag>
+        <tag>springcloud</tag>
         <tag>msa</tag>
       </tags>
   </entry>
@@ -232,8 +245,8 @@
         <category>SpringCloud</category>
       </categories>
       <tags>
-        <tag>springcloud</tag>
         <tag>MicroService</tag>
+        <tag>springcloud</tag>
         <tag>msa</tag>
       </tags>
   </entry>
@@ -246,8 +259,8 @@
         <category>SpringCloud</category>
       </categories>
       <tags>
-        <tag>springcloud</tag>
         <tag>MicroService</tag>
+        <tag>springcloud</tag>
         <tag>msa</tag>
       </tags>
   </entry>
@@ -260,8 +273,8 @@
         <category>SpringCloud</category>
       </categories>
       <tags>
-        <tag>springcloud</tag>
         <tag>MicroService</tag>
+        <tag>springcloud</tag>
         <tag>msa</tag>
       </tags>
   </entry>
@@ -284,8 +297,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>MicroService</tag>
         <tag>算法</tag>
+        <tag>MicroService</tag>
         <tag>分布式</tag>
       </tags>
   </entry>
@@ -297,8 +310,8 @@
         <category>算法</category>
       </categories>
       <tags>
-        <tag>MicroService</tag>
         <tag>算法</tag>
+        <tag>MicroService</tag>
         <tag>分布式</tag>
       </tags>
   </entry>

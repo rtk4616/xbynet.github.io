@@ -330,6 +330,217 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/20/历史博文迁移-Java8新特性学习笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/20/历史博文迁移-Java8新特性学习笔记/" itemprop="url">[历史博文迁移]Java8新特性学习笔记</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T17:02:25+08:00">
+                2017-12-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/20/历史博文迁移-Java8新特性学习笔记/" class="leancloud_visitors" data-flag-title="[历史博文迁移]Java8新特性学习笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  12,536
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  55
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>原地址在我的segmentfault专栏里:<a href="https://segmentfault.com/a/1190000010137914,现进行部分博文迁移" target="_blank" rel="noopener">https://segmentfault.com/a/1190000010137914,现进行部分博文迁移</a>.</p>
+<p>从Java8发布到现在有好几年了,而Java9也提上发布日程了(没记错的话好像就是这个月2017年7月，也许会再度跳票吧，不过没关系，稳定大于一切，稳定了再发布也行)，现在才开始去真正学习，说来也是惭愧。虽然目前工作环境仍然以Java6为主，不过Java8目前已是大势所趋了。Java8带来了许多令人激动的新特性，如lambda表达式，StreamsAPI与并行集合计算，新的时间日期API(借鉴joda-time)，字节码支持保存方法参数名(对于框架开发真的是非常赞的一个特性),Optional类解决空指针问题(虽然Guava中早就有这个了)等。</p>
+<h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><p>语法:</p>
+<ul>
+<li>v-&gt;System.out.println(v)</li>
+<li>(v)-&gt;System.out.println(v)</li>
+<li>(String v)-&gt;System.out.println(v)</li>
+<li>(v)-&gt;{System.out.println(v);return v+1;}</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; numbers = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>);</span><br><span class="line">numbers.forEach((Integer value) -&gt; System.out.println(value));</span><br></pre></td></tr></table></figure>
+<p><strong>注意：lambda表达式内如果引用了外部的局部变量，那么这个局部变量必须是final的，如果不是，编译器会自动给加上final。比如下面这段是错误的</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这是错误的</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">2</span>;</span><br><span class="line">Function&lt;Integer, Integer&gt; stringConverter = (from) -&gt; from * num;</span><br><span class="line">num++;<span class="comment">//会报错，因为此时num已经是final声明的了</span></span><br><span class="line">System.out.println(stringConverter.apply(<span class="number">3</span>));</span><br></pre></td></tr></table></figure></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/20/历史博文迁移-Java8新特性学习笔记/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/20/历史博文迁移-Spring-Boot学习笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2158,208 +2369,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xbynet">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="倚楼听风雨">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/" itemprop="url">[SpringCloud官文笔记]SpringCloudContext与Commons</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-18T11:26:49+08:00">
-                2017-12-18
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/SpringCloud/" itemprop="url" rel="index">
-                    <span itemprop="name">SpringCloud</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/" class="leancloud_visitors" data-flag-title="[SpringCloud官文笔记]SpringCloudContext与Commons">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">热度&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  1,377
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>基于Edgware版本，此篇为SpringCloud官方文档学习笔记的开篇。笔记就是散乱，还望各位看官见谅。<br><a href="http://cloud.spring.io/spring-cloud-static/Edgware.RELEASE/single/spring-cloud.html" target="_blank" rel="noopener">http://cloud.spring.io/spring-cloud-static/Edgware.RELEASE/single/spring-cloud.html</a></p>
-<p>Spring Cloud Context为Spring Cloud应用程序（引导上下文，加密，刷新范围和环境端点）的ApplicationContext提供实用程序和特殊服务。<br>Spring Cloud Commons是一组在不同的Spring Cloud实现中使用的抽象和常用类</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/18/SpringCloud官文笔记-SpringCloudContext与Commons/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-
- 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2416,7 +2425,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2427,7 +2436,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">16</span>
+                  <span class="site-state-item-count">17</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2558,7 +2567,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">149.0k</span>
+    <span title="Site words total count">152.5k</span>
   
 </div>
 
