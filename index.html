@@ -330,6 +330,208 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2018/01/02/Kubernetes笔记之基本概念/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/02/Kubernetes笔记之基本概念/" itemprop="url">Kubernetes笔记之基本概念</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-02T09:48:10+08:00">
+                2018-01-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/kubernetes/" itemprop="url" rel="index">
+                    <span itemprop="name">kubernetes</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/02/Kubernetes笔记之基本概念/" class="leancloud_visitors" data-flag-title="Kubernetes笔记之基本概念">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  5,589
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  20
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>本系列K8s读书笔记基于开源的<a href="https://rootsongjc.gitbooks.io/kubernetes-handbook/content/" target="_blank" rel="noopener">kubernetes-handbook</a>书籍</p>
+<p>Kubernetes(k8s)是Google基于Borg开源的容器编排调度引擎，作为<code>CNCF</code>（Cloud Native Computing Foundation）最重要的组件之一，它的目标不仅仅是一个编排系统，而是提供一个规范，可以让你来<strong>描述集群的架构，定义服务的最终状态，kubernetes可以帮你将系统自动得达到和维持在这个状态</strong>。Kubernetes作为云原生应用的基石，相当于一个云操作系统.<br>Kubernetes用户可以通过编写一个yaml或者json格式的配置文件，也可以通过工具/代码生成或直接请求kubernetes API创建应用，该配置文件中包含了<code>用户想要应用程序保持的状态</code>，不论整个kubernetes集群中的个别主机发生什么问题，<code>都不会影响应用程序的状态</code>，你还可以通过改变该配置文件或请求kubernetes API来<code>改变应用程序的状态</code>。<br><img src="/img/2018-01-02-10-42-02.png" alt=""><br><img src="/img/2018-01-02-10-43-39.png" alt=""><br><img src="/img/2018-01-02-10-45-26.png" alt=""><br><img src="/img/2018-01-02-10-46-47.png" alt=""><br><img src="/img/2018-01-02-10-48-36.png" alt=""><br><img src="/img/2018-01-02-10-48-57.png" alt=""><br><img src="/img/2018-01-02-10-49-18.png" alt=""><br><img src="/img/2018-01-02-10-51-01.png" alt=""><br><img src="/img/2018-01-02-10-51-33.png" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/02/Kubernetes笔记之基本概念/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/28/HTTP权威指南笔记之连接管理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -475,8 +677,7 @@
 
       
         
-          
-            <script src="\assets\js\APlayer.min.js"> </script><p>纲要：</p>
+          <p>纲要：</p>
 <ul>
 <li>HTTP是如何使用TCP连接的；</li>
 <li>TCP连接的时延、瓶颈、存在的障碍；</li>
@@ -487,36 +688,13 @@
 <p>每个<code>IP分组</code>包括三部分：IP分组首部(20字节，包含源和目的ip地址，及其他标记)，TCP段首部(20字节，包含tcp端口号，控制标记，及用于排序和完整性校验的值)，TCP数据块(0或多个字节)。<br>所以要注意，比如TCP流是1字节，比如分成1个段，但需要传输的字节数在41+以上。试想如果有很多个TCP流都是特别小的数据量，那么反而会对带宽造成很大的浪费。<br><img src="/img/2017-12-28-23-41-29.png" alt=""></p>
 <p>TCP是通过<code>端口号</code>来保持连接的，IP地址是用来寻址计算机，端口号是用来寻找计算机上对应应用程序的。<br>TCP连接的唯一标识，包含4个值:<code>源ip、源端口、目的ip、目的端口</code><br><img src="/img/2017-12-28-23-41-49.png" alt=""></p>
 <p>TCP套接字编程：<br><img src="/img/2017-12-28-23-42-19.png" alt=""><br><img src="/img/2017-12-28-23-42-50.png" alt=""></p>
-<h2 id="对TCP性能的考虑"><a href="#对TCP性能的考虑" class="headerlink" title="对TCP性能的考虑"></a>对TCP性能的考虑</h2><p>HTTP事务的时延:<br><img src="/img/2017-12-28-23-44-07.png" alt=""><br>TCP网络时延的大小取决于硬件速度、网络、服务器负载、请求和响应的尺寸、客户端与服务器间的距离。<br>常见的TCP时延包括：</p>
-<ul>
-<li>TCP连接建立握手</li>
-<li>TCP慢启动拥塞控制</li>
-<li>数据聚集的Nagle算法</li>
-<li>用于捎带确认的TCP延迟确认算法</li>
-<li>TIME_WAIT时延和端口耗尽</li>
-</ul>
-<p>1、TCP连接的握手时延<br><img src="/img/2017-12-28-23-49-33.png" alt=""><br>从图中可以看出，小的HTTP事务可能会在TCP建立上花费50%甚至更多的时间。</p>
-<p>2、延迟确认(ACK延迟机制)<br>背景：由于因特网无法确保可靠的分组传输(路由器超负荷的话，可以随意丢弃分组)，所以TCP实现了自己的确认机制来确保数据的成功传输。(TCP是可靠的)<br>每个TCP段都有一哥序列号和数据完整性校验和。每个段的接受者收到时都会向发送者回送小的确认分组。入股发送者没有在指定的时间窗内收到确认信息，发送者就认为分组已被损坏，并重发数据。<br>但是由于确认报文很小，所以TCP允许在发往相同方向的输出数据分组中对其进行<code>捎带</code>.TCP将返回的确认信息与输出的数据分组结合在一起，以便更有效地利用网络。为了实现这一可能，出现了”<code>延迟确认</code>算法”<br>延迟确认算法会在一个特定的时间窗(<code>100~200ms</code>)内将输出确认存放在缓冲区中，以便寻找能够捎带它的输出数据分组。但是，HTTP具有<code>双峰特征</code>的请求-应答行为降低了捎带信息的可能。当希望有相反方向回传分组的时候，偏偏没有那么多。这样延迟确认算法就会引入相当大的时延。<strong>根据操作系统不同，可以调整或禁用延迟确认算法.</strong>(禁用之前一定要确保不会引发这些算法所要避免的问题)<br>(其实在建立连接第三次握手时，客户端向服务器端发送ACK包时就已经可以携带数据)</p>
-<p>3、TCP慢启动<br>TCP连接会随着时间进行<code>自我调谐</code>,起初会限制连接的最大速度，如果数据成功传输，会随着时间的推移提高传输的速度。这种调谐被称为<code>TCP慢启动</code>(slow start),用于防止因特网的突然过载和<code>拥塞</code>。<br>TCP慢启动限制了一个TCP端点在任意时刻可以传输的分组数。(除非随着时间推移<code>打开拥塞窗口</code>后)<br>因为慢启动的存在，出现了HTTP持久连接，在持久连接中，后续的请求都会在处于<code>已调谐</code>的连接中进行。</p>
-<p>4、Nagle算法和TCP_nodelay<br>前面说过，每个IP分组中都至少装载了40个字节的标记和首部，所以如果TCP发送了大量包含少量数据的分组，，网络的性能会严重下降(发送大量单字节分组的行为称为<code>发送端傻窗口综合症</code>)。<br>Nagle算法试图在发送一个分组之前，将大量TCP数据绑定在一起，以提高网络效率。它鼓励发送全尺寸(LAN最大尺寸分组为1500字节，因特网上是几百字节)的段，只有当所有其他分组都被确认之后，Nagle算法才允许发送非全尺寸的分组。只有当挂起分组被确认，<strong>或者缓存中积累了足够发送一个全尺寸分组的数据时，才会将缓存的数据发送出去。</strong><br>这样在HTTP中会引发性能问题:<br>如果小的HTTP报文可能无法填满一个全尺寸分组，从而导致因为等待那些永远不会到来的额外数据而产生时延。<br>Nagle算法就是为了尽可能发送大块数据，避免网络中充斥着许多小数据块。<br>Nagle算法的基本定义是<code>任意时刻，最多只能有一个未被确认的小段</code>。 所谓“小段”，指的是小于MSS尺寸的数据块，所谓“未被确认”，是指一个数据块发送出去后，没有收到对方发送的ACK确认该数据已收到。</p>
-<p>Nagle算法与延迟确认之间的交互也会存在问题。<br>故而HTTP应用通常会在自己的栈中设置参数<code>TCP_NODELAY,禁用Nagle算法</code>，以提高性能。<br>当然，如果你要用Nagle算法的话，一定要确保会向TCP写入大块的数据，这样就不会产生一堆小分组了。</p>
-<p>更多参考，这篇文章介绍的也不错：<a href="http://blog.csdn.net/historyasamirror/article/details/6423235" target="_blank" rel="noopener">http://blog.csdn.net/historyasamirror/article/details/6423235</a></p>
-<p>5、<strong>TIME_WAIT累积与端口耗尽</strong><br>TIME_WAIT端口耗尽是很严重的性能问题。当某个TCP端点关闭TCP连接时，会在内存中维护一个小的控制块，用来记录最近所关闭连接的IP地址和端口号。这类信息只会维持一小段时间，即<code>2MSL(最大分段使用期的两倍</code>，以前为2分钟，但由于硬件及带宽的提升，这个时间变小了很多，而且因操作系统不同而不同，我在docker下看了ubuntu的MSL值为60),以<code>确保在这段时间内不会创建具有相同地址和端口号的新连接</code>。</p>
-<p>Linux下查看并修改MSL(Maximum Segment Lifetime)值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_fin_timeout</span><br><span class="line">或</span><br><span class="line">cat /proc/sys/net/ipv4/tcp_fin_timeout</span><br><span class="line">修改</span><br><span class="line">edit /proc/sys/net/ipv4/tcp_fin_timeout</span><br><span class="line">使上面修改永久生效</span><br><span class="line">sysctl -p /etc/sysctl.conf</span><br></pre></td></tr></table></figure></p>
-<p>需要注意的是，超过2MSL后，有分组被复制的可能性。试想，如果来自之前连接的分组插入了具有相同连接值的新TCP流，会破坏TCP数据。<br>试想只有一个客户端与一个服务端的情形下的压力测试，前面我们知道，构建一个TCP连接需要的4个值:源ip，源端口，目的ip，目的端口。这里面唯一可以改变的只有源端口。<br>而源端口可用数量有限(最大65000左右，可用一般6w个左右)，而且在2MSL秒(比如60s)内连接是无法重用的，连接率就被限制在了60000/60=1000次/s。当达到此峰值，那么客户端的端口也相应地被耗尽了。<br>注意：即使没有遇到端口耗尽问题，也要特别小心有大量连接处于打开状态的情况，这是有些操作系统的速度会严重减缓。</p>
-<h2 id="HTTP连接的处理"><a href="#HTTP连接的处理" class="headerlink" title="HTTP连接的处理"></a>HTTP连接的处理</h2><p>HTTP允许在客户端和最终的源端服务器之间存在一系列HTTP中间实体(代理，高速缓存等)。<br>Connection头部有一个由逗号分隔的连接标签列表，这些标签为此连接指定了不会传播到其他连接中去的选项。Connection头部及其标签指明的头部只能用于相邻的端点，转发时需要被移除。这种称为<code>逐跳首部</code>。</p>
-<p><img src="/img/2017-12-29-00-38-20.png" alt=""></p>
-<p>连接分类：单个串行、并行(多条tcp连接)、持久连接(重用)、管道化连接(重用、并发)、复用连接</p>
-<p><img src="/img/2017-12-29-00-40-50.png" alt=""><br><img src="/img/2017-12-29-00-41-07.png" alt=""><br>注意：并行不一定快，因为其会严重加重服务器或代理的压力。<br>浏览器通常会被并行数量作出限制(如同域名下最多4个)。</p>
-<p>持久连接：重用已对目标服务器打开的空闲持久连接，这样可以避开缓慢的连接建立阶段，避开慢启动的拥塞适应阶段，以便更快速地进行数据的传输。<br>持久连接分类：HTTP1.0+keep-alive, HTTP1.1的默认persistent连接。<br><img src="/img/2017-12-29-00-45-52.png" alt=""></p>
-<p>关于HTTP1.0Keep-Alive与Http1.1持久连接,请参考我另一篇文章。<br>HTTP1.0Keep-Alive:HTTP1.0默认不开启，需要请求和响应头都有<code>Connection: Keep-Alive</code>，否则连接就不持久。<br>Http1.1持久连接:不关心Connection: Keep-Alive,甚至需要废除这个。因为默认开启了持久连接，所以只需要在要关闭连接时发送<code>Connection: close</code>头就可以了。<br>HTTP1.0Keep-Alive与代理交互时可能出现的问题：Keep-Alive和哑代理，Connection头和盲中继，代理和逐跳首部、插入Proxy-Connection</p>
-<h2 id="管道化连接"><a href="#管道化连接" class="headerlink" title="管道化连接"></a>管道化连接</h2><p>基于Http1.1持久连接，可选地使用请求管道。<br><img src="/img/2017-12-29-00-53-04.png" alt=""><br>要求：请求顺序与响应顺序一致性。<br>限制：HTTP客户端不应该用管道化的方式发送会产生副作用的请求，一般指<code>POST(非幂等</code>方法).出错的时候，管道化方式会阻碍客户端了解服务器执行的是一系列管道化请求中的哪一些。由于无法安全地重试POS这样的非幂等请求，所以出错时，就存在某些方法永远不会被执行的风险。<br>这也就是为什么页面提交没反应过来，再次提交或者刷新时，大多数浏览器会提示你是否需要再次提交表单的原因。</p>
-<h2 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h2><p>1、任意关闭<br>2、Content-Length及截尾操作<br>3、连接关闭容限、重试、幂等性:<br>如果一个事务，不管是执行一次还是很多次，得到的结果都相同，这个事务就是幂等性。而POST是非幂等的。</p>
-<p>4、正常关闭连接<br>我们知道TCP连接是双向的。有输入与输出队列，分别负责读与写。<br><img src="/img/2017-12-29-01-01-30.png" alt=""><br>完全关闭(socket.close)与半关闭(socket.shutdown)：是否将输入输出通道都关闭，或者只关闭其中一个。<br>TCP关闭及重置错误:<br><img src="/img/2017-12-29-01-03-53.png" alt=""></p>
-<p>关闭连接的输出信道总是很安全的。连接另一端的对等实体会在从其缓冲区中读出所有数据之后收到连接关闭的通知。<br>关闭连接的输入信道比较危险，除非你知道另一端不打算发送其他数据了。否则操作系统会向另一端的机器回送一条<code>TCP连接被对端重置</code>的报文，<strong>同时删除对端还未读取的所有缓存数据(尽管其中的大部分都已抵达你的机器了)。对于管道化连接来说，这是非常糟糕的情形。</strong></p>
-<p>正常关闭流程：先关闭输出通道-等待对端关闭它的输出信道-两端都告诉了对方不会再发送任何数据(即关闭了输出信道，并且关闭通知被对端读取了)-双方完全关闭连接。这样就不会有重置及清空缓冲数据的危险。<br>实际中，由于网络的不可靠，后面的步骤不一定能正常走完，所以一般需要周期性检查，超过一定时间仍不行就执行强制关闭，以节约资源。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/28/HTTP权威指南笔记之连接管理/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2195,201 +2373,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/21/微服务架构之SpringCloud全家桶/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xbynet">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="倚楼听风雨">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/21/微服务架构之SpringCloud全家桶/" itemprop="url">微服务架构之SpringCloud全家桶</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T14:07:00+08:00">
-                2017-12-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/MicroService/" itemprop="url" rel="index">
-                    <span itemprop="name">MicroService</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/21/微服务架构之SpringCloud全家桶/" class="leancloud_visitors" data-flag-title="微服务架构之SpringCloud全家桶">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">热度&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  13,944
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  51
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>What’s SpringCloud?<br>SpringCloud是基于<a href="/2017/12/21/微服务架构之服务架构演进/">微服务</a>理念，并在基于Netflix OSS的基础上开发的一套全生态的微服务治理框架。模块众多:如Eureka服务发现与注册(CAP中的AP模式)，Hystrix断路器，Sleuth分布式链路追踪，Zuul统一api网关，Config配置中心，Ribbon客户端负载均衡，Sidecar异构系统集成等等。<br>SpringCloud中的微服务通常需要运行在Docker容器中，而Docker是一个类似于虚拟机的虚拟化主机环境，提供独立、快速发布、运行的能力。Kubernetes是Google开源的容器集群管理系统，其提供应用部署、维护、 扩展机制等功能，利用Kubernetes能方便地管理跨机器运行容器化的应用。<br>值得一提的是SpringCloud是基于<a href="/2017/12/20/历史博文迁移-Spring-Boot学习笔记/">SpringBoot</a>的.<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/21/微服务架构之SpringCloud全家桶/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-
- 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2441,7 +2429,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2452,7 +2440,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2463,7 +2451,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2569,7 +2557,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -2583,7 +2571,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">155.7k</span>
+    <span title="Site words total count">161.3k</span>
   
 </div>
 

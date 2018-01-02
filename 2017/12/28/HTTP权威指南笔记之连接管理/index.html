@@ -84,13 +84,13 @@
 
 
 
-<meta name="description" content="纲要：  HTTP是如何使用TCP连接的； TCP连接的时延、瓶颈、存在的障碍； HTTP的优化，并行、keep-alive/持久连接、管道化连接； 管道连接时应该及不应该做的事情  TCP连接TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)TCP流是分段的、由IP分组传送：TCP的流会被分成小块(段se">
+<meta name="description" content="纲要：  HTTP是如何使用TCP连接的； TCP连接的时延、瓶颈、存在的障碍； HTTP的优化，并行、keep-alive/持久连接、管道化连接； 管道连接时应该及不应该做的事情  TCP连接TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)TCP流是分段的、由IP分组传送：TCP的流会被分成小块(段seg">
 <meta name="keywords" content="http,tcp">
 <meta property="og:type" content="article">
 <meta property="og:title" content="HTTP权威指南笔记之连接管理">
 <meta property="og:url" content="http://xbynet.top/2017/12/28/HTTP权威指南笔记之连接管理/index.html">
 <meta property="og:site_name" content="倚楼听风雨">
-<meta property="og:description" content="纲要：  HTTP是如何使用TCP连接的； TCP连接的时延、瓶颈、存在的障碍； HTTP的优化，并行、keep-alive/持久连接、管道化连接； 管道连接时应该及不应该做的事情  TCP连接TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)TCP流是分段的、由IP分组传送：TCP的流会被分成小块(段se">
+<meta property="og:description" content="纲要：  HTTP是如何使用TCP连接的； TCP连接的时延、瓶颈、存在的障碍； HTTP的优化，并行、keep-alive/持久连接、管道化连接； 管道连接时应该及不应该做的事情  TCP连接TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)TCP流是分段的、由IP分组传送：TCP的流会被分成小块(段seg">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-28-23-35-01.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-28-23-41-29.png">
@@ -106,10 +106,10 @@
 <meta property="og:image" content="http://xbynet.top/img/2017-12-29-00-53-04.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-29-01-01-30.png">
 <meta property="og:image" content="http://xbynet.top/img/2017-12-29-01-03-53.png">
-<meta property="og:updated_time" content="2017-12-28T17:23:35.309Z">
+<meta property="og:updated_time" content="2017-12-28T17:28:23.131Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HTTP权威指南笔记之连接管理">
-<meta name="twitter:description" content="纲要：  HTTP是如何使用TCP连接的； TCP连接的时延、瓶颈、存在的障碍； HTTP的优化，并行、keep-alive/持久连接、管道化连接； 管道连接时应该及不应该做的事情  TCP连接TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)TCP流是分段的、由IP分组传送：TCP的流会被分成小块(段se">
+<meta name="twitter:description" content="纲要：  HTTP是如何使用TCP连接的； TCP连接的时延、瓶颈、存在的障碍； HTTP的优化，并行、keep-alive/持久连接、管道化连接； 管道连接时应该及不应该做的事情  TCP连接TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)TCP流是分段的、由IP分组传送：TCP的流会被分成小块(段seg">
 <meta name="twitter:image" content="http://xbynet.top/img/2017-12-28-23-35-01.png">
 
 
@@ -499,6 +499,7 @@
 <p>每个<code>IP分组</code>包括三部分：IP分组首部(20字节，包含源和目的ip地址，及其他标记)，TCP段首部(20字节，包含tcp端口号，控制标记，及用于排序和完整性校验的值)，TCP数据块(0或多个字节)。<br>所以要注意，比如TCP流是1字节，比如分成1个段，但需要传输的字节数在41+以上。试想如果有很多个TCP流都是特别小的数据量，那么反而会对带宽造成很大的浪费。<br><img src="/img/2017-12-28-23-41-29.png" alt=""></p>
 <p>TCP是通过<code>端口号</code>来保持连接的，IP地址是用来寻址计算机，端口号是用来寻找计算机上对应应用程序的。<br>TCP连接的唯一标识，包含4个值:<code>源ip、源端口、目的ip、目的端口</code><br><img src="/img/2017-12-28-23-41-49.png" alt=""></p>
 <p>TCP套接字编程：<br><img src="/img/2017-12-28-23-42-19.png" alt=""><br><img src="/img/2017-12-28-23-42-50.png" alt=""></p>
+<a id="more"></a>
 <h2 id="对TCP性能的考虑"><a href="#对TCP性能的考虑" class="headerlink" title="对TCP性能的考虑"></a>对TCP性能的考虑</h2><p>HTTP事务的时延:<br><img src="/img/2017-12-28-23-44-07.png" alt=""><br>TCP网络时延的大小取决于硬件速度、网络、服务器负载、请求和响应的尺寸、客户端与服务器间的距离。<br>常见的TCP时延包括：</p>
 <ul>
 <li>TCP连接建立握手</li>
@@ -589,6 +590,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2018/01/02/Kubernetes笔记之基本概念/" rel="prev" title="Kubernetes笔记之基本概念">
+                Kubernetes笔记之基本概念 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -675,7 +680,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">31</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -686,7 +691,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -697,7 +702,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -818,7 +823,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -832,7 +837,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">155.7k</span>
+    <span title="Site words total count">161.3k</span>
   
 </div>
 

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xbynet.top/"/>
-  <updated>2017-12-28T17:23:35.309Z</updated>
+  <updated>2018-01-02T03:26:56.473Z</updated>
   <id>http://xbynet.top/</id>
   
   <author>
@@ -17,24 +17,54 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>Kubernetes笔记之基本概念</title>
+    <link href="http://xbynet.top/2018/01/02/Kubernetes%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/"/>
+    <id>http://xbynet.top/2018/01/02/Kubernetes笔记之基本概念/</id>
+    <published>2018-01-02T01:48:10.000Z</published>
+    <updated>2018-01-02T03:26:56.473Z</updated>
+    
+    <content type="html"><![CDATA[<script src="\assets\js\APlayer.min.js"> </script><p>本系列K8s读书笔记基于开源的<a href="https://rootsongjc.gitbooks.io/kubernetes-handbook/content/" target="_blank" rel="noopener">kubernetes-handbook</a>书籍</p><p>Kubernetes(k8s)是Google基于Borg开源的容器编排调度引擎，作为<code>CNCF</code>（Cloud Native Computing Foundation）最重要的组件之一，它的目标不仅仅是一个编排系统，而是提供一个规范，可以让你来<strong>描述集群的架构，定义服务的最终状态，kubernetes可以帮你将系统自动得达到和维持在这个状态</strong>。Kubernetes作为云原生应用的基石，相当于一个云操作系统.<br>Kubernetes用户可以通过编写一个yaml或者json格式的配置文件，也可以通过工具/代码生成或直接请求kubernetes API创建应用，该配置文件中包含了<code>用户想要应用程序保持的状态</code>，不论整个kubernetes集群中的个别主机发生什么问题，<code>都不会影响应用程序的状态</code>，你还可以通过改变该配置文件或请求kubernetes API来<code>改变应用程序的状态</code>。<br><img src="/img/2018-01-02-10-42-02.png" alt=""><br><img src="/img/2018-01-02-10-43-39.png" alt=""><br><img src="/img/2018-01-02-10-45-26.png" alt=""><br><img src="/img/2018-01-02-10-46-47.png" alt=""><br><img src="/img/2018-01-02-10-48-36.png" alt=""><br><img src="/img/2018-01-02-10-48-57.png" alt=""><br><img src="/img/2018-01-02-10-49-18.png" alt=""><br><img src="/img/2018-01-02-10-51-01.png" alt=""><br><img src="/img/2018-01-02-10-51-33.png" alt=""></p><a id="more"></a><h2 id="云生态概念"><a href="#云生态概念" class="headerlink" title="云生态概念"></a>云生态概念</h2><p>kubernetes生态周边，如微服务构建、DevOps、大数据应用、<code>Service Mesh</code>、Cloud Native等领域。</p><p><code>云计算</code>就是一种配置资源的方式，根据资源配置方式的不同我们可以把云计算从宏观上分为以下三种类型：</p><ul><li>IaaS：这是为了想要建立自己的商业模式并进行自定义的客户，例如亚马逊的EC2、S3存储、Rackspace虚拟机等都是IaaS。</li><li>PaaS：工具和服务的集合，对于想用它来构建自己的应用程序或者想快速得将应用程序部署到生产环境而不必关心底层硬件的用户和开发者来说是特别有用的，比如Cloud Foundry、Google App Engine、Heroku等。</li><li>SaaS：终端用户可以直接使用的应用程序。这个就太多，我们生活中用到的很多软件都是SaaS服务，只要基于互联网来提供的服务基本都是SaaS服务，有的服务是免费的，比如Google Docs，还有更多的是根据我们购买的Plan和使用量付费，比如GitHub、各种云存储。</li></ul><p><img src="/img/2018-01-02-10-08-17.png" alt=""><br>为了解决传统应用升级缓慢、架构臃肿、不能快速迭代、故障不能快速定位、问题无法快速解决等问题，云原生这一概念横空出世。云原生可以改进应用开发的效率，改变企业的组织结构，甚至会在文化层面上直接影响一个公司的决策。<br>云原生应用应该具备以下几个关键词：</p><ul><li>敏捷</li><li>可靠</li><li>高弹性</li><li>易扩展</li><li>故障隔离保护</li><li>不中断业务持续更新</li></ul><p><a href="https://12factor.net/" target="_blank" rel="noopener">12因素应用</a>:<br><img src="/img/2018-01-02-10-11-13.png" alt=""><br><a href="https://jimmysong.io/posts/high-level-cloud-native-from-kevin-hoffman/" target="_blank" rel="noopener">15因素应用</a></p><p>容器生态：<br><img src="/img/2018-01-02-10-15-05.png" alt=""></p><p>Kubernetes提供了多种资源对象，用户可以根据自己应用的特性加以选择。这些对象有：<br><img src="/img/2018-01-02-10-16-16.png" alt=""></p><p>在 Kubernetes 系统中，Kubernetes 对象 是持久化的条目。Kubernetes 使用这些条目去表示整个集群的状态。特别地，它们描述了如下信息：</p><ul><li>什么容器化应用在运行（以及在哪个 Node 上）</li><li>可以被应用使用的资源</li><li>关于应用如何表现的策略，比如重启策略、升级策略，以及容错策略<br>Kubernetes 对象是 “目标性记录” —— 一旦创建对象，Kubernetes 系统将持续工作以确保对象存在。通过创建对象，可以有效地告知 Kubernetes 系统，所需要的集群工作负载看起来是什么样子的，这就是 Kubernetes 集群的 <code>期望状态</code>。</li></ul><p>资源限制与配额</p><ul><li>Pod级别，最小的资源调度单位</li><li>Namespace级别，限制资源配额和每个Pod的资源使用区间</li></ul><p>管理Kubernetes集群:<br>1、部署集群<br>使用二进制部署 kubernetes 集群的所有组件和插件，而不是使用 kubeadm 等自动化方式来部署集群，同时开启了集群的TLS安全认证。</p><p>集群详情</p><ul><li>Kubernetes 1.6.0</li><li>Docker 1.12.5（使用yum安装）</li><li>Etcd 3.1.5</li><li>Flanneld 0.7 vxlan 网络</li><li>TLS 认证通信 (所有组件，如 etcd、kubernetes master 和 node)</li><li>RBAC 授权</li><li>kublet TLS BootStrapping</li><li>kubedns、dashboard、heapster(influxdb、grafana)、EFK(elasticsearch、fluentd、kibana) 集群插件</li><li>私有docker镜像仓库harbor</li></ul><p>步骤介绍</p><ul><li>创建 TLS 证书和秘钥</li><li>创建kubeconfig文件</li><li>创建高可用etcd集群</li><li>安装kubectl命令行工具</li><li>部署master节点</li><li>安装flannel网络插件</li><li>部署node节点</li><li>安装kubedns插件</li><li>安装dashboard插件</li><li>安装heapster插件</li><li>安装EFK插件</li></ul><p>服务发现与负载均衡机制：<br>Kubernetes在设计之初就充分考虑了针对容器的服务发现与负载均衡机制，提供了Service资源，并通过kube-proxy配合cloud provider来适应不同的应用场景。<br>目前，kubernetes中的负载均衡大致可以分为以下几种机制，每种机制都有其特定的应用场景：</p><ul><li>Service：直接用Service提供cluster内部的负载均衡，并借助cloud provider提供的LB提供外部访问</li><li>Ingress：还是用Service提供cluster内部的负载均衡，但是通过自定义LB提供外部访问</li><li>Service Load Balancer：把load balancer直接跑在容器中，实现Bare Metal的Service Load Balancer</li><li>Custom Load Balancer：自定义负载均衡，并替代kube-proxy，一般在物理部署Kubernetes时使用，方便接入公司已有的外部服务</li></ul><p>持续集成与发布：<br><img src="/img/2018-01-02-10-29-10.png" alt=""></p><p>应用构建和发布流程说明：</p><ul><li>用户向Gitlab提交代码，代码中必须包含Dockerfile</li><li>将代码提交到远程仓库</li><li>用户在发布应用时需要填写git仓库地址和分支、服务类型、服务名称、资源数量、实例个数，确定后触发Jenkins自动构建</li><li>Jenkins的CI流水线自动编译代码并打包成docker镜像推送到Harbor镜像仓库</li><li>Jenkins的CI流水线中包括了自定义脚本，根据我们已准备好的kubernetes的YAML模板，将其中的变量替换成用户输入的选项</li><li>生成应用的kubernetes YAML配置文件</li><li>更新Ingress的配置，根据新部署的应用的名称，在ingress的配置文件中增加一条路由信息</li><li>更新PowerDNS，向其中插入一条DNS记录，IP地址是边缘节点的IP地址。关于边缘节点，请查看边缘节点配置</li><li>Jenkins调用kubernetes的API，部署应用</li></ul><p>日志收集与监控：<br>基于现有的ELK日志收集方案，稍作改造，选用filebeat来收集日志，可以作为sidecar的形式跟应用运行在同一个Pod中，比较轻量级消耗资源比较少。<br><img src="/img/2018-01-02-10-29-56.png" alt=""></p><p>安全性与权限管理<br>Kubernetes是一个多租户的云平台，因此必须对用户的权限加以限制，对用户空间进行隔离。Kubernetes中的隔离主要包括这几种：</p><ul><li>网络隔离：需要使用网络插件，比如calico。</li><li>资源隔离：kubernetes原生支持资源隔离，pod就是资源就是隔离和调度的最小单位，同时使用namespace限制用户空间和资源限额。</li><li>身份隔离：使用RBAC-基于角色的访问控制，多租户的身份认证和权限控制。</li></ul><p><a href="https://jimmysong.io/migrating-to-cloud-native-application-architectures/" target="_blank" rel="noopener">迁移到云原生应用架构指南</a><br>指出了迁移到云原生应用架构需要做出的企业文化、组织架构和技术变革，并给出了迁移指南。<br>主要讨论的应用程序架构包括：</p><ul><li>十二因素应用程序：云原生应用程序架构模式的集合</li><li>微服务：独立部署的服务，只做一件事情</li><li>自助服务的敏捷基础设施：快速，可重复和一致地提供应用环境和后台服务的平台</li><li>基于API的协作：发布和版本化的API，允许在云原生应用程序架构中的服务之间进行交互</li><li>抗压性：根据压力变强的系统</li></ul><p><a href="https://jimmysong.io/posts/migrating-hadoop-yarn-to-kubernetes/" target="_blank" rel="noopener">迁移传统应用到Kubernetes步骤详解——以Hadoop YARN为例</a></p><p><a href="https://jimmysong.io/posts/what-is-a-service-mesh/" target="_blank" rel="noopener">Service mesh</a>:<br>Service mesh现在一般被翻译作服务网格，目前主流的Service mesh有如下两款：</p><ul><li>Istio：IBM、Google、Lyft共同开源，详细文档见<a href="http://istio.doczh.cn/" target="_blank" rel="noopener">Istio官方文档中文版</a></li><li>Linkerd：原Twitter工程师开发，现为CNCF中的项目之一<br><img src="/img/2018-01-02-10-36-41.png" alt=""></li></ul><p>DevOps<br>真正践行DevOps，让开发人员在掌握自己的开发和测试环境，让环境一致，让开发效率提升，让运维没有堆积如山的tickets，让监控更加精准，从kubernetes平台开始。<br>行动指南</p><ul><li>根据环境（比如开发、测试、生产）划分namespace，也可以根据项目来划分</li><li>再为每个用户划分一个namespace、创建一个serviceaccount和kubeconfig文件，不同namespace间的资源隔离，目前不隔离网络，不同namespace间的服务可以互相访问</li><li>创建yaml模板，降低编写kubernetes yaml文件编写难度</li><li>在kubectl命令上再封装一层，增加用户身份设置和环境初始化操作，简化kubectl命令和常用功能</li><li>管理员通过dashboard查看不同namespace的状态，也可以使用它来使操作更便捷</li><li>所有应用的日志统一收集到ElasticSearch中，统一日志访问入口</li><li>可以通过Grafana查看所有namespace中的应用的状态和kubernetes集群本身的状态</li><li><p>需要持久化的数据保存在分布式存储中，例如GlusterFS或Ceph中</p></li><li><p>使用<code>Kibana</code>查看日志,日志字段中包括了应用的标签、容器名称、主机名称、宿主机名称、IP地址、时间</p></li><li>使用<code>Grafana</code>查看应用状态</li></ul><h2 id="Kubernetes架构与设计理念"><a href="#Kubernetes架构与设计理念" class="headerlink" title="Kubernetes架构与设计理念"></a>Kubernetes架构与设计理念</h2><p>Kubernetes 具备完善的集群管理能力，包括多层次的安全防护和准入机制、多租户应用支撑能力、透明的服务注册和服务发现机制、内建负载均衡器、故障发现和自我修复能力、服务滚动升级和在线扩容、可扩展的资源自动调度机制、多粒度的资源配额管理能力。 Kubernetes 还提供完善的管理工具，涵盖开发、部署测试、运维监控等各个环节。<br><img src="/img/2018-01-02-10-56-37.png" alt=""><br>Kubernetes主要由以下几个核心组件组成：</p><ul><li>etcd保存了整个集群的状态；</li><li>apiserver提供了资源操作的唯一入口，并提供认证、授权、访问控制、API注册和发现等机制；</li><li>controller manager负责维护集群的状态，比如故障检测、自动扩展、滚动更新等；</li><li>scheduler负责资源的调度，按照预定的调度策略将Pod调度到相应的机器上；</li><li>kubelet负责维护容器的生命周期，同时也负责Volume（CVI）和网络（CNI）的管理；</li><li>Container runtime负责镜像管理以及Pod和容器的真正运行（CRI）；</li><li>kube-proxy负责为Service提供cluster内部的服务发现和负载均衡；<br>除了核心组件，还有一些推荐的Add-ons：</li><li>kube-dns负责为整个集群提供DNS服务</li><li>Ingress Controller为服务提供外网入口</li><li>Heapster提供资源监控</li><li>Dashboard提供GUI</li><li>Federation提供跨可用区的集群</li></ul><p>分层架构<br>Kubernetes设计理念和功能其实就是一个类似Linux的分层架构，如下图所示：<br><img src="/img/2018-01-02-11-00-02.png" alt=""></p><ul><li>核心层：Kubernetes最核心的功能，对外提供API构建高层的应用，对内提供插件式应用执行环境</li><li>应用层：部署（无状态应用、有状态应用、批处理任务、集群应用等）和路由（服务发现、DNS解析等）</li><li>管理层：系统度量（如基础设施、容器和网络的度量），自动化（如自动扩展、动态Provision等）以及- 策略管理（RBAC、Quota、PSP、NetworkPolicy等）</li><li>接口层：kubectl命令行工具、客户端SDK以及集群联邦</li><li>生态系统：在接口层之上的庞大容器集群管理调度的生态系统，可以划分为两个范畴<br>Kubernetes外部：日志、监控、配置管理、CI、CD、Workflow、FaaS、OTS应用、ChatOps等<br>Kubernetes内部：CRI、CNI、CVI、镜像仓库、Cloud Provider、集群自身的配置和管理等</li></ul><p>Kubernetes的核心技术概念和API对象：<br>API对象是Kubernetes集群中的管理操作单元。Kubernetes集群系统每支持一项新功能，引入一项新技术，一定会新引入对应的API对象，支持对该功能的管理操作。例如副本集Replica Set对应的API对象是RS。<br>每个API对象都有3大类属性：<code>元数据metadata、规范spec和状态status</code>。元数据是用来标识API对象的，每个对象都至少有3个元数据：<code>namespace，name和uid</code>；除此以外还有各种各样的标签<code>labels</code>用来标识和匹配不同的对象，例如用户可以用标签env来标识区分不同的服务部署环境，分别用env=dev、env=testing、env=production来标识开发、测试、生产的不同服务。规范描述了用户期望Kubernetes集群中的分布式系统达到的<code>理想状态（Desired State）</code>，例如用户可以通过复制控制器Replication Controller设置期望的Pod副本数为3；status描述了系统实际当前达到的状态（Status），例如系统当前实际的Pod副本数为2；那么复制控制器当前的程序逻辑就是自动启动新的Pod，争取达到副本数为3。<br>Kubernetes中所有的配置都是通过API对象的spec去设置的，也就是用户通过配置系统的理想状态来改变系统，这是Kubernetes重要设计理念之一，即所有的操作都是声明式（Declarative）的而不是命令式（Imperative）的。</p><p><code>Pod</code><br>Pod是在Kubernetes集群中运行部署应用或服务的最小单元，它是可以支持多容器的。Pod的设计理念是支持多个容器在一个Pod中共享网络地址和文件系统，可以通过进程间通信和文件共享这种简单高效的方式组合完成服务。Pod对多容器的支持是K8最基础的设计理念。<br>目前Kubernetes中的业务主要可以分为<code>长期伺服型（long-running）、批处理型（batch）、节点后台支撑型（node-daemon）和有状态应用型（stateful application）</code>；分别对应的Pod控制器为<code>Deployment、Job、DaemonSet和PetSet</code></p><p>副本控制器（Replication Controller，RC）<br>RC是Kubernetes集群中最早的保证Pod高可用的API对象。通过监控运行中的Pod来保证集群中运行指定数目的Pod副本。指定的数目可以是多个也可以是1个；少于指定数目，RC就会启动运行新的Pod副本；多于指定数目，RC就会杀死多余的Pod副本。RC是Kubernetes较早期的技术概念，只适用于长期伺服型的业务类型务。</p><p>副本集（Replica Set，RS）<br>RS是新一代RC，提供同样的高可用能力，区别主要在于RS后来居上，能支持更多种类的匹配模式。副本集对象一般不单独使用，而是作为Deployment的理想状态参数使用。</p><p>部署（Deployment）<br>部署表示用户对Kubernetes集群的一次更新操作。部署是一个比RS应用模式更广的API对象，可以是创建一个新的服务，更新一个新的服务，也可以是滚动升级一个服务。滚动升级一个服务，实际是创建一个新的RS，然后逐渐将新RS中副本数增加到理想状态，将旧RS中的副本数减小到0的复合操作。</p><p>服务（Service）<br>RC、RS和Deployment只是保证了支撑服务的微服务Pod的数量，但是没有解决如何访问这些服务的问题。一个Pod只是一个运行服务的实例，随时可能在一个节点上停止，在另一个节点以一个新的IP启动一个新的Pod，因此不能以<code>确定的IP和端口号</code>提供服务。要稳定地提供服务需要<code>服务发现和负载均衡能力</code>。在K8集群中，客户端需要访问的服务就是Service对象。每个Service会对应一个集群内部有效的虚拟IP，集群内部通过虚拟IP访问一个服务。在Kubernetes集群中微服务的负载均衡是由<code>Kube-proxy</code>实现的。它是一个分布式代理服务器，在Kubernetes的每个节点上都有一个.</p><p>任务（Job）<br>Job是Kubernetes用来控制<code>批处理型任务</code>的API对象。Job管理的Pod根据用户的设置把任务成功完成就自动退出了。成功完成的标志根据不同的spec.completions策略而不同：单Pod型任务有一个Pod成功就标志完成；定数成功型任务保证有N个任务全部成功；工作队列型任务根据应用确认的全局成功而标志成功。</p><p>后台支撑服务集（DaemonSet）<br>后台支撑型服务的核心关注点在Kubernetes集群中的节点（物理机或虚拟机），要保证每个节点上都有一个此类Pod运行。节点可能是所有集群节点也可能是通过nodeSelector选定的一些特定节点。典型的后台支撑型服务包括<code>存储，日志和监控</code>等在每个节点上支持Kubernetes集群运行的服务。</p><p>有状态服务集（PetSet）<br>Kubernetes在1.3版本里发布了Alpha版的PetSet功能。在云原生应用的体系里，有下面两组近义词；第一组是无状态（stateless）、牲畜（cattle）、无名（nameless）、可丢弃（disposable）；第二组是有状态（stateful）、宠物（pet）、有名（having name）、不可丢弃（non-disposable）。RC和RS主要是控制提供无状态服务的，其所控制的Pod的名字是随机设置的，一个Pod出故障了就被丢弃掉，在另一个地方重启一个新的Pod，名字变了、名字和启动在哪儿都不重要，重要的只是Pod总数；而PetSet是用来控制有状态服务，PetSet中的每个Pod的名字都是事先确定的，不能更改。PetSet中Pod的名字的作用是关联与该Pod对应的状态。<br>对于RC和RS中的Pod，一般不挂载存储或者挂载共享存储，保存的是所有Pod共享的状态，Pod像牲畜一样没有分别；对于PetSet中的Pod，每个Pod挂载自己独立的存储，如果一个Pod出现故障，从其他节点启动一个同样名字的Pod，要挂在上原来Pod的存储继续以它的状态提供服务。<br>适合于PetSet的业务包括数据库服务<code>MySQL和PostgreSQL，集群化管理服务Zookeeper、etcd等有状态服务</code>。</p><p>集群联邦（Federation）<br>Kubernetes在1.3版本里发布了beta版的Federation功能。在云计算环境中，服务的作用距离范围从近到远一般可以有：同主机（Host，Node）、跨主机同可用区（Available Zone）、跨可用区同地区（Region）、跨地区同服务商（Cloud Service Provider）、跨云平台。<strong>Kubernetes的设计定位是单一集群在同一个地域内</strong>，因为同一个地区的网络性能才能满足Kubernetes的调度和计算存储连接要求。而<code>联合集群服务</code>就是为提供跨Region跨服务商Kubernetes集群服务而设计的。<br>每个Kubernetes Federation有自己的分布式存储、API Server和Controller Manager。用户可以通过Federation的API Server注册该Federation的成员Kubernetes Cluster。当用户通过Federation的API Server创建、更改API对象时，Federation API Server会在自己所有注册的子Kubernetes Cluster都创建一份对应的API对象。</p><p>存储卷（Volume）<br>Kubernetes集群中的存储卷跟Docker的存储卷有些类似，只不过Docker的存储卷作用范围为一个容器，而Kubernetes的存储卷的生命周期和作用范围是一个Pod。每个Pod中声明的存储卷由Pod中的所有容器共享。Kubernetes支持非常多的存储卷类型，支持多种分布式存储包括GlusterFS和Ceph；也支持较容易使用的主机本地目录hostPath和NFS。Kubernetes还支持使用Persistent Volume Claim即PVC这种逻辑存储，使用这种存储，使得存储的使用者可以忽略后台的实际存储技术（例如AWS，Google或GlusterFS和Ceph），而将有关存储实际技术的配置交给存储管理员通过Persistent Volume来配置。</p><p>持久存储卷（Persistent Volume，PV）和持久存储卷声明（Persistent Volume Claim，PVC）<br>PV和PVC使得Kubernetes集群具备了存储的逻辑抽象能力，使得在配置Pod的逻辑里可以忽略对实际后台存储技术的配置，而把这项配置的工作交给PV的配置者，即集群的管理者。</p><p>节点（Node）<br>Kubernetes集群中的计算能力由Node提供，是所有Pod运行所在的工作主机，可以是物理机也可以是虚拟机。工作主机的统一特征是上面要运行kubelet管理节点上运行的容器。</p><p>密钥对象（Secret）<br>Secret是用来保存和传递密码、密钥、认证凭证这些敏感信息的对象。使用Secret的好处是可以避免把敏感信息明文写在配置文件里。</p><p>用户帐户（User Account）和服务帐户（Service Account）<br>顾名思义，用户帐户为人提供账户标识，而服务账户为计算机进程和Kubernetes集群中运行的Pod提供账户标识。用户帐户和服务帐户的一个区别是作用范围；用户帐户对应的是人的身份，人的身份与服务的namespace无关，所以用户账户是跨namespace的；而服务帐户对应的是一个运行中程序的身份，与特定namespace是相关的。</p><p>命名空间（Namespace）<br>命名空间为Kubernetes集群提供虚拟的隔离作用，Kubernetes集群初始有两个命名空间，分别是默认命名空间default和系统命名空间kube-system，除此以外，管理员可以可以创建新的命名空间满足需要。</p><p>RBAC访问授权<br>Kubernetes在1.3版本中发布了alpha版的基于角色的访问控制（Role-based Access Control，RBAC）的授权模式。RBAC主要是引入了角色（Role）和角色绑定（RoleBinding）的抽象概念。在RBAC中，访问策略可以跟某个角色关联，具体的用户在跟一个或多个角色相关联。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;本系列K8s读书笔记基于开源的&lt;a href=&quot;https://rootsongjc.gitbooks.io/kubernetes-handbook/content/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;kubernetes-handbook&lt;/a&gt;书籍&lt;/p&gt;
+&lt;p&gt;Kubernetes(k8s)是Google基于Borg开源的容器编排调度引擎，作为&lt;code&gt;CNCF&lt;/code&gt;（Cloud Native Computing Foundation）最重要的组件之一，它的目标不仅仅是一个编排系统，而是提供一个规范，可以让你来&lt;strong&gt;描述集群的架构，定义服务的最终状态，kubernetes可以帮你将系统自动得达到和维持在这个状态&lt;/strong&gt;。Kubernetes作为云原生应用的基石，相当于一个云操作系统.&lt;br&gt;Kubernetes用户可以通过编写一个yaml或者json格式的配置文件，也可以通过工具/代码生成或直接请求kubernetes API创建应用，该配置文件中包含了&lt;code&gt;用户想要应用程序保持的状态&lt;/code&gt;，不论整个kubernetes集群中的个别主机发生什么问题，&lt;code&gt;都不会影响应用程序的状态&lt;/code&gt;，你还可以通过改变该配置文件或请求kubernetes API来&lt;code&gt;改变应用程序的状态&lt;/code&gt;。&lt;br&gt;&lt;img src=&quot;/img/2018-01-02-10-42-02.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/img/2018-01-02-10-43-39.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/img/2018-01-02-10-45-26.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/img/2018-01-02-10-46-47.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/img/2018-01-02-10-48-36.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/img/2018-01-02-10-48-57.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/img/2018-01-02-10-49-18.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/img/2018-01-02-10-51-01.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/img/2018-01-02-10-51-33.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+    
+    </summary>
+    
+      <category term="读书笔记" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="kubernetes" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/kubernetes/"/>
+    
+    
+      <category term="docker" scheme="http://xbynet.top/tags/docker/"/>
+    
+      <category term="kubernetes" scheme="http://xbynet.top/tags/kubernetes/"/>
+    
+  </entry>
+  
+  <entry>
     <title>HTTP权威指南笔记之连接管理</title>
     <link href="http://xbynet.top/2017/12/28/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0%E4%B9%8B%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86/"/>
     <id>http://xbynet.top/2017/12/28/HTTP权威指南笔记之连接管理/</id>
     <published>2017-12-28T15:29:17.000Z</published>
-    <updated>2017-12-28T17:23:35.309Z</updated>
+    <updated>2017-12-28T17:28:23.131Z</updated>
     
-    <content type="html"><![CDATA[<script src="\assets\js\APlayer.min.js"> </script><p>纲要：</p><ul><li>HTTP是如何使用TCP连接的；</li><li>TCP连接的时延、瓶颈、存在的障碍；</li><li>HTTP的优化，并行、keep-alive/持久连接、管道化连接；</li><li>管道连接时应该及不应该做的事情</li></ul><h2 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h2><p>TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)<br><strong>TCP流是分段的、由IP分组传送：</strong><br>TCP的流会被分成小块(段segment)组装成IP分组(或IP数据报)来发送。<br><img src="/img/2017-12-28-23-35-01.png" alt=""></p><p>每个<code>IP分组</code>包括三部分：IP分组首部(20字节，包含源和目的ip地址，及其他标记)，TCP段首部(20字节，包含tcp端口号，控制标记，及用于排序和完整性校验的值)，TCP数据块(0或多个字节)。<br>所以要注意，比如TCP流是1字节，比如分成1个段，但需要传输的字节数在41+以上。试想如果有很多个TCP流都是特别小的数据量，那么反而会对带宽造成很大的浪费。<br><img src="/img/2017-12-28-23-41-29.png" alt=""></p><p>TCP是通过<code>端口号</code>来保持连接的，IP地址是用来寻址计算机，端口号是用来寻找计算机上对应应用程序的。<br>TCP连接的唯一标识，包含4个值:<code>源ip、源端口、目的ip、目的端口</code><br><img src="/img/2017-12-28-23-41-49.png" alt=""></p><p>TCP套接字编程：<br><img src="/img/2017-12-28-23-42-19.png" alt=""><br><img src="/img/2017-12-28-23-42-50.png" alt=""></p><h2 id="对TCP性能的考虑"><a href="#对TCP性能的考虑" class="headerlink" title="对TCP性能的考虑"></a>对TCP性能的考虑</h2><p>HTTP事务的时延:<br><img src="/img/2017-12-28-23-44-07.png" alt=""><br>TCP网络时延的大小取决于硬件速度、网络、服务器负载、请求和响应的尺寸、客户端与服务器间的距离。<br>常见的TCP时延包括：</p><ul><li>TCP连接建立握手</li><li>TCP慢启动拥塞控制</li><li>数据聚集的Nagle算法</li><li>用于捎带确认的TCP延迟确认算法</li><li>TIME_WAIT时延和端口耗尽</li></ul><p>1、TCP连接的握手时延<br><img src="/img/2017-12-28-23-49-33.png" alt=""><br>从图中可以看出，小的HTTP事务可能会在TCP建立上花费50%甚至更多的时间。</p><p>2、延迟确认(ACK延迟机制)<br>背景：由于因特网无法确保可靠的分组传输(路由器超负荷的话，可以随意丢弃分组)，所以TCP实现了自己的确认机制来确保数据的成功传输。(TCP是可靠的)<br>每个TCP段都有一哥序列号和数据完整性校验和。每个段的接受者收到时都会向发送者回送小的确认分组。入股发送者没有在指定的时间窗内收到确认信息，发送者就认为分组已被损坏，并重发数据。<br>但是由于确认报文很小，所以TCP允许在发往相同方向的输出数据分组中对其进行<code>捎带</code>.TCP将返回的确认信息与输出的数据分组结合在一起，以便更有效地利用网络。为了实现这一可能，出现了”<code>延迟确认</code>算法”<br>延迟确认算法会在一个特定的时间窗(<code>100~200ms</code>)内将输出确认存放在缓冲区中，以便寻找能够捎带它的输出数据分组。但是，HTTP具有<code>双峰特征</code>的请求-应答行为降低了捎带信息的可能。当希望有相反方向回传分组的时候，偏偏没有那么多。这样延迟确认算法就会引入相当大的时延。<strong>根据操作系统不同，可以调整或禁用延迟确认算法.</strong>(禁用之前一定要确保不会引发这些算法所要避免的问题)<br>(其实在建立连接第三次握手时，客户端向服务器端发送ACK包时就已经可以携带数据)</p><p>3、TCP慢启动<br>TCP连接会随着时间进行<code>自我调谐</code>,起初会限制连接的最大速度，如果数据成功传输，会随着时间的推移提高传输的速度。这种调谐被称为<code>TCP慢启动</code>(slow start),用于防止因特网的突然过载和<code>拥塞</code>。<br>TCP慢启动限制了一个TCP端点在任意时刻可以传输的分组数。(除非随着时间推移<code>打开拥塞窗口</code>后)<br>因为慢启动的存在，出现了HTTP持久连接，在持久连接中，后续的请求都会在处于<code>已调谐</code>的连接中进行。</p><p>4、Nagle算法和TCP_nodelay<br>前面说过，每个IP分组中都至少装载了40个字节的标记和首部，所以如果TCP发送了大量包含少量数据的分组，，网络的性能会严重下降(发送大量单字节分组的行为称为<code>发送端傻窗口综合症</code>)。<br>Nagle算法试图在发送一个分组之前，将大量TCP数据绑定在一起，以提高网络效率。它鼓励发送全尺寸(LAN最大尺寸分组为1500字节，因特网上是几百字节)的段，只有当所有其他分组都被确认之后，Nagle算法才允许发送非全尺寸的分组。只有当挂起分组被确认，<strong>或者缓存中积累了足够发送一个全尺寸分组的数据时，才会将缓存的数据发送出去。</strong><br>这样在HTTP中会引发性能问题:<br>如果小的HTTP报文可能无法填满一个全尺寸分组，从而导致因为等待那些永远不会到来的额外数据而产生时延。<br>Nagle算法就是为了尽可能发送大块数据，避免网络中充斥着许多小数据块。<br>Nagle算法的基本定义是<code>任意时刻，最多只能有一个未被确认的小段</code>。 所谓“小段”，指的是小于MSS尺寸的数据块，所谓“未被确认”，是指一个数据块发送出去后，没有收到对方发送的ACK确认该数据已收到。</p><p>Nagle算法与延迟确认之间的交互也会存在问题。<br>故而HTTP应用通常会在自己的栈中设置参数<code>TCP_NODELAY,禁用Nagle算法</code>，以提高性能。<br>当然，如果你要用Nagle算法的话，一定要确保会向TCP写入大块的数据，这样就不会产生一堆小分组了。</p><p>更多参考，这篇文章介绍的也不错：<a href="http://blog.csdn.net/historyasamirror/article/details/6423235" target="_blank" rel="noopener">http://blog.csdn.net/historyasamirror/article/details/6423235</a></p><p>5、<strong>TIME_WAIT累积与端口耗尽</strong><br>TIME_WAIT端口耗尽是很严重的性能问题。当某个TCP端点关闭TCP连接时，会在内存中维护一个小的控制块，用来记录最近所关闭连接的IP地址和端口号。这类信息只会维持一小段时间，即<code>2MSL(最大分段使用期的两倍</code>，以前为2分钟，但由于硬件及带宽的提升，这个时间变小了很多，而且因操作系统不同而不同，我在docker下看了ubuntu的MSL值为60),以<code>确保在这段时间内不会创建具有相同地址和端口号的新连接</code>。</p><p>Linux下查看并修改MSL(Maximum Segment Lifetime)值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_fin_timeout</span><br><span class="line">或</span><br><span class="line">cat /proc/sys/net/ipv4/tcp_fin_timeout</span><br><span class="line">修改</span><br><span class="line">edit /proc/sys/net/ipv4/tcp_fin_timeout</span><br><span class="line">使上面修改永久生效</span><br><span class="line">sysctl -p /etc/sysctl.conf</span><br></pre></td></tr></table></figure></p><p>需要注意的是，超过2MSL后，有分组被复制的可能性。试想，如果来自之前连接的分组插入了具有相同连接值的新TCP流，会破坏TCP数据。<br>试想只有一个客户端与一个服务端的情形下的压力测试，前面我们知道，构建一个TCP连接需要的4个值:源ip，源端口，目的ip，目的端口。这里面唯一可以改变的只有源端口。<br>而源端口可用数量有限(最大65000左右，可用一般6w个左右)，而且在2MSL秒(比如60s)内连接是无法重用的，连接率就被限制在了60000/60=1000次/s。当达到此峰值，那么客户端的端口也相应地被耗尽了。<br>注意：即使没有遇到端口耗尽问题，也要特别小心有大量连接处于打开状态的情况，这是有些操作系统的速度会严重减缓。</p><h2 id="HTTP连接的处理"><a href="#HTTP连接的处理" class="headerlink" title="HTTP连接的处理"></a>HTTP连接的处理</h2><p>HTTP允许在客户端和最终的源端服务器之间存在一系列HTTP中间实体(代理，高速缓存等)。<br>Connection头部有一个由逗号分隔的连接标签列表，这些标签为此连接指定了不会传播到其他连接中去的选项。Connection头部及其标签指明的头部只能用于相邻的端点，转发时需要被移除。这种称为<code>逐跳首部</code>。</p><p><img src="/img/2017-12-29-00-38-20.png" alt=""></p><p>连接分类：单个串行、并行(多条tcp连接)、持久连接(重用)、管道化连接(重用、并发)、复用连接</p><p><img src="/img/2017-12-29-00-40-50.png" alt=""><br><img src="/img/2017-12-29-00-41-07.png" alt=""><br>注意：并行不一定快，因为其会严重加重服务器或代理的压力。<br>浏览器通常会被并行数量作出限制(如同域名下最多4个)。</p><p>持久连接：重用已对目标服务器打开的空闲持久连接，这样可以避开缓慢的连接建立阶段，避开慢启动的拥塞适应阶段，以便更快速地进行数据的传输。<br>持久连接分类：HTTP1.0+keep-alive, HTTP1.1的默认persistent连接。<br><img src="/img/2017-12-29-00-45-52.png" alt=""></p><p>关于HTTP1.0Keep-Alive与Http1.1持久连接,请参考我另一篇文章。<br>HTTP1.0Keep-Alive:HTTP1.0默认不开启，需要请求和响应头都有<code>Connection: Keep-Alive</code>，否则连接就不持久。<br>Http1.1持久连接:不关心Connection: Keep-Alive,甚至需要废除这个。因为默认开启了持久连接，所以只需要在要关闭连接时发送<code>Connection: close</code>头就可以了。<br>HTTP1.0Keep-Alive与代理交互时可能出现的问题：Keep-Alive和哑代理，Connection头和盲中继，代理和逐跳首部、插入Proxy-Connection</p><h2 id="管道化连接"><a href="#管道化连接" class="headerlink" title="管道化连接"></a>管道化连接</h2><p>基于Http1.1持久连接，可选地使用请求管道。<br><img src="/img/2017-12-29-00-53-04.png" alt=""><br>要求：请求顺序与响应顺序一致性。<br>限制：HTTP客户端不应该用管道化的方式发送会产生副作用的请求，一般指<code>POST(非幂等</code>方法).出错的时候，管道化方式会阻碍客户端了解服务器执行的是一系列管道化请求中的哪一些。由于无法安全地重试POS这样的非幂等请求，所以出错时，就存在某些方法永远不会被执行的风险。<br>这也就是为什么页面提交没反应过来，再次提交或者刷新时，大多数浏览器会提示你是否需要再次提交表单的原因。</p><h2 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h2><p>1、任意关闭<br>2、Content-Length及截尾操作<br>3、连接关闭容限、重试、幂等性:<br>如果一个事务，不管是执行一次还是很多次，得到的结果都相同，这个事务就是幂等性。而POST是非幂等的。</p><p>4、正常关闭连接<br>我们知道TCP连接是双向的。有输入与输出队列，分别负责读与写。<br><img src="/img/2017-12-29-01-01-30.png" alt=""><br>完全关闭(socket.close)与半关闭(socket.shutdown)：是否将输入输出通道都关闭，或者只关闭其中一个。<br>TCP关闭及重置错误:<br><img src="/img/2017-12-29-01-03-53.png" alt=""></p><p>关闭连接的输出信道总是很安全的。连接另一端的对等实体会在从其缓冲区中读出所有数据之后收到连接关闭的通知。<br>关闭连接的输入信道比较危险，除非你知道另一端不打算发送其他数据了。否则操作系统会向另一端的机器回送一条<code>TCP连接被对端重置</code>的报文，<strong>同时删除对端还未读取的所有缓存数据(尽管其中的大部分都已抵达你的机器了)。对于管道化连接来说，这是非常糟糕的情形。</strong></p><p>正常关闭流程：先关闭输出通道-等待对端关闭它的输出信道-两端都告诉了对方不会再发送任何数据(即关闭了输出信道，并且关闭通知被对端读取了)-双方完全关闭连接。这样就不会有重置及清空缓冲数据的危险。<br>实际中，由于网络的不可靠，后面的步骤不一定能正常走完，所以一般需要周期性检查，超过一定时间仍不行就执行强制关闭，以节约资源。</p>]]></content>
+    <content type="html"><![CDATA[<script src="\assets\js\APlayer.min.js"> </script><p>纲要：</p><ul><li>HTTP是如何使用TCP连接的；</li><li>TCP连接的时延、瓶颈、存在的障碍；</li><li>HTTP的优化，并行、keep-alive/持久连接、管道化连接；</li><li>管道连接时应该及不应该做的事情</li></ul><h2 id="TCP连接"><a href="#TCP连接" class="headerlink" title="TCP连接"></a>TCP连接</h2><p>TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)<br><strong>TCP流是分段的、由IP分组传送：</strong><br>TCP的流会被分成小块(段segment)组装成IP分组(或IP数据报)来发送。<br><img src="/img/2017-12-28-23-35-01.png" alt=""></p><p>每个<code>IP分组</code>包括三部分：IP分组首部(20字节，包含源和目的ip地址，及其他标记)，TCP段首部(20字节，包含tcp端口号，控制标记，及用于排序和完整性校验的值)，TCP数据块(0或多个字节)。<br>所以要注意，比如TCP流是1字节，比如分成1个段，但需要传输的字节数在41+以上。试想如果有很多个TCP流都是特别小的数据量，那么反而会对带宽造成很大的浪费。<br><img src="/img/2017-12-28-23-41-29.png" alt=""></p><p>TCP是通过<code>端口号</code>来保持连接的，IP地址是用来寻址计算机，端口号是用来寻找计算机上对应应用程序的。<br>TCP连接的唯一标识，包含4个值:<code>源ip、源端口、目的ip、目的端口</code><br><img src="/img/2017-12-28-23-41-49.png" alt=""></p><p>TCP套接字编程：<br><img src="/img/2017-12-28-23-42-19.png" alt=""><br><img src="/img/2017-12-28-23-42-50.png" alt=""></p><a id="more"></a><h2 id="对TCP性能的考虑"><a href="#对TCP性能的考虑" class="headerlink" title="对TCP性能的考虑"></a>对TCP性能的考虑</h2><p>HTTP事务的时延:<br><img src="/img/2017-12-28-23-44-07.png" alt=""><br>TCP网络时延的大小取决于硬件速度、网络、服务器负载、请求和响应的尺寸、客户端与服务器间的距离。<br>常见的TCP时延包括：</p><ul><li>TCP连接建立握手</li><li>TCP慢启动拥塞控制</li><li>数据聚集的Nagle算法</li><li>用于捎带确认的TCP延迟确认算法</li><li>TIME_WAIT时延和端口耗尽</li></ul><p>1、TCP连接的握手时延<br><img src="/img/2017-12-28-23-49-33.png" alt=""><br>从图中可以看出，小的HTTP事务可能会在TCP建立上花费50%甚至更多的时间。</p><p>2、延迟确认(ACK延迟机制)<br>背景：由于因特网无法确保可靠的分组传输(路由器超负荷的话，可以随意丢弃分组)，所以TCP实现了自己的确认机制来确保数据的成功传输。(TCP是可靠的)<br>每个TCP段都有一哥序列号和数据完整性校验和。每个段的接受者收到时都会向发送者回送小的确认分组。入股发送者没有在指定的时间窗内收到确认信息，发送者就认为分组已被损坏，并重发数据。<br>但是由于确认报文很小，所以TCP允许在发往相同方向的输出数据分组中对其进行<code>捎带</code>.TCP将返回的确认信息与输出的数据分组结合在一起，以便更有效地利用网络。为了实现这一可能，出现了”<code>延迟确认</code>算法”<br>延迟确认算法会在一个特定的时间窗(<code>100~200ms</code>)内将输出确认存放在缓冲区中，以便寻找能够捎带它的输出数据分组。但是，HTTP具有<code>双峰特征</code>的请求-应答行为降低了捎带信息的可能。当希望有相反方向回传分组的时候，偏偏没有那么多。这样延迟确认算法就会引入相当大的时延。<strong>根据操作系统不同，可以调整或禁用延迟确认算法.</strong>(禁用之前一定要确保不会引发这些算法所要避免的问题)<br>(其实在建立连接第三次握手时，客户端向服务器端发送ACK包时就已经可以携带数据)</p><p>3、TCP慢启动<br>TCP连接会随着时间进行<code>自我调谐</code>,起初会限制连接的最大速度，如果数据成功传输，会随着时间的推移提高传输的速度。这种调谐被称为<code>TCP慢启动</code>(slow start),用于防止因特网的突然过载和<code>拥塞</code>。<br>TCP慢启动限制了一个TCP端点在任意时刻可以传输的分组数。(除非随着时间推移<code>打开拥塞窗口</code>后)<br>因为慢启动的存在，出现了HTTP持久连接，在持久连接中，后续的请求都会在处于<code>已调谐</code>的连接中进行。</p><p>4、Nagle算法和TCP_nodelay<br>前面说过，每个IP分组中都至少装载了40个字节的标记和首部，所以如果TCP发送了大量包含少量数据的分组，，网络的性能会严重下降(发送大量单字节分组的行为称为<code>发送端傻窗口综合症</code>)。<br>Nagle算法试图在发送一个分组之前，将大量TCP数据绑定在一起，以提高网络效率。它鼓励发送全尺寸(LAN最大尺寸分组为1500字节，因特网上是几百字节)的段，只有当所有其他分组都被确认之后，Nagle算法才允许发送非全尺寸的分组。只有当挂起分组被确认，<strong>或者缓存中积累了足够发送一个全尺寸分组的数据时，才会将缓存的数据发送出去。</strong><br>这样在HTTP中会引发性能问题:<br>如果小的HTTP报文可能无法填满一个全尺寸分组，从而导致因为等待那些永远不会到来的额外数据而产生时延。<br>Nagle算法就是为了尽可能发送大块数据，避免网络中充斥着许多小数据块。<br>Nagle算法的基本定义是<code>任意时刻，最多只能有一个未被确认的小段</code>。 所谓“小段”，指的是小于MSS尺寸的数据块，所谓“未被确认”，是指一个数据块发送出去后，没有收到对方发送的ACK确认该数据已收到。</p><p>Nagle算法与延迟确认之间的交互也会存在问题。<br>故而HTTP应用通常会在自己的栈中设置参数<code>TCP_NODELAY,禁用Nagle算法</code>，以提高性能。<br>当然，如果你要用Nagle算法的话，一定要确保会向TCP写入大块的数据，这样就不会产生一堆小分组了。</p><p>更多参考，这篇文章介绍的也不错：<a href="http://blog.csdn.net/historyasamirror/article/details/6423235" target="_blank" rel="noopener">http://blog.csdn.net/historyasamirror/article/details/6423235</a></p><p>5、<strong>TIME_WAIT累积与端口耗尽</strong><br>TIME_WAIT端口耗尽是很严重的性能问题。当某个TCP端点关闭TCP连接时，会在内存中维护一个小的控制块，用来记录最近所关闭连接的IP地址和端口号。这类信息只会维持一小段时间，即<code>2MSL(最大分段使用期的两倍</code>，以前为2分钟，但由于硬件及带宽的提升，这个时间变小了很多，而且因操作系统不同而不同，我在docker下看了ubuntu的MSL值为60),以<code>确保在这段时间内不会创建具有相同地址和端口号的新连接</code>。</p><p>Linux下查看并修改MSL(Maximum Segment Lifetime)值<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">sysctl net.ipv4.tcp_fin_timeout</span><br><span class="line">或</span><br><span class="line">cat /proc/sys/net/ipv4/tcp_fin_timeout</span><br><span class="line">修改</span><br><span class="line">edit /proc/sys/net/ipv4/tcp_fin_timeout</span><br><span class="line">使上面修改永久生效</span><br><span class="line">sysctl -p /etc/sysctl.conf</span><br></pre></td></tr></table></figure></p><p>需要注意的是，超过2MSL后，有分组被复制的可能性。试想，如果来自之前连接的分组插入了具有相同连接值的新TCP流，会破坏TCP数据。<br>试想只有一个客户端与一个服务端的情形下的压力测试，前面我们知道，构建一个TCP连接需要的4个值:源ip，源端口，目的ip，目的端口。这里面唯一可以改变的只有源端口。<br>而源端口可用数量有限(最大65000左右，可用一般6w个左右)，而且在2MSL秒(比如60s)内连接是无法重用的，连接率就被限制在了60000/60=1000次/s。当达到此峰值，那么客户端的端口也相应地被耗尽了。<br>注意：即使没有遇到端口耗尽问题，也要特别小心有大量连接处于打开状态的情况，这是有些操作系统的速度会严重减缓。</p><h2 id="HTTP连接的处理"><a href="#HTTP连接的处理" class="headerlink" title="HTTP连接的处理"></a>HTTP连接的处理</h2><p>HTTP允许在客户端和最终的源端服务器之间存在一系列HTTP中间实体(代理，高速缓存等)。<br>Connection头部有一个由逗号分隔的连接标签列表，这些标签为此连接指定了不会传播到其他连接中去的选项。Connection头部及其标签指明的头部只能用于相邻的端点，转发时需要被移除。这种称为<code>逐跳首部</code>。</p><p><img src="/img/2017-12-29-00-38-20.png" alt=""></p><p>连接分类：单个串行、并行(多条tcp连接)、持久连接(重用)、管道化连接(重用、并发)、复用连接</p><p><img src="/img/2017-12-29-00-40-50.png" alt=""><br><img src="/img/2017-12-29-00-41-07.png" alt=""><br>注意：并行不一定快，因为其会严重加重服务器或代理的压力。<br>浏览器通常会被并行数量作出限制(如同域名下最多4个)。</p><p>持久连接：重用已对目标服务器打开的空闲持久连接，这样可以避开缓慢的连接建立阶段，避开慢启动的拥塞适应阶段，以便更快速地进行数据的传输。<br>持久连接分类：HTTP1.0+keep-alive, HTTP1.1的默认persistent连接。<br><img src="/img/2017-12-29-00-45-52.png" alt=""></p><p>关于HTTP1.0Keep-Alive与Http1.1持久连接,请参考我另一篇文章。<br>HTTP1.0Keep-Alive:HTTP1.0默认不开启，需要请求和响应头都有<code>Connection: Keep-Alive</code>，否则连接就不持久。<br>Http1.1持久连接:不关心Connection: Keep-Alive,甚至需要废除这个。因为默认开启了持久连接，所以只需要在要关闭连接时发送<code>Connection: close</code>头就可以了。<br>HTTP1.0Keep-Alive与代理交互时可能出现的问题：Keep-Alive和哑代理，Connection头和盲中继，代理和逐跳首部、插入Proxy-Connection</p><h2 id="管道化连接"><a href="#管道化连接" class="headerlink" title="管道化连接"></a>管道化连接</h2><p>基于Http1.1持久连接，可选地使用请求管道。<br><img src="/img/2017-12-29-00-53-04.png" alt=""><br>要求：请求顺序与响应顺序一致性。<br>限制：HTTP客户端不应该用管道化的方式发送会产生副作用的请求，一般指<code>POST(非幂等</code>方法).出错的时候，管道化方式会阻碍客户端了解服务器执行的是一系列管道化请求中的哪一些。由于无法安全地重试POS这样的非幂等请求，所以出错时，就存在某些方法永远不会被执行的风险。<br>这也就是为什么页面提交没反应过来，再次提交或者刷新时，大多数浏览器会提示你是否需要再次提交表单的原因。</p><h2 id="关闭连接"><a href="#关闭连接" class="headerlink" title="关闭连接"></a>关闭连接</h2><p>1、任意关闭<br>2、Content-Length及截尾操作<br>3、连接关闭容限、重试、幂等性:<br>如果一个事务，不管是执行一次还是很多次，得到的结果都相同，这个事务就是幂等性。而POST是非幂等的。</p><p>4、正常关闭连接<br>我们知道TCP连接是双向的。有输入与输出队列，分别负责读与写。<br><img src="/img/2017-12-29-01-01-30.png" alt=""><br>完全关闭(socket.close)与半关闭(socket.shutdown)：是否将输入输出通道都关闭，或者只关闭其中一个。<br>TCP关闭及重置错误:<br><img src="/img/2017-12-29-01-03-53.png" alt=""></p><p>关闭连接的输出信道总是很安全的。连接另一端的对等实体会在从其缓冲区中读出所有数据之后收到连接关闭的通知。<br>关闭连接的输入信道比较危险，除非你知道另一端不打算发送其他数据了。否则操作系统会向另一端的机器回送一条<code>TCP连接被对端重置</code>的报文，<strong>同时删除对端还未读取的所有缓存数据(尽管其中的大部分都已抵达你的机器了)。对于管道化连接来说，这是非常糟糕的情形。</strong></p><p>正常关闭流程：先关闭输出通道-等待对端关闭它的输出信道-两端都告诉了对方不会再发送任何数据(即关闭了输出信道，并且关闭通知被对端读取了)-双方完全关闭连接。这样就不会有重置及清空缓冲数据的危险。<br>实际中，由于网络的不可靠，后面的步骤不一定能正常走完，所以一般需要周期性检查，超过一定时间仍不行就执行强制关闭，以节约资源。</p>]]></content>
     
     <summary type="html">
     
-      
-      
-        &lt;script src=&quot;\assets\js\APlayer.min.js&quot;&gt; &lt;/script&gt;&lt;p&gt;纲要：&lt;/p&gt;
+      &lt;p&gt;纲要：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;HTTP是如何使用TCP连接的；&lt;/li&gt;
 &lt;li&gt;TCP连接的时延、瓶颈、存在的障碍；&lt;/li&gt;
-&lt;li&gt;HTTP的优化，并行、keep-
-      
+&lt;li&gt;HTTP的优化，并行、keep-alive/持久连接、管道化连接；&lt;/li&gt;
+&lt;li&gt;管道连接时应该及不应该做的事情&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;TCP连接&quot;&gt;&lt;a href=&quot;#TCP连接&quot; class=&quot;headerlink&quot; title=&quot;TCP连接&quot;&gt;&lt;/a&gt;TCP连接&lt;/h2&gt;&lt;p&gt;TCP为HTTP提供了一条可靠的数据传输管道。一旦连接建立，客户端和服务器之间交换的报文就永远不会丢失、受损或失序(在连接没有断开的情况下)&lt;br&gt;&lt;strong&gt;TCP流是分段的、由IP分组传送：&lt;/strong&gt;&lt;br&gt;TCP的流会被分成小块(段segment)组装成IP分组(或IP数据报)来发送。&lt;br&gt;&lt;img src=&quot;/img/2017-12-28-23-35-01.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;每个&lt;code&gt;IP分组&lt;/code&gt;包括三部分：IP分组首部(20字节，包含源和目的ip地址，及其他标记)，TCP段首部(20字节，包含tcp端口号，控制标记，及用于排序和完整性校验的值)，TCP数据块(0或多个字节)。&lt;br&gt;所以要注意，比如TCP流是1字节，比如分成1个段，但需要传输的字节数在41+以上。试想如果有很多个TCP流都是特别小的数据量，那么反而会对带宽造成很大的浪费。&lt;br&gt;&lt;img src=&quot;/img/2017-12-28-23-41-29.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;TCP是通过&lt;code&gt;端口号&lt;/code&gt;来保持连接的，IP地址是用来寻址计算机，端口号是用来寻找计算机上对应应用程序的。&lt;br&gt;TCP连接的唯一标识，包含4个值:&lt;code&gt;源ip、源端口、目的ip、目的端口&lt;/code&gt;&lt;br&gt;&lt;img src=&quot;/img/2017-12-28-23-41-49.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;TCP套接字编程：&lt;br&gt;&lt;img src=&quot;/img/2017-12-28-23-42-19.png&quot; alt=&quot;&quot;&gt;&lt;br&gt;&lt;img src=&quot;/img/2017-12-28-23-42-50.png&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
@@ -499,9 +529,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -527,9 +557,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -563,9 +593,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -591,9 +621,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -624,9 +654,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -655,9 +685,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -683,9 +713,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -712,9 +742,9 @@
       <category term="SpringCloud" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringCloud/"/>
     
     
-      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
-    
       <category term="springcloud" scheme="http://xbynet.top/tags/springcloud/"/>
+    
+      <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
     
       <category term="msa" scheme="http://xbynet.top/tags/msa/"/>
     
@@ -764,9 +794,9 @@
       <category term="算法" scheme="http://xbynet.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="分布式" scheme="http://xbynet.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
@@ -791,9 +821,9 @@
       <category term="算法" scheme="http://xbynet.top/categories/%E7%AE%97%E6%B3%95/"/>
     
     
-      <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
-    
       <category term="MicroService" scheme="http://xbynet.top/tags/MicroService/"/>
+    
+      <category term="算法" scheme="http://xbynet.top/tags/%E7%AE%97%E6%B3%95/"/>
     
       <category term="分布式" scheme="http://xbynet.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
     
