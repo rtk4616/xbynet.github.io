@@ -98,7 +98,7 @@
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-17-20-47.png">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-16-45-49.png">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-16-36-36.png">
-<meta property="og:updated_time" content="2018-01-05T09:21:08.724Z">
+<meta property="og:updated_time" content="2018-01-05T09:29:14.165Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat8.5官文笔记">
 <meta name="twitter:description" content="一直没有通读过很多中间件的官方文档，这次恶补起来。http://tomcat.apache.org/tomcat-8.5-doc/index.htmltomcat还在维护的有几个版本9.0,8.5,8.0,7.0其中9.0实现了Servlet4.0规范(JavaEE8),8.5实现了Servlet3.1规范(JavaEE7),并移除BIO连接器，默认采用NIO连接器，8.0也实现了Servlet3">
@@ -454,7 +454,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  3,804
+                  3,811
                 </span>
               
 
@@ -505,7 +505,7 @@
 <h2 id="QuickStart"><a href="#QuickStart" class="headerlink" title="QuickStart"></a>QuickStart</h2><p>安装：(其实我们实际情况下不是这么来的)<br>windows:<a href="http://tomcat.apache.org/tomcat-8.5-doc/windows-service-howto.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/windows-service-howto.html</a><br>Linux:<a href="http://tomcat.apache.org/tomcat-8.5-doc/windows-service-howto.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/windows-service-howto.html</a></p>
 <h3 id="Application-Developer’s-Guide"><a href="#Application-Developer’s-Guide" class="headerlink" title="Application Developer’s Guide"></a>Application Developer’s Guide</h3><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/appdev/deployment.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/appdev/deployment.html</a><br>应用文件格式WAR(Web Application Archive)<br>应用标准目录WEB-INF/web.xml,WEB-INF/lib/, <em>.jsp,</em>.html,etc.<br>应用自用库放WEB-INF/lib,所有应用公用库放CATALINA_HOME/lib.<br>描述文件:<br><code>/WEB-INF/web.xml</code>:由Servlet规范定义的。配置文档见：<a href="http://tomcat.apache.org/tomcat-8.5-doc/appdev/web.xml.txt" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/appdev/web.xml.txt</a><br><code>/META-INF/context.xml</code>:Tomcat Context配置文件，该文件以<code>Context</code>元素为根，实际运行时文件中的配置会作为Tomcat配置的<code>Host</code>元素的子元素。注意：此处/META-INF不是/WEB-INF/META-INF.配置文档见：<a href="http://tomcat.apache.org/tomcat-8.5-doc/config/context.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/config/context.html</a></p>
 <p>部署方式:<br>1、直接拷贝文件夹到webapps下<br>2、拷贝war到webapps下<br>3、使用tomcat /manager应用来部署<br>4、其他</p>
-<h2 id="tomcat-class-loader"><a href="#tomcat-class-loader" class="headerlink" title="tomcat class loader"></a>tomcat class loader</h2><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/class-loader-howto.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/class-loader-howto.html</a><br>Java类加载机制采用双亲委派模型。具体不作过多介绍。在tomcat中有些不一样。<br>      Bootstrap<br>          |<br>       System<br>          |<br>       Common<br>       /     \<br>  Webapp1   Webapp2 …</p>
+<h2 id="tomcat-class-loader"><a href="#tomcat-class-loader" class="headerlink" title="tomcat class loader"></a>tomcat class loader</h2><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/class-loader-howto.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/class-loader-howto.html</a><br>Java类加载机制采用双亲委派模型。具体不作过多介绍。在tomcat中有些不一样。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">    Bootstrap</span><br><span class="line">        |</span><br><span class="line">     System</span><br><span class="line">        |</span><br><span class="line">     Common</span><br><span class="line">     /     \</span><br><span class="line">Webapp1   Webapp2 ...</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>Bootstrap：这里的Bootstrap指得是Java类加载器模型中的Bootstrap+Ext</li>
 <li>System:和java类加载器模型的APP/System加载器概念一致，不过加载路径上有些区别。java类加载器模型中的System会按照ClASSPATH环境变量的定义去加载类。而tomcat的System会忽略ClASSPATH环境变量(除非你显式定义在$CATALINA_HOME/bin/catalina.sh).此处System的加载路径为：$CATALINA_HOME/bin/bootstrap.jar，$CATALINA_HOME/bin/tomcat-juli.jar(日志相关)，$CATALINA_HOME/bin/commons-daemon.jar</li>
