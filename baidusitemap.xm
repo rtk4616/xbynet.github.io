@@ -4,6 +4,59 @@
 
     
   <url>
+    <loc>http://xbynet.top/2018/01/05/tomcat8-5%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2018-01-05T08:48:08.619Z</lastmod>
+    <data>
+        <display>
+        <title>tomcat8.5官文笔记</title>
+        <pubTime>2018-01-05T01:29:11.000Z</pubTime>
+        
+        <tag>tomcat</tag>
+         
+        <tag>java</tag>
+         
+         
+           
+             
+              <breadCrumb title="中间件" url="http://xbynet.top/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+          
+             
+              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="tomcat" url="http://xbynet.top/categories/tomcat/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xbynet.top/2018/01/02/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97%E7%AC%94%E8%AE%B0%E4%B9%8BWeb%E6%9C%8D%E5%8A%A1%E5%99%A8-%E4%BB%A3%E7%90%86-%E7%BC%93%E5%AD%98/</loc>
+    <lastmod>2018-01-04T10:59:25.362Z</lastmod>
+    <data>
+        <display>
+        <title>HTTP权威指南笔记之Web服务器、代理、缓存</title>
+        <pubTime>2018-01-02T12:36:03.000Z</pubTime>
+        
+        <tag>http</tag>
+         
+        <tag>tcp</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="HTTP权威指南" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/HTTP%E6%9D%83%E5%A8%81%E6%8C%87%E5%8D%97/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xbynet.top/2017/12/27/tomcat%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</loc>
     <lastmod>2018-01-02T09:07:59.214Z</lastmod>
     <data>
@@ -575,9 +628,9 @@
          
         <tag>msa</tag>
          
-        <tag>soa</tag>
-         
         <tag>架构</tag>
+         
+        <tag>soa</tag>
          
          
            
@@ -604,9 +657,9 @@
          
         <tag>msa</tag>
          
-        <tag>soa</tag>
-         
         <tag>架构</tag>
+         
+        <tag>soa</tag>
          
          
            
@@ -633,9 +686,9 @@
          
         <tag>msa</tag>
          
-        <tag>soa</tag>
-         
         <tag>架构</tag>
+         
+        <tag>soa</tag>
          
          
            
@@ -662,9 +715,9 @@
          
         <tag>msa</tag>
          
-        <tag>soa</tag>
-         
         <tag>架构</tag>
+         
+        <tag>soa</tag>
          
          
            
