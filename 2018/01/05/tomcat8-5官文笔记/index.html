@@ -94,11 +94,11 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-09-41-47.png">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-09-44-06.png">
-<meta property="og:image" content="http://xbynet.top/img/2018-01-05-16-41-31.png">
-<meta property="og:image" content="http://xbynet.top/img/2018-01-05-16-43-42.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-05-17-19-50.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-05-17-20-47.png">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-16-45-49.png">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-16-36-36.png">
-<meta property="og:updated_time" content="2018-01-05T09:04:50.988Z">
+<meta property="og:updated_time" content="2018-01-05T09:21:08.724Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat8.5官文笔记">
 <meta name="twitter:description" content="一直没有通读过很多中间件的官方文档，这次恶补起来。http://tomcat.apache.org/tomcat-8.5-doc/index.htmltomcat还在维护的有几个版本9.0,8.5,8.0,7.0其中9.0实现了Servlet4.0规范(JavaEE8),8.5实现了Servlet3.1规范(JavaEE7),并移除BIO连接器，默认采用NIO连接器，8.0也实现了Servlet3">
@@ -501,7 +501,7 @@
 <p>tomcat源码:<a href="http://tomcat.apache.org/svn.html" target="_blank" rel="noopener">http://tomcat.apache.org/svn.html</a><br>svncheck地址:<a href="http://svn.apache.org/repos/asf/tomcat/tc8.5.x/trunk/" target="_blank" rel="noopener">http://svn.apache.org/repos/asf/tomcat/tc8.5.x/trunk/</a><br>git地址:git://git.apache.org/tomcat85.git</p>
 <p>tomcat升级迁移指南：<a href="http://tomcat.apache.org/migration.html" target="_blank" rel="noopener">http://tomcat.apache.org/migration.html</a><br><a href="http://tomcat.apache.org/migration-85.html" target="_blank" rel="noopener">http://tomcat.apache.org/migration-85.html</a></p>
 <p>JSP talibs下载：<a href="https://tomcat.apache.org/download-taglibs.cgi" target="_blank" rel="noopener">https://tomcat.apache.org/download-taglibs.cgi</a></p>
-<p>架构图：<br><img src="/img/2018-01-05-16-41-31.png" alt=""><br><img src="/img/2018-01-05-16-43-42.png" alt=""><br><img src="/img/2018-01-05-16-45-49.png" alt=""><br><a id="more"></a></p>
+<p>架构图：<br><img src="/img/2018-01-05-17-19-50.png" alt=""><br><img src="/img/2018-01-05-17-20-47.png" alt=""><br><img src="/img/2018-01-05-16-45-49.png" alt=""><br><a id="more"></a></p>
 <h2 id="QuickStart"><a href="#QuickStart" class="headerlink" title="QuickStart"></a>QuickStart</h2><p>安装：(其实我们实际情况下不是这么来的)<br>windows:<a href="http://tomcat.apache.org/tomcat-8.5-doc/windows-service-howto.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/windows-service-howto.html</a><br>Linux:<a href="http://tomcat.apache.org/tomcat-8.5-doc/windows-service-howto.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/windows-service-howto.html</a></p>
 <h3 id="Application-Developer’s-Guide"><a href="#Application-Developer’s-Guide" class="headerlink" title="Application Developer’s Guide"></a>Application Developer’s Guide</h3><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/appdev/deployment.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/appdev/deployment.html</a><br>应用文件格式WAR(Web Application Archive)<br>应用标准目录WEB-INF/web.xml,WEB-INF/lib/, <em>.jsp,</em>.html,etc.<br>应用自用库放WEB-INF/lib,所有应用公用库放CATALINA_HOME/lib.<br>描述文件:<br><code>/WEB-INF/web.xml</code>:由Servlet规范定义的。配置文档见：<a href="http://tomcat.apache.org/tomcat-8.5-doc/appdev/web.xml.txt" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/appdev/web.xml.txt</a><br><code>/META-INF/context.xml</code>:Tomcat Context配置文件，该文件以<code>Context</code>元素为根，实际运行时文件中的配置会作为Tomcat配置的<code>Host</code>元素的子元素。注意：此处/META-INF不是/WEB-INF/META-INF.配置文档见：<a href="http://tomcat.apache.org/tomcat-8.5-doc/config/context.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/config/context.html</a></p>
 <p>部署方式:<br>1、直接拷贝文件夹到webapps下<br>2、拷贝war到webapps下<br>3、使用tomcat /manager应用来部署<br>4、其他</p>
