@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-18-43-40.png">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-18-35-36.png">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-16-36-36.png">
-<meta property="og:updated_time" content="2018-01-05T10:44:12.689Z">
+<meta property="og:updated_time" content="2018-01-09T08:48:50.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat8.5官文笔记">
 <meta name="twitter:description" content="一直没有通读过很多中间件的官方文档，这次恶补起来。http://tomcat.apache.org/tomcat-8.5-doc/index.htmltomcat还在维护的有几个版本9.0,8.5,8.0,7.0其中9.0实现了Servlet4.0规范(JavaEE8),8.5实现了Servlet3.1规范(JavaEE7),并移除BIO连接器，默认采用NIO连接器，8.0也实现了Servlet3">
@@ -456,7 +456,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4,563
+                  4,694
                 </span>
               
 
@@ -550,7 +550,9 @@
 <h2 id="Clustering-Session-Replication"><a href="#Clustering-Session-Replication" class="headerlink" title="Clustering/Session Replication"></a>Clustering/Session Replication</h2><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/cluster-howto.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/cluster-howto.html</a><br><a href="http://tomcat.apache.org/tomcat-8.5-doc/config/cluster.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/config/cluster.html</a><br>简单方式，添加下面的配置到server.xml中的 <code>&lt;Engine&gt;</code>或 <code>&lt;Host&gt;</code>元素下来启用集群模式。<br><code>&lt;Cluster className=&quot;org.apache.catalina.ha.tcp.SimpleTcpCluster&quot;/&gt;</code><br>策略是all-to-all session replication using the DeltaManager。小集群模式下可以，但是节点较多时不推荐。<br>稍微复杂点的方式是使用BackupManager，配置方式见官文。</p>
 <p>采用第三方插件结合缓存中间件共享session:略</p>
 <p>集群负载均衡，官方仅支持Apache Http 的插件形式：mod_proxy</p>
-<h2 id="Monitoring-with-JMX"><a href="#Monitoring-with-JMX" class="headerlink" title="Monitoring with JMX"></a>Monitoring with JMX</h2><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/monitoring.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/monitoring.html</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">set CATALINA_OPTS=\</span><br><span class="line">-Dcom.sun.management.jmxremote \</span><br><span class="line">-Dcom.sun.management.jmxremote.port=8999 \</span><br><span class="line">-Dcom.sun.management.jmxremote.ssl=false \</span><br><span class="line">-Dcom.sun.management.jmxremote.authenticate=false</span><br></pre></td></tr></table></figure></p>
+<h2 id="Monitoring-with-JMX"><a href="#Monitoring-with-JMX" class="headerlink" title="Monitoring with JMX"></a>Monitoring with JMX</h2><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/monitoring.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/monitoring.html</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">set CATALINA_OPTS=\</span><br><span class="line">-Dcom.sun.management.jmxremote \</span><br><span class="line">-Dcom.sun.management.jmxremote.port=8999 \</span><br><span class="line">-Dcom.sun.management.jmxremote.ssl=false \</span><br><span class="line">-Dcom.sun.management.jmxremote.authenticate=false \</span><br><span class="line">-Djava.rmi.server.hostname=127.0.0.1</span><br></pre></td></tr></table></figure></p>
+<p> linux服务器 执行hostname -i 命令，如果显示的是127.0.0.1，则需要修改/etc/hosts文件或者添加-Djava.rmi.server.hostname=xxxip参数,否则jconsole无法链接。</p>
+<p>注意：在docker情况下有所不同：<br><a href="https://stackoverflow.com/questions/29958421/access-tomcat-running-in-docker-container-by-jmx" target="_blank" rel="noopener">https://stackoverflow.com/questions/29958421/access-tomcat-running-in-docker-container-by-jmx</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">-Dcom.sun.management.jmxremote</span><br><span class="line">-Dcom.sun.management.jmxremote.local.only=false </span><br><span class="line">-Dcom.sun.management.jmxremote.authenticate=false </span><br><span class="line">-Dcom.sun.management.jmxremote.port=8999 </span><br><span class="line">-Dcom.sun.management.jmxremote.rmi.port=8999 </span><br><span class="line">-Djava.rmi.server.hostname=127.0.0.1 </span><br><span class="line">-Dcom.sun.management.jmxremote.ssl=false</span><br></pre></td></tr></table></figure></p>
 <h2 id="Connectors"><a href="#Connectors" class="headerlink" title="Connectors"></a>Connectors</h2><p><a href="http://tomcat.apache.org/tomcat-8.5-doc/connectors.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/connectors.html</a><br><a href="http://tomcat.apache.org/tomcat-8.5-doc/config/http.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/config/http.html</a><br>分为两大类:HTTP,AJP<br>AJP主要用于与ApacheHttp集成做集群负载均衡的时候使用。<br>Tomcat8.5之后移除了对BIO连接器的支持，并默认采用NIO连接器。<br>支持的HTTP连接器类型:BIO(8.5版本后被移除，以前版本是默认连接器)、<br>NIO/NIO2、APR:<a href="http://tomcat.apache.org/tomcat-8.5-doc/config/http.html#Connector_Comparison" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/config/http.html#Connector_Comparison</a><br>APR连接器：<a href="http://tomcat.apache.org/tomcat-8.5-doc/apr.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/apr.html</a></p>
 <p>maxThreads,maxConnections,acceptCount:<br>当并发请求数大于maxThreads时，server仍然会接受请求并(由Connector)创建socket连接,当达到maxConnections值(也就是所支持的最大tcp连接数,NIO模式下默认是10000.)，仍然可以继续接受socket，但是只是由操作系统放在Accept队列里，Connector并不会立即去取到Connector中,当并发请求数继续增加超过acceptCount(默认100)后，之后的请求过来时就会直接拒绝，客户端会看到”connection refused” error.</p>
 <p>其他重要点的参数：<br>enableLookups ： 是否启用dns查询，默认是禁用false。如果你想使用request.getRemoteHost()可以开启，但是这对性能会有损耗，一般不建议开启。<br>maxPostSize：最大POST大小，默认2m，设置为-1则不限制。<br>port:指定tcp端口<br>protocol:指定使用的连接器：<br>org.apache.coyote.http11.Http11NioProtocol<br>org.apache.coyote.http11.Http11Nio2Protocol<br>org.apache.coyote.http11.Http11AprProtocol<br>如果配置值为<code>HTTP/1.1</code>会自动检测使用合适的连接器。</p>
@@ -724,7 +726,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-count">37</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -881,7 +883,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">173.1k</span>
+    <span title="Site words total count">174.7k</span>
   
 </div>
 
