@@ -4,6 +4,52 @@
 
     
   <url>
+    <loc>http://xbynet.top/2018/01/09/SpringBoot%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2018-01-09T16:39:26.377Z</lastmod>
+    <data>
+        <display>
+        <title>SpringBoot官文笔记</title>
+        <pubTime>2018-01-09T01:35:04.000Z</pubTime>
+        
+        <tag>SpringBoot</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="SpringBoot" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringBoot/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://xbynet.top/2017/12/20/%E5%8E%86%E5%8F%B2%E5%8D%9A%E6%96%87%E8%BF%81%E7%A7%BB-Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
+    <lastmod>2018-01-09T16:39:18.182Z</lastmod>
+    <data>
+        <display>
+        <title>[历史博文迁移]Spring-Boot学习笔记</title>
+        <pubTime>2017-12-20T08:57:08.000Z</pubTime>
+        
+        <tag>SpringBoot</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="SpringBoot" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringBoot/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xbynet.top/2018/01/05/tomcat8-5%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2018-01-09T08:48:50.904Z</lastmod>
     <data>
@@ -25,29 +71,6 @@
           
              
               <breadCrumb title="tomcat" url="http://xbynet.top/categories/tomcat/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://xbynet.top/2018/01/09/SpringBoot%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2018-01-09T03:30:44.073Z</lastmod>
-    <data>
-        <display>
-        <title>SpringBoot官文笔记</title>
-        <pubTime>2018-01-09T01:35:04.000Z</pubTime>
-        
-        <tag>SpringBoot</tag>
-         
-         
-           
-             
-              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-          
-             
-              <breadCrumb title="SpringBoot" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringBoot/"/>
           
         </display>
     </data>
@@ -845,29 +868,6 @@
           
              
               <breadCrumb title="Java" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://xbynet.top/2017/12/20/%E5%8E%86%E5%8F%B2%E5%8D%9A%E6%96%87%E8%BF%81%E7%A7%BB-Spring-Boot%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2017-12-20T09:00:45.959Z</lastmod>
-    <data>
-        <display>
-        <title>[历史博文迁移]Spring-Boot学习笔记</title>
-        <pubTime>2017-12-20T08:57:08.000Z</pubTime>
-        
-        <tag>SpringBoot</tag>
-         
-         
-           
-             
-              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
-          
-             
-              <breadCrumb title="SpringBoot" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/SpringBoot/"/>
           
         </display>
     </data>
