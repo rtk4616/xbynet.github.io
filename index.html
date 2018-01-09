@@ -330,6 +330,638 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2018/01/08/Redis集群方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/08/Redis集群方案/" itemprop="url">Redis集群方案</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-08T10:22:47+08:00">
+                2018-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/中间件/" itemprop="url" rel="index">
+                    <span itemprop="name">中间件</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/中间件/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/08/Redis集群方案/" class="leancloud_visitors" data-flag-title="Redis集群方案">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,743
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="知识点回顾"><a href="#知识点回顾" class="headerlink" title="知识点回顾"></a>知识点回顾</h1><p>Redis支持的数据结构</p>
+<ul>
+<li>字符串（String）</li>
+<li>哈希（Hash）</li>
+<li>列表（List）</li>
+<li>集合（Set）</li>
+<li>有序集合（Sorted Set）：支持针对score作范围查询</li>
+<li>位数组</li>
+<li>HyperLogLog：做基数统计的算法</li>
+</ul>
+<p>Redis支持的操作</p>
+<ul>
+<li>基本操作：Set get add push pop…</li>
+<li>发布/订阅</li>
+<li>Pipeline操作</li>
+<li>事务：事务支持不完整。不提供回滚命令。</li>
+<li>……</li>
+</ul>
+<p>Redis适用场景</p>
+<ul>
+<li>KV存储</li>
+<li>缓存（ttl LRU…）：Lru是redis达到maxmemory之后，可选的key删除策略。</li>
+<li>消息中间件</li>
+<li>分布式锁</li>
+<li>……</li>
+</ul>
+<h1 id="Redis的主从复制"><a href="#Redis的主从复制" class="headerlink" title="Redis的主从复制"></a>Redis的主从复制</h1><p>1.如果设置了一个Slave，无论是第一次连接还是重新连接到Master，它都会发出一个SYNC命令；设置Slave可以是在配置文件添加slaveof 主IP 端口，然后带上配置文件启动server，还可以是启动服务后通过命令的方式设置，<code>slaveof 主IP 端口</code>来实现。<br>2.当Master收到SYNC命令后，会做两件事：<br>a)Master执行BGSAVE，即在后台保存数据到磁盘（rdb快照文件）；是通过子进程进行的<br>b)Master同时将新收到的写入和修改数据集的命令存入缓冲区（非查询类）；<br>3.当Master在后台把数据保存到快照文件完成后，Master会把这个快照文件传送给Slave，而Slave则把内存清空后，加载该文件到内存中；<br>4.而Master也会把此前收集到缓冲区的命令，通过Redis命令协议形式转发给Slave，Slave执行这些命令，实现和Master的同步；<br>5.Master/Slave此后会不断通过异步方式进行命令的同步，达到最终数据的同步一致；</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/01/08/Redis集群方案/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/" itemprop="url">HTTP权威指南笔记之重定向与负载均衡</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T16:07:15+08:00">
+                2018-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/HTTP权威指南/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP权威指南</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/" class="leancloud_visitors" data-flag-title="HTTP权威指南笔记之重定向与负载均衡">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,267
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="\assets\js\APlayer.min.js"> </script><p>重定向技术:<br>HTTP重定向<br>DNS重定向<br>任播路由<br>策略路由<br>IP MAC转发<br>IP地址转发<br>WCCP(Web缓存协调协议)<br>ICP(缓存间通信协议)<br>HTCP(超文本缓存协议)<br>NECP(网元控制协议)<br>CARP(缓存阵列路由协议)<br>WPAD(Web代理自动发现协议)</p>
+<p>为什么要重定向：可靠地执行HTTP事务、最小化时延、节约网络带宽、对服务器进行负载均衡<br><img src="/img/2018-01-07-16-10-56.png" alt=""><br><img src="/img/2018-01-07-16-11-25.png" alt=""><br><img src="/img/2018-01-07-16-12-03.png" alt=""><br><img src="/img/2018-01-07-16-12-25.png" alt=""><br>DNS轮转，DNS缓存。由于进行DNS查询一般会比较耗时，所以一般会进行DNS缓存，由于DNS缓存的存在，对于单个客户端而言每次请求的都是同一个ip，但是对于所有客户端而言，由于DNS轮转的存在，可以实现服务器的负载均衡。<br><img src="/img/2018-01-07-16-15-39.png" alt=""></p>
+<h1 id="IP-MAC转发："><a href="#IP-MAC转发：" class="headerlink" title="IP MAC转发："></a>IP MAC转发：</h1><p>在以太网中，HTTP报文都是以携带地址的数据分组的形式发送的。每个分组都有一个第四层地址，由源IP地址，目的IP地址以及TCP端口号组成,它是第四层设备所关注的地址。每个分组还有一个第二层地址，MAC(Media Access Control)地址，这是第二层设备(通常是交换机和Hub)所关注的地址。第二层设备的任务是接收具有特定输入MAC地址的分组，然后将其转发到特定的输出MAC地址上去。<br><img src="/img/2018-01-07-16-19-41.png" alt=""><br><img src="/img/2018-01-07-16-20-32.png" alt=""></p>
+<p>注意：由于MAC地址转发只是点对点的，所以服务器或代理只能位于离交换机一跳远的地方。</p>
+<h1 id="IP地址转发："><a href="#IP地址转发：" class="headerlink" title="IP地址转发："></a>IP地址转发：</h1><p>在IP地址转发中，交换机或其他第四层设备会检测输入分组的TCP/IP地址，并通过修改目的IP地址,对分组进行相应的转发。与MAC转发相比，这么做的优点是目标服务器不需要位于一跳远的地方，只需要位于交换机的上游就行。这种类型的转发也被称为<code>NAT</code>(Network Address Translation,网络地址转换)。<br><code>对称路由</code>的问题：从客户端接受输入TCP连接的交换机管理着连接，交换机必须通过那条TCP连接将响应回送给客户端。这样，所有来自目标服务器或代理的响应都必须返回给交换机。<br><img src="/img/2018-01-07-16-26-39.png" alt=""><br>有以下两种方式可以控制响应的返回路径：<br>1、将分组的源IP地址改成交换机的IP地址。通过这种方式，无论交换机和服务器之间采用何种网络配置，响应分组都会被发送给交换机。这种方式被称为<code>完全NAT(full NAT)</code>,其中的IP转发设备会对目的IP地址和源IP地址都进行转换。缺点：服务器不知道客户端的IP地址。<br><img src="/img/2018-01-07-16-30-53.png" alt=""><br>2、如果源IP地址仍然是客户端的IP地址，就要确保(从硬件角度)没有从服务器到客户端的直接路由(绕过交换机的)。这种方式被称为<code>半NAT(half NAT)</code>。缺点：要对客户端和服务器之间的整个网络都有某种程度的控制。</p>
+<h1 id="NECP-网元控制协议"><a href="#NECP-网元控制协议" class="headerlink" title="NECP-网元控制协议"></a>NECP-网元控制协议</h1><p>NECP(Network Element Control Protocol)允许网元(NE,路由器和交换机等负责转发IP分组的设备)与服务器元素(SE,Web服务器和代理缓存等提供应用层请求的设备)进行交互。NECP并未显式提供对负载均衡的支持，它只是为SE提供了一种发送负载均衡信息给NE的方式，这样NE就可以在它认为合适的情况下进行负载均衡了。转发分组的方式：MAC转发，GRE封装，NAT。<br>NECP报文：略。</p>
+<h1 id="代理的重定向"><a href="#代理的重定向" class="headerlink" title="代理的重定向"></a>代理的重定向</h1><p>略</p>
+<h1 id="缓存重定向"><a href="#缓存重定向" class="headerlink" title="缓存重定向"></a>缓存重定向</h1><p>WCCP重定向：可以使路由器将Web流量重定向到代理缓存中去。</p>
+<h1 id="因特网缓存协议-TCP"><a href="#因特网缓存协议-TCP" class="headerlink" title="因特网缓存协议-TCP"></a>因特网缓存协议-TCP</h1><p>ICP允许缓存在其兄弟中查找命中内容。如果某个缓存中没有HTTP报文所请求的内容，它可以查明内容是否在附近的兄弟缓存中，如果在，就从那里获取内容，以避免查询原始服务器而带来的更多开销。可以把ICP当作一个缓存集群协议。<br><img src="/img/2018-01-07-18-24-15.png" alt=""></p>
+<h1 id="CARP-缓存阵列路由协议"><a href="#CARP-缓存阵列路由协议" class="headerlink" title="CARP-缓存阵列路由协议"></a>CARP-缓存阵列路由协议</h1><p>随着用户数的增加，大量流量可能会使代理服务器自身超载，对此，一种解决方案就是使用多个代理服务器将负载分散到一组服务器上。CARP就是这样一种协议来管理一组代理服务器。CARP是ICP的一个替代品。<br><img src="/img/2018-01-07-18-24-55.png" alt=""></p>
+<h1 id="HTCP-超文本缓存协议"><a href="#HTCP-超文本缓存协议" class="headerlink" title="HTCP-超文本缓存协议"></a>HTCP-超文本缓存协议</h1><p>HTCP允许兄弟缓存之间通过URL和所有的请求及响应头部来相互查询文档是否存在，以降低错误命中的可能。同时还允许兄弟缓存监听或请求在对方的缓存中添加或删除所选中的文档，并修改对方已缓存文档的缓存策略。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2018/01/07/HTTP权威指南笔记之识别-认证-安全/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/01/07/HTTP权威指南笔记之识别-认证-安全/" itemprop="url">HTTP权威指南笔记之识别-认证-安全</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T14:40:22+08:00">
+                2018-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/HTTP权威指南/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP权威指南</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/07/HTTP权威指南笔记之识别-认证-安全/" class="leancloud_visitors" data-flag-title="HTTP权威指南笔记之识别-认证-安全">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  34
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <script src="\assets\js\APlayer.min.js"> </script><p>承载用户信息的HTTP首部：<br>From  用户的e-mail地址<br>User-Agent<br>Referer<br>Authorization 用户名和密码<br>Client-IP<br>X-Forwarded-For<br>Cookie</p>
+<p><img src="/img/2018-01-07-14-55-11.png" alt=""><br><img src="/img/2018-01-07-14-55-48.png" alt=""><br><img src="/img/2018-01-07-14-56-54.png" alt=""><br><img src="/img/2018-01-07-15-00-24.png" alt=""><br><img src="/img/2018-01-07-15-01-06.png" alt=""></p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://xbynet.top/2018/01/05/tomcat8-5官文笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -659,7 +1291,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  675
+                  1,322
                 </span>
               
 
@@ -675,7 +1307,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  2
+                  5
                 </span>
               
             </div>
@@ -1799,600 +2431,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/27/Http1-1与1-0与2-0的区别/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xbynet">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="倚楼听风雨">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/27/Http1-1与1-0与2-0的区别/" itemprop="url">Http1.1与1.0及2.0的区别</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T14:22:06+08:00">
-                2017-12-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络基础/" itemprop="url" rel="index">
-                    <span itemprop="name">网络基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/27/Http1-1与1-0与2-0的区别/" class="leancloud_visitors" data-flag-title="Http1.1与1.0及2.0的区别">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">热度&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3,946
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  15
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="HTTP概念"><a href="#HTTP概念" class="headerlink" title="HTTP概念"></a>HTTP概念</h2><p>HTTP是基于TCP协议之上的。在TCP/IP协议参考模型的各层对应的协议如下图,其中HTTP是应用层的协议。<br><img src="/img/2017-12-27-15-28-28.png" alt=""></p>
-<h2 id="HTTP1-1与1-0的区别筛选"><a href="#HTTP1-1与1-0的区别筛选" class="headerlink" title="HTTP1.1与1.0的区别筛选"></a>HTTP1.1与1.0的区别筛选</h2><ol>
-<li>Persistent Connection持久连接<br>在HTTP1.0中，默认的是短连接，没有正式规定 Connection:Keep-alive 操作；<br>在HTTP1.1中所有连接都是Keep-alive的，也就是默认都是持续连接的（Persistent Connection）。<br>持续连接在同一个tcp的连接中可以传送多个HTTP请求和响应. 多个请求和响应可以同时进行.<br><img src="/img/2017-12-27-15-12-56.png" alt=""></li>
-</ol>
-<p>HTTP1.0 持久连接是通过请求头<code>Connection:keep-alive</code>实现的。<br>即使用着HTTP1.1,但现在很多客户端和服务器仍然在使用这些早期的keep-live连接。<br>实现HTTP/1.0 keep-live连接的客户端可以通过包含<code>Connection:Keep-Alive</code> 首部请求将一条连接保持在打开状态。如果服务器愿意为下一条请求将连接保持在打开状态，就在响应中包含相同的首部，<code>如果响应中没有Connection:Keep-Alive 首部，客户端就认为服务器不支持keep-live</code>，会在发回响应报文后关闭连接。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Connection:Keep-Alive</span><br><span class="line">Keep-Alive:max=5,timeout=120</span><br><span class="line">#服务器最多还会为另外5个事务保持连接的打开状态，或者将打开状态保持到连接空闲了2分钟以后。</span><br></pre></td></tr></table></figure></p>
-<p>在HTTP/1.0中，keep-alive并不是默认使用的。客户端必需发送一个Connection：Keep-Alive 请求首部来激活keep-alive连接。</p>
-<p>HTTP/1.1 逐渐停止了对keep-alive连接的支持，用一种名为持久连接的改进型设计取代了它。持久连接的目的与keep-alive连接的目的相同，但是工作机制更优些。HTTP/1.1持久连接在默认情况下是激活的，除非特别指明，否则HTTP/1.1假定所有的连接都是持久的，要在事务处理结束之后将连接关闭，HTTP/1.1应用程序必须向报文中显示地添加一个<code>Connection：close</code>首部。<br><strong>HTTP1.1客户端加载在收到响应后，除非响应中包含了Connection：close首部，不然HTTP/1.1连接就仍然维持在打开状态。</strong>但是，客户端和服务器仍然可以随时关闭空闲的连接。不发送Connection：close并不意味这服务器承诺永远将连接保持在打开状态。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/27/Http1-1与1-0与2-0的区别/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-
- 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/26/Docker之入门笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xbynet">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="倚楼听风雨">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/26/Docker之入门笔记/" itemprop="url">Docker之入门笔记</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-26T17:53:06+08:00">
-                2017-12-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/docker/" itemprop="url" rel="index">
-                    <span itemprop="name">docker</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/26/Docker之入门笔记/" class="leancloud_visitors" data-flag-title="Docker之入门笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">热度&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  22,679
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  89
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>书籍为：<a href="https://yeasy.gitbooks.io/docker_practice/content/" target="_blank" rel="noopener">https://yeasy.gitbooks.io/docker_practice/content/</a><br>最新Docker版本：17.09.1-ce</p>
-<p>15年的时候就接触过docker，不过当时docker生态并没有现在这么完善，而且跨主机间通信什么的过于复杂，就放弃了。都忘得差不多了，现在拾起来重新学习。加入macroservice+docker的潮流当中。</p>
-<p>Docker 是个划时代的开源项目，它彻底释放了计算虚拟化的威力，极大提高了应用的运行效率，降低了云计算资源供应的成本！使用 Docker，可以让应用的部署、测试和分发都变得前所未有的高效和轻松！</p>
-<p>历史：<br>Docker 最初是 dotCloud 公司创始人 Solomon Hykes 在法国期间发起的一个公司内部项目，它是基于 dotCloud 公司多年云服务技术的一次革新，并于 2013 年 3 月以 Apache 2.0 授权协议开源，主要项目代码在 GitHub 上进行维护。Docker 项目后来还加入了 Linux 基金会，并成立推动 开放容器联盟（OCI）。Docker 最初是在 Ubuntu 12.04 上开发实现的，不过现在已经支持多个平台了。<br>Docker 使用 Google 公司推出的 Go 语言 进行开发实现，基于 Linux 内核的 cgroup，namespace，以及 AUFS 类的 Union FS 等技术，对进程进行封装隔离，属于 操作系统层面的虚拟化技术。由于隔离的进程独立于宿主和其它的隔离的进程，因此也称其为容器。最初实现是基于 LXC，从 0.7 版本以后转而使用自行开发的 libcontainer，从 1.11 开始，则进一步演进为使用 runC 和 containerd。</p>
-<p>Docker与传统虚拟化的区别：<br>下面的图片比较了 Docker 和传统虚拟化方式的不同之处。<br><strong>传统虚拟机技术是虚拟出一套硬件后，在其上运行一个完整操作系统，在该系统上再运行所需应用进程；而容器内的应用进程直接运行于宿主的内核，容器内没有自己的内核，而且也没有进行硬件虚拟。因此容器要比传统虚拟机更为轻便。</strong><br><img src="/img/2017-12-26-18-29-11.png" alt=""></p>
-<p>为什么要使用 Docker？</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/26/Docker之入门笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-
- 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/25/Http与TCP长短连接/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xbynet">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="倚楼听风雨">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/25/Http与TCP长短连接/" itemprop="url">Http与TCP长短连接</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-25T16:32:50+08:00">
-                2017-12-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/网络基础/" itemprop="url" rel="index">
-                    <span itemprop="name">网络基础</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/25/Http与TCP长短连接/" class="leancloud_visitors" data-flag-title="Http与TCP长短连接">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">热度&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  3,099
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  11
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="TCP长连接与短连接的区别"><a href="#TCP长连接与短连接的区别" class="headerlink" title="TCP长连接与短连接的区别"></a>TCP长连接与短连接的区别</h2><p>当网络通信时采用TCP协议时，在真正的读写操作之前，server与client之间必须建立一个连接，当读写操作完成后，双方不再需要这个连接时它们可以释放这个连接，连接的建立是需要三次握手的，而释放则需要4次握手，所以说每个连接的建立都是需要资源消耗和时间消耗的。<br>经典的三次握手示意图：<br><img src="/img/2017-12-25-16-34-58.png" alt=""><img src="/img/2017-12-25-16-52-09.png" alt=""><br>经典的四次握手关闭图：<br><img src="/img/2017-12-25-16-35-09.png" alt=""><img src="/img/2017-12-25-16-52-15.png" alt=""></p>
-<h3 id="TCP短连接"><a href="#TCP短连接" class="headerlink" title="TCP短连接"></a>TCP短连接</h3><p><img src="/img/2017-12-25-17-14-05.png" alt=""><br>我们模拟一下TCP短连接的情况，client向server发起连接请求，server接到请求，然后双方建立连接。client向server发送消息，server回应client，然后一次读写就完成了，这时候双方任何一个都可以发起close操作，不过一般都是client先发起close操作。<br><strong>短连接一般只会在client/server间传递一次读写操作</strong><br><code>连接-&gt;传输数据-&gt;关闭连接</code></p>
-<p>短连接的优点是：管理起来比较简单，存在的连接都是有用的连接，不需要额外的控制手段</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/25/Http与TCP长短连接/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-
- 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2449,7 +2487,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2591,7 +2629,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">167.5k</span>
+    <span title="Site words total count">173.1k</span>
   
 </div>
 

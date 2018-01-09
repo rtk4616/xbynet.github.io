@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="redis," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="倚楼听风雨" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="知识点回顾Redis支持的数据结构  字符串（String） 哈希（Hash） 列表（List） 集合（Set） 有序集合（Sorted Set）：支持针对score作范围查询 位数组 HyperLogLog：做基数统计的算法  Redis支持的操作  基本操作：Set get add push pop… 发布/订阅 Pipeline操作 事务：事务支持不完整。不提供回滚命令。 ……  Redis">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis集群方案">
+<meta property="og:url" content="http://xbynet.top/2018/01/08/Redis集群方案/index.html">
+<meta property="og:site_name" content="倚楼听风雨">
+<meta property="og:description" content="知识点回顾Redis支持的数据结构  字符串（String） 哈希（Hash） 列表（List） 集合（Set） 有序集合（Sorted Set）：支持针对score作范围查询 位数组 HyperLogLog：做基数统计的算法  Redis支持的操作  基本操作：Set get add push pop… 发布/订阅 Pipeline操作 事务：事务支持不完整。不提供回滚命令。 ……  Redis">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-08-11-48-40.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-08-11-49-26.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-08-11-49-56.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-08-10-29-10.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-08-10-31-06.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-08-10-40-54.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-08-11-04-47.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-08-11-39-08.png">
+<meta property="og:updated_time" content="2018-01-08T03:53:38.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Redis集群方案">
+<meta name="twitter:description" content="知识点回顾Redis支持的数据结构  字符串（String） 哈希（Hash） 列表（List） 集合（Set） 有序集合（Sorted Set）：支持针对score作范围查询 位数组 HyperLogLog：做基数统计的算法  Redis支持的操作  基本操作：Set get add push pop… 发布/订阅 Pipeline操作 事务：事务支持不完整。不提供回滚命令。 ……  Redis">
+<meta name="twitter:image" content="http://xbynet.top/img/2018-01-08-11-48-40.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xbynet.top/2018/01/08/Redis集群方案/"/>
+
+
+
+
+
+  <title>Redis集群方案 | 倚楼听风雨</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9e6e9198259e7a598474c9df6397dc";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">倚楼听风雨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">淡看江湖路</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-相册">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2018/01/08/Redis集群方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Redis集群方案</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-08T10:22:47+08:00">
+                2018-01-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/中间件/" itemprop="url" rel="index">
+                    <span itemprop="name">中间件</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/中间件/redis/" itemprop="url" rel="index">
+                    <span itemprop="name">redis</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/08/Redis集群方案/" class="leancloud_visitors" data-flag-title="Redis集群方案">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,743
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><h1 id="知识点回顾"><a href="#知识点回顾" class="headerlink" title="知识点回顾"></a>知识点回顾</h1><p>Redis支持的数据结构</p>
+<ul>
+<li>字符串（String）</li>
+<li>哈希（Hash）</li>
+<li>列表（List）</li>
+<li>集合（Set）</li>
+<li>有序集合（Sorted Set）：支持针对score作范围查询</li>
+<li>位数组</li>
+<li>HyperLogLog：做基数统计的算法</li>
+</ul>
+<p>Redis支持的操作</p>
+<ul>
+<li>基本操作：Set get add push pop…</li>
+<li>发布/订阅</li>
+<li>Pipeline操作</li>
+<li>事务：事务支持不完整。不提供回滚命令。</li>
+<li>……</li>
+</ul>
+<p>Redis适用场景</p>
+<ul>
+<li>KV存储</li>
+<li>缓存（ttl LRU…）：Lru是redis达到maxmemory之后，可选的key删除策略。</li>
+<li>消息中间件</li>
+<li>分布式锁</li>
+<li>……</li>
+</ul>
+<h1 id="Redis的主从复制"><a href="#Redis的主从复制" class="headerlink" title="Redis的主从复制"></a>Redis的主从复制</h1><p>1.如果设置了一个Slave，无论是第一次连接还是重新连接到Master，它都会发出一个SYNC命令；设置Slave可以是在配置文件添加slaveof 主IP 端口，然后带上配置文件启动server，还可以是启动服务后通过命令的方式设置，<code>slaveof 主IP 端口</code>来实现。<br>2.当Master收到SYNC命令后，会做两件事：<br>a)Master执行BGSAVE，即在后台保存数据到磁盘（rdb快照文件）；是通过子进程进行的<br>b)Master同时将新收到的写入和修改数据集的命令存入缓冲区（非查询类）；<br>3.当Master在后台把数据保存到快照文件完成后，Master会把这个快照文件传送给Slave，而Slave则把内存清空后，加载该文件到内存中；<br>4.而Master也会把此前收集到缓冲区的命令，通过Redis命令协议形式转发给Slave，Slave执行这些命令，实现和Master的同步；<br>5.Master/Slave此后会不断通过异步方式进行命令的同步，达到最终数据的同步一致；</p>
+<a id="more"></a>
+<p>Slave端主要经历四个阶段：<br>第一阶段：与master建立连接<br>第二阶段：向master发起同步请求（SYNC）<br>第三阶段：接收master发来的RDB数据<br>第四阶段：载入RDB文件<br><img src="/img/2018-01-08-11-48-40.png" alt=""><br>Master端主要做以下三件事：<br>1.发送RDB文件<br>当master接收到slave发送的sync同步命令后的执行流程如下图：<br><img src="/img/2018-01-08-11-49-26.png" alt=""><br>上图看似分支复杂，但我们抓住以下几点即可：<br>a.保存RDB文件是在一个子进程中进行的；<br>b.如果master已经在保存RDB文件，但是没有客户端正在等待这次BGSAVE，新添加的slave需要等到下次BGSAVE，而不能直接使用这次生成的RDB文件；<br>c.master会定期检查RDB文件是否保存完毕（时间事件serverCron）；<br>当向某个客户端发送完RDB文件后，该客户端状态从<code>REDIS_REPL_SEND_BULK</code>状态变为<code>REDIS_REPL_ONLINE</code>。</p>
+<p>2.发送保活命令PINGNG<br>3.发送变更命令<br>master保存RDB文件是通过一个子进程进行的，所以master依然可以处理客户端请求而不被阻塞，但是这也导致了在保存RDB文件期间，“键空间”可能发生变化，因此为了保证数据同步的一致性，master会在保存RDB文件期间，把接收到的这些可能变更数据库的“键空间”的命令保存下来，然后放到每个slave的回复列表中，当RDB文件发送完master会发送这些回复列表中的内容，并且在这之后，如果数据库发生变更，master依然会把变更的命令追加到回复列表发送给slave，这样就保证master和slave数据的一致性。</p>
+<p>主从复制过程，总结一下大致流程：<br><img src="/img/2018-01-08-11-49-56.png" alt=""></p>
+<h1 id="redis集群方案"><a href="#redis集群方案" class="headerlink" title="redis集群方案"></a>redis集群方案</h1><p>实现基础——分区<br>分区是分割数据到多个Redis实例的处理过程，因此每个实例只保存key的一个子集。<br>通过利用多台计算机内存的和值，允许我们构造更大的数据库。<br>通过多核和多台计算机，允许我们扩展计算能力；通过多台计算机和网络适配器，允许我们扩展网络带宽。</p>
+<p>集群的几种方式</p>
+<ul>
+<li>客户端分片:   优点：简单，性能高；缺点：业务逻辑与存储逻辑耦合，不支持动态扩容</li>
+<li>基于代理(proxy-based)的分片</li>
+<li>路由查询/客户端服务端协作</li>
+</ul>
+<p>集群的几种实现：</p>
+<ul>
+<li>官方的cluser方案；(3.0后官方推出，无中心架构，一致性哈希思想(哈希槽)，客户端直连redis服务)</li>
+<li>twemproxy代理方案；(proxy-based,推特开源，现已不再维护)</li>
+<li>codis；(proxy-based,豆瓣开源，基于2.8分支修改源码开发)</li>
+<li>sentinel(哨兵)；</li>
+</ul>
+<p>客户端分片<br>由客户端决定key写入或者读取的节点。<br>包括jedis在内的一些客户端，实现了客户端分片机制。<br><img src="/img/2018-01-08-10-29-10.png" alt=""></p>
+<p>基于代理的分片<br>客户端发送请求到一个代理，代理解析客户端的数据，将请求转发至正确的节点，然后将结果回复给客户端。开源方案：Twemproxy，codis。优点：透明接入，支持动态增删节点；缺点：代理层多了一次转发，性能有所损耗<br><img src="/img/2018-01-08-10-31-06.png" alt=""></p>
+<p>路由查询<br>将请求发送到任意节点，接收到请求的节点会将查询请求发送到正确的节点上执行。<br>开源方案：Redis-cluster<br><img src="/img/2018-01-08-10-40-54.png" alt=""></p>
+<p>集群的挑战<br>涉及多个key的操作通常是不被支持的：举例来说，当两个set映射到不同的redis实例上时，你就不能对这两个set执行交集操作。<br>涉及多个key的redis事务不能使用。<br>不能保证集群内的数据均衡：分区的粒度是key，如果某个key的值是巨大的set、list，无法进行拆分。<br>增加或删除容量也比较复杂。<br>redis集群需要支持在运行时增加、删除节点的透明数据平衡的能力。</p>
+<h1 id="Redis-Sentinel-哨兵模式"><a href="#Redis-Sentinel-哨兵模式" class="headerlink" title="Redis-Sentinel(哨兵模式)"></a>Redis-Sentinel(哨兵模式)</h1><p>Redis-Sentinel是官方推荐的高可用（HA）解决方案，当用Redis做Master-slave的高可用方案时，加入Master宕机了，Redis本身（包括他的很多客户端）都没有实现自动进行主备切换，而Redis-Sentinel本身也是一个独立运行的进程，它能够监控多个master-slave集群，发现master宕机后能进行自动切换。<br>它的主要功能有以下几点：</p>
+<ul>
+<li>监控(Monitoring): 哨兵(sentinel) 会不断地检查你的Master和Slave是否运作正常。</li>
+<li>提醒(Notification):当被监控的某个 Redis出现问题时, 哨兵(sentinel) 可以通过 API 向管理员或者其他应用程序发送通知。</li>
+<li>自动故障迁移(Automatic failover):当一个Master不能正常工作时，哨兵(sentinel) 会开始一次自动故障迁移操作,它会将失效Master的其中一个Slave升级为新的Master, 并让失效Master的其他Slave改为复制新的Master; 当客户端试图连接失效的Master时,集群也会向客户端返回新Master的地址,使得集群可以使用Master代替失效Master。<br>哨兵(sentinel) 是一个分布式系统,你可以在一个架构中运行多个哨兵(sentinel) 进程,这些进程使用流言协议(gossipprotocols)来接收关于Master是否下线的信息,并使用投票协议(agreement protocols)来决定是否执行自动故障迁移,以及选择哪个Slave作为新的Master.</li>
+</ul>
+<p>主观下线和客观下线<br>主观下线：Subjectively Down，简称 <code>SDOWN</code>，指的是当前 Sentinel 实例对某个redis服务器做出的下线判断。<br>客观下线：Objectively Down， 简称 <code>ODOWN</code>，指的是多个 Sentinel 实例在对Master Server做出 SDOWN 判断，并且通过 SENTINEL is-master-down-by-addr 命令互相交流之后，得出的Master Server下线判断，然后开启failover.</p>
+<p>工作模式：<br>每个哨兵(sentinel) 会以1s的间隔向其它哨兵(sentinel)、master、slave定时发送消息,以确认对方是否”活”着,如果发现对方在指定时间(可配置，down-after-milliseconds)内未回应,则暂时认为对方已挂(所谓的”主观认为宕机” Subjective Down,简称sdown).<br>若“哨兵群”中的多数sentinel,都报告某一master没响应,系统才认为该master”彻底死亡”(即:客观上的真正down机,Objective Down,简称odown),通过一定的vote算法,从剩下的slave节点中,选一台提升为master,然后自动修改相关配置.<br><img src="/img/2018-01-08-11-04-47.png" alt=""></p>
+<p>运行sentinel有两种方式：<br>第一种：redis-sentinel /path/to/sentinel.conf<br>第二种：redis-server /path/to/sentinel.conf –sentinel<br>以上两种方式，都必须指定一个sentinel的配置文件sentinel.conf，如果不指定，将无法启动。sentinel默认监听26379端口</p>
+<h2 id="Sentinel的配置"><a href="#Sentinel的配置" class="headerlink" title="Sentinel的配置"></a>Sentinel的配置</h2><p>典型的配置项如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sentinel monitor mymaster 127.0.0.1 6379 2</span><br><span class="line">sentinel down-after-milliseconds mymaster 60000</span><br><span class="line">sentinel failover-timeout mymaster 180000</span><br><span class="line">sentinel parallels-syncs mymaster 1</span><br><span class="line"></span><br><span class="line">sentinel monitor resque 192.168.1.3 6380 4</span><br><span class="line">sentinel down-after-milliseconds resque 10000</span><br><span class="line">sentinel failover-timeout resque 180000</span><br><span class="line">sentinel parallels-syncs resque 5</span><br></pre></td></tr></table></figure></p>
+<p>上面的配置项配置了两个名字分别为mymaster和resque的master，配置文件只需要配置master的信息就好了，不用配置slave的信息，因为slave能够自动检测到。需要注意的是，配置文件在sentinel运行期间是会被动态修改的，例如当发生主备切换时，配置文件的master会被修改为另一个slave。这样，如果重启，可以根据这个配置来恢复之前监控的redis集群状态。<br>sentinel monitor mymaster 127.0.0.1 6379 2<br>这一行代表sentinel监控的master叫做mymaster，地址为127.0.0.1:6379，行尾最后的一个2代表什么意思呢？我们知道，网络是不可靠的，有时候一个sentinel会因为网络堵塞而误以为一个master redis已经死掉了，当sentinel集群模式，解决这个问题的方法就变得很简单，只需要多个sentinel互相沟通来确认某个master是否真的死了，这个2代表，当集群中有2个sentinel认为master死了，才能真正认为该master已经不可用了。（sentinel集群中各个sentinel也有互相通信，通过gossip协议）。<br>除了第一行的配置，剩下有一个统一模式：<code>sentinel &lt; option_name&gt; &lt; master_name&gt; &lt; option_value&gt;</code><br>根据option_name解释上面配置项：<br>down-after-milliseconds：sentinel会向master发送心跳PING来确认master是否存活，如果master在“一定时间范围”内不回应PONG或者是回复了一个错误消息，那么这个Sentinel会主观地认为这个master已经不可用了（subjectively down，简称SDOWN）。这个配置项就是配置这个时间，单位毫秒。不过需要注意的是这个时候sentinel并不会马上进行failover主备切换，这个sentinel还需要参照集群中其他的sentinel意见，当集群中超过之前配置的数量的sentinel都认为这个master不可达，那么才会客观认为这个master死了（Objectively down，简称ODOWN）<br>parallel-syncs：在发生failover主备切换时，这个选项用来指定最多可以有多少个slave同时对新的master进行同步，这个数字越小，完成failover时间越长，越大则意味着越多slave因为replication不可用。<br>其他配置项在sentinel.conf中有详细介绍。所有的配置都可以在运行命令时用命令<code>SENTINEL SET command</code>动态改动。</p>
+<h2 id="sentinel的命令"><a href="#sentinel的命令" class="headerlink" title="sentinel的命令"></a>sentinel的命令</h2><p>要使用sentinel的命令，我们需要用redis-cli命令进入到sentinel：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h 192.168.12.90 -p 7505</span><br><span class="line">INFO :sentinel的基本状态信息 </span><br><span class="line">PING sentinel回复PONG。</span><br><span class="line">SENTINEL masters显示被监控的所有master以及他们的状态</span><br><span class="line">SENTINEL master &lt;master name&gt;显示指定master的信息和状态</span><br><span class="line">SENTINEL slaves &lt;master name&gt;显示指定master的所有slave以及他们的状态</span><br><span class="line">SENTINEL get-master-addr-by-name &lt;master name&gt;返回指定master的ip和端口，如果正在进行failover或者failover已经完成，将会显示被提升为master的slave的IP和端口。</span><br><span class="line">SENTINEL reset &lt;pattern&gt; 重置名字匹配该正则表达式的所有的master的状态信息，清除其前面的状态信息，以及slaves信息。</span><br><span class="line">SENTINEL failover &lt;master name&gt;强制sentinel执行failover，并且不需要得到其他sentinel的同意。但是failover后将最新的配置发送给其他的sentinel。</span><br></pre></td></tr></table></figure></p>
+<h2 id="动态修改Sentinel配置"><a href="#动态修改Sentinel配置" class="headerlink" title="动态修改Sentinel配置"></a>动态修改Sentinel配置</h2><p>从redis2.8.4开始，sentinel提供了一组API用来添加，删除，修改master的配置。需要注意的是，如果你通过API修改了一个sentinel的配置，sentinel不会把修改的配置告诉其他sentinel。你需要自己手动地对多个sentinel发送修改配置的命令。<br>命令：略</p>
+<h2 id="发布-订阅"><a href="#发布-订阅" class="headerlink" title="发布/订阅"></a>发布/订阅</h2><p>客户端可以向一个sentinel发送订阅某个频道的事件的命令，当有特定的事件发生时，sentinel会通知所有订阅的客户端。需要注意的是客户端只能订阅，不能发布。订阅频道的名字与事件的名字一致。例如，频道名为sdown将会发布所有与SDOWN相关的消息给订阅者。</p>
+<h2 id="TILT模式"><a href="#TILT模式" class="headerlink" title="TILT模式"></a>TILT模式</h2><p>redis sentinel非常依赖系统时间，例如他会使用系统时间来判断一个PING恢复用了多久。然而假如系统时间被修改了，或者是系统十分繁忙，或者是进程堵塞了。sentinel可能会出现运行不正常的情况。当系统的稳定性下降时，TILT模式是sentinel可以进入的一种<code>保护模式</code>。当进入TILT模式时，sentinel会继续监控工作，但是它不会有任何其他动作，他不会回应is-master-down-by-addr这样的命令了，因为在TILT模式下，检测失效节点的能力已经变得让人不可信任。如果恢复正常，持续30秒，sentinel就会推出TILT模式。</p>
+<p>配合分片：<a href="http://blog.csdn.net/java20150326/article/details/71036347" target="_blank" rel="noopener">http://blog.csdn.net/java20150326/article/details/71036347</a></p>
+<h1 id="Redis-Cluster"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</h1><p>设计初衷：性能、水平扩展、可用性<br>集群连接<br>Redis集群是一个网状结构，每个节点都通过TCP连接跟其他每个节点连接。在一个有N个节点的集群中，每个节点都有N-1个流出的TCP连接和N-1个流入的连接，这些TCP连接会永久保持，并不是按需创建的。该TCP连接使用二进制协议进行通讯。节点之间使用Gossip协议来进行以下工作：<br>a）传播（propagate）关于集群的信息，以此来发现新的节点。<br>b）向其他节点发送PING数据包，以此来检查目标节点是否正常运作。<br>c）在特定事件发生时，发送集群信息。<br>除此之外，集群连接还用于在集群中发布或订阅信息。</p>
+<p>Redis Cluster采用虚拟槽分区，所有的键根据哈希函数映射到0 ～ 16383，计算公式：slot = CRC16(key)&amp;16383。每一个节点负责维护一部分槽以及槽所映射的键值数据。<br><img src="/img/2018-01-08-11-39-08.png" alt=""></p>
+<p>具体：略。</p>
+<p><a href="http://blog.csdn.net/men_wen/article/details/72853078" target="_blank" rel="noopener">http://blog.csdn.net/men_wen/article/details/72853078</a><br><a href="https://www.jianshu.com/p/ee2aa7fe341b" target="_blank" rel="noopener">https://www.jianshu.com/p/ee2aa7fe341b</a><br><a href="https://redis.io/topics/cluster-tutorial" target="_blank" rel="noopener">https://redis.io/topics/cluster-tutorial</a><br>参考：<br><a href="https://redis.io/topics/sentinel" target="_blank" rel="noopener">https://redis.io/topics/sentinel</a><br><a href="https://www.zhihu.com/question/21419897" target="_blank" rel="noopener">https://www.zhihu.com/question/21419897</a><br><a href="https://www.jianshu.com/p/14835303b07e" target="_blank" rel="noopener">https://www.jianshu.com/p/14835303b07e</a><br><a href="http://blog.csdn.net/xmj_csdn/article/details/74908951" target="_blank" rel="noopener">http://blog.csdn.net/xmj_csdn/article/details/74908951</a><br><a href="http://blog.csdn.net/a67474506/article/details/50435498" target="_blank" rel="noopener">http://blog.csdn.net/a67474506/article/details/50435498</a><br><a href="http://blog.csdn.net/donggang1992/article/details/50981341" target="_blank" rel="noopener">http://blog.csdn.net/donggang1992/article/details/50981341</a></p>
+
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xbynet.top/2018/01/08/Redis集群方案/" title="Redis集群方案">http://xbynet.top/2018/01/08/Redis集群方案/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"><i class="fa fa-tag"></i> redis</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/" rel="next" title="HTTP权威指南笔记之重定向与负载均衡">
+                <i class="fa fa-chevron-left"></i> HTTP权威指南笔记之重定向与负载均衡
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ3OS85MDQw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256"
+                alt="xbynet" />
+            
+              <p class="site-author-name" itemprop="name">xbynet</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xbynet" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xbynet@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.xby1993.net/index.html" title="旧博客笔记" target="_blank">旧博客笔记</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://segmentfault.com/blog/xbynet" title="Segmentfault旧博文" target="_blank">Segmentfault旧博文</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          <div id="aplayer1" class="aplayer"></div>
+<script src="/asserts/js/APlayer.min.js"></script>
+<script>
+    var musiclist=[
+        {title:'素雨',author:'孙雪宁',url:'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'},
+        {title:'爱在上',author:'崔子格',url:'http://dl.stream.qqmusic.qq.com/M8000019Hx0J3tqcaV.mp3?vkey=93EB395793C648848684E76AE3B2D6E08F9EC8C7412B177750792C7CEC73BDC4FD06C1F78C02D9186339549C042F2CA5955914BA8322F6E4&guid=5150825362&fromtag=1',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003ksYhQ1EmEcr.jpg?max_age=2592000'}
+    ]
+    var tmpindex=Math.floor(Math.random()*musiclist.length);
+    var music=musiclist[tmpindex];
+    var ap = new APlayer({
+        element: document.getElementById('aplayer1'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: music.title,
+            author: music.author,
+            url: music.url,
+            pic: music.pic
+        }
+    });
+</script>
+
+<!-- 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+-->
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#知识点回顾"><span class="nav-number">1.</span> <span class="nav-text"><a href="#&#x77E5;&#x8BC6;&#x70B9;&#x56DE;&#x987E;" class="headerlink" title="&#x77E5;&#x8BC6;&#x70B9;&#x56DE;&#x987E;"></a>&#x77E5;&#x8BC6;&#x70B9;&#x56DE;&#x987E;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis的主从复制"><span class="nav-number">2.</span> <span class="nav-text"><a href="#Redis&#x7684;&#x4E3B;&#x4ECE;&#x590D;&#x5236;" class="headerlink" title="Redis&#x7684;&#x4E3B;&#x4ECE;&#x590D;&#x5236;"></a>Redis&#x7684;&#x4E3B;&#x4ECE;&#x590D;&#x5236;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#redis集群方案"><span class="nav-number">3.</span> <span class="nav-text"><a href="#redis&#x96C6;&#x7FA4;&#x65B9;&#x6848;" class="headerlink" title="redis&#x96C6;&#x7FA4;&#x65B9;&#x6848;"></a>redis&#x96C6;&#x7FA4;&#x65B9;&#x6848;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-Sentinel-哨兵模式"><span class="nav-number">4.</span> <span class="nav-text"><a href="#Redis-Sentinel-&#x54E8;&#x5175;&#x6A21;&#x5F0F;" class="headerlink" title="Redis-Sentinel(&#x54E8;&#x5175;&#x6A21;&#x5F0F;)"></a>Redis-Sentinel(&#x54E8;&#x5175;&#x6A21;&#x5F0F;)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Sentinel的配置"><span class="nav-number">4.1.</span> <span class="nav-text"><a href="#Sentinel&#x7684;&#x914D;&#x7F6E;" class="headerlink" title="Sentinel&#x7684;&#x914D;&#x7F6E;"></a>Sentinel&#x7684;&#x914D;&#x7F6E;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sentinel的命令"><span class="nav-number">4.2.</span> <span class="nav-text"><a href="#sentinel&#x7684;&#x547D;&#x4EE4;" class="headerlink" title="sentinel&#x7684;&#x547D;&#x4EE4;"></a>sentinel&#x7684;&#x547D;&#x4EE4;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#动态修改Sentinel配置"><span class="nav-number">4.3.</span> <span class="nav-text"><a href="#&#x52A8;&#x6001;&#x4FEE;&#x6539;Sentinel&#x914D;&#x7F6E;" class="headerlink" title="&#x52A8;&#x6001;&#x4FEE;&#x6539;Sentinel&#x914D;&#x7F6E;"></a>&#x52A8;&#x6001;&#x4FEE;&#x6539;Sentinel&#x914D;&#x7F6E;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#发布-订阅"><span class="nav-number">4.4.</span> <span class="nav-text"><a href="#&#x53D1;&#x5E03;-&#x8BA2;&#x9605;" class="headerlink" title="&#x53D1;&#x5E03;/&#x8BA2;&#x9605;"></a>&#x53D1;&#x5E03;/&#x8BA2;&#x9605;</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#TILT模式"><span class="nav-number">4.5.</span> <span class="nav-text"><a href="#TILT&#x6A21;&#x5F0F;" class="headerlink" title="TILT&#x6A21;&#x5F0F;"></a>TILT&#x6A21;&#x5F0F;</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Redis-Cluster"><span class="nav-number">5.</span> <span class="nav-text"><a href="#Redis-Cluster" class="headerlink" title="Redis Cluster"></a>Redis Cluster</span></a></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xbynet</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">173.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("sHIc70OVniNsR5OI1atIhMuk-gzGzoHsz", "wt266j1nbmoGAFrXdwXt7TeS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>

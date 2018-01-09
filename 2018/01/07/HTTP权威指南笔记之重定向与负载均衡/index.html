@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256?v=5.1.3">
+
+
+
+
+
+
+  <meta name="keywords" content="http,tcp," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="倚楼听风雨" type="application/atom+xml" />
+
+
+
+
+
+
+<meta name="description" content="重定向技术:HTTP重定向DNS重定向任播路由策略路由IP MAC转发IP地址转发WCCP(Web缓存协调协议)ICP(缓存间通信协议)HTCP(超文本缓存协议)NECP(网元控制协议)CARP(缓存阵列路由协议)WPAD(Web代理自动发现协议) 为什么要重定向：可靠地执行HTTP事务、最小化时延、节约网络带宽、对服务器进行负载均衡DNS轮转，DNS缓存。由于进行DNS查询一般会比较耗时，所以">
+<meta name="keywords" content="http,tcp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTTP权威指南笔记之重定向与负载均衡">
+<meta property="og:url" content="http://xbynet.top/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/index.html">
+<meta property="og:site_name" content="倚楼听风雨">
+<meta property="og:description" content="重定向技术:HTTP重定向DNS重定向任播路由策略路由IP MAC转发IP地址转发WCCP(Web缓存协调协议)ICP(缓存间通信协议)HTCP(超文本缓存协议)NECP(网元控制协议)CARP(缓存阵列路由协议)WPAD(Web代理自动发现协议) 为什么要重定向：可靠地执行HTTP事务、最小化时延、节约网络带宽、对服务器进行负载均衡DNS轮转，DNS缓存。由于进行DNS查询一般会比较耗时，所以">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-16-10-56.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-16-11-25.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-16-12-03.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-16-12-25.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-16-15-39.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-16-19-41.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-16-20-32.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-16-26-39.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-16-30-53.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-18-24-15.png">
+<meta property="og:image" content="http://xbynet.top/img/2018-01-07-18-24-55.png">
+<meta property="og:updated_time" content="2018-01-08T01:16:35.829Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HTTP权威指南笔记之重定向与负载均衡">
+<meta name="twitter:description" content="重定向技术:HTTP重定向DNS重定向任播路由策略路由IP MAC转发IP地址转发WCCP(Web缓存协调协议)ICP(缓存间通信协议)HTCP(超文本缓存协议)NECP(网元控制协议)CARP(缓存阵列路由协议)WPAD(Web代理自动发现协议) 为什么要重定向：可靠地执行HTTP事务、最小化时延、节约网络带宽、对服务器进行负载均衡DNS轮转，DNS缓存。由于进行DNS查询一般会比较耗时，所以">
+<meta name="twitter:image" content="http://xbynet.top/img/2018-01-07-16-10-56.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":true},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://xbynet.top/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/"/>
+
+
+
+
+
+  <title>HTTP权威指南笔记之重定向与负载均衡 | 倚楼听风雨</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?9f9e6e9198259e7a598474c9df6397dc";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">倚楼听风雨</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">淡看江湖路</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-相册">
+          <a href="/photos/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            相册
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+<script>
+    (function(){
+        if(''){
+            if (prompt('请输入文章密码') !== ''){
+                alert('密码错误！');
+                history.back();
+            }
+        }
+    })();
+</script>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">HTTP权威指南笔记之重定向与负载均衡</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-01-07T16:07:15+08:00">
+                2018-01-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/HTTP权威指南/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP权威指南</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/" class="leancloud_visitors" data-flag-title="HTTP权威指南笔记之重定向与负载均衡">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1,267
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  4
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <script src="\assets\js\APlayer.min.js"> </script><p>重定向技术:<br>HTTP重定向<br>DNS重定向<br>任播路由<br>策略路由<br>IP MAC转发<br>IP地址转发<br>WCCP(Web缓存协调协议)<br>ICP(缓存间通信协议)<br>HTCP(超文本缓存协议)<br>NECP(网元控制协议)<br>CARP(缓存阵列路由协议)<br>WPAD(Web代理自动发现协议)</p>
+<p>为什么要重定向：可靠地执行HTTP事务、最小化时延、节约网络带宽、对服务器进行负载均衡<br><img src="/img/2018-01-07-16-10-56.png" alt=""><br><img src="/img/2018-01-07-16-11-25.png" alt=""><br><img src="/img/2018-01-07-16-12-03.png" alt=""><br><img src="/img/2018-01-07-16-12-25.png" alt=""><br>DNS轮转，DNS缓存。由于进行DNS查询一般会比较耗时，所以一般会进行DNS缓存，由于DNS缓存的存在，对于单个客户端而言每次请求的都是同一个ip，但是对于所有客户端而言，由于DNS轮转的存在，可以实现服务器的负载均衡。<br><img src="/img/2018-01-07-16-15-39.png" alt=""></p>
+<h1 id="IP-MAC转发："><a href="#IP-MAC转发：" class="headerlink" title="IP MAC转发："></a>IP MAC转发：</h1><p>在以太网中，HTTP报文都是以携带地址的数据分组的形式发送的。每个分组都有一个第四层地址，由源IP地址，目的IP地址以及TCP端口号组成,它是第四层设备所关注的地址。每个分组还有一个第二层地址，MAC(Media Access Control)地址，这是第二层设备(通常是交换机和Hub)所关注的地址。第二层设备的任务是接收具有特定输入MAC地址的分组，然后将其转发到特定的输出MAC地址上去。<br><img src="/img/2018-01-07-16-19-41.png" alt=""><br><img src="/img/2018-01-07-16-20-32.png" alt=""></p>
+<p>注意：由于MAC地址转发只是点对点的，所以服务器或代理只能位于离交换机一跳远的地方。</p>
+<h1 id="IP地址转发："><a href="#IP地址转发：" class="headerlink" title="IP地址转发："></a>IP地址转发：</h1><p>在IP地址转发中，交换机或其他第四层设备会检测输入分组的TCP/IP地址，并通过修改目的IP地址,对分组进行相应的转发。与MAC转发相比，这么做的优点是目标服务器不需要位于一跳远的地方，只需要位于交换机的上游就行。这种类型的转发也被称为<code>NAT</code>(Network Address Translation,网络地址转换)。<br><code>对称路由</code>的问题：从客户端接受输入TCP连接的交换机管理着连接，交换机必须通过那条TCP连接将响应回送给客户端。这样，所有来自目标服务器或代理的响应都必须返回给交换机。<br><img src="/img/2018-01-07-16-26-39.png" alt=""><br>有以下两种方式可以控制响应的返回路径：<br>1、将分组的源IP地址改成交换机的IP地址。通过这种方式，无论交换机和服务器之间采用何种网络配置，响应分组都会被发送给交换机。这种方式被称为<code>完全NAT(full NAT)</code>,其中的IP转发设备会对目的IP地址和源IP地址都进行转换。缺点：服务器不知道客户端的IP地址。<br><img src="/img/2018-01-07-16-30-53.png" alt=""><br>2、如果源IP地址仍然是客户端的IP地址，就要确保(从硬件角度)没有从服务器到客户端的直接路由(绕过交换机的)。这种方式被称为<code>半NAT(half NAT)</code>。缺点：要对客户端和服务器之间的整个网络都有某种程度的控制。</p>
+<h1 id="NECP-网元控制协议"><a href="#NECP-网元控制协议" class="headerlink" title="NECP-网元控制协议"></a>NECP-网元控制协议</h1><p>NECP(Network Element Control Protocol)允许网元(NE,路由器和交换机等负责转发IP分组的设备)与服务器元素(SE,Web服务器和代理缓存等提供应用层请求的设备)进行交互。NECP并未显式提供对负载均衡的支持，它只是为SE提供了一种发送负载均衡信息给NE的方式，这样NE就可以在它认为合适的情况下进行负载均衡了。转发分组的方式：MAC转发，GRE封装，NAT。<br>NECP报文：略。</p>
+<h1 id="代理的重定向"><a href="#代理的重定向" class="headerlink" title="代理的重定向"></a>代理的重定向</h1><p>略</p>
+<h1 id="缓存重定向"><a href="#缓存重定向" class="headerlink" title="缓存重定向"></a>缓存重定向</h1><p>WCCP重定向：可以使路由器将Web流量重定向到代理缓存中去。</p>
+<h1 id="因特网缓存协议-TCP"><a href="#因特网缓存协议-TCP" class="headerlink" title="因特网缓存协议-TCP"></a>因特网缓存协议-TCP</h1><p>ICP允许缓存在其兄弟中查找命中内容。如果某个缓存中没有HTTP报文所请求的内容，它可以查明内容是否在附近的兄弟缓存中，如果在，就从那里获取内容，以避免查询原始服务器而带来的更多开销。可以把ICP当作一个缓存集群协议。<br><img src="/img/2018-01-07-18-24-15.png" alt=""></p>
+<h1 id="CARP-缓存阵列路由协议"><a href="#CARP-缓存阵列路由协议" class="headerlink" title="CARP-缓存阵列路由协议"></a>CARP-缓存阵列路由协议</h1><p>随着用户数的增加，大量流量可能会使代理服务器自身超载，对此，一种解决方案就是使用多个代理服务器将负载分散到一组服务器上。CARP就是这样一种协议来管理一组代理服务器。CARP是ICP的一个替代品。<br><img src="/img/2018-01-07-18-24-55.png" alt=""></p>
+<h1 id="HTCP-超文本缓存协议"><a href="#HTCP-超文本缓存协议" class="headerlink" title="HTCP-超文本缓存协议"></a>HTCP-超文本缓存协议</h1><p>HTCP允许兄弟缓存之间通过URL和所有的请求及响应头部来相互查询文档是否存在，以降低错误命中的可能。同时还允许兄弟缓存监听或请求在对方的缓存中添加或删除所选中的文档，并修改对方已缓存文档的缓存策略。</p>
+
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+      <div>
+       <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    xbynet
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://xbynet.top/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/" title="HTTP权威指南笔记之重定向与负载均衡">http://xbynet.top/2018/01/07/HTTP权威指南笔记之重定向与负载均衡/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+  
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/http/" rel="tag"><i class="fa fa-tag"></i> http</a>
+          
+            <a href="/tags/tcp/" rel="tag"><i class="fa fa-tag"></i> tcp</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/01/07/HTTP权威指南笔记之识别-认证-安全/" rel="next" title="HTTP权威指南笔记之识别-认证-安全">
+                <i class="fa fa-chevron-left"></i> HTTP权威指南笔记之识别-认证-安全
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/08/Redis集群方案/" rel="prev" title="Redis集群方案">
+                Redis集群方案 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjQ3OS85MDQw"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+      <div id="sidebar-dimmer"></div>
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256"
+                alt="xbynet" />
+            
+              <p class="site-author-name" itemprop="name">xbynet</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">36</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/xbynet" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:xbynet@outlook.com" target="_blank" title="E-Mail">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                友情链接
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.xby1993.net/index.html" title="旧博客笔记" target="_blank">旧博客笔记</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://segmentfault.com/blog/xbynet" title="Segmentfault旧博文" target="_blank">Segmentfault旧博文</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          <div id="aplayer1" class="aplayer"></div>
+<script src="/asserts/js/APlayer.min.js"></script>
+<script>
+    var musiclist=[
+        {title:'素雨',author:'孙雪宁',url:'http://ws.stream.qqmusic.qq.com/C1000040LV2h3FzIVl.m4a?fromtag=38',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003mxnKZ0WbTPc.jpg?max_age=2592000'},
+        {title:'爱在上',author:'崔子格',url:'http://dl.stream.qqmusic.qq.com/M8000019Hx0J3tqcaV.mp3?vkey=93EB395793C648848684E76AE3B2D6E08F9EC8C7412B177750792C7CEC73BDC4FD06C1F78C02D9186339549C042F2CA5955914BA8322F6E4&guid=5150825362&fromtag=1',pic:'https://y.gtimg.cn/music/photo_new/T002R300x300M000003ksYhQ1EmEcr.jpg?max_age=2592000'}
+    ]
+    var tmpindex=Math.floor(Math.random()*musiclist.length);
+    var music=musiclist[tmpindex];
+    var ap = new APlayer({
+        element: document.getElementById('aplayer1'),
+        narrow: false,
+        autoplay: false,
+        showlrc: false,
+        mutex: true,
+        theme: '#e6d0b2',
+        preload: 'metadata',
+        mode: 'circulation',
+        music: {
+            title: music.title,
+            author: music.author,
+            url: music.url,
+            pic: music.pic
+        }
+    });
+</script>
+
+<!-- 
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=2&id=28815250&auto=0&height=66"></iframe>
+-->
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#IP-MAC转发："><span class="nav-number">1.</span> <span class="nav-text"><a href="#IP-MAC&#x8F6C;&#x53D1;&#xFF1A;" class="headerlink" title="IP MAC&#x8F6C;&#x53D1;&#xFF1A;"></a>IP MAC&#x8F6C;&#x53D1;&#xFF1A;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#IP地址转发："><span class="nav-number">2.</span> <span class="nav-text"><a href="#IP&#x5730;&#x5740;&#x8F6C;&#x53D1;&#xFF1A;" class="headerlink" title="IP&#x5730;&#x5740;&#x8F6C;&#x53D1;&#xFF1A;"></a>IP&#x5730;&#x5740;&#x8F6C;&#x53D1;&#xFF1A;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#NECP-网元控制协议"><span class="nav-number">3.</span> <span class="nav-text"><a href="#NECP-&#x7F51;&#x5143;&#x63A7;&#x5236;&#x534F;&#x8BAE;" class="headerlink" title="NECP-&#x7F51;&#x5143;&#x63A7;&#x5236;&#x534F;&#x8BAE;"></a>NECP-&#x7F51;&#x5143;&#x63A7;&#x5236;&#x534F;&#x8BAE;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代理的重定向"><span class="nav-number">4.</span> <span class="nav-text"><a href="#&#x4EE3;&#x7406;&#x7684;&#x91CD;&#x5B9A;&#x5411;" class="headerlink" title="&#x4EE3;&#x7406;&#x7684;&#x91CD;&#x5B9A;&#x5411;"></a>&#x4EE3;&#x7406;&#x7684;&#x91CD;&#x5B9A;&#x5411;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#缓存重定向"><span class="nav-number">5.</span> <span class="nav-text"><a href="#&#x7F13;&#x5B58;&#x91CD;&#x5B9A;&#x5411;" class="headerlink" title="&#x7F13;&#x5B58;&#x91CD;&#x5B9A;&#x5411;"></a>&#x7F13;&#x5B58;&#x91CD;&#x5B9A;&#x5411;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#因特网缓存协议-TCP"><span class="nav-number">6.</span> <span class="nav-text"><a href="#&#x56E0;&#x7279;&#x7F51;&#x7F13;&#x5B58;&#x534F;&#x8BAE;-TCP" class="headerlink" title="&#x56E0;&#x7279;&#x7F51;&#x7F13;&#x5B58;&#x534F;&#x8BAE;-TCP"></a>&#x56E0;&#x7279;&#x7F51;&#x7F13;&#x5B58;&#x534F;&#x8BAE;-TCP</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#CARP-缓存阵列路由协议"><span class="nav-number">7.</span> <span class="nav-text"><a href="#CARP-&#x7F13;&#x5B58;&#x9635;&#x5217;&#x8DEF;&#x7531;&#x534F;&#x8BAE;" class="headerlink" title="CARP-&#x7F13;&#x5B58;&#x9635;&#x5217;&#x8DEF;&#x7531;&#x534F;&#x8BAE;"></a>CARP-&#x7F13;&#x5B58;&#x9635;&#x5217;&#x8DEF;&#x7531;&#x534F;&#x8BAE;</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HTCP-超文本缓存协议"><span class="nav-number">8.</span> <span class="nav-text"><a href="#HTCP-&#x8D85;&#x6587;&#x672C;&#x7F13;&#x5B58;&#x534F;&#x8BAE;" class="headerlink" title="HTCP-&#x8D85;&#x6587;&#x672C;&#x7F13;&#x5B58;&#x534F;&#x8BAE;"></a>HTCP-&#x8D85;&#x6587;&#x672C;&#x7F13;&#x5B58;&#x534F;&#x8BAE;</span></a></li></ol></div>
+            
+          </div>
+          
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">xbynet</span>
+
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">Site words total count&#58;</span>
+    
+    <span title="Site words total count">173.1k</span>
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("sHIc70OVniNsR5OI1atIhMuk-gzGzoHsz", "wt266j1nbmoGAFrXdwXt7TeS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.3"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.3"></script>
+
+
+  
+
+
+  <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>
