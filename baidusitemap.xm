@@ -4,6 +4,28 @@
 
     
   <url>
+    <loc>http://xbynet.top/2018/01/10/JMS%E4%B9%8BActiveMQ/</loc>
+    <lastmod>2018-01-10T11:05:33.473Z</lastmod>
+    <data>
+        <display>
+        <title>JMS之ActiveMQ</title>
+        <pubTime>2018-01-10T09:23:26.000Z</pubTime>
+        
+        <tag>jms</tag>
+         
+        <tag>activemq</tag>
+         
+         
+           
+             
+              <breadCrumb title="中间件" url="http://xbynet.top/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xbynet.top/2018/01/09/SpringBoot%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2018-01-10T01:43:59.777Z</lastmod>
     <data>
@@ -747,9 +769,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
@@ -776,9 +798,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
@@ -805,9 +827,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
@@ -834,9 +856,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
