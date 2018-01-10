@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://xbynet.top/2018/01/09/SpringBoot%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
-    <lastmod>2018-01-09T16:39:26.377Z</lastmod>
+    <lastmod>2018-01-10T01:43:59.777Z</lastmod>
     <data>
         <display>
         <title>SpringBoot官文笔记</title>
