@@ -100,7 +100,7 @@
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-18-43-40.png">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-18-35-36.png">
 <meta property="og:image" content="http://xbynet.top/img/2018-01-05-16-36-36.png">
-<meta property="og:updated_time" content="2018-01-09T08:48:50.904Z">
+<meta property="og:updated_time" content="2018-01-12T09:30:49.846Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="tomcat8.5官文笔记">
 <meta name="twitter:description" content="一直没有通读过很多中间件的官方文档，这次恶补起来。http://tomcat.apache.org/tomcat-8.5-doc/index.htmltomcat还在维护的有几个版本9.0,8.5,8.0,7.0其中9.0实现了Servlet4.0规范(JavaEE8),8.5实现了Servlet3.1规范(JavaEE7),并移除BIO连接器，默认采用NIO连接器，8.0也实现了Servlet3">
@@ -456,7 +456,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4,694
+                  4,691
                 </span>
               
 
@@ -557,7 +557,7 @@
 <p>maxThreads,maxConnections,acceptCount:<br>当并发请求数大于maxThreads时，server仍然会接受请求并(由Connector)创建socket连接,当达到maxConnections值(也就是所支持的最大tcp连接数,NIO模式下默认是10000.)，仍然可以继续接受socket，但是只是由操作系统放在Accept队列里，Connector并不会立即去取到Connector中,当并发请求数继续增加超过acceptCount(默认100)后，之后的请求过来时就会直接拒绝，客户端会看到”connection refused” error.</p>
 <p>其他重要点的参数：<br>enableLookups ： 是否启用dns查询，默认是禁用false。如果你想使用request.getRemoteHost()可以开启，但是这对性能会有损耗，一般不建议开启。<br>maxPostSize：最大POST大小，默认2m，设置为-1则不限制。<br>port:指定tcp端口<br>protocol:指定使用的连接器：<br>org.apache.coyote.http11.Http11NioProtocol<br>org.apache.coyote.http11.Http11Nio2Protocol<br>org.apache.coyote.http11.Http11AprProtocol<br>如果配置值为<code>HTTP/1.1</code>会自动检测使用合适的连接器。</p>
 <p>URIEncoding:如配置为UTF-8，防止GET参数含中文时乱码</p>
-<p>nio连接器特定配置：<br>acceptCount默认100<br>compression<br>connectionTimeout：默认20000 ，即20s<br>disableUploadTimeout默认为true<br>executor：连接执行器(可选，亦可直接配置MaxThreads,使用executors的好处有：更详细的配置、可以配置成多个connector公用),对应<code>Executor</code>元素<br>keepAliveTimeout:与connectionTimeout时间一致，一般无需单独配置它<br>maxConnections：nio下默认10000<br>maxThreads：内部线程池大小，默认200，在指定executor后该值会被忽略。<br>minSpareThreads：最小的保留空闲线程数，默认10，在指定executor后该值会被忽略。<br>tcpNoDelay：默认为true，禁用Nagle算法，提升Http场景下的tcp传输性能。<br>更高级的关于tcp socket, nio,nio2,apr，ssl的配置请见文档。</p>
+<p>nio连接器特定配置：<br>acceptCount默认100<br>compression<br>connectionTimeout：默认20000 ，即20s<br>disableUploadTimeout默认为true<br>executor：连接执行器(可选，亦可直接配置MaxThreads,使用executors的好处有：更详细的配置、可以配置成多个connector公用),对应<code>Executor</code>元素<br>keepAliveTimeout:默认与connectionTimeout时间一致。<br>maxKeepAliveRequests:默认100.<br>maxConnections：nio下默认10000<br>maxThreads：内部线程池大小，默认200，在指定executor后该值会被忽略。<br>minSpareThreads：最小的保留空闲线程数，默认10，在指定executor后该值会被忽略。<br>tcpNoDelay：默认为true，禁用Nagle算法，提升Http场景下的tcp传输性能。<br>更高级的关于tcp socket, nio,nio2,apr，ssl的配置请见文档。</p>
 <p>HTTP2支持：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;Connector ... &gt;</span><br><span class="line">  &lt;UpgradeProtocol className=&quot;org.apache.coyote.http2.Http2Protocol&quot; /&gt;</span><br><span class="line">&lt;/Connector&gt;</span><br></pre></td></tr></table></figure></p>
 <p>Executor元素配置：<br><a href="http://tomcat.apache.org/tomcat-8.5-doc/config/executor.html" target="_blank" rel="noopener">http://tomcat.apache.org/tomcat-8.5-doc/config/executor.html</a><br>相比maxThreads使用内部线程池，Executor可作为多个Connectors使用的共享线程池。<br>className：默认org.apache.catalina.core.StandardThreadExecutor<br>name:指定名字，用于connector引用。<br>namePrefix<br>maxThreads默认200<br>minSpareThreads默认25<br>maxIdleTime默认60000(1 minute)</p>
 <h2 id="虚拟主机"><a href="#虚拟主机" class="headerlink" title="虚拟主机"></a>虚拟主机</h2><p>server.xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Engine name=&quot;Catalina&quot; defaultHost=&quot;ren&quot;&gt;</span><br><span class="line">    &lt;Host name=&quot;ren&quot;    appBase=&quot;renapps&quot;/&gt;</span><br><span class="line">    &lt;Host name=&quot;stimpy&quot; appBase=&quot;stimpyapps&quot;/&gt;</span><br><span class="line">&lt;/Engine&gt;</span><br><span class="line"></span><br><span class="line">mkdir $CATALINA_HOME/renapps</span><br><span class="line">mkdir $CATALINA_HOME/stimpyapps</span><br></pre></td></tr></table></figure></p>
@@ -883,7 +883,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">182.6k</span>
+    <span title="Site words total count">183.2k</span>
   
 </div>
 

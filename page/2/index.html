@@ -661,7 +661,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,380
+                  3,030
                 </span>
               
 
@@ -677,7 +677,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  10
+                  12
                 </span>
               
             </div>
@@ -699,7 +699,14 @@
 
       
         
-          <h2 id="JVM参数优化"><a href="#JVM参数优化" class="headerlink" title="JVM参数优化"></a>JVM参数优化</h2><p>catalina.sh<br>首先通过添加<code>-server</code>选项来开启server mode，默认情况下是client mode。然后垃圾收集器选择ParNew/CMS收集器，以实现较低的STW时间。然后根据自己的系统测试来评估实际的-Xms -Xmx值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CATALINA_OPTS=&quot;-server -Xms3G -Xmx3G $CATALINA_OPTS -XX:+UseConcMarkSweepGC -XX:NewSize=1G -XX:+UseParNewGC&quot;</span><br></pre></td></tr></table></figure></p>
+          <p>优化点：<br>1、JVM参数、GC组合<br>2、tomcat配置参数</p>
+<p>1、JVM参数选用-server模式，tomcat会对server模式下进行优化<br>2、GC选用ParNew/CMS组合，CMS收集器采用4分段2STW的形式能够有效地减少FGC的时间。<br>3、Tomcat参数调优：<br>连接器：BIO、NIO、ARP<br>选用NIO(org.apache.coyote.http11.Http11NioProtocol)替代BIO：<br>由于目前Http1.1是主流，而Http1.1默认采用持久化连接，在BIO的情形下会导致Tomcat处理的并发数=线程池大小，而在NIO模式下并发数&gt;&gt;线程池大小。简单地说就是因为处理完某次请求后，BIO模式线程会阻塞等待该tcp连接下次数据包的到来，直到超时或者客户端主动关闭连接。而NIO模式下，处理完某次请求后，线程不会等待该tcp连接的下次数据到来而直接去处理下一个准备好数据的tcp连接。从而达到并发优化。</p>
+<p>server.xml参数优化：(参考源码NioEndPoint会容易理解点)<br>maxThreads:处理请求的线程数，线程池模式。在指定executor后该值会被忽略，不过可在executor中进行同样的配置。<br>minSpareThreads：最小的保留空闲线程数，默认10，在指定executor后该值会被忽略，不过可在executor中进行同样的配置。<br>maxConnections：接收建立的TCP连接并被Accpetor accept的连接数，只要数据被准备好，可以随时被线程处理。BIO=maxThreads, NIO模式下默认10000<br>acceptCount:操作系统维护的TCP完全连接数，此处连接没有被tomcat的Accpetor accept。当maxConnections满了后，会增加该计数，当acceptCount满了后，便会拒绝客户端连接，导致客户端connection:reset异常。acceptCount默认100。<br>connectionTimeout：默认20000 ，即20s。该值是tcp连接被Acceptor accpet之后，tomcat允许其存在的最长时间。默认情况下keepAliveTimeout也采用该值。</p>
+<p>可能的优化点：<br>Linux的ulimit限制优化。默认情况下Linux对单进程所能持有的文件描述符限制为1024，而由于linux下一切皆文件，故而tcp连接也一个socket文件，这一限制会限制tomcat进程能够创建的连接数。建议配置在10100以上(&gt;maxConnections+acceptCount)</p>
+<p>更多的配置，如：<br>maxKeepAliveRequests：支持的Http持久连接生命周期内最大的请求次数，如果很明确应用的连接被请求次数，可以定义该值。默认100.</p>
+<p>关于dns查询、tcpnodelay:tomcat默认配置已经禁用掉了，所以不需要显式配置。</p>
+<p>—————- 分界线，以下为旧内容 ——————————————————-</p>
+<h2 id="JVM参数优化"><a href="#JVM参数优化" class="headerlink" title="JVM参数优化"></a>JVM参数优化</h2><p>catalina.sh<br>首先通过添加<code>-server</code>选项来开启server mode，默认情况下是client mode。然后垃圾收集器选择ParNew/CMS收集器，以实现较低的STW时间。然后根据自己的系统测试来评估实际的-Xms -Xmx值。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CATALINA_OPTS=&quot;-server -Xms3G -Xmx3G $CATALINA_OPTS -XX:+UseConcMarkSweepGC -XX:NewSize=1G -XX:+UseParNewGC&quot;</span><br></pre></td></tr></table></figure></p>
 <p>那么如何看到是否合理呢<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java -XX:+PrintFlagsFinal tomcat | grep HeapSize </span><br><span class="line">java -XX:+PrintFlagsFinal -Xms512m -Xmx1024m -Xss512k -XX:PermSize=64m -XX:MaxPermSize=128m</span><br></pre></td></tr></table></figure></p>
 <p>-XX:+PrintFlagsInitial表示打印出所有XX选项的默认值，-XX:+PrintFlagsFinal表示打印出XX选项在运行程序时生效的值。<br>-Xms 设置初始堆的大小，也是最小堆的大小，它等价于：-XX:InitialHeapSize<br>-Xmx 设置最大堆的大小，它等价于-XX:MaxHeapSize。 </p>
           <!--noindex-->
@@ -2544,7 +2551,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">182.6k</span>
+    <span title="Site words total count">183.2k</span>
   
 </div>
 
