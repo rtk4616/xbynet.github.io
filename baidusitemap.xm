@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>http://xbynet.top/2018/01/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9Fv3%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2018-01-17T01:15:22.855Z</lastmod>
+    <data>
+        <display>
+        <title>深入理解计算机系统v3笔记之基础</title>
+        <pubTime>2018-01-17T01:14:14.000Z</pubTime>
+        
+        <tag>操作系统</tag>
+         
+        <tag>理论</tag>
+         
+         
+           
+             
+              <breadCrumb title="读书笔记" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+          
+             
+              <breadCrumb title="深入理解计算机系统" url="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xbynet.top/2018/01/05/tomcat8-5%E5%AE%98%E6%96%87%E7%AC%94%E8%AE%B0/</loc>
     <lastmod>2018-01-16T10:31:44.624Z</lastmod>
     <data>

@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://xbynet.top/"/>
-  <updated>2018-01-10T11:05:33.473Z</updated>
+  <updated>2018-01-17T01:15:22.855Z</updated>
   <id>http://xbynet.top/</id>
   
   <author>
@@ -15,6 +15,35 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>深入理解计算机系统v3笔记之基础</title>
+    <link href="http://xbynet.top/2018/01/17/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9Fv3%E7%AC%94%E8%AE%B0%E4%B9%8B%E5%9F%BA%E7%A1%80/"/>
+    <id>http://xbynet.top/2018/01/17/深入理解计算机系统v3笔记之基础/</id>
+    <published>2018-01-17T01:14:14.000Z</published>
+    <updated>2018-01-17T01:15:22.855Z</updated>
+    
+    <content type="html"><![CDATA[<script src="\assets\js\APlayer.min.js"> </script>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;script src=&quot;\assets\js\APlayer.min.js&quot;&gt; &lt;/script&gt;
+      
+    
+    </summary>
+    
+      <category term="读书笔记" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="深入理解计算机系统" scheme="http://xbynet.top/categories/%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F/"/>
+    
+    
+      <category term="操作系统" scheme="http://xbynet.top/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/"/>
+    
+      <category term="理论" scheme="http://xbynet.top/tags/%E7%90%86%E8%AE%BA/"/>
+    
+  </entry>
   
   <entry>
     <title>JMS之ActiveMQ</title>

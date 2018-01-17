@@ -215,16 +215,6 @@
         </li>
       
         
-        <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
-            
-            归档
-          </a>
-        </li>
-      
-        
         <li class="menu-item menu-item-tags">
           <a href="/tags/" rel="section">
             
@@ -330,6 +320,203 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/28/HTTP权威指南笔记之HTTP报文/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="xbynet">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="倚楼听风雨">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/28/HTTP权威指南笔记之HTTP报文/" itemprop="url">HTTP权威指南笔记之HTTP报文</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">读书笔记</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/读书笔记/HTTP权威指南/" itemprop="url" rel="index">
+                    <span itemprop="name">HTTP权威指南</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/28/HTTP权威指南笔记之HTTP报文/" class="leancloud_visitors" data-flag-title="HTTP权威指南笔记之HTTP报文">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">热度&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  3,580
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  14
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>一些概念：<br>资源，资源定位符URI/URL，媒体类型MIME,HTTP事务(一次请求响应的过程)<br>方法(GET/PUT/POST/HEAD/TRACE/OPTIONS/DELETE)，状态码(200/302/404)，报文(请求、响应消息:起始行，首部字段，主体)，连接(TCP/IP)<br><img src="/img/2017-12-28-12-01-52.png" alt=""><br><img src="/img/2017-12-28-12-02-12.png" alt=""><br>Telnet、netcat工具<br>协议版本:0.9,1.0,1.1,2.0<br>Web的结构组件:</p>
+<ul>
+<li>代理:请求转发，可能会进行一些过滤操作。场景的有Apache Http Server,Nginx</li>
+<li>缓存:对响应的资源进行缓存，下次请求即可直接从缓存返回，一般用于静态资源如图片，css，js，常见的有CDN,Nginx缓存。</li>
+<li>网关:通常用于将HTTP流量转换成其他的协议。网关接受请求时就好像自己是资源的源端服务器一样。<br><img src="/img/2017-12-28-13-08-37.png" alt=""></li>
+<li>隧道(tunnel)在一条或多条连接上对原始数据进行盲转发，转发时不会窥探数据。如TLS/SSL隧道。</li>
+<li>Agent代理：代表用户发起HTTP请求的客户端程序，如浏览器，爬虫</li>
+</ul>
+<p>规范信息：<br><a href="http://www.w3.org/Protocols" target="_blank" rel="noopener">http://www.w3.org/Protocols</a><br><a href="http://www.ietf.org/rfc/rfc2616.txt" target="_blank" rel="noopener">http://www.ietf.org/rfc/rfc2616.txt</a> http1.1规范<br><a href="http://www.ietf.org/rfc/rfc2046.txt" target="_blank" rel="noopener">http://www.ietf.org/rfc/rfc2046.txt</a> MIME规范</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/12/28/HTTP权威指南笔记之HTTP报文/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+    
+
+ 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/28/Redis缓存命中率及过期移除策略/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -355,16 +542,6 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-28T09:03:46+08:00">
-                2017-12-28
-              </time>
-            
 
             
 
@@ -373,8 +550,6 @@
 
           
             <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -579,16 +754,6 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T15:47:16+08:00">
-                2017-12-27
-              </time>
-            
 
             
 
@@ -597,8 +762,6 @@
 
           
             <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -805,16 +968,6 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-27T14:22:06+08:00">
-                2017-12-27
-              </time>
-            
 
             
 
@@ -823,8 +976,6 @@
 
           
             <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -1001,16 +1152,6 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-26T17:53:06+08:00">
-                2017-12-26
-              </time>
-            
 
             
 
@@ -1019,8 +1160,6 @@
 
           
             <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -1207,16 +1346,6 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-25T16:32:50+08:00">
-                2017-12-25
-              </time>
-            
 
             
 
@@ -1225,8 +1354,6 @@
 
           
             <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -1399,16 +1526,6 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-25T10:31:31+08:00">
-                2017-12-25
-              </time>
-            
 
             
 
@@ -1417,8 +1534,6 @@
 
           
             <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -1603,16 +1718,6 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T17:50:50+08:00">
-                2017-12-21
-              </time>
-            
 
             
 
@@ -1621,8 +1726,6 @@
 
           
             <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -1812,16 +1915,6 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T14:07:00+08:00">
-                2017-12-21
-              </time>
-            
 
             
 
@@ -1830,8 +1923,6 @@
 
           
             <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -2002,16 +2093,6 @@
         <div class="post-meta">
           <span class="post-time">
             
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-21T09:21:31+08:00">
-                2017-12-21
-              </time>
-            
 
             
 
@@ -2020,8 +2101,6 @@
 
           
             <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -2158,217 +2237,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://xbynet.top/2017/12/20/历史博文迁移-Java8新特性学习笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="xbynet">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://sfault-avatar.b0.upaiyun.com/206/579/2065794108-5721d3ee75b36_huge256">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="倚楼听风雨">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/20/历史博文迁移-Java8新特性学习笔记/" itemprop="url">[历史博文迁移]Java8新特性学习笔记</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-20T17:02:25+08:00">
-                2017-12-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">读书笔记</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/读书笔记/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/20/历史博文迁移-Java8新特性学习笔记/" class="leancloud_visitors" data-flag-title="[历史博文迁移]Java8新特性学习笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">热度&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  12,536
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  55
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>原地址在我的segmentfault专栏里:<a href="https://segmentfault.com/a/1190000010137914,现进行部分博文迁移" target="_blank" rel="noopener">https://segmentfault.com/a/1190000010137914,现进行部分博文迁移</a>.</p>
-<p>从Java8发布到现在有好几年了,而Java9也提上发布日程了(没记错的话好像就是这个月2017年7月，也许会再度跳票吧，不过没关系，稳定大于一切，稳定了再发布也行)，现在才开始去真正学习，说来也是惭愧。虽然目前工作环境仍然以Java6为主，不过Java8目前已是大势所趋了。Java8带来了许多令人激动的新特性，如lambda表达式，StreamsAPI与并行集合计算，新的时间日期API(借鉴joda-time)，字节码支持保存方法参数名(对于框架开发真的是非常赞的一个特性),Optional类解决空指针问题(虽然Guava中早就有这个了)等。</p>
-<h2 id="lambda表达式"><a href="#lambda表达式" class="headerlink" title="lambda表达式"></a>lambda表达式</h2><p>语法:</p>
-<ul>
-<li>v-&gt;System.out.println(v)</li>
-<li>(v)-&gt;System.out.println(v)</li>
-<li>(String v)-&gt;System.out.println(v)</li>
-<li>(v)-&gt;{System.out.println(v);return v+1;}</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">List&lt;Integer&gt; numbers = Arrays.asList(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>);</span><br><span class="line">numbers.forEach((Integer value) -&gt; System.out.println(value));</span><br></pre></td></tr></table></figure>
-<p><strong>注意：lambda表达式内如果引用了外部的局部变量，那么这个局部变量必须是final的，如果不是，编译器会自动给加上final。比如下面这段是错误的</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//这是错误的</span></span><br><span class="line"><span class="keyword">int</span> num = <span class="number">2</span>;</span><br><span class="line">Function&lt;Integer, Integer&gt; stringConverter = (from) -&gt; from * num;</span><br><span class="line">num++;<span class="comment">//会报错，因为此时num已经是final声明的了</span></span><br><span class="line">System.out.println(stringConverter.apply(<span class="number">3</span>));</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/12/20/历史博文迁移-Java8新特性学习笔记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-    
-
- 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2423,9 +2291,9 @@
             
               <div class="site-state-item site-state-posts">
               
-                <a href="/archives/">
+                <a href="/archives">
               
-                  <span class="site-state-item-count">38</span>
+                  <span class="site-state-item-count">39</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2436,7 +2304,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">19</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -2447,7 +2315,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">30</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
