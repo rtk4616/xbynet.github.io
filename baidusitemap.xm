@@ -4,8 +4,30 @@
 
     
   <url>
+    <loc>http://xbynet.top/2018/01/19/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE%E4%B9%8B%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/</loc>
+    <lastmod>2018-01-19T11:01:23.255Z</lastmod>
+    <data>
+        <display>
+        <title>数据库知识回顾之理论基础</title>
+        <pubTime>2018-01-19T08:11:59.000Z</pubTime>
+        
+        <tag>数据库</tag>
+         
+        <tag>mysql</tag>
+         
+         
+           
+             
+              <breadCrumb title="数据库" url="http://xbynet.top/categories/%E6%95%B0%E6%8D%AE%E5%BA%93/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xbynet.top/2017/12/27/tomcat%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/</loc>
-    <lastmod>2018-01-19T02:36:45.577Z</lastmod>
+    <lastmod>2018-01-19T08:46:42.302Z</lastmod>
     <data>
         <display>
         <title>tomcat性能优化</title>
