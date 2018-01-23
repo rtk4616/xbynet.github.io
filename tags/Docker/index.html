@@ -87,7 +87,7 @@
 <meta name="description" content="青苔边，折梅不赏;古道旁，煮酒不饮。">
 <meta property="og:type" content="website">
 <meta property="og:title" content="倚楼听风雨">
-<meta property="og:url" content="http://xbynet.top/tags/docker/index.html">
+<meta property="og:url" content="http://xbynet.top/tags/Docker/index.html">
 <meta property="og:site_name" content="倚楼听风雨">
 <meta property="og:description" content="青苔边，折梅不赏;古道旁，煮酒不饮。">
 <meta property="og:locale" content="zh-Hans">
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="http://xbynet.top/tags/docker/"/>
+  <link rel="canonical" href="http://xbynet.top/tags/Docker/"/>
 
 
 
 
 
-  <title>标签: docker | 倚楼听风雨</title>
+  <title>标签: Docker | 倚楼听风雨</title>
   
 
 
@@ -312,7 +312,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h2>docker<small>标签</small>
+        <h2>Docker<small>标签</small>
         </h2>
       </div>
 
@@ -324,37 +324,9 @@
 
       <h3 class="post-title">
         
-            <a class="post-title-link" href="/2018/01/02/Kubernetes笔记之基本概念/" itemprop="url">
+            <a class="post-title-link" href="/2017/12/21/微服务架构之DevOps/" itemprop="url">
               
-                <span itemprop="name">Kubernetes笔记之基本概念</span>
-              
-            </a>
-        
-      </h3>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2018-01-02T09:48:10+08:00"
-              content="2018-01-02" >
-          01-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h3 class="post-title">
-        
-            <a class="post-title-link" href="/2017/12/26/Docker之入门笔记/" itemprop="url">
-              
-                <span itemprop="name">Docker之入门笔记</span>
+                <span itemprop="name">微服务架构之DevOps</span>
               
             </a>
         
@@ -362,9 +334,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2017-12-26T17:53:06+08:00"
-              content="2017-12-26" >
-          12-26
+              datetime="2017-12-21T17:50:50+08:00"
+              content="2017-12-21" >
+          12-21
         </time>
       </div>
 
@@ -430,7 +402,7 @@
               
                 <a href="/archives">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -441,7 +413,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">20</span>
+                  <span class="site-state-item-count">21</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -572,7 +544,7 @@
     
       <span class="post-meta-item-text">Site words total count&#58;</span>
     
-    <span title="Site words total count">191.1k</span>
+    <span title="Site words total count">194.6k</span>
   
 </div>
 
@@ -1193,6 +1165,27 @@
 
 
   <a href="https://github.com/xbynet"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://camo.githubusercontent.com/567c3a48d796e2fc06ea80409cc9dd82bf714434/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
+
+<script>
+
+$(document).ready(function() {
+//修复toc无法点击的问题
+    $(".nav-item .nav-link").each(function(i){
+              $(this).text($(this).attr("href").replace('#',''));
+              $(this).parent().contents().filter(function() {
+                  return this.nodeType == 3; //Node.TEXT_NODE
+              }).remove();
+            });
+//主页阴影
+      if(false){
+            $('.post').addClass('post-index');
+        }
+    });
+</script>
+  
+</body>
+</html>
+f6e732f666f726b6d655f6c6566745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png"></a>
 
 <script>
 

@@ -4,8 +4,28 @@
 
     
   <url>
+    <loc>http://xbynet.top/2018/01/22/Java%E5%9F%BA%E7%A1%80%E5%9B%9E%E9%A1%BE%E4%B9%8BThreadLocal/</loc>
+    <lastmod>2018-01-23T02:43:51.383Z</lastmod>
+    <data>
+        <display>
+        <title>Java基础回顾之ThreadLocal</title>
+        <pubTime>2018-01-22T01:10:56.000Z</pubTime>
+        
+        <tag>java</tag>
+         
+         
+           
+             
+              <breadCrumb title="java" url="http://xbynet.top/categories/java/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://xbynet.top/2018/01/19/%E6%95%B0%E6%8D%AE%E5%BA%93%E7%9F%A5%E8%AF%86%E5%9B%9E%E9%A1%BE%E4%B9%8B%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2018-01-19T11:01:23.255Z</lastmod>
+    <lastmod>2018-01-23T01:35:07.848Z</lastmod>
     <data>
         <display>
         <title>数据库知识回顾之理论基础</title>
@@ -56,9 +76,9 @@
         <title>tomcat8.5官文笔记</title>
         <pubTime>2018-01-05T01:29:11.000Z</pubTime>
         
-        <tag>tomcat</tag>
-         
         <tag>java</tag>
+         
+        <tag>tomcat</tag>
          
          
            
@@ -813,9 +833,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
@@ -842,9 +862,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
@@ -871,9 +891,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
@@ -900,9 +920,9 @@
          
         <tag>msa</tag>
          
-        <tag>架构</tag>
-         
         <tag>soa</tag>
+         
+        <tag>架构</tag>
          
          
            
